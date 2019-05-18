@@ -1,0 +1,79 @@
+﻿<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>dplayer播放</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="DPlayer.min.css">
+	<script type="text/javascript" src="flv.min.js"></script>
+	<script type="text/javascript" src="hls.min.js"></script>
+	<script type="text/javascript" src="dash.all.min.js"></script>
+	<script type="text/javascript" src="webtorrent.min.js"></script>
+	<script type="text/javascript" src="DPlayer.min.js"></script>
+	<script type="text/javascript" src="md5.js"></script>
+	</head>
+
+	<body>
+<div id="playerCnt"></div>
+<script type="text/javascript">
+	//获取地址栏里传递过来的视频地址
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg); //匹配目标参数
+		if(r != null) return unescape(r[2]);
+		return null; //返回参数值
+	}
+	var videoUrl2 =getUrlParam('videourl');
+	
+	var a=videoUrl2.split(",");
+	var nextpage=a[0];
+	var videoUrl=a[1];
+	var biliaid=a[2];
+	var did=hex_md5(videoUrl);
+</script>
+
+<script type="text/javascript">
+    var type='normal';
+    var live=false;
+    if(videoUrl.indexOf('.m3u8')>-1){
+        type='hls';
+        live=true;
+    }
+    else if(videoUrl.indexOf('magnet:')>-1){
+        type='webtorrent';
+    }
+    else if(videoUrl.indexOf('.flv')>-1){
+        type='flv';
+    }
+    else if(videoUrl.indexOf('.mpd')>-1){
+        type='dash';
+    }
+
+    var dp = new DPlayer({
+        container: document.getElementById('playerCnt'),
+        autoplay: true,
+        screenshot: false,
+        video: {
+            url: videoUrl,
+            type:type
+        },
+		danmaku: {                                                         
+        id: did,                                                                                                                
+        api: 'https://api.prprpr.me/dplayer/',                            
+        addition: ['https://api.prprpr.me/dplayer/v3/bilibili?aid='+biliaid]
+    },
+        contextmenu: [
+
+        ]
+    });
+		dp.on('ended', function (){
+        if(nextpage!='' && nextpage !='undefined'){
+            top.location.href = nextpage;
+        }
+    });
+
+
+</script>
+	</body>
+
+</html>

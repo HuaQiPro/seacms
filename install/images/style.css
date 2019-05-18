@@ -1,0 +1,51 @@
+html,body{height:100%}
+body,div,ul,li,dl,dd,dt,p,h1,h2,h3,form{margin:0;padding:0;font-family:"Microsoft Yahei",Tahoma,Arial;font-size:14px}
+ul{list-style:none}
+a,a:visited{color:#1F376D;text-decoration:none}
+a:hover{color:#BD0A01}
+img{border:0}
+table{border-collapse:collapse;border-spacing:0}
+
+.inp{display:inline;float:left;width:15em;padding:3px;border:1px solid #8E8F8F;background:#FBFBFB;border-radius:2px;margin-right:8px}
+.inp_tips{position:absolute;z-index:999;border:1px solid #006600;background:#C9F0A0;line-height:22px;padding:0 5px;border-radius:4px}
+.tips_no,.tips_look{float:left;background:url('reg.gif') 0 1px no-repeat;text-indent:20px;line-height:18px;height:18px;margin-top:4px}
+.tips_yes{float:left;background:url('reg.gif') 0 -20px no-repeat;width:16px;height:16px;margin-top:6px}
+.tips_look{background-position:0 -39px}
+.tips_load{float:left;background:url('load.gif');width:16px;height:16px;margin-top:6px}
+
+.b{height:100%;background:url('top.gif') repeat-x;min-width:960px}
+.b .main{width:960px;height:100%;margin:0 auto;position:relative}
+.head{height:50px;margin-bottom:10px}
+.head .h_right{float:right;padding:16px 10px 0 0}
+.head .h_right span{padding:0 8px}
+
+.cont{position:absolute;top:60px;right:0;left:0;bottom:10px;min-height:300px;_height:expression(document.body.offsetHeight-60<300?300:document.body.offsetHeight-60)}
+.cont .c_top{width:100%;height:11px;background:url('box.gif') no-repeat}
+.cont .c_c{position:absolute;top:11px;right:0;bottom:11px;background:url('box.gif') -960px 0 repeat-y;width:960px;_height:expression(document.body.offsetHeight-60<300?274:document.body.offsetHeight-82)}
+.cont .c_c .c_c_left{float:left;width:154px}
+.cont .c_c .c_c_left ul{margin:20px 0 0 20px}
+.cont .c_c .c_c_left ul li{line-height:44px;font-size:14px;font-weight:700}
+.cont .c_c .c_c_left ul li.ok{color:#aaa}
+.cont .c_c .c_c_left ul li.on{position:relative;z-index:9;left:-26px;background:url('bg.gif') 0 -36px no-repeat;width:180px;height:44px;line-height:36px;text-indent:26px;color:#FFF}
+.cont .c_c .c_c_right{position:absolute;top:0;right:6px;bottom:0;width:794px;_height:100%}
+.cont .c_c .c_c_right .content{position:absolute;top:0;right:5px;bottom:40px;width:764px;padding:5px 10px;line-height:1.8;overflow:auto;_height:expression(document.body.offsetHeight-60<300?223:document.body.offsetHeight-137)}
+.cont .c_c .c_c_right .content h2{background:#E9F4F6;border-left:3px solid #72A9BC;text-indent:6px;font-size:14px;margin-bottom:5px}
+.cont .c_c .c_c_right .content p{padding:8px 0 0}
+.cont .c_c .c_c_right .content i{font-style:normal;color:green}
+.cont .c_c .c_c_right .content u{text-decoration:none;color:red}
+.cont .c_c .c_c_right .content .end{margin:12px 0 0}
+.cont .c_c .c_c_right .content .end h3{line-height:48px;background:url('success.gif') no-repeat;font-size:26px;text-indent:55px;color:green}
+.cont .c_c .c_c_right .content .end h4{font-size:26px;color:red}
+.cont .c_c .c_c_right .content .end p{padding:10px;color:#CD0200;font-weight:bold;font-size:18px}
+.cont .c_c .c_c_right .button{position:absolute;bottom:0;width:100%;height:28px;_height:36px;padding:7px 0 0;background:url('bg.gif') no-repeat;overflow:hidden}
+.cont .c_c .c_c_right .button a,.but{float:right;display:inline;width:75px;height:27px;line-height:27px;text-align:center;font-weight:700;color:#fff;margin:0 20px 0 0;background:url('bg.gif') -182px -36px no-repeat;border:none;cursor:pointer}
+.cont .c_c .c_c_right .button .grey{background-position:-258px -36px}
+.cont .c_btm{position:absolute;bottom:0;width:100%;height:11px;background:url('box.gif') 100% 0 no-repeat}
+
+.err{border:1px solid #C8D4D9;border-radius:4px;padding:10px}
+.err h1{margin-bottom:8px}
+.err p{line-height:2}
+
+.tb{position:relative;width:746px;margin:8px auto;border:1px solid #CEE3EA;font-size:14px;}
+.tb tr th{color:#333;line-height:24px;padding:5px 8px;text-align:left;background:#F2F8F9}
+.tb tr td{color:#333;line-height:24px;padding:5px 8px;vertical-align:top;border-top:1px solid #E0EDF2}

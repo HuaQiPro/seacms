@@ -1,0 +1,128 @@
+<!DOCTYPE html>{seacms:strip}
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+    <title>{seacms:sitename}-高级搜索</title>
+    <meta name="keywords" content="{seacms:sitenotice}">
+    <meta name="description" content="{seacms:sitenotice}"> {seacms:load block_header.html}
+</head>
+
+<body class="apptop">
+
+    {seacms:top}
+    <!--main-->
+    <div class="container">
+        <div class="row">
+            <div class="hy-cascade clearfix">
+                <div class="content-meun clearfix">
+				<a class="head" href="javascript:;" data-toggle="collapse" data-target="#collapse" aria-expanded="false"><span class="text">已选择：</span><span>{searchpage:typename}</span><span>{searchpage:jq}</span><span>{searchpage:area}</span><span>{searchpage:year}</span><span>{searchpage:lang}</span><span class="hidden-xs">{searchpage:state}</span><span class="hidden-xs">{searchpage:money}</span><span class="hidden-xs">{searchpage:ver}</span><span class="hidden-xs">{searchpage:letter}</span></a>
+                    <div class="item collapse" id="collapse" aria-expanded="false" >
+                        <ul class="clearfix">
+                            <li class="text"><span class="text-muted">按分类：</span></li>
+                            {seacms:typeitemlist}
+                            <li><a href="[typeitemlist:link]" {if:[typeitemlist:value]=={searchpage:typename}} class="active" {end if}>[typeitemlist:value]</a></li>
+                            {/seacms:typeitemlist}
+                        </ul>
+						<ul class="clearfix">
+                            <li class="text"><span class="text-muted">按剧情：</span></li>
+                            {seacms:jqitemlist}
+                            <li><a href="[jqitemlist:link]" {if:[jqitemlist:value]=={searchpage:jq}} class="active" {end if}>[jqitemlist:value]</a></li>
+                            {/seacms:jqitemlist}
+                        </ul>
+                        <ul class="clearfix">
+                            <li class="text"><span class="text-muted">按地区：</span></li>
+                            {seacms:areaitemlist}
+                            <li><a href="[areaitemlist:link]" {if:[areaitemlist:value]=={searchpage:area}} class="active" {end if}>[areaitemlist:value]</a></li>{/seacms:areaitemlist}
+                        </ul>
+                        <ul class="clearfix">
+                            <li class="text"><span class="text-muted">按年份：</span></li>
+                            {seacms:yearitemlist}
+                            <li><a href="[yearitemlist:link]" {if:[yearitemlist:value]=={searchpage:year}} class="active" {end if}>{if:[yearitemlist:value]==more}更早{else}[yearitemlist:value]{end if}</a></li>{/seacms:yearitemlist}
+                        </ul>
+                        <ul class="clearfix">
+                            <li class="text"><span class="text-muted">按语言：</span></li>
+                            {seacms:langitemlist}
+                            <li><a {if:[langitemlist:value]=={searchpage:lang}} class="active" {else} {end if} target="_self" href="[langitemlist:link]">[langitemlist:value]</a></li>
+                            {/seacms:langitemlist}
+                        </ul>
+                        <ul class="clearfix">
+                            <li class="text"><span class="text-muted">按状态：</span></li>
+                            {seacms:stateitemlist}
+							<li><a href="[stateitemlist:link]" {if:"[stateitemlist:value]"=="{searchpage:state}"}  class="active" {else} {end if} target="_self" >[stateitemlist:value]</a></li>
+                            {/seacms:stateitemlist}
+                        </ul>
+						<ul class="clearfix">
+                            <li class="text"><span class="text-muted">按收费：</span></li>							
+							{seacms:moneyitemlist}
+							<li>{if: [moneyitemlist:value]={searchpage:money}}<a href="[moneyitemlist:link]" class="active">[moneyitemlist:value]</a>{else}<a href="[moneyitemlist:link]">[moneyitemlist:value]</a>{end if} </li>
+							{/seacms:moneyitemlist}
+							
+							
+                        </ul>
+						<ul class="clearfix">
+                            <li class="text"><span class="text-muted">按版本：</span></li>
+                            {seacms:veritemlist}
+							<li><a href="[veritemlist:link]" {if:"[veritemlist:value]"=="{searchpage:ver}"}  class="active" {else} {end if} target="_self" >[veritemlist:value]</a></li>
+                            {/seacms:veritemlist}
+                        </ul>
+                        <ul class="clearfix">
+						<li class="text"><span class="text-muted">按字母：</span></li>
+                            {seacms:letteritemlist}
+                            <li><a {if:{searchpage:letter}==[letteritemlist:value]} class="active" {end if} href="[letteritemlist:link]">[letteritemlist:value]</a></li>{/seacms:letteritemlist}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="hy-layout clearfix" style="margin-top: 0;">
+                <div class="hy-switch-tabs active clearfix"><span class="text-muted pull-right hidden-xs">共有<span class="text-color">“{cascadelist:recordcount}”</span>个影片,当前第<span class="text-color">“{cascadelist:page}”</span>页</span>
+                    <ul class="nav nav-tabs">
+                        <li class="{if:{searchpage:ordername}==time} active{end if}"><a href="{searchpage:order-time-link}">按时间</a></li>
+                        <li class="{if:{searchpage:ordername}==hit} active{end if}"><a href="{seacms:sitepath}{searchpage:order-hit-link}">按人气</a></li>
+                        <li class="{if:{searchpage:ordername}==score}active{end if}"><a href="{seacms:sitepath}{searchpage:order-score-link}">按推荐</a></li>
+                    </ul>
+                </div>
+                <div class="hy-video-list">
+                    <div class="item">
+                        <ul class="clearfix">{seacms:cascadelist size=36 order=time}
+                            <li class="col-md-2 col-sm-3 col-xs-4"><a class="videopic lazy" href="[cascadelist:link]" title="[cascadelist:name]" data-original="[cascadelist:pic]" style="background: url(images/load.gif) no-repeat; background-position:50% 50%; background-size: cover;"><span class="play hidden-xs"></span></a>
+                                <div class="title">
+                                    <h5 class="text-overflow"><a href="[cascadelist:link]">[cascadelist:name]</a></h5></div>
+                                <div class="subtitle text-muted text-overflow hidden-xs">[cascadelist:actor len=4]</div>
+                            </li>{/seacms:cascadelist}
+                        </ul>
+                    </div>
+                </div>
+                <div class="hy-page clearfix">
+                    <ul class="cleafix">
+                        <li><a href="{cascadelist:firstlink}">首页</a></li>
+                        <li><a href="{cascadelist:backlink}">上一页</a></li>
+                        {cascadelist:pagenumber len=6} {if:{cascadelist:page}
+                        <>[pagenumber:page]}
+                            <li class="hidden-xs "><a href="[pagenumber:link]">[pagenumber:page]</a></li>
+                            {else}
+                            <li class="hidden-xs active"><a href="[pagenumber:link]">[pagenumber:page]</a></li>
+                            {end if} {/cascadelist:pagenumber}
+                            <li><a href="{cascadelist:nextlink}">下一页</a></li>
+                            <li><a href="{cascadelist:lastlink}">尾页</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var w = document.documentElement ? document.documentElement.clientWidth : document.body.clientWidth;
+    if (w > 640) {
+        $(".collapse").addClass("in");
+		 }else{
+        $(".content-meun").css("min-height","100%");
+    }
+    </script>
+    {seacms:foot}
+</body>
+
+{/seacms:strip}</html>

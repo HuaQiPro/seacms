@@ -1,0 +1,59 @@
+
+<div class="tabbar visible-xs">
+	<a href="{seacms:indexlink}" class="item{if:{seacms:currenttypeid}==-444} active{end if}">
+        <i class="icon iconfont icon-home"></i>
+        <p class="text">首页</p>
+    </a>
+    {seacms:menulist type=1,2,3,4}    
+	<a href="[menulist:link]" class="item{if:[menulist:typeid]=={seacms:currenttypeid}} active{elseif:[menulist:typeid]={playpage:upid}} active{end if}">
+        <i class="icon iconfont icon-{if:[menulist:typeid]== 1}film{elseif:[menulist:typeid]== 2}show{elseif:[menulist:typeid]== 3}flag{elseif:[menulist:typeid]== 4}mallanimation{end if}"></i>
+        <p class="text">[menulist:typename] </p>
+    </a>
+    {/seacms:menulist}
+	
+	<a href="/{seacms:sitepath}member.php" class="item">
+        <i class="icon iconfont icon-member1"></i>
+        <p class="text">会员</p>
+    </a>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="hy-footer clearfix">
+			<p class="margin-0 text-muted">{seacms:copyright}</p>
+			
+		</div>
+	</div>
+</div>
+<div class="hidden-xs"><a href="#" id="back-to-top" title="Back to top">&uarr;&uarr;&uarr;</a></div>
+<span style="display:none">{seacms:sitevisitjs}</span>
+<script type="text/javascript" charset="utf-8">
+    $(function() {
+        $(".videopic.lazy").lazyload({effect: "fadeIn"});  
+        $("[data-toggle='tooltip']").tooltip();
+    });
+</script>
+    
+<script>
+        if ($('#back-to-top').length) {
+            var scrollTrigger = 100; // px
+
+            // $(window).scrollTop()与 $(document).scrollTop()产生结果一样
+            // 一般使用document注册事件，window使用情况如 scroll, scrollTop, resize
+            $(window).on('scroll', function () {
+                if ($(window).scrollTop() > scrollTrigger) {
+                    $('#back-to-top').addClass('show');
+                } else {
+                    $('#back-to-top').removeClass('show');
+                }
+            });
+
+            $('#back-to-top').on('click', function (e) {
+                // html,body 都写是为了兼容浏览器
+                $('html,body').animate({
+                    scrollTop: 0
+                }, 700);
+
+                return false;
+            });
+        }
+    </script>

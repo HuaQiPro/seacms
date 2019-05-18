@@ -1,0 +1,44 @@
+<div class="hy-head-menu">
+	<div class="container">
+	    <div class="row">
+		  	<div class="item">
+			    <div class="logo hidden-sm hidden-xs">
+					<a class="" href="{seacms:indexlink}"><img src="images/logo.png" /></a>										  
+				</div>	
+				<div class="logo visible-sm visible-xs">
+		  			<a class="visible-sm visible-xs" href="{seacms:indexlink}"><img src="images/logo_min.png" /></a>											  
+				</div>	
+				<div class="search"> 
+				<li style="margin-top:10px;float:right;">
+			        <form name="formsearch" id="formsearch" action='/{seacms:sitepath}search.php' method="post" autocomplete="off">																			
+						<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+						<input type="submit" id="searchbutton" value="" class="hide">
+						<a style="margin-top:10px;" href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
+					</form>
+				</li>
+				
+				<li title="留言" onclick="window.location='/{seacms:sitepath}gbook.php'" class="btn btn-sm btn-default" style="margin-top:10px; height:35px;margin-right:10px;float:right;background-color:#FCFCFC;color:#666"><i class="icon iconfont icon-comment"></i> </li>
+				<li onmouseout="document.getElementById('his').style.display='none';" onmouseover="document.getElementById('his').style.display='block';" class="btn btn-sm btn-default" style="margin-top:10px; height:35px;margin-right:10px;float:right;background-color:#FCFCFC;color:#666"><i class="icon iconfont icon-record1" ></i> </li>
+				<div id="his" style="position:absolute;right:0px;z-index:999;background-color:#FCFCFC;width:281px;overflow:hidden;padding:15px;border:1px solid #ccc;top:53px;display:none;" onmouseout="document.getElementById('his').style.display='none';" onmouseover="document.getElementById('his').style.display='block';">
+				您的观看历史：
+				<script type="text/javascript ">
+					$MH.limit = 10;
+					$MH.WriteHistoryBox(250, 170, 'font');
+					
+				</script>
+			</div>	
+				<li title="会员中心" onclick="window.location='/{seacms:sitepath}member.php'" class="btn btn-sm btn-default" style="margin-top:10px; height:35px;margin-right:10px;float:right;background-color:#FCFCFC;color:#666"><i class="icon iconfont icon-member1"></i> </li>
+				
+			   </div>			   
+			   <ul class="menulist hidden-xs">
+					<li><a href="{seacms:indexlink}">首页</a></li>
+					{seacms:menulist type=top}					
+					<li{if:[menulist:typeid]={seacms:currenttypeid}} class="active"{elseif:[menulist:typeid]={playpage:upid}} class="active"{end if}><a href="[menulist:link]">  [menulist:typename]</a></li>						  
+					{/seacms:menulist}	
+					<li><a href="{seacms:newslink} ">资讯</a></li>
+					<li><a href="{seacms:topiclink} ">专题</a></li>
+				</ul>													 
+		  	</div>							
+	    </div>
+	</div>
+</div>

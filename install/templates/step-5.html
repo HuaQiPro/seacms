@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>安装向导 - 海洋CMS</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link href="images/style.css"rel="stylesheet" type="text/css"  />
+<script src="images/jquery.js" type="text/javascript"></script>
+</head>
+
+<body scroll="no">
+<div class="b">
+	<div class="main">
+		<div class="head">
+			<div class="h_right"><a href="//www.seacms.net" target="_blank">官方网站</a><span>|</span><a href="//www.seacms.net" target="_blank">交流论坛</a></div>
+			<img src="images/logo.png" />
+		</div>
+		<div class="cont">
+			<div class="c_top"></div>
+			<div class="c_c">
+				<div class="c_c_left">
+					<ul>
+						<li class="">1、欢迎界面</li>
+						<li class="">2、阅读协议</li>
+						<li class="">3、环境检测</li>
+						<li class="">4、参数配置</li>
+						<li class="on">5、安装完成</li>
+					</ul>
+				</div>
+				<div class="c_c_right">
+
+<div class="content">
+	<h2>恭喜您已经成功完成了海洋CMS的安装</h2>
+	<?php echo $errmsg; ?><br><br>
+	<div class="end" style="margin-left:80px;"><h3>恭喜,您的网站已安装完成！</h3>
+	<p>首页地址：<a href="<?php echo $baseurl; ?>" target="_blank"><?php echo $baseurl; ?></a>
+	<br>后台地址：<a href="<?php echo $cadmininfo; ?>" target="_blank"><?php echo $cadmininfo; ?></a>
+	<br>用户名：<?php echo $adminuser; ?>
+	<br>密　码：<?php echo $adminpwd; ?>
+	<br>请牢记以上信息，您可以登陆后台修改密码及网站设置。</p>
+	</div>
+</div>
+<div class="button"><a href="../" target="_blank">访问网站</a></div>
+				</div>
+			</div>
+			<div class="c_btm"></div>
+		</div>
+	</div>
+</div>
+
+<script src="./images/install.js" type="text/javascript"></script>
+<div style="display:none;">
+<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/install.js"></script>
+</div>	
+</body>
+</html>
