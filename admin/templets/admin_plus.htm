@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>插件管理</title>
+	<link rel="stylesheet" href="js/bootstrap.min.css">
+	<script src="js/jquery2.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+   <script src="js/main.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;视频&nbsp;&raquo;&nbsp;增强插件';</script>
+<ul id="myTab" class="nav nav-tabs" style="border-radius:2px;">
+	<li class="active" style="border-radius:2px;"><a href="#HideVideo" data-toggle="tab">视频屏蔽</a></li>
+	<li style="border-radius:2px;"><a href="#JmpVideo" data-toggle="tab">网站改版</a></li>
+    <li style="border-radius:2px;"><a href="#Other" data-toggle="tab">其它功能</a></li>
+	
+</ul>
+  
+<div id="myTabContent" class="tab-content">
+  
+  <div class="tab-pane fade in active" id="HideVideo">
+      
+      <script type="text/JavaScript">
+      function check()
+{
+  var textarea =$('hidebody').value;
+  var uidArr = textarea.split(/[(\r\n)\r\n]+/);
+  var temp=[];
+  //正则取得数值数组
+  for(var j = 0,len = uidArr.length; j < len; j++){
+     var uid=uidArr[j].replace(/(^\s*)|(\s*$)/g, "");
+     if(uid!=""){var m = uid.match(/(\d+)(?:-|)/);if(m){temp.push(m[1]);}}
+   }
+   uidArr = []; 
+  //删除数值重复 
+  for(var i = 0,len = temp.length;i< len; i++){
+        if(uidArr.indexOf(temp[i]) == -1){
+            uidArr.push(temp[i]);
+        }
+    }
+   $('hidebody').value=uidArr.join("\r\n");
+  
+  
+   	alert("校正成功,共有"+uidArr.length+"条数据。");
+  
+}
+
+   </script>
+
+    
+    <form action="?action=HideVideo" method="post"  role="form">
+    
+
+     <div class="form-group">
+       
+       <div class="panel panel-info">
+	<div class="panel-heading">
+
+   
+
+		<h3 class="panel-title">
+			 <input type="checkbox" name="hideoff" <?php echo $PLUS["HideVideo"]["off"]?"checked":""; ?> />启用？&nbsp;&nbsp;&nbsp;&nbsp;版权屏蔽,用于收到版权投诉后屏蔽其显示，输入提示文本及视频ID(每行一个,支持输入链接)。
+		</h3>
+	</div>
+	<div class="panel-body">
+		<textarea name="hideinfo" id="hideinfo" cols="30" rows="1" class="form-control" style="border-radius:2px;"><?php  echo $PLUS["HideVideo"]["info"];?></textarea>
+        <textarea name="hidebody" id="hidebody" cols="30" rows="12" class="form-control" style="border-radius:2px;margin-top:5px;"><?php foreach($PLUS["HideVideo"]["data"] as $key){echo "$key\r";} ?></textarea> 
+        <br>
+       <input  type="button" value="自动校正" class="rb1"   onclick="check()" />&nbsp;&nbsp;
+       <input type="submit" value="保存设置" class="rb1" />
+      
+	</div>
+         
+  </div>
+         
+ 
+
+    </div>
+
+
+    
+    </form>
+    
+    
+    
+	</div>
+  
+
+	<div class="tab-pane fade" id="JmpVideo">
+	 <form action="?action=JmpVideo" method="post"  role="form">
+     <div class="form-group">
+       
+       <div class="panel panel-info">
+	   <div class="panel-heading">
+
+
+		<h3 class="panel-title">
+			 <input type="checkbox" name="jmpoff" <?php echo $PLUS["JmpVideo"]["off"]?"checked":""; ?> />启用？&nbsp;&nbsp;&nbsp;&nbsp;网站改版,用于视频跳转(每行一个,格式：失效视频ID=>正常视频ID)。
+		</h3>
+	</div>
+	<div class="panel-body"> 
+   <textarea name="jmpbody" id="jmpbody" cols="30" rows="15" class="form-control"><?php foreach($PLUS["JmpVideo"]["data"] as $key=>$val){echo "$key=>$val\r";} ?></textarea> <br>
+       <input type="submit" value="保存设置" class="rb1" />
+      
+	</div>
+         
+  </div>
+         
+ 
+
+    </div>
+
+
+    
+    </form>
+    
+	</div>
+	
+	
+		<div class="tab-pane fade" id="Other">
+	 <form action="?action=Other" method="post"  role="form">
+     <div class="form-group">
+       
+       <div class="panel panel-info">
+	   <div class="panel-heading">
+
+		<h3 class="panel-title">
+			其它功能，自定义视频管理页面中每页显示的视频个数
+		</h3>
+	</div>
+	<div class="panel-body">
+
+	 
+	   视频管理每页显示个数：<input  name="numPerPage" type="text" value=<?php echo $PLUS["Other"]["numPerPage"]; ?> class="rb1" />
+	 
+      <p></p>
+	 <input type="submit" value="保存设置" class="rb1" />
+      
+	</div>
+         
+  </div>
+         
+ 
+
+    </div>
+
+
+    
+    </form>
+    
+	</div>
+	
+	
+	
+	
+	
+
+
+</div>
+
+<?php
+viewFoot();
+?>
+
+</body>
+</html>

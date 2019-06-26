@@ -1699,18 +1699,7 @@ function RemoveXSS($val) {
          }  
       }  
    } 
-    $val = str_replace('<','',$val);
-    $val = str_replace('>','',$val);
-	$val = str_replace('(','',$val);
-	$val = str_replace(')','',$val);
-	$val = str_replace(';','',$val);
-	$val = str_replace('?','',$val);
-	$val = str_replace('=','',$val);
-	$val = str_replace('#','',$val);
-	$val = str_replace('$','',$val);
-	$val = str_replace('@','',$val);
-	$val = str_replace('*','',$val);
-	$val = str_replace('%','',$val);   
+
    return $val;  
 }   
 

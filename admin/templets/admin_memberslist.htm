@@ -57,7 +57,7 @@ $sql="select * from sea_member ORDER BY  id DESC limit $limitstart,$numPerPage";
 	   <td class="td_border" height="30" ><input class="checkbox" type="checkbox" value="<?php echo $row->id;?>" name="uidarray[]"></td>
             <td class="td_border" height="30" ><?php echo $row->id;?></td>
             <td class="td_border" height="30" ><?php echo $row->username;?></td>
-            <td class="td_border" height="30" ><?php echo str_replace('|||||','@',$row->email);?></td>
+            <td class="td_border" height="30" ><?php echo $row->email;?></td>
             <td class="td_border" height="30" ><?php echo date('Y-m-d H:i:s',$row->regtime);?></td>
             <td class="td_border" height="30" ><?php echo $row->regip;?></td>
             <td class="td_border" height="30" ><?php echo $rs['gname'];?></td>

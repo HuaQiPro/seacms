@@ -41,7 +41,7 @@
             echo '<td class="td_border" height="30" ><input class="checkbox" type="checkbox" value="'.$row['id'].'" name="uidarray[]"></td>';
             echo '<td class="td_border" height="30" >'.$row['id'].'</td>';
             echo '<td class="td_border" height="30" >'.$row['username'].'</td>';
-            echo '<td class="td_border" height="30" >'.str_replace('|||||','@',$row['email']).'</td>';
+            echo '<td class="td_border" height="30" >'.$row['email'].'</td>';
             echo '<td class="td_border" height="30" >'.date('Y-m-d H:i:s',$row['regtime']).'</td>';
             echo '<td class="td_border" height="30" >'.$row['regip'].'</td>';
             echo '<td class="td_border" height="30" >'.$rs['gname'].'</td>';
@@ -100,7 +100,7 @@
       </tr>
 	  <tr>
         <td class="td_border" width="11%" height="30">&nbsp;邮箱：</td>
-        <td class="td_border"><input id="email" type="text" value="<?php echo str_replace('|||||','@',$row['email']) ?>" size="20" name="email" /> </td>
+        <td class="td_border"><input id="email" type="text" value="<?php echo $row['email'] ?>" size="20" name="email" /> </td>
       </tr>
 	  <tr>
         <td class="td_border" width="11%" height="30">&nbsp;联系：</td>

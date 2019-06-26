@@ -543,77 +543,6 @@ function CheckSql($db_string,$querytype='select')
 	$log_file = sea_INC.'/../data/'.md5($cfg_cookie_encode).'_safe.txt';
 	$userIP = GetIP();
 	$getUrl = GetCurUrl();
-	$db_string = str_ireplace('@', "|||||", $db_string);	
-	$db_string = str_ireplace('--', "", $db_string);
-	$db_string = str_ireplace('/*', "", $db_string);
-	$db_string = str_ireplace('*/', "", $db_string);
-	$db_string = str_ireplace('*!', "", $db_string);
-	$db_string = str_ireplace('//', "", $db_string);
-	$db_string = str_ireplace('\\', "", $db_string);
-	$db_string = str_ireplace('#', "", $db_string);
-	$db_string = str_ireplace('%00', "", $db_string);
-	$db_string = str_ireplace('0x', "", $db_string);
-	$db_string = str_ireplace('%0b', "", $db_string);
-	$db_string = str_ireplace('%23', "", $db_string);
-	$db_string = str_ireplace('%20', "", $db_string);
-	$db_string = str_ireplace('%27', "", $db_string);
-	$db_string = str_ireplace('%2527', "", $db_string);
-	$db_string = str_ireplace('hex', "he", $db_string);	
-	$db_string = str_ireplace('updatexml', "update", $db_string);
-	$db_string = str_ireplace('extractvalue', "extract", $db_string);
-	$db_string = str_ireplace('benchmark', "bench", $db_string);
-	$db_string = str_ireplace('sleep', "slee", $db_string);
-	$db_string = str_ireplace('load_file', "", $db_string);
-	$db_string = str_ireplace('outfile', "out", $db_string);
-	$db_string = str_ireplace('ascii', "asc", $db_string);	
-	$db_string = str_ireplace('char(', "cha", $db_string);	
-	$db_string = str_ireplace('substr', "sub", $db_string);
-	$db_string = str_ireplace('substring', "sub", $db_string);
-	$db_string = str_ireplace('script', "scri", $db_string);
-	$db_string = str_ireplace('frame', "fra", $db_string);
-	$db_string = str_ireplace('information_schema', "infor", $db_string);
-	$db_string = str_ireplace('exp', "ex", $db_string);
-	$db_string = str_ireplace('information_schema', "infor", $db_string);
-	$db_string = str_ireplace('GeometryCollection', "Geomet", $db_string);
-	$db_string = str_ireplace('polygon', "poly", $db_string);
-	$db_string = str_ireplace('multipoint', "multi", $db_string);
-	$db_string = str_ireplace('multilinestring', "multi", $db_string);
-	$db_string = str_ireplace('linestring', "lines", $db_string);
-	$db_string = str_ireplace('multipolygon', "multi", $db_string);
-	$db_string = str_ireplace('@', "|||||", $db_string);	
-	$db_string = str_ireplace('--', "", $db_string);
-	$db_string = str_ireplace('/*', "", $db_string);
-	$db_string = str_ireplace('*/', "", $db_string);
-	$db_string = str_ireplace('*!', "", $db_string);
-	$db_string = str_ireplace('//', "", $db_string);
-	$db_string = str_ireplace('\\', "", $db_string);
-	$db_string = str_ireplace('#', "", $db_string);
-	$db_string = str_ireplace('%00', "", $db_string);
-	$db_string = str_ireplace('0x', "", $db_string);
-	$db_string = str_ireplace('%0b', "", $db_string);
-	$db_string = str_ireplace('%23', "", $db_string);
-	$db_string = str_ireplace('hex', "he", $db_string);	
-	$db_string = str_ireplace('updatexml', "update", $db_string);
-	$db_string = str_ireplace('extractvalue', "extract", $db_string);
-	$db_string = str_ireplace('benchmark', "bench", $db_string);
-	$db_string = str_ireplace('sleep', "slee", $db_string);
-	$db_string = str_ireplace('load_file', "", $db_string);
-	$db_string = str_ireplace('outfile', "out", $db_string);
-	$db_string = str_ireplace('ascii', "asc", $db_string);	
-	$db_string = str_ireplace('char(', "cha", $db_string);	
-	$db_string = str_ireplace('substr', "sub", $db_string);
-	$db_string = str_ireplace('substring', "sub", $db_string);
-	$db_string = str_ireplace('script', "scri", $db_string);
-	$db_string = str_ireplace('frame', "fra", $db_string);
-	$db_string = str_ireplace('information_schema', "infor", $db_string);
-	$db_string = str_ireplace('exp', "ex", $db_string);
-	$db_string = str_ireplace('information_schema', "infor", $db_string);
-	$db_string = str_ireplace('GeometryCollection', "Geomet", $db_string);
-	$db_string = str_ireplace('polygon', "poly", $db_string);
-	$db_string = str_ireplace('multipoint', "multi", $db_string);
-	$db_string = str_ireplace('multilinestring', "multi", $db_string);
-	$db_string = str_ireplace('linestring', "lines", $db_string);
-	$db_string = str_ireplace('multipolygon', "multi", $db_string);
 
 	//如果是普通查询语句，直接过滤一些特殊语法
 	if($querytype=='select')
@@ -621,31 +550,7 @@ function CheckSql($db_string,$querytype='select')
 		$notallow1 = "[^0-9a-z@\._-]{1,}(union|sleep|benchmark|load_file|outfile)[^0-9a-z@\.-]{1,}";
 
 		//$notallow2 = "--|/\*";
-		if(m_eregi($notallow1,$db_string)){exit('1');}
-		if(m_eregi('@',$db_string)){exit('2');}
-		if(m_eregi('0x',$db_string)){exit('3');}
-		if(m_eregi('updatexml',$db_string)){exit('3');}
-		if(m_eregi('extractvalue',$db_string)){exit('5');}
-		if(m_eregi('<script',$db_string)){exit('6');}
-		if(m_eregi('/script',$db_string)){exit('7');}
-		if(m_eregi('script>',$db_string)){exit('8');}
-		if(m_eregi('if:',$db_string)){exit('9');}
-		if(m_eregi('#',$db_string)){exit('a');}
-		if(m_eregi('--',$db_string)){exit('b');}
-		if(m_eregi('%22',$db_string)){exit('c');}
-		if(m_eregi('%27',$db_string)){exit('d');}
-		if(m_eregi('%24',$db_string)){exit('e');}
-		if(m_eregi('%28',$db_string)){exit('f');}
-		if(m_eregi('%29',$db_string)){exit('g');}
-		if(m_eregi('%3A',$db_string)){exit('h');}
-		if(m_eregi('%3B',$db_string)){exit('i');}
-		if(m_eregi('%5B',$db_string)){exit('j');}
-		if(m_eregi('%5D',$db_string)){exit('k');}
-		if(m_eregi('%7B',$db_string)){exit('l');}
-		if(m_eregi('%7D',$db_string)){exit('m');}
-		if(m_eregi('%3C',$db_string)){exit('n');}
-		if(m_eregi('%3E',$db_string)){exit('u');}
-		if(m_eregi('char(',$db_string)){exit('v');}
+
 	}
 
 	//完整的SQL检查

@@ -156,6 +156,7 @@ if($action=="boardsource")
 	</tr>
 <?php
 	$xml = simplexml_load_file($playerKindsfile);
+	if(!$xml){$xml = simplexml_load_string(file_get_contents($playerKindsfile));}
     $id=0;
 	foreach($xml as $player){
     $id++;

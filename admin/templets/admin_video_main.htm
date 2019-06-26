@@ -37,7 +37,8 @@ select {
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;数据&nbsp;&raquo;&nbsp;影片管理 ';</script>
 <?php
-    $numPerPage=20;
+    require_once(dirname(__FILE__)."/../../data/config.plus.inc.php"); 
+    $numPerPage=$PLUS["Other"]["numPerPage"];
     $v_state=isset($v_state) ? $v_state : '';
     $v_commend=isset($v_commend) ? $v_commend : '';
     $v_recycled=isset($v_recycled) ? $v_recycled : '';

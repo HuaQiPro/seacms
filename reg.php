@@ -60,7 +60,6 @@ if($row1['username']==$username)
 	$ip = GetIP();
 	$randtime=uniqid();
 	$acode=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$randtime); //构造唯一码	
-	$email= str_replace('@','|||||',$email);
 	$email = RemoveXSS(stripslashes($email));
 	$email = addslashes(cn_substr($email,200));
 	
@@ -74,7 +73,7 @@ if($row1['username']==$username)
 		if($smtpreg=='on')
 		{
 				$smtprmail= $email;
-				$smtprmail= str_replace('|||||','@',$smtprmail);
+
 				$smtprtitle = '【'.$cfg_webname.'】Email 地址验证，账号激活邮件';
 $smtprbody = '<strong>Email 地址验证 账户激活</strong><br><br>尊敬的：'.$username.'<br>这封信是由 '.$cfg_webname.' 发送的。<br>您收到这封邮件，是由于在 '.$cfg_webname.' 进行了新用户注册。如果您并没有访问过 '.$cfg_webname.'，或没有进行上述操作，请忽略这封邮件。您不需要退订或进行其他进一步的操作。<br><br>如果您是 '.$cfg_webname. '的新用户，我们需要对您的地址有效性进行验证以避免垃圾邮件或地址被滥用。<br>您只需点击下面的链接即可激活您的帐号：<br><a target="_blank" href="'.$cfg_basehost.'/member.php?mod=activate&acode='.$acode.'">'.$cfg_basehost.'/member.php?mod=activate&acode='.$acode.'</a><br>(如果上面不是链接形式，请将该地址手工粘贴到浏览器地址栏再访问)<br><br>感谢您的访问，祝您使用愉快！<br><br>此致<br>'.$cfg_webname.'管理团队.<br>'.$cfg_basehost.'<br>';
 				require_once("include/class.phpmailer.php"); 

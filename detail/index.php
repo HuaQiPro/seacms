@@ -27,6 +27,17 @@ echoContent($id);
 function echoContent($vId)
 {
 	global $dsql,$cfg_iscache,$mainClassObj,$t1,$cfg_user;
+	
+ 	/*---------插件管理---------*/
+  
+	require_once(dirname(__FILE__)."/../data/config.plus.inc.php"); 
+    //网站改版
+    if($PLUS["JmpVideo"]['off']){$ref=filter_input(INPUT_SERVER,"HTTP_REFERER");if($ref && !preg_match("/".$_SERVER['HTTP_HOST']."/i",$ref)){ $pID=$PLUS["JmpVideo"]['data'][$vId];if($pID){$vId=$pID;};}}
+    //版权屏蔽
+    if($PLUS["HideVideo"]['off']){ if(in_array($vId,$PLUS["HideVideo"]['data'])){ShowMsg($PLUS["HideVideo"]['info'],"../index.php",0,2000);exit();}}
+	
+  	/*---------插件管理---------*/
+	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
 	$vType=$row['tid'];
