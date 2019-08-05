@@ -464,7 +464,11 @@ class DB_MySQL
 	//显示数据链接错误信息
 	function DisplayError($msg)
 	{
-		$errorTrackFile = dirname(__FILE__).'/../data/mysqli_error_trace.php';
+		//$msg=$msg;
+	}
+	function DisplayError2($msg)
+	{
+		$errorTrackFile = dirname(__FILE__).'/../data/'.$dbPwd.'mysqli_error_trace.inc';
 		//if( file_exists(dirname(__FILE__).'/../data/mysqli_error_trace.php') )
 		//{
 		//	@unlink(dirname(__FILE__).'/../data/mysqli_error_trace.php');
@@ -484,7 +488,7 @@ class DB_MySQL
 		$savemsg = 'Page: '.$this->GetCurUrl()."\r\nError: ".$msg;
 		//保存MySql错误日志
 		$fp = @fopen($errorTrackFile, 'a');
-		@fwrite($fp, "\r\n<?php /*\r\n {$savemsg} \r\n*/  ?>\r\n\r\n");
+		@fwrite($fp, "\r\n\r\n{$savemsg}\r\n\r\n\r\n");
 		@fclose($fp);
 	}
 	
@@ -512,6 +516,7 @@ class DB_MySQL
 }
 
 //特殊操作
+$arrs1 = array(); $arrs2 = array(); 
 if(isset($GLOBALS['arrs1']))
 {
 	$v1 = $v2 = '';
@@ -542,7 +547,41 @@ function CheckSql($db_string,$querytype='select')
 	$pos = -1;
 	$log_file = sea_INC.'/../data/'.md5($cfg_cookie_encode).'_safe.txt';
 	$userIP = GetIP();
-	$getUrl = GetCurUrl();
+	$getUrl = GetCurUrl();	
+	$db_string = str_ireplace('--', "", $db_string);
+	$db_string = str_ireplace('/*', "", $db_string);
+	$db_string = str_ireplace('*/', "", $db_string);
+	$db_string = str_ireplace('*!', "", $db_string);
+	$db_string = str_ireplace('//', "", $db_string);
+	$db_string = str_ireplace('\\', "", $db_string);
+	$db_string = str_ireplace('%00', "", $db_string);
+	$db_string = str_ireplace('0x', "", $db_string);
+	$db_string = str_ireplace('%0b', "", $db_string);
+	$db_string = str_ireplace('%23', "", $db_string);
+	$db_string = str_ireplace('%20', "", $db_string);
+	$db_string = str_ireplace('%27', "", $db_string);
+	$db_string = str_ireplace('%2527', "", $db_string);
+	$db_string = str_ireplace('hex', "he", $db_string);	
+	$db_string = str_ireplace('updatexml', "updatexm", $db_string);
+	$db_string = str_ireplace('extractvalue', "extractvalu", $db_string);
+	$db_string = str_ireplace('benchmark', "benchmar", $db_string);
+	$db_string = str_ireplace('sleep', "slee", $db_string);
+	$db_string = str_ireplace('load_file', "load-file", $db_string);
+	$db_string = str_ireplace('outfile', "out-file", $db_string);
+	$db_string = str_ireplace('ascii', "asci", $db_string);	
+	$db_string = str_ireplace('char(', "cha", $db_string);	
+	$db_string = str_ireplace('substr', "subst", $db_string);
+	$db_string = str_ireplace('substring', "substrin", $db_string);
+	$db_string = str_ireplace('script', "scrip", $db_string);
+	$db_string = str_ireplace('frame', "fram", $db_string);
+	$db_string = str_ireplace('information_schema', "information-schema", $db_string);
+	$db_string = str_ireplace('exp', "ex", $db_string);
+	$db_string = str_ireplace('GeometryCollection', "GeometryCollectio", $db_string);
+	$db_string = str_ireplace('polygon', "polygo", $db_string);
+	$db_string = str_ireplace('multipoint', "multipoin", $db_string);
+	$db_string = str_ireplace('multilinestring', "multilinestrin", $db_string);
+	$db_string = str_ireplace('linestring', "linestrin", $db_string);
+	$db_string = str_ireplace('multipolygon', "multipolygo", $db_string);	
 
 	//如果是普通查询语句，直接过滤一些特殊语法
 	if($querytype=='select')
@@ -550,7 +589,31 @@ function CheckSql($db_string,$querytype='select')
 		$notallow1 = "[^0-9a-z@\._-]{1,}(union|sleep|benchmark|load_file|outfile)[^0-9a-z@\.-]{1,}";
 
 		//$notallow2 = "--|/\*";
-
+		if(m_eregi($notallow1,$db_string)){exit('1');}
+		if(m_eregi('0x',$db_string)){exit('3');}
+		if(m_eregi('updatexml',$db_string)){exit('3');}
+		if(m_eregi('extractvalue',$db_string)){exit('5');}
+		if(m_eregi('<script',$db_string)){exit('6');}
+		if(m_eregi('/script',$db_string)){exit('7');}
+		if(m_eregi('script>',$db_string)){exit('8');}
+		if(m_eregi('if:',$db_string)){exit('9');}
+		//if(m_eregi('#',$db_string)){exit('a');}
+		if(m_eregi('--',$db_string)){exit('b');}
+		if(m_eregi('%22',$db_string)){exit('c');}
+		if(m_eregi('%27',$db_string)){exit('d');}
+		if(m_eregi('%24',$db_string)){exit('e');}
+		if(m_eregi('%28',$db_string)){exit('f');}
+		if(m_eregi('%29',$db_string)){exit('g');}
+		if(m_eregi('%3A',$db_string)){exit('h');}
+		if(m_eregi('%3B',$db_string)){exit('i');}
+		if(m_eregi('%5B',$db_string)){exit('j');}
+		if(m_eregi('%5D',$db_string)){exit('k');}
+		if(m_eregi('%7B',$db_string)){exit('l');}
+		if(m_eregi('%7D',$db_string)){exit('m');}
+		if(m_eregi('%3C',$db_string)){exit('n');}
+		if(m_eregi('%3E',$db_string)){exit('u');}
+		if(m_eregi('char(',$db_string)){exit('v');}
+		if(m_eregi('*/',$db_string)){exit('s');}
 	}
 
 	//完整的SQL检查

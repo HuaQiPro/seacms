@@ -12,7 +12,8 @@ if($cfg_user==0)
 	ShowMsg('系统已关闭会员功能!','index.php');
 	exit();
 }
-$hashstr=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser); //构造session安全码 
+$front='front';
+$hashstr=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$front); //构造session安全码 
 $svali = $_SESSION['sea_ckstr'];
 if($dopost=='login')
 {

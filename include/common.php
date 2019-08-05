@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-require_once('webscan/webscan.php'); 
+require_once('webscan/webscan.php');
 define('sea_INC', preg_replace("|[/\\\]{1,}|",'/',dirname(__FILE__) ) );
 define('sea_ROOT', preg_replace("|[/\\\]{1,}|",'/',substr(sea_INC,0,-8) ) );
 define('sea_DATA', sea_ROOT.'/data');
@@ -17,11 +17,13 @@ if(PHP_VERSION < '4.1.0') {
 $starttime = microtime();
 require_once(sea_INC.'/common.func.php');
 //检查和注册外部提交的变量
+$jpurl='//'.$_SERVER['SERVER_NAME'];
 foreach($_REQUEST as $_k=>$_v)
 {
-	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS)',$_k) && !isset($_COOKIE[$_k]) )
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
 	{
-		exit('Request var not allow!');
+		Header("Location:$jpurl");
+		exit('err');
 	}
 }
 function isMobile()
@@ -112,7 +114,7 @@ function _RunMagicQuotes(&$svar)
 }
 
 
-foreach(Array('_GET','_POST','_COOKIE') as $_request)
+foreach(Array('_GET','_POST','_COOKIE','_SERVER') as $_request)
 {
 	foreach($$_request as $_k => $_v) ${$_k} = _RunMagicQuotes($_v);
 }

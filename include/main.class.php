@@ -1063,6 +1063,7 @@ class MainClass_Template {
 								break;
 							case "pic" :
 								$v_pic = $row->n_pic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_pic )) {
 									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
@@ -1630,6 +1631,7 @@ class MainClass_Template {
 								break;
 							case "pic" :
 								$v_pic = $row->v_pic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);} 
 								if (! empty ( $v_pic )) {
 									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
@@ -1642,6 +1644,7 @@ class MainClass_Template {
 								break;
 							case "spic" :
 								$v_spic = $row->v_spic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_spic,$ref)){$v_spic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_spic )) {
 									if (strpos ( ' ' . $v_spic, '://' ) > 0) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_spic, $loopstrVlistNew );
@@ -1654,6 +1657,7 @@ class MainClass_Template {
 								break;
 							case "gpic" :
 								$v_gpic = $row->v_gpic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_gpic,$ref)){$v_gpic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_gpic )) {
 									if (strpos ( ' ' . $v_gpic, '://' ) > 0) {
 										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_gpic, $loopstrVlistNew );
@@ -2109,6 +2113,7 @@ class MainClass_Template {
 								break;
 							case "pic" :
 								$v_pic = $row->v_pic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);} 
 								if (! empty ( $v_pic )) {
 									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
@@ -2121,6 +2126,7 @@ class MainClass_Template {
 								break;
 							case "spic" :
 								$v_spic = $row->v_spic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_spic,$ref)){$v_spic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_spic )) {
 									if (strpos ( ' ' . $v_spic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_spic, $loopstrChannelNew );
@@ -2133,6 +2139,7 @@ class MainClass_Template {
 								break;
 							case "gpic" :
 								$v_gpic = $row->v_gpic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_gpic,$ref)){$v_gpic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_gpic )) {
 									if (strpos ( ' ' . $v_gpic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_gpic, $loopstrChannelNew );
@@ -2566,6 +2573,7 @@ class MainClass_Template {
 								break;
 							case "pic" :
 								$v_pic = $row->n_pic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_pic )) {
 									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
@@ -3320,8 +3328,9 @@ class MainClass_Template {
 						'fwrite',
 						'file',
 						'system',
+						'GLOBAL',
 						'shell_' 
-				), 'Not-Allowed-Words', $v);
+				), 'seacms', $v);
 			}
 			$iar = $iarok;
 			$arlen = count ( $iar [0] );
@@ -3425,8 +3434,9 @@ class MainClass_Template {
 						'fwrite',
 						'file',
 						'system',
+						'GLOBAL',
 						'shell_'
-				), 'Not-Allowed-Words', $v);
+				), 'seacms', $v);
 			}
 			$iar = $iarok;
 			$arlen = count ( $iar [0] );
@@ -4067,6 +4077,7 @@ class MainClass_Template {
 								break;
 							case "pic" :
 								$v_pic = $row->v_pic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_pic )) {
 									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
@@ -4079,6 +4090,7 @@ class MainClass_Template {
 								break;
 							case "spic" :
 								$v_spic = $row->v_spic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_spic,$ref)){$v_spic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_spic )) {
 									if (strpos ( ' ' . $v_spic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_spic, $loopstrChannelNew );
@@ -4091,6 +4103,7 @@ class MainClass_Template {
 								break;
 							case "gpic" :
 								$v_gpic = $row->v_gpic;
+								$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_gpic,$ref)){$v_gpic=str_ireplace($pickey,'',$ref[1]);}
 								if (! empty ( $v_gpic )) {
 									if (strpos ( ' ' . $v_gpic, '://' ) > 0) {
 										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_gpic, $loopstrChannelNew );

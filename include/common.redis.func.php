@@ -2993,7 +2993,7 @@ function updatecronscache()
 		$contents.= "\$collectPageNum = '".$collectPageNum."';\r\n";
 		$contents.= "\$getconnum = '".$autogetconnum."';";
 	}
-	$cachedata = "<?php\r\n//ssea2.0 cache file\r\n//Created on ".MyDate('Y-m-d H:i:s',time())."\r\n\r\nif(!defined('sea_INC')) exit('Access Denied');\r\n\r\n".$contents."\r\n\r\n?>";
+	$cachedata = "<?php\r\n//seacms cache file\r\n//Created on ".MyDate('Y-m-d H:i:s',time())."\r\n\r\nif(!defined('sea_INC')) exit('Access Denied');\r\n\r\n".$contents."\r\n\r\n?>";
 	if($fp = fopen($cachefile,'wb')) {
 		@flock($fp, LOCK_EX);
 		fwrite($fp, $cachedata);

@@ -196,7 +196,7 @@ if($key=="" OR empty($key)){$keytxt="";}else{$keytxt="管理员您好，请求�
 }
 function leaveWordList($currentPage){
 	global $dsql;
-	$vsize=10;
+	$vsize=20;
 	if($currentPage<=1)
 	{
 		$currentPage=1;
@@ -235,18 +235,21 @@ function leaveWordList($currentPage){
 	unset($i);
 	$txt.="<div class=\"hy-page clearfix\"><ul class=\"cleafix\">";
 	if($currentPage==1)$txt.="<li><span class=\"num\">首页</span></li><li><span class=\"num\">上一页</span></li>";
-	else $txt.="<a title='首页' href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=1\">首页</a><a title='前一页' href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".($currentPage-1)."\">上一页</a>";
+	else $txt.="<li><a title='首页' href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=1\">首页</a></li><li><a title='前一页' href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".($currentPage-1)."\">上一页</a></li>";
 	if($TotalPage==1)
 	{
 		$txt.="<li><span class=\"num\">1</span></li>";
 	}else{
-	$x=$currentPage-4;
-	$y=$currentPage+4;
+	$x=$currentPage-2;
+	$y=$currentPage+2;
 	if($x<1)$x=1;
 	if($y>$TotalPage)$y=$TotalPage;
 	for($i=$x;$i<=$y;$i++)
 	{
-		$txt.="<a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$i."\">".$i."</a>";
+		if($currentPage==$i)
+		{$txt.="<li class='active'><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$i."\">".$i."</a></li>";}
+		else
+		{$txt.="<li><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$i."\">".$i."</a></li>";}
 	}	
 	}
 	if($currentPage==$TotalPage)$txt.="<li><span class=\"num\">下一页</span></li><li><span class=\"num\">尾页</span></li>";

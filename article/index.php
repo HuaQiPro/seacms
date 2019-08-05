@@ -102,6 +102,7 @@ function echoContent($vId)
 	if (strpos($content,"{news:keywords}")>0)
 	$content=str_replace("{news:keywords}",getKeywordsList($row['n_keyword'],"&nbsp;&nbsp;"),$content);
 	$n_pic=$row['n_pic'];
+	$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$n_pic,$ref)){$n_pic=str_ireplace($pickey,'',$ref[1]);}
 	if(!empty($n_pic)){
 		if(strpos(' '.$n_pic,'://')>0){
 			$content=str_replace("{news:pic}",$n_pic,$content);

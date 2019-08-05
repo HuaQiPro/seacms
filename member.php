@@ -293,8 +293,8 @@ if($mod=='repsw4'){
 
 
 ////////////////////////////////////
-
-$hashstr=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser);//构造session安全码
+$front='front';
+$hashstr=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$front);//构造session安全码
 if(empty($uid) OR $_SESSION['hashstr'] !== $hashstr)
 {
 	showMsg("请先登录","login.php");
