@@ -1,0 +1,158 @@
+@charset "utf-8";
+/*!
+ * 版本：MYUI Copyright © 2019
+ * 作者：QQ726662013版权所有
+ * 官网：https://www.mytheme.cn
+ */
+
+/* all */
+body{ padding-top: 90px;}
+body.active{ padding-top: 60px;}
+
+/* header */
+.myui-header__top{position:fixed; top:0; z-index:999; width:100%; min-height:60px; background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,.1);}
+.top-fixed-down{margin-top:-60px;}
+
+/* header-logo */
+.myui-header__logo,.myui-header__menu,.myui-header__search{float:left;}
+
+/* header-seacrh */
+.myui-header__search{position: relative; width: 260px; margin-left: 50px; margin-top: 12px;}
+.myui-header__search .form-control{ padding-right: 30px; border-radius: 18px; background-color: #f5f5f5; border: 0;}
+.myui-header__search .submit{ display:block; position:absolute; top: 0; right: 15px; height:32px; line-height:30px; text-align:center; background: none; border: 0; font-size: 12px; cursor: pointer; color: #999;}
+.myui-header__search .dropdown-box{ margin-left: -130px;}
+.myui-header__search .dropdown-box .item{ width: 260px; padding: 20px;}
+.myui-header__search.search-box:hover .search-dropdown-hot{ display: block;}
+.myui-header__search .search-select{ position: absolute; top: 8px; left: 15px; padding-right: 8px; background: none; box-shadow: none; color: #666; border-right: 1px solid #ddd;}
+.myui-header__search .search-select .dropdown-box{ margin-left: -40px; z-index: 101;}
+.myui-header__search .search-select .dropdown-box .item{ width: 80px; padding: 10px;}
+.myui-header__search .search-select .dropdown-box .item li{ text-align: center; padding: 2px 0;}
+
+/* header-menu */
+.myui-header__menu{position:relative;}
+.myui-header__menu > li{ position: relative; float: left; margin-left: 35px;}
+.myui-header__menu > li > a{ font-size: 16px; line-height: 60px; color: #333;}
+.myui-header__menu > li.active > a{ color: #ff9900;}
+.myui-header__menu > li .dropdown-box{ margin-left: -250px; padding-top: 0;}
+.myui-header__menu > li .dropdown-box .item{ width: 500px;}
+.myui-header__menu > li .dropdown-box .item li{ padding: 6px;}
+
+/* header-user */
+.myui-header__user{float:right;}
+.myui-header__user > li{ float:left; position: relative; padding: 18px 0 10px; margin-left: 30px;}
+.myui-header__user > li > a,.myui-header__user > li > a .fa{ display: inline-block; font-size: 24px; line-height: 24px; color: #333;}
+.myui-header__user > li .dropdown-box{ right: 0; margin-left: 0; margin-right: -50px; padding-top: 10px;}
+.myui-header__user > li .dropdown-box .item{ width: 260px; padding: 20px;}
+.myui-header__user > li.menu .dropdown-box{ right: 0; margin-left: 0; margin-right: -50px; padding-top: 10px;}
+.myui-header__user > li.menu .dropdown-box .item{ width: 120px; padding: 10px;}
+.myui-header__user > li.menu .dropdown-box .item li{ padding: 5px 0; text-align: center;}
+
+/* content */
+.myui-content__detail,.myui-content__thumb{display:table-cell;vertical-align:top}
+.myui-content__detail{ width:100%; padding-left: 20px;}
+.myui-content__detail .title{ margin:10px 0 10px; font-size: 24px; line-height:30px}
+.myui-content__detail .title .score{ display: inline-block; margin-left: 10px; font-family: Georgia,"Times New Roman",Times,serif;}
+.myui-content__detail .data{ margin-bottom:10px; line-height: 20px; word-wrap: break-word; white-space: normal; word-break: break-all;}
+.myui-content__detail .score{ margin-bottom: 20px;}
+.myui-content__detail .score .rating{ display: inline-block; position: relative; top: 5px;}
+.myui-content__detail .score .rating li{ cursor:pointer; display: inline-block; margin-right: 5px;}
+.myui-content__detail .score .rating li .fa{ font-size: 24px;}
+.myui-content__detail .score .branch{ display: inline-block; font-family: Georgia,"Times New Roman",Times,serif; font-size: 24px; line-height: 24px;}
+.myui-content__detail .desc{ padding-left: 45px; word-wrap: break-word; white-space: normal; word-break: break-all;}
+.myui-content__detail .desc .left{ margin-left:-45px}
+.myui-content__detail .operate{ padding-left: 42px; margin-top:20px}
+.myui-content__detail .operate .btn{ margin-right: 10px;}
+.myui-content__detail .operate .btn:last-child{ margin-right: 0;}
+.myui-content__detail .operate .share{ margin-top:5px}
+
+/* player */
+.myui-player{ margin-bottom: 50px; padding-bottom: 15px; padding-top: 50px;}
+.myui-player__item{ position: relative;}
+.myui-player__item .fixed{ position: fixed; z-index: 998; right: 0; bottom: 0; padding: 10px; background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,.1);}
+.myui-player__item .is-btn{ position: absolute; z-index: 99; top: 50%; right: -12px; margin-top: -30px; display: block; width: 12px; text-align: center; height: 60px; line-height: 60px; font-size: 10px; border-radius: 0 4px 4px 0; background-color: #404040; color: #999;}
+.myui-player__item .player-fixed-off{display: none; position: absolute; top: -10px; left: -10px; width: 20px; height: 20px; text-align: center; line-height: 20px; background-color: #fff; border-radius: 50%; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,.1);}
+.myui-player__data{ padding: 20px 0 10px;}
+.myui-player__data .title{ font-size: 24px;}
+.myui-player__operate{ padding: 20px 0;}
+.myui-player__operate li{ display: inline-block; margin-left: 20px;}
+.myui-player__detail .title{margin:0 0 10px}
+.myui-player__detail .detail-content{padding-top:10px}
+.myui-player__detail .desc{padding-left:42px}
+.myui-player__detail .desc .left{margin-left:-42px}
+#player-sidebar::-webkit-scrollbar{ width: 4px; background-color: #1c1b1e;}
+#player-sidebar::-webkit-scrollbar-thumb{background-color: #434145;}
+.myui-player__notice{ position: absolute; top: 50%; left: 0; width: 100%; margin-top: -65px;}
+.myui-player__notice h3,.myui-player__notice h5,.myui-player__notice p{ color: #fff;}
+.myui-player-links{ position: relative; top: 15px; right: 10px;}
+.myui-player-links .btn{ position: absolute; top: 0; right: -5px; border-radius: 0 5px 5px 0;}
+
+/* news */
+.myui-newslist li{ padding: 30px 0;}
+.myui-newslist li .title{ margin: 0; font-size: 22px; line-height: 30px; font-weight: 600;}
+.myui-newslist li .desc{ text-indent: 2em; margin: 0; padding: 20px 0; line-height: 25px;}
+.myui-newslist__text li .title{ margin: 0; font-size: 15px;}
+
+/* footer */
+.myui-foot{ padding: 20px 0;}
+.myui-foot p{ line-height: 25px;}
+
+@media (max-width:1400px){
+	
+    /* header */
+    .myui-header__top{ padding: 0 20px;}
+	.myui-header__search{ width: 200px; margin-left: 20px;}
+	.myui-header__menu > li{ margin-left: 20px;}
+	.myui-header__user > li{ margin-left: 20px;}
+	.myui-header__menu > li:hover .head-dropdown,.myui-header__user > li:hover .head-dropdown{ display: none;} 
+		
+}
+
+@media (max-width:767px){
+	
+	body{ padding-top: 60px;}
+
+	.myui-panel-bg,.myui-vodlist__bg,.myui-vodlist__bg:hover{box-shadow: none;}
+	.myui-panel__head .title, .myui-panel__head .title a{ font-size: 18px;}
+
+	/* header */ 
+	.myui-header__top{ padding: 0 10px;}
+	.myui-header__search{ position:absolute; top: -100%; left: 10px; right: 10px; margin-left: 0; width: auto; padding-right: 30px;}
+	.myui-header__search .form-control{ height: 32px; padding: 0 10px; border-radius: 16px;}
+	.myui-header__search .submit{ right: 30px; width:32px;height:32px;line-height:30px;}
+	.myui-header__search .search-close{ position: absolute; top: 6px; right: 0;}
+	.myui-header__menu > li .dropdown-box{ margin-left: -150px; padding-top: 0;}
+	.myui-header__menu > li .dropdown-box .item{ width: 300px;}
+	.myui-header__user > li{ margin-left: 15px; padding: 15px 0 10px;}
+	.myui-header__user > li > a .fa{ font-size: 20px; line-height: 20px;}
+	.myui-header__user > li.menu .dropdown-box{ margin-right: 0;}
+	
+	/* content */
+	.myui-content__item{ padding: 20px 15px;}
+	.myui-content__detail{padding:0 0 0 10px}
+	.myui-content__detail .title{ margin: 5px 0 8px; font-size:18px; line-height:18px}
+	.myui-content__detail .data{margin:0 0 10px; font-size:12px; line-height: 18px; word-wrap: break-word; white-space: normal;}
+	.myui-content__detail .operate{margin:0;padding:0}
+	.myui-content__thumb.actor{ display: none;}
+	.myui-content__detail .score { margin-bottom: 5px;}
+	.myui-content__detail .score  .branch{ font-size: 16px;}
+	.myui-content__detail .score  .rating{ top: 0;}
+	.myui-content__detail .score  .rating li{ margin: 0;}
+	.myui-content__detail .score  .rating li .fa{ font-size: 18px;}
+	
+	/* player */
+	.myui-player{ padding-top: 0;}
+	.myui-player__item{ padding: 0;}
+	.myui-player__detail{ margin: 0;}
+	.myui-player__detail .data .title{font-size:16px}
+	.myui-player__detail.detail .title{font-size:18px;}
+	.myui-player__operate{ display: -webkit-box; display: -webkit-flex; display: flex;}
+	.myui-player__operate li{ margin: 0; display: block; text-align: center; -webkit-box-flex: 1; -webkit-flex: 1; flex: 1;}
+	.myui-player__operate li .fa{ display: block; margin-bottom: 5px; font-size: 16px;}
+	.myui-player-links{ top: 0; right: 0; padding: 0 10px;}
+	.myui-player-links .btn{ height: 35px; right: 8px;}
+	
+	/* news */
+	.myui-newslist li .title{ font-size: 18px; line-height: 30px;}
+	
+}
+

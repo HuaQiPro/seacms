@@ -1,29 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{seacms:strip}
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		{seacms:load block_header.html}		
-		<title>用户注册-{seacms:sitename}</title>
-		<meta name="keywords" content="用户注册-{seacms:sitename}">
-		<meta name="description" content="用户注册-{seacms:sitename}">	
-	</head>
-	<body>		
-		{seacms:top}
-        <!--main-->       
-		<div class="container">
-			<div class="row">
-				<div class="hy-login reg">
-					<div class="head">
-						<h3 class="text-center">
-							<a href="{seacms:siteurl}"><img src="images/logo.png" /></a>
-						</h3>
-						<p class="text-muted text-center">用户注册</p>
-					</div>
-					{register:viewRegister}
-			    </div>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>用户注册-{seacms:sitename}</title>
+<meta name="keywords" content="用户注册-{seacms:sitename}">
+<meta name="description" content="用户注册-{seacms:sitename}">
+{seacms:load block/inc_header.html}
+<style type="text/css">.myui-user__head .btn-default{padding:15px}.myui-user__head .fa{font-size:16px;vertical-align:-1px}.myui-user__name{border-radius:5px;margin-bottom:20px;position:relative;padding:50px 30px;background-image:linear-gradient(135deg,#f761a1 10%,#8c1bab 100%)}.myui-user__name dt{float:left}.myui-user__name dd{margin-left:70px;padding-top:5px}.myui-user__name .logout{position:absolute;top:0;right:15px;margin-top:20px}.myui-user__form p{margin:0;padding:15px 0}.myui-user__form .xiang{display:inline-block;width:120px;padding-right:15px;text-align:right;color:#999}.myui-user__form input.form-control{display:inline-block;width:200px;margin-right:10px}.myui-login__form{width:350px;padding:30px;margin: 80px auto; box-shadow:0 2px 5px rgba(0,0,0,.1)}.myui-login__form li{margin:20px 0}@media (max-width:767px){.myui-user__head .btn-default{padding:15px 5px}.myui-user__name{padding:20px}.myui-user__name h3{margin:3px 0 5px;font-size:15px}.myui-user__head li a,.myui-vodlist__text li a{font-size:14px}.stui_login__form,.stui_login__form.active{width:100%;margin:0;padding:0}.myui-user__form p{padding:10px;font-size:14px}.myui-user__form .xiang{display:none}.myui-user__form .xiang.active{display:inline-block;width:auto;text-align:left}.myui-user__form input.form-control{width:100%;height:40px}.myui-user__form p .btn{width:120px}.myui-user__form .btn_unbind{display:inline-block;margin-top:5px}}</style>
+
+</head>
+<body>
+ {seacms:top}
+<div class="myui-login__form clearfix">
+	<div class="myui-panel myui-panel-bg clearfix">
+		<div class="myui-panel-box clearfix">		
+			<div class="myui-panel_bd">
+				<div class="head text-center">
+					<a href="/"><img class="img-responsive" src="images/logo.png"/></a>
+					<h5>注册新账号</h5>
+				</div>
+				{register:viewRegister}
 			</div>
-		</div>				
-		{seacms:foot}
-    </body>
+		</div>
+	</div>
+</div>
+ {seacms:foot}
+</body>
 </html>
-{/seacms:strip}

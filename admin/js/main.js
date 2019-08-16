@@ -502,7 +502,7 @@ function expendPlayArea(i,optionStr,type){
 	optionStr=unescape(optionStr)
 	var n=i-1,m=i+1
 	var sparkStr=(type==1)?"":""
-	var sparkStr2=(type==1)?"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='//www.seacms.net/doc/player' target='_blank'>视频地址填写格式说明</a>":""
+	var sparkStr2=(type==1)?"":""
 	var area="<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='playfb"+i+"'><tr><td height='30' width='70' class='td_border'>播放来源"+i+"：</td><td class='td_border'><select id='v_playfrom"+i+"' name='v_playfrom["+i+"]'><option value=''>暂无数据"+i+"</option>"+optionStr+"</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('playfb"+i+"');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除播放来源"+i+"' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('playfb"+i+"'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('playfb"+i+"'))\">下移</a>"+sparkStr+sparkStr2+"</td></tr><tr><td  class='td_border'>数据地址"+i+"：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl("+i+")'/></td><td align='left' class='td_border'><textarea id='v_playurl"+i+"' name='v_playurl["+i+"]' rows='8'  style='width:695px'></textarea>"+sparkStr+"</td></tr></table>"
 	var _nextdiv=document.createElement("div");
 	_nextdiv.innerHTML=area
@@ -518,7 +518,7 @@ function expendDownArea(i,optionStr,type){
 	}
 	optionStr=unescape(optionStr)
 	var n=i-1,m=i+1
-	var sparkStr=(type==1)?"<font style='position:absolute;left: 300px; line-height:23px;white-space:nowrap' ><a href='//www.seacms.net/doc/player' target='_blank'>下载地址填写格式说明</a></font>":""
+	var sparkStr=(type==1)?"":""
 	var area="<table width='100%' border='0' cellpadding='0' cellspacing='0' bgcolor='#FFFFFF' id='downfb"+i+"'><tr><td  height='30' width='70' >下载来源"+i+"：</td><td class='td_border'>"+sparkStr+"<select id='m_downfrom"+i+"' name='m_downfrom["+i+"]'><option value=''>暂无数据"+i+"</option>"+optionStr+"</select>&nbsp;&nbsp;<img onclick=\"var tb=document.getElementById('downfb"+i+"');tb.parentNode.removeChild(tb);\"  src='img/btn_dec.gif' class='pointer' alt='删除下载来源"+i+"' align='absmiddle' />&nbsp;&nbsp;<a href=\"javascript:moveTableUp(document.getElementById('downfb"+i+"'))\">上移</a>&nbsp;&nbsp;<a href=\"javascript:moveTableDown(document.getElementById('downfb"+i+"'))\">下移</a></td></tr><tr><td  class='td_border'>下载地址"+i+"：<br/><input type='button' value='手动校正' title='一般情况下不需要手动校正，系统会自动进行校正' class='rb1'  onclick='repairUrl2("+i+")'/></td><td align='left' class='td_border'><textarea id='m_downurl"+i+"' name='m_downurl["+i+"]' rows='8' style='width:695px'></textarea></td></tr></table>";
 	var _nextdiv=document.createElement("div");
 	_nextdiv.innerHTML=area

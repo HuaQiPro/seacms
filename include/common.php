@@ -23,9 +23,64 @@ foreach($_REQUEST as $_k=>$_v)
 	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
 	{
 		Header("Location:$jpurl");
-		exit('err');
+		exit('err1');
 	}
 }
+
+foreach($_GET as $_k=>$_v)
+{
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
+	{
+		Header("Location:$jpurl");
+		exit('err2');
+	}
+}
+
+foreach($_POST as $_k=>$_v)
+{
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
+	{
+		Header("Location:$jpurl");
+		exit('err3');
+	}
+}
+
+foreach($_COOKIE as $_k=>$_v)
+{
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
+	{
+		Header("Location:$jpurl");
+		exit('err4');
+	}
+}
+
+foreach($_FILES as $_k=>$_v)
+{
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
+	{
+		Header("Location:$jpurl");
+		exit('err5');
+	}
+}
+
+foreach($_SERVER as $_k=>$_v)
+{
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
+	{
+		Header("Location:$jpurl");
+		exit('err6');
+	}
+}
+
+foreach($_SESSION as $_k=>$_v)
+{
+	if( strlen($_k)>0 && m_eregi('^(cfg_|GLOBALS|_GET|_POST|_COOKIE|_REQUEST|_SERVER|_FILES|_SESSION)',$_k))
+	{
+		Header("Location:$jpurl");
+		exit('err7');
+	}
+}
+
 function isMobile()
 { 
     // 如果有HTTP_X_WAP_PROFILE则一定是移动设备

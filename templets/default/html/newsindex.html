@@ -1,89 +1,119 @@
-<!DOCTYPE html>{seacms:strip}
-<html lang="zh-cn">
-
-<head>
-    <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
-    <title>资讯_{seacms:sitename}</title>
-    <meta name="keywords" content="{seacms:sitenotice}">
-    <meta name="description" content="{seacms:sitenotice}"> {seacms:load block_header.html}
-</head>
-
-<body>
-    {seacms:top}
-    <!--main-->
-    <div class="container">
-        <div class="row"> </div>
-
-            <div class="col-md-9 col-sm-12 hy-main-content">
-                <div class="hy-layout clearfix">{seacms:menulist by=news type=top}
-                    <div class="hy-video-head">
-                        <span class="text-muted pull-right hidden-xs"><a href="[menulist:link]" target="_blank" class="more">更多&gt;&gt;</a></span>
-                        <h4 class="margin-0">[menulist:typename]</h4>
-                    </div>
-                    <div class="hy-video-details active clearfix">
-                        <div class="item">
-						{seacms:newslist num=3 order=time type=[menulist:typeid]}
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <a class="videopic lazy" href="[newslist:link]" title="[newslist:name]" data-original="[newslist:pic]" style="padding-top: 50%; background: url(images/load_w.gif) no-repeat; background-position:50% 50%; background-size: cover;">
-                                <div class="details textbg">
-                                    <span class="text"><i class="icon iconfont icon-icon_special"></i></span><span class="name">[newslist:name]</span>
-                                </div>
-                            </a>
-                        </div>{/seacms:newslist}
-                    </div>
-                    </div>{/seacms:menulist}
-		
-
-                </div>
-            </div>
-			
-		<div class="col-md-3 col-sm-12 hy-main-side hidden-sm hidden-xs">
-                <div class="hy-layout clearfix">
-                    <div class="hy-details-qrcode side clearfix">
-                        <div class="item">
-                            <h5 class="text-muted">扫一扫用手机观看</h5>
-                            <p><img src="/{seacms:sitepath}pic/ewm.png" /></p>
-                            <p class="text-muted">分享到朋友圈</p>
-                        </div>
-                    </div>
-                    <div class="hy-video-ranking side clearfix">
-                        <div class="head"><a class="text-muted pull-right" href="/{seacms:sitepath}top.html#list-1">更多 <i class="icon iconfont icon-right"></i></a>
-                            <h4><i class="icon iconfont icon-top text-color"></i> 电影排行榜</h4></div>
-                        <div class="item">
-                            <ul class="clearfix">{seacms:videolist num=9 type=1 order=monthhit}
-                                <li class="text-overflow "><span class="pull-right text-color">[videolist:score]</span><a href="[videolist:link]" title="[videolist:name]"><em class="number {if:[videolist:i]<4} active{end if}">[videolist:i]</em>[videolist:name]</a></li>{/seacms:videolist}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="hy-video-ranking side clearfix">
-                        <div class="head"><a class="text-muted pull-right" href="/{seacms:sitepath}top.html#list-2">更多 <i class="icon iconfont icon-right"></i></a>
-                            <h4><i class="icon iconfont icon-top text-color"></i> 电视剧排行榜</h4></div>
-                        <div class="item">
-                            <ul class="clearfix">{seacms:videolist num=9 type=2 order=monthhit}
-                                <li class="text-overflow "><span class="pull-right text-color">[videolist:score]</span><a href="[videolist:link]" title="[videolist:name]"><em class="number {if:[videolist:i]<4} active{end if}">[videolist:i]</em>[videolist:name]</a></li>{/seacms:videolist}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="hy-video-list side clearfix">
-                        <div class="head"><a class="pull-right text-muted" href="{seacms:newslink}">更多 <i class="icon iconfont icon-right"></i></a>
-                            <h4>推荐资讯</h4></div>
-                        <div class="item">
-                            <ul class="clearfix">{seacms:newslist num=3 order=time}
-                                <li><a class="videopic lazy" href="[newslist:link]" title="[newslist:name]" data-original="[newslist:pic]" style="padding-top: 50%; background: url(images/load_w.gif) no-repeat; background-position:50% 50%; background-size: cover;"><span class="play hidden-xs"></span><span class="note textbg text-overflow">[newslist:name]</span></a></li>{/seacms:newslist}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>娱乐资讯_花边八卦_影视资讯 - {seacms:sitename}</title>
+<meta name="keywords" content="最新影视资讯,电影资讯,娱乐资讯" />
+<meta name="description" content="本站提供最新电影,电视剧,综艺,动漫的资讯信息,一览无遗" />  
+{seacms:load block/inc_header.html}
+	</head>
+	<body>
+{seacms:load newshead.html}
+	    <div class="container min">
+	        <div class="row">
+	        	<div class="myui-layout clearfix">
+	<div class="myui-layout-box col-lg-2">
+		<div class="myui-panel myui-panel-bg clearfix hiddex-xs">	
+			<div class="myui-panel-box clearfix">
+				<div class="myui-panel_hd">
+					<div class="myui-panel__head active bottom-line clearfix">	
+						<h3 class="title">
+							最新资讯						</h3>	
+<a class="more text-muted pull-left" href="[menulist:link]">更多 <i class="fa fa-angle-right"></i></a>
+					</div>																			
+				</div>	
+				<div class="myui-panel_bd clearfix">								
+					<ul class="myui-newslist__text clearfix">
+{seacms:newslist num=10 order=time type=all}
+												<li class="col-md-2 col-sm-2 col-xs-1">
+							<h3 class="title text-overflow"><a href="[newslist:link]"><span class="text-muted"> • </span>[newslist:name]</a></h3>			
+						</li>	
+{/seacms:newslist}
+											</ul>															
+				</div>						
+			</div>
+		</div>
+	</div>
+	<div class="myui-layout-box col-lg-2">
+		<div class="myui-panel myui-panel-bg clearfix">	
+			<div class="myui-panel-box clearfix">
+				<div class="myui-panel_hd">
+					<div class="myui-panel__head active bottom-line clearfix">		
+						<h3 class="title">
+							最热资讯						</h3>
+<a class="more text-muted pull-left" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i>
+					</div>																			
+				</div>	
+				<div class="myui-panel_bd clearfix">								
+					<ul class="myui-newslist__text clearfix">
+{seacms:newslist num=10 order=hit type=all}
+												<li class="col-md-2 col-sm-2 col-xs-1">
+							<h3 class="title text-overflow"><a href="[newslist:link]"><span class="text-muted"> • </span>[newslist:name]</a></h3>			
+						</li>	
+{/seacms:newslist}
+											</ul>	
+					</ul>															
+				</div>						
+			</div>
+		</div>
+	</div>
 </div>
 
-    {seacms:foot}
-</body>
 
-{/seacms:strip}</html>
+	        	<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head clearfix">
+				<h3 class="title">
+					今日推荐				</h3>	
+				<a class="more text-muted" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i></a>
+			</div>																		
+		</div>
+		<div class="myui-panel_bd clearfix">															
+			<ul class="myui-vodlist clearfix">
+{seacms:newslist num=10 order=dayhit type=all}
+								<li class="col-lg-5  col-md-5 col-sm-3 col-xs-2">
+					<div class="myui-vodlist__box myui-panel_bg">
+						<a class="myui-vodlist__thumb wide lazyload" href="[newslist:link]" title="[newslist:name]" data-original="[newslist:pic]">							
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-center text-overflow"><a href="[newslist:link]" title="[newslist:name]">[newslist:name]</a></h4>
+						</div>												
+					</div>												
+				</li>
+{/seacms:newslist}
+		      </ul>	
+		</div>	
+	</div>
+</div>
+
+
+{seacms:menulist type=top by=news}		
+				<div class="myui-panel myui-panel-bg clearfix">					
+					<div class="myui-panel-box clearfix">
+				<div class="myui-panel_hd">
+					<div class="myui-panel__head active bottom-line clearfix">	
+						<h3 class="title">
+							[menulist:typename]						</h3>	
+<a class="more text-muted pull-left" href="[menulist:link]">更多 <i class="fa fa-angle-right"></i></a>
+					</div>																			
+				</div>
+						<div class="myui-panel_bd clearfix">											
+							<ul class="myui-newslist col-pd clearfix">
+{seacms:newslist num=3 order=time type=[menulist:typeid]}
+																<li class="top-line-dot">
+									<h3 class="title"><a href="[newslist:newslink]">[newslist:title]</a></h3>
+<p class="desc">[newslist:content len=150]</p>
+<p class="time margin-0"><span class="hidden-xs">分类：</span><a href="[newslist:typelink]">[newslist:typename]</a><span class="split-line"></span><span class="text-muted">时间：</span>[newslist:time style=yyyy-mm-dd]<span class="split-line"></span><span class="text-muted">浏览：</span>[newslist:hit]</p>																	
+								</li>
+{/seacms:newslist}
+															</ul>
+						</div>
+					</div>
+				</div>
+{/seacms:menulist}				
+			</div>
+	    </div>
+ {seacms:foot}
+	</body>
+</html>

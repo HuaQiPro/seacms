@@ -1,124 +1,90 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{seacms:strip}
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		{seacms:load block_header.html}		
-		<title>{seacms:topicname}_第{topicpagelist:page}页_{seacms:sitename}</title>
-		<meta name="keywords" content="{seacms:sitename}">
-		<meta name="description" content="{seacms:topicdes}">	
-	</head>
-	<body>
-		{seacms:top}
-		<!--main-->
-		<div class="container">
-			<div class="row">				
-				<div class="hy-layout clearfix">
-					<div class="col-md-7 col-sm-12 col-xs-12">
-						<div class="hy-video-list">
-							<div class="item">
-								<div class="pic" href="" style="padding-top: 50%; background: url({seacms:topicpic})  no-repeat; background-position:50% 50%; background-size: cover;"></div></li>																		
-							</div>														
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>{seacms:topicname}_第{topicpagelist:page}页_{seacms:sitename}</title>
+<meta name="keywords" content="{seacms:sitename}">
+<meta name="description" content="{seacms:sitename}">
+{seacms:load block/inc_header.html}
+<link rel="stylesheet" href="images/stui_block_color.css" type="text/css" />
+<link rel="stylesheet" href="images/stui_block.css" type="text/css" />
+</head>
+<body>
+{seacms:load tophead.html}
+    <div class="container">
+        <div class="row">
+				<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="col-md-wide-3 col-xs-1">
+							<div class="myui-vodlist__thumb wide" style="background: url({seacms:topicpic});"></div>																								
 						</div>
-					</div>
-				    <div class="col-md-5 col-sm-12 col-xs-12">
-				    	<div class="hy-topic-content">
-				    		<div class="head">
-				    			<h3>{seacms:topicname}</h3>			    			
-				    		</div>
-				    		<div class="item">
-				    			{seacms:topicdes}
-				    		</div>			    		
-				    	</div>
-				    </div>
-				</div>
-				<div class="col-md-9 col-sm-12 hy-main-content">
-					<div class="hy-layout clearfix">
-						<div class="hy-video-head">
-							<span class="text-muted pull-right hidden-xs">共有<span class="text-color">“{topicpagelist:recordcount}”</span>个影片,当前第<span class="text-color">“{topicpagelist:page}”</span>页</span>	
-							<h4 class="margin-0">该专题包含的影片</h4>					
-						</div>
-						{seacms:topicpagelist size=10 order=time}
-						<div class="hy-video-details active clearfix">						
-						    <div class="item clearfix">
-								<dl class="content">
-									<dt>
-										<a class="videopic" href="[topicpagelist:link]" style="background: url([topicpagelist:pic])  no-repeat; background-position:50% 50%; background-size: cover;">
-											<span class="play hidden-xs"></span>
-											{if:"[topicpagelist:note]" <> "" }<span class="note textbg">[topicpagelist:note]</span>{end if}
-										</a>																		
-									</dt>
-									<dd class="clearfix">
-									    <div class="head">
-									    	<h3><a href="[topicpagelist:link]">[topicpagelist:name]</a></h3>
-									    </div>
-									    <div class="score">
-											<div class="star"><span class="star-cur" id="score-[topicpagelist:i]"></span></div>
-											<span class="branch">{if:"[topicpagelist:score]"==""}<span class="font-size-12">暂无评分 </span> {else}[topicpagelist:score]{end if}</span>
-											<script type="text/javascript">
-												var str = "[topicpagelist:score]%" 
-												document.getElementById("score-[topicpagelist:i]").style.width = (str.replace(".", ""))
-										    </script>
-										</div>
-									    <ul>
-									    	<li><span class="text-muted">主演：</span>[topicpagelist:actor len=60]</li>
-									    	<li><span class="text-muted">导演：</span>[topicpagelist:director]</li>
-									    	<li class="col-md-6 hidden-md hidden-sm hidden-xs padding-0"><span class="text-muted">地区：</span>[topicpagelist:publisharea]</li>
-									    	<li class="col-md-6 hidden-md hidden-sm hidden-xs padding-0"><span class="text-muted">类型：</span><a href="/{seacms:sitepath}search.php?searchtype=5&tid=[topicpagelist:typeid]" title="[topicpagelist:typename]">[topicpagelist:typename]</a></li>
-									    	<li class="col-md-6 hidden-md hidden-sm hidden-xs padding-0"><span class="text-muted">语言：</span>{if:"[topicpagelist:lang]"==""}内详{else}[topicpagelist:lang]{end if}</li>
-									    	<li class="col-md-6 hidden-md hidden-sm hidden-xs padding-0"><span class="text-muted">年份：</span>[topicpagelist:publishtime]</li>								    	
-									    </ul>
-									    <div class="block">
-								    		<a class="text-muted" href="[topicpagelist:link]">查看详情 <i class="icon iconfont icon-right"></i> </a>
-								    	</div>
-									</dd>
-								</dl>
-						   </div>						    																												
-						</div>																							
-						{/seacms:topicpagelist}										
-						<div class="hy-page clearfix">
-							<ul class="cleafix">
-								<li><a href="{topicpagelist:firstlink}">首页</a></li>
-								<li><a href="{topicpagelist:backlink}">上一页</a></li>
-								<li class="visible-xs"><span class="num">{topicpagelist:page}/{topicpagelist:pagecount}</span></li>
-								{topicpagelist:pagenumber len=6}
-								<li class="hidden-xs {if:{topicpagelist:page}==[pagenumber:page]}active{end if}"><a href="[pagenumber:link]">[pagenumber:page]</a></li>
-								{/topicpagelist:pagenumber}
-								<li><a href="{topicpagelist:nextlink}">下一页</a></li>
-								<li><a href="{topicpagelist:lastlink}">尾页</a></li>
-							</ul>					
-						</div>
-					</div>
-				</div>	
-				<div class="col-md-3 col-sm-12 hy-main-side hidden-sm hidden-xs">
-					<div class="hy-layout clearfix">						
-						<div class="hy-details-qrcode side clearfix">
-							<div class="item">
-							    <h5 class="text-muted">扫一扫用手机查看</h5>
-					            <p><img src="/{seacms:sitepath}pic/ewm.png" /></p>
-					            <p class="text-muted">分享到朋友圈</p>							           
-						    </div>							    
-						</div>	
-						{seacms:menulist type=1,2}
-						<div class="hy-video-ranking side clearfix">
-							<div class="head">
-								<a class="text-muted pull-right" href="/{seacms:sitepath}top.html#list-[menulist:typeid]">更多 <i class="icon iconfont icon-right"></i></a>
-								<h4><i class="icon iconfont icon-top text-color"></i> [menulist:typename]排行榜</h4>
-							</div>
-							<div class="item">											
-								<ul class="clearfix">
-					    			{seacms:videolist type=[menulist:typeid] order=douban num=9 }
-									{seacms:load block_ranking.html}
-									{/seacms:videolist}											
-					    	   </ul>											
-							</div>
-						</div>
-						{/seacms:menulist}
-						{seacms:load block_topic.html}
+					    <div class="col-md-wide-7 col-xs-1">
+					    	<h1 class="myui-article__title">{seacms:topicname}</h1>
+					        <p class="myui-article__content mt20">{seacms:topicdes}</p>	
+					        							<div class="bdshare bdsharebuttonbox hidden-sm hidden-xs">
+								<span class="bds_shere"></span>
+																<a class="bds_qzone" data-cmd="qzone"></a>
+																<a class="bds_tsina" data-cmd="tsina"></a>
+																<a class="bds_weixin" data-cmd="weixin"></a>
+																<a class="bds_tqq" data-cmd="tqq"></a>
+																<a class="bds_sqq" data-cmd="sqq"></a>
+																<a class="bds_bdhome" data-cmd="bdhome"></a>
+																<a class="bds_tqf" data-cmd="tqf"></a>
+																<a class="bds_youdao" data-cmd="youdao"></a>
+																<a class="bds_more" data-cmd="more"></a>
+															</div>
+												    </div>
 					</div>
 				</div>
+
+				<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_hd">
+							<div class="myui-panel__head clearfix">
+								<span class="more text-muted pull-right hidden-xs">本专题共“{topicpagelist:recordcount}”部影片</span>
+								<h3 class="title">
+									该专题包含的影片
+								</h3>									
+							</div>								
+						</div>
+						<div class="myui-panel_bd clearfix">
+							<ul class="myui-vodlist clearfix">
+{seacms:topicpagelist size=24 order=time}
+									<li class="col-lg-8 col-md-6 col-sm-4 col-xs-3">
+									<div class="myui-vodlist__box">
+			<a class="myui-vodlist__thumb lazyload" href="[topicpagelist:link]" title="[topicpagelist:name]" data-original="[topicpagelist:pic]">
+				<span class="play hidden-xs"></span>
+			<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+				[topicpagelist:score]分
+			</span>
+<span class="pic-text text-right">
+		[topicpagelist:note]</span>
+	</a>									
+	<div class="myui-vodlist__detail">
+		<h4 class="title text-overflow"><a href="[topicpagelist:link]" title="[topicpagelist:name]">[topicpagelist:name]</a></h4>
+		<p class="text text-overflow text-muted hidden-xs">
+		[topicpagelist:publishtime]/[topicpagelist:publisharea]/[topicpagelist:typename]</p>
+	</div>										
+</div>										
+								</li>
+{/seacms:topicpagelist}
+							</ul>	
+						</div>
+					</div>
+				</div>
+
+			<ul class="myui-page text-center clearfix">
+	<li><a class="btn btn-default" href="{topicpagelist:firstlink}">首页</a></li>
+	<li><a class="btn btn-default" href="{topicpagelist:backlink}">上一页</a></li>	
+{topicpagelist:pagenumber len=5}						
+		<li class="hidden-xs"><a class="btn  btn-{if:{topicpagelist:page}==[pagenumber:page]}warm{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+{/topicpagelist:pagenumber}
+		<li class="visible-xs"><a class="btn btn-warm">{topicpagelist:page}/{topicpagelist:pagecount}</a></li>
+	<li><a class="btn btn-default" href="{topicpagelist:nextlink}">下一页</a></li>
+	<li><a class="btn btn-default" href="{topicpagelist:lastlink}">尾页</a></li>							
+</ul>				
 			</div>
 		</div>
-		{seacms:foot}
-	</body>
+ {seacms:foot}
+</body>
 </html>
-{/seacms:strip}

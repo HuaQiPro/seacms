@@ -1,59 +1,36 @@
-
-<div class="tabbar visible-xs">
-	<a href="{seacms:indexlink}" class="item{if:{seacms:currenttypeid}==-444} active{end if}">
-        <i class="icon iconfont icon-home"></i>
-        <p class="text">首页</p>
-    </a>
-    {seacms:menulist type=1,2,3,4}    
-	<a href="[menulist:link]" class="item{if:[menulist:typeid]=={seacms:currenttypeid}} active{elseif:[menulist:typeid]={playpage:upid}} active{end if}">
-        <i class="icon iconfont icon-{if:[menulist:typeid]== 1}film{elseif:[menulist:typeid]== 2}show{elseif:[menulist:typeid]== 3}flag{elseif:[menulist:typeid]== 4}mallanimation{end if}"></i>
-        <p class="text">[menulist:typename] </p>
-    </a>
-    {/seacms:menulist}
-	
-	<a href="/{seacms:sitepath}member.php" class="item">
-        <i class="icon iconfont icon-member1"></i>
-        <p class="text">会员</p>
-    </a>
-</div>
-<div class="container">
-	<div class="row">
-		<div class="hy-footer clearfix">
-			<p class="margin-0 text-muted">{seacms:copyright}</p>
-			
+		<div class="myui-foot clearfix">
+	<div class="container min">
+		<div class="row">
+			<div class="col-pd text-center">
+				<p class="margin-0">{seacms:copyright}</p>	
+			</div>
 		</div>
 	</div>
 </div>
-<div class="hidden-xs"><a href="#" id="back-to-top" title="Back to top">&uarr;&uarr;&uarr;</a></div>
-<span style="display:none">{seacms:sitevisitjs}</span>
-<script type="text/javascript" charset="utf-8">
-    $(function() {
-        $(".videopic.lazy").lazyload({effect: "fadeIn"});  
-        $("[data-toggle='tooltip']").tooltip();
-    });
-</script>
-    
-<script>
-        if ($('#back-to-top').length) {
-            var scrollTrigger = 100; // px
 
-            // $(window).scrollTop()与 $(document).scrollTop()产生结果一样
-            // 一般使用document注册事件，window使用情况如 scroll, scrollTop, resize
-            $(window).on('scroll', function () {
-                if ($(window).scrollTop() > scrollTrigger) {
-                    $('#back-to-top').addClass('show');
-                } else {
-                    $('#back-to-top').removeClass('show');
-                }
-            });
+<ul class="myui-extra clearfix">
+	<li>
+		<a class="backtop" href="javascript:scroll(0,0)" title="返回顶部" style="display: none;"><i class="fa fa-angle-up"></i></a>
+	</li>
+		<li>
+		<a class="btnskin" href="javascript:;" title="切换皮肤"><i class="fa fa-windows"></i></a>
+	</li>
+		<li class="visible-xs">
+		<a class="open-share" href="javascript:;" title="分享给朋友"><i class="fa fa-share-alt"></i></a>
+	</li>
+		<li class="dropdown-hover hidden-xs">
+		<a href="javascript:;" title="手机观看" onclick="MyTheme.Layer.Img('手机观看','images/ewm.png','扫一扫手机观看')"><i class="fa fa-android"></i></a>
+		<div class="dropdown-box right fadeInDown clearfix">
+			<div class="item text-center">
+				<div class="qrcode-box">
+					<img src="{seacms:ewm}" width="160" />
+				</div>
+				<p>扫一扫手机观看</p>
+			</div>
+		</div>
+	</li>
+	<li><a href="/gbook.php" title="留言反馈"><i class="fa fa-commenting"></i></a></li></ul>
 
-            $('#back-to-top').on('click', function (e) {
-                // html,body 都写是为了兼容浏览器
-                $('html,body').animate({
-                    scrollTop: 0
-                }, 700);
-
-                return false;
-            });
-        }
-    </script>
+<script type="text/javascript">
+	MyTheme.Images.Qrcode.Init();MyTheme.Link.Short();MyTheme.Other.Skin();MyTheme.Other.Share();</script>
+<div class="hide">{seacms:sitevisitjs}</div>

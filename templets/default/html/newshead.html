@@ -1,0 +1,116 @@
+		<header class="myui-header__top clearfix" id="header-top">
+	<div class="container">	
+		<div class="row">
+			<div class="myui-header_bd clearfix">					
+			    <div class="myui-header__logo">			    	
+					<a class="logo" href="/">
+						<img class="img-responsive hidden-xs" src="images/logo.png"/>
+						<img class="img-responsive visible-xs" src="images/logo.png"/>
+					</a>					
+				</div>
+				<ul class="myui-header__menu nav-menu">
+					<li class="  hidden-sm hidden-xs"><a href="/">首页</a></li>
+{seacms:menulist type=top}<li class=" {if:[menulist:typeid]={seacms:currenttypeid}}active{elseif:[menulist:typeid]={playpage:upid}}active{end if} hidden-sm hidden-xs"><a href="[menulist:link]">[menulist:typename]</a></li>{/seacms:menulist}
+					<li class="active hidden-sm hidden-xs"><a href="{seacms:newslink}">资讯</a></li>
+					<li class="hidden-sm hidden-xs"><a href="{seacms:topiclink}">专题</a></li>
+					<li class="dropdown-hover">
+						<a href="javascript:;">频道 <i class="fa fa-angle-down"></i></a>
+						<div class="dropdown-box bottom fadeInDown clearfix">
+							<ul class="item nav-list clearfix">
+						                                                                      <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="/">首页</a></li>
+{seacms:menulist type=top}{seacms:smallmenulist type=[menulist:typeid]}<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-{if:[smallmenulist:typeid]={seacms:currenttypeid}}warm{elseif:[smallmenulist:typeid]={playpage:upid}}warm{end if}" href="[smallmenulist:link]">[smallmenulist:typename]</a></li>{/seacms:smallmenulist}{/seacms:menulist}
+						                                                                      <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:topiclink}">专题</a></li>
+						                                                                      <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-warm" href="{seacms:newslink}">资讯</a></li>
+						                                                                      <li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:gbook}">留言</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+				<script type="text/javascript" src="images/autocomplete.js"></script>
+				<div class="myui-header__search search-box "> 
+										<a class="search-select dropdown-hover" href="javascript:;">
+						<span class="text">视频</span> <i class="fa fa-caret-down"></i>
+						<div class="dropdown-box bottom fadeInDown">
+							<ul class="item">
+								<li class="vod" data-action="/search.php">视频</li>
+								<li class="news" data-action="/so.php">资讯</li>
+							</ul>
+						</div>
+					</a>
+					
+								        <form id="search" name="search" method="get" action="/search.php" onSubmit="return qrsearch();">
+    					<input type="text" id="wd" name="searchword" class="search_wd form-control" value="" placeholder="输入影片关键词..." autocomplete="off" style=" padding-left: 72px; "/>
+						<button class="submit search_submit" id="searchbutton" type="submit" name="submit"><i class="fa fa-search"></i></button>							
+					</form>
+					<div id="word" class="autocomplete-suggestions active hidden-xs" style="display: none;"></div>
+					<a class="search-close visible-xs" href="javascript:;"><i class="fa fa-close"></i></a>
+										<div class="search-dropdown-hot dropdown-box bottom fadeInDown">
+						<div class="item">
+							<p class="text-muted">
+								热门搜索
+							</p>
+{seacms:videolist type=all num=5 order=dayhit}<p><a class="text-333" href="[videolist:link]" title="[videolist:name]"><span class="badge badge-[videolist:i]">[videolist:i]</span> [videolist:name]</a></p>{/seacms:videolist}
+													</div>
+					</div>
+								    </div>
+			    							    				<ul class="myui-header__user">		
+										<li class="visible-xs">
+						<a class="open-search" href="javascript:;"><i class="fa fa-search"></i></a>
+					</li>	
+										<li class="dropdown-hover">
+						<a href="javascript:;" title="播放记录"> <i class="fa fa-clock-o"></i></a>
+						<div class="dropdown-box fadeInDown">
+							<div class="item clearfix">					
+								<p class="text-muted">
+									播放记录 
+								</p>
+								<div class="history-list clearfix">
+									<script type="text/javascript">
+										var history_get = MyTheme.Cookie.Get("history");
+										if(history_get){
+										    var json=eval("("+history_get+")");
+										    for(i=0;i<json.length;i++){
+										        document.write("<p><a class='text-333' href='"+json[i].link+"' title='"+json[i].name+"'><span class='pull-right text-red'>"+json[i].part+"</span>"+json[i].name+"</a></p>");
+										    }
+										} else {
+											document.write("<p style='padding: 80px 0; text-align: center'>您还没有看过影片哦</p>");
+									    }
+									</script>
+								</div>
+								
+							</div>
+						</div>	
+					</li>
+	
+					<li><a href="/gbook.php" title="留言反馈"><i class="fa fa-commenting"></i></a></li>					<li>
+						<a href="/member.php"><i class="fa fa-user"></i></a>
+					</li>
+									</ul>
+		  	</div>		
+		</div>						    
+	</div>
+</header>
+	    <div class="container min">
+	        <div class="row">
+					<div class="myui-panel myui-panel-bg clearfix">					
+					<div class="myui-panel-box clearfix">
+				<div class="myui-panel_hd">
+        		<div class="clearfix" data-align="left">
+                                                <li class="col-md-9 col-xs-3">
+						<a class="btn btn-block btn-{if:{seacms:currenttypeid}=-444}warm{end if}" href="{seacms:newslink}">
+							<span class="spot"></span>资讯首页
+						</a>
+					</li>
+{seacms:menulist type=top by=news}
+                                                <li class="col-md-9 col-xs-3">
+						<a class="btn btn-block btn-{if:[menulist:typeid]={seacms:currenttypeid}}warm{elseif:[menulist:typeid]={playpage:upid}}warm{end if}" href="[menulist:link]">
+							<span class="spot"></span>[menulist:typename]
+						</a>
+					</li>
+{/seacms:menulist}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

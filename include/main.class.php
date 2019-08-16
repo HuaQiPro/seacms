@@ -118,6 +118,7 @@ class MainClass_Template {
 		$content = str_replace ( "{seacms:sitepath}", $GLOBALS ['cfg_cmspath'], $content );
 		$content = str_replace ( "{seacms:adfolder}", $GLOBALS ['cfg_ads_dir'], $content );
 		$content = str_replace ( "{seacms:sitename}", $GLOBALS ['cfg_webname'], $content );
+		$content = str_replace ( "{seacms:ewm}", $GLOBALS ['cfg_ewm'], $content );
 		$content = str_replace ( "{seacms:copyright}", decodeHtml ( $GLOBALS ['cfg_powerby'] ), $content );
 		$content = str_replace ( "{seacms:des}", decodeHtml ( $GLOBALS ['cfg_description'] ), $content );
 		$content = str_replace ( "{seacms:sitevisitjs}", stripslashes ( $GLOBALS ['cfg_sitevisitejs'] ), $content );
@@ -3329,6 +3330,9 @@ class MainClass_Template {
 						'file',
 						'system',
 						'GLOBAL',
+						'copy',
+						'implode',
+						'session',
 						'shell_' 
 				), 'seacms', $v);
 			}
@@ -3435,6 +3439,9 @@ class MainClass_Template {
 						'file',
 						'system',
 						'GLOBAL',
+						'copy',
+						'implode',
+						'session',
 						'shell_'
 				), 'seacms', $v);
 			}

@@ -65,6 +65,7 @@ $cfg_cookie_encode = '~cookie_encode~';
 $cfg_gatherpicset = '0';
 $cfg_df_style = 'default';
 $cfg_df_mstyle = 'default';
+$cfg_ewm = 'http://www.seacms.net/ewm.jpg';
 $cfg_mhost = 'http://m.seacms.net';
 $cfg_mskin = '0';
 $cfg_df_html = 'html';

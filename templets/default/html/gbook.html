@@ -1,21 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{seacms:strip}
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		{seacms:load block_header.html}		
-		<title>{seacms:sitename}</title>
-		<meta name="keywords" content="{seacms:sitename}">
-		<meta name="description" content="{seacms:sitename}">	
-	</head>
-	<body>		
-		{seacms:top}		
-		<!--main-->
-		<div class="container">
-			<div class="row">	
-				{gbook:viewLeaveWord}
-			</div>
-		</div>
-		{seacms:foot}
-	</body>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>留言求片-{seacms:sitename}</title>
+<meta name="keywords" content="留言求片-{seacms:sitename}">
+<meta name="description" content="留言求片-{seacms:sitename}">
+{seacms:load block/inc_header.html}
+<link rel="stylesheet" href="images/stui_block_color.css" type="text/css" />
+<link rel="stylesheet" href="images/stui_block.css" type="text/css" />
+</head>
+<body>
+ {seacms:top}
+    <div class="container">
+        <div class="row">
+				<div class="stui-pannel stui-pannel-x">
+					{gbook:viewLeaveWord}
+				</div>				
+				<style type="text/css">
+					.gbook-form li{ margin-top: 15px;}
+					.gbook-form li:first-child{ margin-top: 0;}
+				</style>
+	</div>
+</div>
+
+ {seacms:foot}
+</body>
 </html>
-{/seacms:strip}
