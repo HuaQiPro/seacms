@@ -21,23 +21,14 @@ if($id==0){
 	showmsg('参数丢失，请返回！', -1);
 	exit;
 }
-
+	require(dirname(__FILE__)."/../data/config.plus.inc.php"); 
+	//网站改版
+    if($PLUS["JmpVideo"]['off']){$pID=$PLUS["JmpVideo"]['data'][$id];if($pID){$id=$pID;}}
 echoContent($id);
 
 function echoContent($vId)
 {
 	global $dsql,$cfg_iscache,$mainClassObj,$t1,$cfg_user;
-	
- 	/*---------插件管理---------*/
-  
-	require_once(dirname(__FILE__)."/../data/config.plus.inc.php"); 
-    //网站改版
-    if($PLUS["JmpVideo"]['off']){$ref=filter_input(INPUT_SERVER,"HTTP_REFERER");if($ref && !preg_match("/".$_SERVER['HTTP_HOST']."/i",$ref)){ $pID=$PLUS["JmpVideo"]['data'][$vId];if($pID){$vId=$pID;};}}
-    //版权屏蔽
-    if($PLUS["HideVideo"]['off']){ if(in_array($vId,$PLUS["HideVideo"]['data'])){ShowMsg($PLUS["HideVideo"]['info'],"../index.php",0,2000);exit();}}
-	
-  	/*---------插件管理---------*/
-	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
 	$vType=$row['tid'];
@@ -59,6 +50,27 @@ function echoContent($vId)
 	$GLOBALS[tid]=$currentTypeId;
 	$typeFlag = "parse_content_" ;
 	$cacheName = $typeFlag.$vType.$GLOBALS['cfg_mskin'].$GLOBALS['isMobile'];
+	/*---------插件管理---------*/ 
+	require(dirname(__FILE__)."/../data/config.plus.inc.php"); 	
+    //提高兼容性
+	  $HideVideo_off=$PLUS["HideVideo"]['off'] ; $HideVideo_data=$PLUS["HideVideo"]['data'];  $HideVideo_info=$PLUS["HideVideo"]['info']; 
+      $HideName_off=$PLUS["HideName"]['off'] ; $HideName_data=$PLUS["HideName"]['data'];  $HideName_info=$PLUS["HideName"]['info']; 
+      $HideType_off=$PLUS["HideType"]['off'] ;  $HideType_data=$PLUS["HideType"]['data']; $HideType_info=$PLUS["HideType"]['info']; 
+	  
+    
+	//版权屏蔽
+   if($HideVideo_off && in_array($vId,$HideVideo_data)){
+		$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();}
+    
+	//视频屏蔽
+	elseif($HideName_off &&  $HideName_data[0]!="" && preg_match("{".implode("|",$HideName_data) . "}i", $row['v_name'])) {
+	 	$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
+	 		 	
+
+    }		
+/*---------插件管理---------*/
+	
+	
 	if($cfg_iscache){
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);

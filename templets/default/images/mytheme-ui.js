@@ -341,7 +341,7 @@ var MyTheme = {
 	    	$(".search_wd").focus(function() {
 	    		$(this).parent().parent().find(".search-dropdown-hot").show();
 	    	});
-			$(".search_wd").blur(function() {
+			$(".search_wd").click(function() {
 				$(this).parent().parent().find(".search-dropdown-hot").hide();
 			});
 	    	$(".open-search").click(function(){

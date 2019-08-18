@@ -43,6 +43,9 @@ if($vid==0){
 	showmsg('参数丢失，请返回！', -1);
 	exit;
 }
+	require(dirname(__FILE__)."/../data/config.plus.inc.php"); 
+	//网站改版
+    if($PLUS["JmpVideo"]['off']){$pID=$PLUS["JmpVideo"]['data'][$vid];if($pID){$vid=$pID;}}
 if($GLOBALS['cfg_runmode']==1) {$action=$_GET['action'];}
 $uid=$_SESSION['sea_user_id'];
 $uid = intval($uid);
@@ -73,15 +76,7 @@ function echoPlay($vId)
 {
 	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname;
 	
-		/*---------插件管理---------*/
-  
-	require_once(dirname(__FILE__)."/../data/config.plus.inc.php"); 
-    //网站改版
-    if($PLUS["JmpVideo"]['off']){$ref=filter_input(INPUT_SERVER,"HTTP_REFERER");if($ref && !preg_match("/".$_SERVER['HTTP_HOST']."/i",$ref)){ $pID=$PLUS["JmpVideo"]['data'][$vId];if($pID){$vId=$pID;};}}
-    //版权屏蔽
-    if($PLUS["HideVideo"]['off']){ if(in_array($vId,$PLUS["HideVideo"]['data'])){ShowMsg($PLUS["HideVideo"]['info'],"../index.php",0,2000);exit();}}
-	
-  	/*---------插件管理---------*/
+
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
 	$vType=$row['tid'];
@@ -297,10 +292,33 @@ $str=implode('$$$',$arr1); //最终地址
 	$content = str_replace("{playpage:textlink}",$typeText."&nbsp;&nbsp;&raquo;&nbsp;&nbsp;<a href='".$contentLink2."'>".$row['v_name']."</a>",$content);
 	$playerwidth = 1;
 	$playerheight = 1;
+	
+/*---------插件管理---------*/ 
+	require(dirname(__FILE__)."/../data/config.plus.inc.php");   	
+  	
+    //提高兼容性
+	  $HideVideo_off=$PLUS["HideVideo"]['off'] ; $HideVideo_data=$PLUS["HideVideo"]['data'];  $HideVideo_info=$PLUS["HideVideo"]['info']; 
+      $HideName_off=$PLUS["HideName"]['off'] ; $HideName_data=$PLUS["HideName"]['data'];  $HideName_info=$PLUS["HideName"]['info']; 
+      $HideType_off=$PLUS["HideType"]['off'] ;  $HideType_data=$PLUS["HideType"]['data']; $HideType_info=$PLUS["HideType"]['info']; 
+    
+	//版权屏蔽
+    if($HideVideo_off && in_array($vId,$HideVideo_data)){
+		$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();}
+    
+	//视频屏蔽
+	elseif($HideName_off &&  $HideName_data[0]!="" && preg_match("{".implode("|",$HideName_data) . "}i", $row['v_name'])) {
+	 	$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
+	 		 	
+	//限制分类必须使用移动设备
+    }elseif($HideType_off  &&  $GLOBALS['isMobile']==false &&  $HideType_data[0]!=""  &&  in_array($row['tid'],$HideType_data)){      	
+      	$content = str_replace("{playpage:player}",$HideType_info,$content);					 
+    }else{  	
+/*---------插件管理---------*/
+     
 $password=$row['v_psd'];
 if(!empty($password)){
 		if($_POST['password'] !== $password)  {
-		$content = str_replace("{playpage:player}","<!DOCTYPE html><html><head><title>请输入视频播放口令后继续</title></head><body leftmargin='0' topmargin='0'><center><div style='font-size:12px; width:100%;height:100%;'><div style='width:200px; height:50px;text-align:left; margin-top:30px;'>请输入密码后继续：<br /><form action='' method='post'><input style='border:1px solid #3374b4;height:33px;line-height:33px;padding-left:5px' type='password' name='password' /><input style='border:1px solid #3374b4;background:#3374b4;padding:7px 10px;color:#fff;text-decoration:none;vertical-align:top' type='submit' value='播 放' /></form></div></div><br><img style='margin:15px 0 5px 0' src='/pic/ewm.png' height='100' width='100'><br/>扫描二维码关注微信<br />回复<font color='red'>".$vId."</font>获取播放口令</center></body></html>",$content);
+		$content = str_replace("{playpage:player}","<!DOCTYPE html><html><head><title>请输入视频播放口令后继续</title></head><body leftmargin='0' topmargin='0'><center><div style='font-size:12px; width:100%;height:100%;'><div style='width:200px; height:50px;text-align:left; margin-top:30px;'>请输入密码后继续：<br /><form action='' method='post'><input style='border:1px solid #3374b4;height:33px;line-height:33px;padding-left:5px' type='password' name='password' /><input style='border:1px solid #3374b4;background:#3374b4;padding:7px 10px;color:#fff;text-decoration:none;vertical-align:top' type='submit' value='播 放' /></form></div></div><br><img style='margin:15px 0 5px 0' src='".$GLOBALS ['cfg_ewm']."' height='100' width='100'><br/>扫描二维码关注微信<br />回复<font color='red'>".$vId."</font>获取播放口令</center></body></html>",$content);
 		}
 	else{
 		if($cfg_runmode==2) $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"yes\";var forcejx3=\"jiexi\";if(forcejx1==forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
@@ -312,12 +330,16 @@ else{
 	if($cfg_runmode==2) $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"yes\";var forcejx3=\"jiexi\";if(forcejx1==forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
 	else $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"yes\";var forcejx3=\"jiexi\";if(forcejx1==forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
 }
-
+	}
 
 	$content=$mainClassObj->parseIf($content);
+	$content=$mainClassObj->parseGlobal($content);
+	$content=str_replace("{playpage:link}",$contentLink,$content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
-	echo str_replace("{seacms:runinfo}",getRunTime($t1),$content) ;
+	 echo str_replace("{seacms:runinfo}",getRunTime($t1),$content) ;
 }
+
+
 
 function parsePlayPart($templatePath,$currentTypeId,$vtag)
 {
