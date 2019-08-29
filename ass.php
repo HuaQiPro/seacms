@@ -4,45 +4,42 @@
 require_once("include/common.php");
 require_once(sea_INC."/main.class.php");
 
-//循环取参数，参数名同时赋值变量名。
-$schwhere = '';
-foreach($_GET as $k=>$v)
-{
-	$$k=_RunMagicQuotes(gbutf8(RemoveXSS($v)));
-	$schwhere.= "&$k=".urlencode($$k);
-}
-$schwhere = ltrim($schwhere,'&');
-
 //参数过滤
-$wd = RemoveXSS(stripslashes($wd));
-$wd = addslashes(cn_substr($wd,20));
-$wd = trim($wd);
+$cb=filter_input(INPUT_GET, 'cb',FILTER_SANITIZE_STRING);
+$wd =filter_input(INPUT_GET, 'wd',FILTER_SANITIZE_STRING);
+//$url=filter_input(INPUT_GET, 'url',FILTER_SANITIZE_URL);
+$url=dp;
+$vid=intval($_GET['vid']);
+$vfrom=$_GET['vfrom'];
+$vpart=$_GET['vpart']+1;
 
-$cb = isset($cb) && $cb ? $cb:'seacms:search';
-$cb = FilterSearch(stripslashes($cb));
-$cb = RemoveXSS(stripslashes($cb));
-$cb = trim($cb);
 
 $sug=array('q'=>"",'p'=>false,s=>array(''));
 
-if($cfg_notallowstr !='' && m_eregi($cfg_notallowstr,$wd))
-{  
-	$sug[p]=true;
-	$sug[q]="非法字符！";
-	echo $cb."(".json_encode($sug).");" ;  
-	exit();
-}
-if($wd=='')
+
+if($wd=='' && $url=='')
 { 
    $sug[p]=true;
-   $sug[q]="关键字不能为空！";
+   $sug[q]="input error！";
    echo $cb."(".json_encode($sug).");" ;  
    exit();	
 }
 
+
 $myObj = new SetQuerybyseacms();
-$sug[q]=$wd;
-$sug[s]=$myObj->Querykey($wd,"v_name",10);
+
+
+if($wd!=''){
+	
+	$sug[q]=$wd;
+	$sug[s]=$myObj->Querykey($wd,"v_name",10);	
+	
+	
+}elseif($url!=''){
+	$sug[q]=$url;
+	$sug[s]=$myObj->Queryurl($vid,$vfrom,$vpart);	
+	
+}
 
 echo $myObj->out_json($cb,$sug);
 
@@ -85,6 +82,40 @@ class SetQuerybyseacms
 	  return $rows;		 		 		 
   }
   
+  
+   public function Queryurl($vid,$from,$part)
+  
+   {
+   	
+   	global $dsql;
+
+
+		//echo $url.$vid.$vfrom,$vpart;
+   		$row=$dsql->GetOne("SELECT * FROM `sea_playdata` WHERE `v_id` ='$vid'");
+		
+       //来源分组
+        $fromArray1=explode("$$$",$row['body']); $fromArray2=explode("$$",$fromArray1[$from]);
+       
+       //剧集分组
+        $pratArray=explode("#",$fromArray2[1]);
+        
+       //取所有地址
+       foreach ($pratArray as $key=>$val){
+      	
+      	   $Array=explode("$",$val);
+      	 
+      	   $urlArray[$key]=$Array[1];
+      	 
+        }
+
+      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray);
+
+
+     return '';
+
+   }
+  
+
      public function out_json($Callback,$data)
   
    {

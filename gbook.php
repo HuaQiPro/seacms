@@ -1,6 +1,11 @@
 <?php
 session_start();
 require_once("include/common.php");
+//前置跳转start
+$cs=$_SERVER["REQUEST_URI"];
+if($GLOBALS['cfg_mskin']==3 AND $GLOBALS['isMobile']==1){header("location:$cfg_mhost$cs");}
+if($GLOBALS['cfg_mskin']==4 AND $GLOBALS['isMobile']==1){header("location:$cfg_mhost");}
+//前置跳转end
 require_once(sea_INC."/filter.inc.php");
 require_once(sea_INC.'/main.class.php');
 
@@ -108,6 +113,8 @@ else
 	$page=empty($page) ? 1 : intval($page);
 	if($page==0) $page=1;
 	$tempfile = sea_ROOT."/templets/".$GLOBALS['cfg_df_style']."/".$GLOBALS['cfg_df_html']."/gbook.html";
+	if($GLOBALS['cfg_mskin']!=0 AND $GLOBALS['cfg_mskin']!=3 AND $GLOBALS['cfg_mskin']!=4  AND $GLOBALS['isMobile']==1)
+	{$tempfile = sea_ROOT."/templets/".$GLOBALS['cfg_df_mstyle']."/".$GLOBALS['cfg_df_html']."/gbook.html";}
 	$content=loadFile($tempfile);
 	$t=$content;
 	$t=$mainClassObj->parseTopAndFoot($t);

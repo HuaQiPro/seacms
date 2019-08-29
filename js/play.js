@@ -15,7 +15,7 @@ var jxCapi="https://";
 var jxDapi="https://";
 var jxEapi="https://";
 var forcejx="no";
-var unforcejx="yunpan#swf#iframe#url#xigua#ffhd#jjvod#ck#dp";
+var unforcejx="yunpan#swf#iframe#url#xigua#ffhd#jjvod";
 var unforcejxARR = unforcejx.split('#');
 
 

@@ -1,12 +1,18 @@
-﻿<html>
+<html>
 
 	<head>
 		<meta charset="UTF-8">
 		<title>dplayer播放</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		
 		<link rel="stylesheet" href="DPlayer.min.css">
+		
+    <script type="text/javascript" src="jquery.min.js"></script>		
 	<script type="text/javascript" src="flv.min.js"></script>
-	<script type="text/javascript" src="hls.min.js"></script>
+	<!-- <script type="text/javascript" src="hls.min.js"></script> -->
+	
+	<script type="text/javascript"  src="https://cdn.jsdelivr.net/npm/cdnbye@latest" ></script>
+	
 	<script type="text/javascript" src="dash.all.min.js"></script>
 	<script type="text/javascript" src="webtorrent.min.js"></script>
 	<script type="text/javascript" src="DPlayer.min.js"></script>
@@ -23,13 +29,59 @@
 		if(r != null) return unescape(r[2]);
 		return null; //返回参数值
 	}
-	var videoUrl2 =getUrlParam('videourl');
 	
+	
+   //设置浏览器缓存项值，参数：项名,值,有效时间(小时)
+    function setCookie(c_name, value, expireHours) {
+      var exdate = new Date();
+      exdate.setHours(exdate.getHours() + expireHours);
+      document.cookie = c_name + "=" + escape(value) + ((expireHours === null) ? "" : ";expires=" + exdate.toGMTString());
+    }
+    //获取浏览器缓存项值，参数：项名
+    function getCookie(c_name) {
+      if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start !== -1) {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end === -1) {
+                c_end = document.cookie.length;
+            };
+            return unescape(document.cookie.substring(c_start, c_end));
+         }
+     }
+    return "";
+   }
+	
+
+	
+	var videoUrl2 =getUrlParam('videourl');
 	var a=videoUrl2.split(",");
 	var nextpage=a[0];
 	var videoUrl=a[1];
-	var biliaid=a[2];
+	var vid=a[3];
+	var vfrom=a[4];
+	var vpart=a[5];
 	var did=hex_md5(videoUrl);
+	var headtime=Number(getCookie(did) || 0);
+	
+//获取剧集数据
+    function getvideo(url){  	
+    		$.ajax({
+				url: '/ass.php?url=dp&vid='+vid+'&vfrom='+vfrom+'&vpart='+vpart,
+				dataType: 'jsonp',
+				jsonp: 'cb',                 
+				success:function(data){					
+					//剧集及当前集数
+				     xyplay=data.s;				     
+				     if(xyplay.part>0){xyplay.part--;}
+				},				
+    		})
+	
+    }
+	//获取剧集数据
+	if("undefined" !== typeof nextpage && nextpage!=""){getvideo(nextpage);}
+    
 </script>
 
 <script type="text/javascript">
@@ -57,23 +109,112 @@
             url: videoUrl,
             type:type
         },
-		danmaku: {                                                         
-        id: did,                                                                                                                
-        api: 'https://api.prprpr.me/dplayer/',                            
-        addition: ['https://api.prprpr.me/dplayer/v3/bilibili?aid='+biliaid]
-    },
+        front:"video_front",
+        next:"video_next",
+        
         contextmenu: [
+          
+            {text:"Xyplayer X3 ",link:""},
 
         ]
     });
-		dp.on('ended', function (){
-        if(nextpage!='' && nextpage !='undefined'){
-            top.location.href = nextpage;
-        }
-    });
+	
+
+	//绑定准备就绪回调
+    dp.on("loadedmetadata", function () {loadedmetadataHandler();});
+
+	
+	//绑定播放结束回调
+    dp.on("ended", function () {endedHandler();});
+	
+	
+	
+	//视频就绪回调,用来监控播放开始 
+      function loadedmetadataHandler() {
+                if (  headtime > 0 && dp.video.currentTime < headtime) {
+                        dp.seek(headtime);
+                        dp.notice("继续上次播放");
+ 
+                } else {
+                       dp.notice("视频已就绪");
+            
+                }
+                        dp.on("timeupdate", function () {
+                        timeupdateHandler();
+                    })
+					$("#playerCnt").addClass("dplayer-hide-controller");
+           
+            }
+       //播放进度回调  	
+         function timeupdateHandler() {
+                 setCookie(did,dp.video.currentTime,24);
+           }
+	
+
+          //播放结束回调		
+            function endedHandler() {
+               
+             setCookie(did,"",-1);
+                
+            if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video){
+               
+                if (Number(xyplay.part) + 1 <= xyplay.video.length){
+                     dp.notice("视频已结束,为您跳到下一集");
+                     setTimeout(function () {video_next();}, 500);
+                } else {
+                    dp.notice("视频播放已结束");
+                }
+           
+             }else{
+             	
+              	if("undefined" !== typeof nextpage && nextpage!=""){ top.location.href=nextpage;}	
+
+             }
+           
+            }
 
 
+	 //播放下集
+            function video_next() {
+                if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video)
+                    if (Number(xyplay.part) + 1>= xyplay.video.length) {
+                    	dp.notice("已经是最后一集");
+	
+                        return false;
+                    }
+                xyplay.part++;    
+                myplay(xyplay.video[xyplay.part]);
+               
+            }
+	
+	
+	//播放上集	
+            function video_front() {
+                if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video)
+                    if (Number(xyplay.part) <= 0) {
+                    	dp.notice("已经是最前一集");
+                        return false;
+                    }
+                xyplay.part--;
+                myplay(xyplay.video[xyplay.part]);
+
+            }
+	
+	
+	 //调用播放
+            function myplay(url) { 
+            	
+                videoUrl=url; did=hex_md5(videoUrl);
+                headtime= Number(getCookie(did));
+                dp.switchVideo({url: videoUrl});
+                dp.play();
+	
+            }
+	
 </script>
+
+
+
 	</body>
 
 </html>

@@ -585,7 +585,7 @@ $str=implode('$$$',$arr1); //最终地址
 				$content = $mainClassObj->paresNextVideo($content,$vId,$typeFlag,$vType);
 				
 				$content = str_replace("{playpage:textlink}",$typeText."&nbsp;&raquo;&nbsp;<a href='".$contentLink2."'>".$row['v_name']."</a>",$content);
-				$content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"yes\";var forcejx3=\"jiexi\";if(forcejx1==forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
+				$content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
 				$content=$mainClassObj->parseIf($content);
 				$playArr = playData2Ary($row['v_playdata']);
 				makePlayByData($vType,$vId,$playArr,$str2,$content,date('Y-n',$row['v_addtime']),$row['v_enname'],$stringecho);
@@ -636,11 +636,11 @@ function makePlayByData($vType,$vId,$playArr,$str2,$content,$sdate,$enname,$stri
 				$tmp1 = str_replace("{playpage:part}",$partName[1],$tmp1);
 				$tmp1 = str_replace("{playpage:dz}",$partName[2],$tmp1);
 				if($cfg_playaddr_enc=='escape'){
-					$tmp1 = str_replace("{playpage:playurlinfo}","<script> var now=unescape(\"".escape($partName[2])."\");var pn=\"".$partName[3]."\";var next=unescape(\"".escape($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
+					$tmp1 = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$vId."\";var vfrom=\"".$i."\";var vpart=\"".$n."\";var now=unescape(\"".escape($partName[2])."\");var pn=\"".$partName[3]."\";var next=unescape(\"".escape($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
 				}elseif($cfg_playaddr_enc=='base64'){
-					$tmp1 = str_replace("{playpage:playurlinfo}","<script> var now=base64decode(\"".base64_encode($partName[2])."\");var pn=\"".$partName[3]."\";var next=base64decode(\"".base64_encode($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
+					$tmp1 = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$vId."\";var vfrom=\"".$i."\";var vpart=\"".$n."\"; var now=base64decode(\"".base64_encode($partName[2])."\");var pn=\"".$partName[3]."\";var next=base64decode(\"".base64_encode($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
 				}else{
-					$tmp1 = str_replace("{playpage:playurlinfo}","<script>var now=\"".$partName[2]."\";var pn=\"".$partName[3]."\"; var next=\"".$partNameN[2]."\";var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
+					$tmp1 = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$vId."\";var vfrom=\"".$i."\";var vpart=\"".$n."\";var now=\"".$partName[2]."\";var pn=\"".$partName[3]."\"; var next=\"".$partNameN[2]."\";var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
 				}
 				createTextFile($tmp1,sea_ROOT.$playLink,"");
 				$stringecho .= echoEach($play, $i, '..'.$playLink, "play");

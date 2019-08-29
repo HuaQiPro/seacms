@@ -1,4 +1,5 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -55,7 +56,7 @@ onload=initAd;
 <script>
 
 var playerh=parent.playerh;
-document.getElementById('player').innerHTML  = '<iframe width="100%" height='+playerh+' src="dplayer/dplayer.html?videourl='+parent.nextPage+","+parent.now+'" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></iframe>';
+document.getElementById('player').innerHTML  = '<iframe width="100%" height='+playerh+' src="dplayer/dplayer.html?videourl='+parent.nextPage+','+parent.now + ','+parent.next+','+parent.vid+','+parent.vfrom+','+parent.vpart+'" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></iframe>';
 </script>   
 </body>
 </html>

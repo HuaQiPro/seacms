@@ -254,20 +254,24 @@ if($action=="boardsource")
 </tr>
 
 <tr>
-<td >强制使用解析</td>
+<td >强制播放器</td>
 <td>
 关闭
 <input type="radio" name="forcejx" value="no" <?php if($forcejx=="no") echo 'checked';?>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+解析播放<input type="radio" name="forcejx" value="jiexi" <?php if($forcejx=="jiexi") echo 'checked';?>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CKplayer播放<input type="radio" name="forcejx" value="ck" <?php if($forcejx=="ck") echo 'checked';?>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Dplayer播放<font style="color:#CC3333;">[全屏连播 进度记忆]</font><input type="radio" name="forcejx" value="dp" <?php if($forcejx=="dp") echo 'checked';?>>
 &nbsp;&nbsp;
-开启<input type="radio" name="forcejx" value="yes" <?php if($forcejx=="yes") echo 'checked';?>>
-&nbsp;&nbsp;&nbsp;&nbsp;
-开启后强制除下面排除列表外的所有播放器使用解析</td>
+开启后将强制使用此播放器</td>
 </tr>
 
 <tr>
-<td >强制解析排除：</td>
-<td><input type="text" name="unforcejx" size="60" value="<?php echo $unforcejx;?>"/><br>
-不使用强制解析的播放器，请填写播放器后缀，如多个播放器请用英文 # 隔开,如：youku#letv#yunpan</td>
+<td >强制播放器排除：</td>
+<td><input type="text" name="unforcejx" size="60" value="<?php echo $unforcejx;?>"/>
+不使用强制播放的后缀，格式：youku#yunpan</td>
 </tr>
 
 <tr class="thead"><td colspan="2" class="td_title">解析接口配置</td></tr>
