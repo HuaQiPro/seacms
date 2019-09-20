@@ -6,6 +6,18 @@
 <title>添加采集项目</title>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<script charset="utf-8" src="editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="editor/lang/zh-CN.js"></script>
+<script>
+        KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id', {
+                uploadJson : 'editor/php/upload_json.php',
+                fileManagerJson : 'editor/php/file_manager_json.php',
+                allowFileManager : true,
+				afterBlur: function(){this.sync();}
+        });
+        });
+</script>
 </head>
 <!--当前导航-->
 <body bgcolor="#F7FBFF">
@@ -108,15 +120,13 @@ $purlstr=str_replace("#",chr(13),$purlstr);
           </tr>
           <tr>
             <td class="td_border" align="right" height="30">相关介绍：</td>
-            <td class="td_border"><?php
-        GetEditor('v_content',$v_content);
-	?></td>
+            <td class="td_border"><textarea id="editor_id" name="v_content" style="width:700px;height:300px;"><?php echo $v_content;?></textarea></td>
           </tr>
           <tr>
             <input type="hidden" name="v_id" value="<?php echo $id;?>">
             <input type="hidden" name="v_back" value="<?php echo $Pirurl;?>" />
             <td class="td_border"></td>
-            <td class="td_border"><input type=Submit class="rb1" value="确认保存" name=Submit onClick="if($('v_name').value.length==0){alert('请填写名称');return false;};if($('v_type').value.length==0){alert('请选择分类');return false;}">
+            <td height="40" colspan="2" align="left" class="td_border"><input type=Submit class="rb1" value="确认保存" name=Submit onClick="if($('v_name').value.length==0){alert('请填写名称');return false;};if($('v_type').value.length==0){alert('请选择分类');return false;}">
               &nbsp;
               <input type=reset name=Submit2 class="rb1" value="清 除">
               &nbsp;

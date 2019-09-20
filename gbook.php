@@ -200,7 +200,7 @@ function viewLeaveWord2(){
 	  "</li>".
 	  
 	  "<li>".
-		 	"<input name=\"validate\" type=\"text\" placeholder=\"验证码\" class=\"form-control\" id=\"vdcode\" style=\"width: 80px; display: inline-block; margin-right: 10px;\" class=\"text\" tabindex=\"3\"/> <img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"height: 28px; cursor:pointer\" onClick=\"this.src=this.src+'?get=' + new Date()\"/>".
+		 	"<input name=\"validate\" type=\"text\" placeholder=\"验证码\" class=\"form-control\" id=\"vdcode\" style=\"width: 80px; display: inline-block; margin-right: 10px;text-transform:uppercase\" class=\"text\" tabindex=\"3\"/> <img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"height: 28px; cursor:pointer\" onClick=\"this.src=this.src+'?get=' + new Date()\"/>".
 	  "</li>".
 	  
 	  "<li>".

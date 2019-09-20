@@ -42,7 +42,8 @@ if($action=="addrule")
 			ShowMsg("请填写采集名称！","-1");
 			exit();
 		}
-		$listconfig = "{seacms:listrule cid=\"$id\" tname=\"$itemname\" isupdate=\"$isupdate\" getherday=\"$getherday\" siteurl=\"$siteurl\" playfrom=\"$playfrom\" autocls=\"$autocls\" classid=\"$classid\" inithit=\"$inithit\" pageset=\"$pageset\" pageurl0=\"$pageurl0\" pageurl1=\"$pageurl1\" istart=\"$istart\" iend=\"$iend\" reverse=\"$reverse\"}";
+		$removecode = implode('|',$removecode);
+		$listconfig = "{seacms:listrule cid=\"$id\" tname=\"$itemname\" intodatabase=\"$intodatabase\" isupdate=\"$isupdate\" getherday=\"$getherday\" siteurl=\"$siteurl\" playfrom=\"$playfrom\" autocls=\"$autocls\" classid=\"$classid\" removecode=\"$removecode\" inithit=\"$inithit\" pageset=\"$pageset\" pageurl0=\"$pageurl0\" pageurl1=\"$pageurl1\" istart=\"$istart\" iend=\"$iend\" reverse=\"$reverse\"}";
 		include(sea_ADMIN.'/templets/admin_collect_ruleadd2.htm');
 		exit();
 	}elseif($step==test){
@@ -128,7 +129,8 @@ elseif($action=="editrulesingle")
 	$loopstr=$ar[2][0];
 	$atd=parseAttr($attrStr);
 	if($step==2){
-		$listconfig = "{seacms:listrule cid=\"$id\" tname=\"$itemname\" isupdate=\"$isupdate\" getherday=\"$getherday\" siteurl=\"$siteurl\" playfrom=\"$playfrom\" autocls=\"$autocls\" classid=\"$classid\" inithit=\"$inithit\" pageset=\"$pageset\" pageurl0=\"$pageurl0\" pageurl1=\"$pageurl1\" istart=\"$istart\" iend=\"$iend\" reverse=\"$reverse\"}";
+		$removecode = implode('|',$removecode);
+		$listconfig = "{seacms:listrule cid=\"$id\" tname=\"$itemname\" intodatabase=\"$intodatabase\" isupdate=\"$isupdate\" getherday=\"$getherday\" siteurl=\"$siteurl\" playfrom=\"$playfrom\" autocls=\"$autocls\" classid=\"$classid\" removecode=\"$removecode\" inithit=\"$inithit\" pageset=\"$pageset\" pageurl0=\"$pageurl0\" pageurl1=\"$pageurl1\" istart=\"$istart\" iend=\"$iend\" reverse=\"$reverse\"}";
 		include(sea_ADMIN.'/templets/admin_collect_ruleedit2.htm');
 		exit();
 	}elseif($step==test){
@@ -833,6 +835,8 @@ function getconbyid($id,$cid='',$action2='',$index='')
 	$listattrDictionary=parseAttr($listattrStr);
 	$inithit=$listattrDictionary["inithit"];
 	$reverse=$listattrDictionary["reverse"];
+	$intodatabase=$listattrDictionary["intodatabase"];
+	$removecode=$listattrDictionary["removecode"];
 	//页面规则
 	$labelRule = buildregx("{seacms:itemconfig(.*?)}(.*?){/seacms:itemconfig}","is");
 	preg_match_all($labelRule,$itemconfig,$ar);
@@ -927,12 +931,18 @@ function getconbyid($id,$cid='',$action2='',$index='')
 				}
 				if(!empty($n_title))
 				{
+					
 					$rs=$dsql->GetOne("Select n_id from `sea_co_news` where n_title like '%".$n_title."%'");
 					$ndata = array('tid'=>$tid,'n_title'=>$n_title,'n_keyword'=>$n_keyword,'n_pic'=>$n_pic,'n_hit'=>$n_hit,'n_author'=>$n_author,'n_addtime'=>$n_addtime,'n_letter'=>$n_letter,'n_content'=>$n_content,'n_outline'=>$n_outline,'tname'=>$tname,'n_from'=>$n_from,'n_inbase'=>0,'n_entitle'=>$n_entitle);
-					if(is_array($rs))
+					if(is_array($rs)){
 						$ret = update_record('sea_co_news',"where n_id=".$rs['n_id'],$ndata);
-					else
-						$ret = insert_record('sea_co_news',$ndata);
+						if($intodatabase==1){$idsArray=array($rs['n_id']);import2Base($idsArray,$vtype);}
+					}
+					else{
+					$ret = insert_record('sea_co_news',$ndata);
+					$rsid=$dsql->GetOne("SELECT LAST_INSERT_ID();");//print_r($rsid[0]);
+					if($intodatabase==1){$idsArray=array($rsid[0]);import2Base($idsArray,$vtype);}
+					}
 					if($ret){
 						$sql = "update `sea_co_url` set succ='1' where uid=".$rowt->uid;
 						echo "{$echo_id}. {$url}\t<font color=red>保存成功</font>.<br>";
