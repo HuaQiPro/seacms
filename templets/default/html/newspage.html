@@ -13,13 +13,7 @@
 	        <div class="row">
 	        	<div class="myui-panel myui-panel-bg clearfix">
 	<div class="myui-panel-box clearfix">
-		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					{newspagelist:typename}				</h3>	
-				<a class="more text-muted" href="#">更多 <i class="fa fa-angle-right"></i></a>
-			</div>																		
-		</div>
+
 		<div class="myui-panel_bd clearfix">															
 			<ul class="myui-vodlist clearfix">
 {seacms:newslist num=10 order=dayhit type=current}
@@ -43,7 +37,7 @@
 							<ul class="myui-newslist col-pd clearfix">
 {seacms:newspagelist size=10}
 																<li class="top-line-dot">
-									<h3 class="title"><a href="[newspagelist:link]">[newspagelist:title]</a></h3>
+									<h3 class="title"><img src="images/icon_26.png"> <a href="[newspagelist:link]">[newspagelist:title]</a></h3>
 <p class="desc">[newspagelist:content len=150]</p>
 <p class="time margin-0"><span class="hidden-xs">分类：</span>[newspagelist:typename]<span class="split-line"></span><span class="text-muted">时间：</span>[newspagelist:time style=yyyy-mm-dd]<span class="split-line"></span><span class="text-muted">浏览：</span>[newspagelist:hit]</p>	<!-- 列表 -->																	
 								</li>

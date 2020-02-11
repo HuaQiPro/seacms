@@ -13,11 +13,16 @@
 	        <div class="row">			
 				<div class="myui-panel myui-panel-bg clearfix">					
 					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_bd clearfix">											
+						<div class="myui-panel_bd clearfix">	
+<div class="myui-panel__head active  clearfix">	
+								<h3 class="title">
+									<img src="images/icon_27.png">搜索 <span class="text-red">“{seacms:newssearchword}”</span> 相关结果
+								</h3>
+							</div>						
 							<ul class="myui-newslist col-pd clearfix">
 {seacms:newssearchlist size=10}
 																<li class="top-line-dot">
-									<h3 class="title"><a href="[newssearchlist:link]">[newssearchlist:title]</a></h3>
+									<h3 class="title"><img src="images/icon_26.png"> <a href="[newssearchlist:link]">[newssearchlist:title]</a></h3>
 <p class="desc">[newssearchlist:content len=150]</p>
 <p class="time margin-0"><span class="hidden-xs">分类：</span>[newssearchlist:typename]<span class="split-line"></span><span class="text-muted">时间：</span>[newssearchlist:time style=yyyy-mm-dd]<span class="split-line"></span><span class="text-muted">浏览：</span>[newssearchlist:hit]</p>	<!-- 列表 -->																	
 								</li>

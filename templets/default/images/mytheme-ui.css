@@ -185,9 +185,9 @@ textarea.form-control{ height: auto; padding: 10px;}
 
 /* panel-head */
 .myui-panel__head{ position: relative; height: 30px;}
-.myui-panel__head .title{ float: left; display: inline-block; margin:0; padding-right: 10px; line-height: 30px;}
+.myui-panel__head .title{ float: left; display: inline-block; margin:0; padding-right: 2px; line-height: 24px;}
 .myui-panel__head .title img{ display: inline-block; width: 24px; height: 24px; margin-right: 10px; vertical-align: -5px;}
-.myui-panel__head .title, .myui-panel__head .title a{ font-size: 24px;}
+.myui-panel__head .title, .myui-panel__head .title a{ font-size: 18px; line-height:24px;}
 .myui-panel__head .more{ line-height: 30px;}
 .myui-panel__head .operate{ position: relative; padding-bottom: 5px;}
 .myui-panel__head .operate.open .dropdown-menu{ display: block;}
@@ -201,8 +201,8 @@ textarea.form-control{ height: auto; padding: 10px;}
 .myui-vodlist__thumb .play.active{ display: block;}
 .myui-vodlist__thumb:hover .play{ display: block;}
 .myui-vodlist__detail.active{ padding: 0 10px 10px;}
-.myui-vodlist__detail .title{ margin: 10px 0 0; font-size: 15px; font-weight: 700;}
-.myui-vodlist__detail .title.active{ font-size: 16px; margin-bottom: 10px;}
+.myui-vodlist__detail .title{ margin: 10px 0 0; font-size: 14px;}
+.myui-vodlist__detail .title.active{ font-size: 14px; margin-bottom: 10px;}
 .myui-vodlist__detail .text{ min-height: 19px; font-size: 12px; margin-bottom: 0; margin-top: 5px;}
 .myui-vodlist__detail .text-title{ font-size: 14px; line-height: 18px; margin:11px 0 0; height: 36px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;}
 

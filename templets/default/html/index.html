@@ -56,7 +56,7 @@
 					</li>
                                                 <li class="col-md-9 col-xs-3">
 						<a class="btn btn-block btn-default" href="{seacms:topiclink}">
-							<span class="spot"></span>专题<span class="visible-inline-lg">（聚合版块）</span>
+							<span class="spot"></span>专题<span class="visible-inline-lg">（影视聚合）</span>
 						</a>
 					</li>
 				</div>
@@ -66,13 +66,15 @@
 </div>
 	    <div class="container">
 	        <div class="row"> 
-             <div class="myui-panel myui-panel-bg clearfix">	
+			
+
+<div class="myui-panel myui-panel-bg clearfix">	
 	<div class="myui-panel-box clearfix">
 		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">			
-				<span class="text-muted more pull-right">今日更新：“{seacms:daycount}”条数据</span>
-				<h3 class="title">
-					今日推荐				</h3>	
+			<div class="myui-panel__head  clearfix">			
+				<span class="text-muted more pull-right">今日更新{seacms:daycount}条数据</span>
+				<h3 class="title"><img src="images/icon_12.png">
+					热播推荐				</h3>	
 				
 			</div>																			
 		</div>	
@@ -116,6 +118,7 @@
 </div>												
 				</li>
  {/seacms:videolist}
+
 							</ul>											
 		</div>
 	</div>
@@ -127,10 +130,13 @@
 			<div class="col-lg-wide-75 col-md-wide-75 col-xs-1 padding-0">		
 				<div class="myui-panel_hd">
 					<div class="myui-panel__head clearfix">				
-						<h3 class="title">
-							最新[menulist:typename]						</h3>
+						<h3 class="title"><img src="images/icon_[menulist:typeid].png">
+							[menulist:typename]	
+				</h3>
+
+<a class="more text-muted pull-right" href="[menulist:link]">更多  <i class="fa fa-angle-right"></i></a>
                             </ul>	
-						<a class="more text-muted" href="[menulist:link]">更多 <i class="fa fa-angle-right"></i></a>
+						
 					</div>																			
 				</div>
 				<ul class="myui-vodlist clearfix">
@@ -179,7 +185,7 @@
 					<div class="myui-panel__head clearfix">				
 						<h3 class="title">
 							最热[menulist:typename]						</h3>
-						<a class="more text-muted" href="[menulist:link]">更多  <i class="fa fa-angle-right"></i></a>
+						
 					</div>																			
 				</div>
 				<ul class="myui-vodlist__text active clearfix" style="padding: 0 10px;">
@@ -199,7 +205,7 @@
 		<span class="badge">[videolist:i]</span>[videolist:name]</a>
 </li>
 {/seacms:videolist}
-{seacms:videolist type=[menulist:typeid] num=4 order=hit start=7}
+{seacms:videolist type=[menulist:typeid] num=2 order=hit start=7}
 											<li class="visible-lg">
 	<a href="[videolist:link]" title="[videolist:name]">
 		<span class="pull-right  text-muted visible-lg" style="color: ;">
@@ -219,15 +225,14 @@
 	<div class="myui-panel-box clearfix">
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					热门专题				</h3>	
-				<a class="more text-muted" href="{seacms:topiclink}">更多 <i class="fa fa-angle-right"></i></a>
+				<h3 class="title"><img src="images/icon_7.png">影视专题				</h3>	
+				<a class="more text-muted pull-right"  href="{seacms:topiclink}">更多 <i class="fa fa-angle-right"></i></a>
 			</div>																		
 		</div>
 		<div class="myui-panel_bd clearfix">															
 			<ul class="myui-vodlist clearfix">
-{seacms:topiclist num=10}
-								<li class="col-lg-5  col-md-5 col-sm-3 col-xs-2">
+{seacms:topiclist num=4}
+								<li class="col-lg-4  col-md-4 col-sm-4 col-xs-4">
 					<div class="myui-vodlist__box myui-panel_bg">
 						<a class="myui-vodlist__thumb wide lazyload" href="[topiclist:link]" title="[topiclist:name]" data-original="[topiclist:pic]">						
 							<span class="play hidden-xs"></span>								
@@ -251,9 +256,9 @@
 			<div class="myui-panel-box clearfix">
 				<div class="myui-panel_hd">
 					<div class="myui-panel__head active bottom-line clearfix">	
-						<h3 class="title">
+						<h3 class="title"><img src="images/icon_30.png">
 							最新资讯						</h3>	
-<a class="more text-muted pull-left" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i></a>
+<a class="more text-muted pull-right" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i></a>
 					</div>																			
 				</div>	
 				<div class="myui-panel_bd clearfix">								
@@ -273,9 +278,9 @@
 			<div class="myui-panel-box clearfix">
 				<div class="myui-panel_hd">
 					<div class="myui-panel__head active bottom-line clearfix">		
-						<h3 class="title">
+						<h3 class="title"><img src="images/icon_30.png">
 							最热资讯						</h3>
-<a class="more text-muted pull-left" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i></a>
+<a class="more text-muted pull-right" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i></a>
 					</div>																			
 				</div>	
 				<div class="myui-panel_bd clearfix">								
@@ -297,8 +302,7 @@
 	        	<div class="myui-panel myui-panel-bg  clearfix">
 	<div class="myui-panel-box clearfix">
 		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">                                                                                                                                                                                                                                                       
-				<h3 class="title">
+			<div class="myui-panel__head clearfix"><h3 class="title"><img src="images/icon_26.png">
 					友情链接
 				</h3>								
 			</div>																		

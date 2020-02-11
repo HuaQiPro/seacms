@@ -24,7 +24,7 @@
  	</div>
 </div>
 <div class="clearfix" style="background-color: #1b1a25;">
-	<div class="col-md-wide-7">
+	<div class="col-md-wide-9">
 	<ul class="myui-player__operate">	
 			<li>
 		<a href="javascript:AddFav('{playpage:id}','')"><i class="fa fa-star"></i> 收藏</a>											
@@ -63,11 +63,7 @@
 	</li>
 </ul>
 </div>
-	<div class="col-md-wide-3">
-		<div class="myui-player-links">
-			<font size="2" face="arial" color="red">切勿相信视频内广告 以免造成财产损失</font>
-		</div>
-	</div>
+
 </div>
 <style type="text/css"> .embed-responsive{ padding-bottom: 56.25%;} </style>
 										<a class="is-btn hidden-sm hidden-xs" id="player-sidebar-is" href="javascript:;"><i class="fa fa-angle-right"></i></a>
@@ -84,11 +80,11 @@
 		</div>
 <!-- <div class="col-pd mb10">
 			<div style="padding: 80px  35px; background-color: #000; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位02</h5></div>		</div> -->
-				<div class="myui-panel_bd">
+				<div class="myui-panel_bd visible_ms">
 			<h5 class="text-center text-muted">—— 同主演推荐 ——</h5>
 			<ul class="myui-vodlist__bd clearfix">
-{seacms:videolist type=all num=9 order=time rel=y}
-								<li class="col-md-2 col-sm-4 col-xs-3">
+{seacms:videolist type=all num=4 order=time rel=y}
+								<li class="col-md-2 col-sm-4 col-xs-4">
 					<div class="myui-vodlist__box">
 	<a href="[videolist:link]" class="myui-vodlist__thumb lazyload" title="[videolist:name]" style="background: url([videolist:pic]);">	
 		<span class="play hidden-xs"></span>
@@ -130,7 +126,7 @@
 				<div class="myui-panel_hd">
 					<div class="myui-panel__head active bottom-line clearfix">
 						<a class="more sort-button pull-right" href="javascript:;"><i class="fa fa-sort-amount-asc"></i> 排序</a>						<h3 class="title">
-							播放地址						</h3>
+							<img src="images/icon_17.png">播放地址						</h3>
 						<ul class="nav nav-tabs active">	
 {playpage:playlist}							
 							<li><a href="#playlist[playlist:i]" data-toggle="tab">[playlist:from]</a></li>
@@ -158,14 +154,12 @@
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
 				<h3 class="title">
-					剧情简介
+					<img src="images/icon_5.png">剧情简介
 				</h3>						
 			</div>																		
 		</div>
 		<div class="myui-panel_bd">
 			<div class="col-pd text-collapse content">
-				<p><span class="text-muted">导演：</span>{playpage:director} </p>
-				<p><span class="text-muted">主演：</span>{playpage:actor} </p>
 				<span class="sketch content">{playpage:des len=200}</span>
 				<span class="data" style="display: none;">{playpage:des}</span>
 				<a class="details" href="javascript:;">详情 <i class="fa fa-angle-down"></i></a>
@@ -179,14 +173,33 @@
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
 				<h3 class="title">
-					猜你喜欢				</h3>		
+					<img src="images/icon_6.png">猜你喜欢				</h3>		
 				<a class="more text-muted" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
 			</div>																		
 		</div>
 		<div class="myui-panel_bd">
 			<ul class="myui-vodlist__bd clearfix">
-{seacms:videolist type=current num=6 order=dayhit} 
-								<li class="col-lg- col-md-6 col-sm-4 col-xs-3">
+{seacms:videolist type=current num=4 order=dayhit} 
+								<li class="col-lg-6 col-md-6 col-sm-4 col-xs-3">
+						<div class="myui-vodlist__box">
+			<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
+				<span class="play hidden-xs"></span>
+			<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+				[videolist:score]分
+			</span>
+<span class="pic-text text-right">
+		[videolist:note len=10]</span>
+	</a>									
+	<div class="myui-vodlist__detail">
+		<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
+		<p class="text text-overflow text-muted hidden-xs">
+		[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]</p>
+	</div>										
+</div>												
+				</li>
+ {/seacms:videolist} 
+{seacms:videolist type=current num=2 order=dayhit  start=5} 
+								<li class="col-lg-6 col-md-6 col-sm-4 col-xs-3 hidden-sm"">
 						<div class="myui-vodlist__box">
 			<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
 				<span class="play hidden-xs"></span>
@@ -214,7 +227,7 @@
 			<div class="myui-panel_hd">
 				<div class="myui-panel__head clearfix">
 					<h3 class="title">
-						影片评论
+						<img src="images/icon_15.png">影片评论
 					</h3>						
 				</div>																		
 			</div>
@@ -231,8 +244,8 @@
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
 				<h3 class="title">
-					当天更新				</h3>	
-				<a class="more text-muted" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
+					<img src="images/icon_8.png">最近更新				</h3>	
+				<a class="more text-muted pull-right" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
 			</div>																		
 		</div>
 		<div class="myui-panel_bd">
@@ -276,8 +289,8 @@
 	<div class="myui-panel-box clearfix">
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					正在热播				</h3>	
+				<h3 class="title"><img src="images/icon_9.png">正在热播	</h3>	
+				<a class="more text-muted pull-right" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
 			</div>																		
 		</div>
 		<div class="myui-panel_bd">

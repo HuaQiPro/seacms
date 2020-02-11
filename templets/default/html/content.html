@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{playpage:name}由{seacms:sitename}提供全集百度云在线观看/迅雷下载-{playpage:typename}-{seacms:sitename}</title>
 <meta name="keywords" content="{playpage:name},{playpage:name}在线观看,{playpage:name}全集,电视剧{playpage:name},{playpage:name}下载,{playpage:name}主题曲,{playpage:name}剧情,{playpage:name}演员表">
 <meta name="description" content="{playpage:name}在线观看 {playpage:name}全集 电视剧{playpage:name}；{playpage:name}剧情。">   
@@ -36,7 +36,7 @@
 			</div>
 			<div class="myui-content__detail">
 				
-				<h1 class="title">{playpage:name}</h1>
+				<h1 class="title">{playpage:name}<span style="font-size:13px; color:red; margin-left:6px;">{playpage:note}</span></h1>
 				
 				<!-- 评分 -->
 			    <div class="score">
@@ -87,7 +87,7 @@
 				<div class="myui-panel_hd">
 					<div class="myui-panel__head active bottom-line clearfix">
 						<a class="more sort-button pull-right" href="javascript:;"><i class="fa fa-sort-amount-asc"></i> 排序</a>						<h3 class="title">
-							播放地址						</h3>
+							<img src="images/icon_17.png">播放地址						</h3>
 						<ul class="nav nav-tabs active">	
 {playpage:playlist}							
 							<li><a href="#playlist[playlist:i]" data-toggle="tab">[playlist:from]</a></li>
@@ -118,11 +118,11 @@
 			<div class="myui-panel-box clearfix">
 				<div class="myui-panel_hd">
 	<div class="stui-pannel-box">
-		<div class="stui-pannel_hd">
+		<div class="stui-pannel_box">
 			<div class="stui-pannel__head bottom-line active clearfix">
 				<span class="more text-muted pull-right">需安装迅雷客户端 </span>
-				<h3 class="title">
-					[downlist:from]				
+				<h3 class="title" style="font-size:18px;">
+					<img src="images/icon_21.png">[downlist:from]				
 				</h3>						
 			</div>																		
 		</div>
@@ -168,8 +168,27 @@
 		</div>
 		<div class="myui-panel_bd">
 			<ul class="myui-vodlist__bd clearfix">
-{seacms:videolist type=current num=6 order=dayhit} 
-								<li class="col-lg- col-md-6 col-sm-4 col-xs-3">
+{seacms:videolist type=current num=4 order=dayhit} 
+								<li class="col-lg-6 col-md-6 col-sm-4 col-xs-3">
+						<div class="myui-vodlist__box">
+			<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
+				<span class="play hidden-xs"></span>
+			<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+				[videolist:score]分
+			</span>
+<span class="pic-text text-right">
+		[videolist:note len=10]</span>
+	</a>									
+	<div class="myui-vodlist__detail">
+		<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
+		<p class="text text-overflow text-muted hidden-xs">
+		[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]</p>
+	</div>										
+</div>												
+				</li>
+ {/seacms:videolist} 
+{seacms:videolist type=current num=2 order=dayhit  start=5} 
+								<li class="col-lg-6 col-md-6 col-sm-4 col-xs-3 hidden-sm"">
 						<div class="myui-vodlist__box">
 			<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
 				<span class="play hidden-xs"></span>
@@ -196,8 +215,7 @@
 		<div class="myui-panel_bd">
 			<div class="myui-panel_hd">
 				<div class="myui-panel__head clearfix">
-					<h3 class="title">
-						影片评论
+					<h3 class="title"><img src="images/icon_15.png">影片评论
 					</h3>						
 				</div>																		
 			</div>
@@ -213,9 +231,8 @@
 	<div class="myui-panel-box clearfix">
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					当天更新				</h3>	
-				<a class="more text-muted" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
+				<h3 class="title"><img src="images/icon_8.png">最近更新</h3>	
+				<a class="more text-muted pull-right" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
 			</div>																		
 		</div>
 		<div class="myui-panel_bd">
@@ -259,8 +276,8 @@
 	<div class="myui-panel-box clearfix">
 		<div class="myui-panel_hd">
 			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					正在热播				</h3>	
+				<h3 class="title"><img src="images/icon_9.png">正在热播	</h3>	
+				<a class="more text-muted pull-right" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
 			</div>																		
 		</div>
 		<div class="myui-panel_bd">

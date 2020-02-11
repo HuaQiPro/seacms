@@ -78,16 +78,6 @@ var MAC={
             window.location ="//"+ldghost;
         }
     },
-    'Adaptive':function(){
-        if(seacms.mob_status=='1' && seacms.url != seacms.wapurl){
-            if(document.domain ==seacms.url && MAC.UserAgent.mobile){
-                    location.href = location.href.replace(seacms.url,seacms.wapurl);
-            }
-            else if(document.domain ==seacms.wapurl && !MAC.UserAgent.mobile){
-                location.href = location.href.replace(seacms.wapurl,seacms.url);
-            }
-        }
-    },
     'CheckBox':{
         'All':function(n){
             $("input[name='"+n+"']").each(function() {
@@ -881,32 +871,11 @@ var MAC={
 $(function(){
     //异步加载图片初始化
     MAC.Image.Lazyload.Show();
-    //自动跳转手机和pc网页地址
-    MAC.Adaptive();
-    //验证码初始化
-    MAC.Verify.Init();
-    //分页跳转初始化
-    MAC.PageGo.Init();
+    
     //用户部分初始化
     MAC.User.Init();
-    //二维码初始化
-    MAC.Qrcode.Init();
-    //顶和踩初始化
-    MAC.Digg.Init();
-    //评分初始化
-    MAC.Score.Init();
-    //星星评分初始化
-    MAC.Star.Init();
-    //点击数量
-    MAC.Hits.Init();
-    //短网址
-    MAC.Shorten.Init();
+
     //历史记录初始化
     MAC.History.Init();
-    //用户访问记录初始化
-    MAC.Ulog.Init();
-    //联想搜索初始化
-    MAC.Suggest.Init('.mac_wd',1,'');
-    //定时任务初始化
-    MAC.Timming();
+
 });

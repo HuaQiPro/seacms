@@ -1,4 +1,5 @@
 <?php
+@session_start();
 if (! defined ( 'sea_INC' )) {
 	exit ( "Request Error!" );
 }
@@ -119,6 +120,9 @@ class MainClass_Template {
 		$content = str_replace ( "{seacms:des}", decodeHtml ( $GLOBALS ['cfg_description'] ), $content );
 		$content = str_replace ( "{seacms:sitevisitjs}", stripslashes ( $GLOBALS ['cfg_sitevisitejs'] ), $content );
 		$content = str_replace ( "{seacms:sitenotice}", decodeHtml ( $GLOBALS ['cfg_site_notice'] ), $content );
+		$content = str_replace ( "{seacms:vipname}", $_SESSION['sea_user_name'], $content );
+		$content = str_replace ( "{seacms:vipid}", $_SESSION['sea_user_id'], $content );
+		$content = str_replace ( "{seacms:vipgid}", $_SESSION['sea_user_group'], $content );
 		if (strpos ( $content, "{seacms:hotkeywords" ) !== false) {
 			$labelHaveLen = buildregx ( "{seacms:hotkeywords\s+len=(\d+)?\s*}", "is" );
 			preg_match_all ( $labelHaveLen, $content, $labelHaveLenar );

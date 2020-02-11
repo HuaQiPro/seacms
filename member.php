@@ -495,10 +495,10 @@ if(empty($msgbody) OR $msgbody =="" OR $msgstate=='y'){$notify4css='display:none
 		    	<div class="hy-switch-tabs">
 					<ul class="nav nav-tabs">
 						<a class="text-muted pull-right hidden-xs" href="exit.php"><i class="icon iconfont icon-setting"></i> 退出账户</a>
-						<li class="active"><a href="?action=cc" title="播放线路">基本资料</a></li>							
+						<li class="active"><a href="?action=cc" title="基本资料">基本资料</a></li>							
 						<li><a href="?action=favorite"title="我的收藏">我的收藏</a></li>							
 						<li><a href="?action=buy" title="购买记录">购买记录</a></li>
-						<li><a href="/" title="返回首页">返回首页</a></li>						
+						<li><a href="/" title="首页">首页</a></li>						
 					</ul>
 				</div>
 		    	<div class="tab-content">
@@ -626,10 +626,10 @@ elseif($action=='favorite')
 	    		<div class="hy-switch-tabs">
 					<ul class="nav nav-tabs">
 						<a class="text-muted pull-right hidden-xs" href="exit.php"><i class="icon iconfont icon-setting"></i> 退出账户</a>
-						<li><a href="?action=cc" title="播放线路">基本资料</a></li>							
+						<li><a href="?action=cc" title="基本资料">基本资料</a></li>							
 						<li class="active"><a href="?action=favorite"title="我的收藏">我的收藏</a></li>							
 						<li><a href="?action=buy" title="购买记录">购买记录</a></li>
-						<li><a href="/" title="返回首页">返回首页</a></li>							
+						<li><a href="/" title="首页">首页</a></li>							
 					</ul>
 				</div>			
 				<div class="tab-content">
@@ -783,10 +783,10 @@ elseif($action=='buy')
 	    		<div class="hy-switch-tabs">
 					<ul class="nav nav-tabs">
 						<a class="text-muted pull-right hidden-xs" href="exit.php"><i class="icon iconfont icon-setting"></i> 退出账户</a>
-						<li><a href="?action=cc" title="播放线路">基本资料</a></li>							
+						<li><a href="?action=cc" title="基本资料">基本资料</a></li>							
 						<li><a href="?action=favorite"title="我的收藏">我的收藏</a></li>							
 						<li class="active"><a href="?action=buy" title="购买记录">购买记录</a></li>	
-						<li><a href="/" title="返回首页">返回首页</a></li>	
+						<li><a href="/" title="首页">首页</a></li>	
 					</ul>
 				</div>			
 				<div class="tab-content">

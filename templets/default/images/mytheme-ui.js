@@ -4,7 +4,6 @@
  * 官网：https://www.mytheme.cn
  */
 
-
 var MyTheme = {
 	'Browser': {
 		url: document.URL,
@@ -497,10 +496,10 @@ var MyTheme = {
 					},
 					share: [{
 						"bdSize": 24,
-						bdCustomStyle: myui.tpl+'statics/css/mytheme-share.css'
+						
 					}]
 				}
-				with(document)0[(getElementsByTagName("head")[0]||body).appendChild(createElement('script')).src=''+myui.bdapi+'?cdnversion='+~(-new Date()/36e5)];
+				
 			}			
 		}
 	}	

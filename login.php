@@ -59,6 +59,8 @@ if($row1['username']==$userid AND $row1['password']==$pwd)
 					$_SESSION['sea_user_id'] = $row1['id'];
 					$uid=$row1['id'];
 					$_SESSION['sea_user_name'] = $row1['username'];
+					$lifeTime = 31104000; 
+					setcookie(session_name(), session_id(), time() + $lifeTime, "/");
 					if($row1['vipendtime']<time()){
 						$_SESSION['sea_user_group'] = 2;
 						$dsql->ExecuteNoneQuery("update `sea_member` set gid=2 where id=$uid");

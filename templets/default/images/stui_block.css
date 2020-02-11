@@ -5,7 +5,7 @@
 .stui-pannel.stui-pannel-x{ margin: -10px -10px 10px;}
 .stui-pannel-bg{border-radius: 2px;}
 .stui-pannel-side{ padding: 0 0 0 20px;}
-.stui-pannel-box{ padding: 10px;}
+.stui-pannel-box{ padding: 0px;}
 .stui-pannel-box.active{ padding: 0; margin: -10px;}
 .stui-pannel_hd{ padding: 10px;}
 .stui-pannel_ft{ margin-top: 10px; padding: 10px 10px 0; text-align: center;}
@@ -49,7 +49,7 @@
 .stui-vodlist__text.to-color li{ padding: 10px; border-radius: 5px;}
 .stui-vodlist__text.to-color li a{ padding: 0;}
 .stui-vodlist__text.downlist{ padding-top: 0;}
-.stui-vodlist__text.downlist li{ padding: 10px 0;}
+.stui-vodlist__text.downlist li{ padding: 0px 0;}
 .stui-vodlist__text.downlist li .text{ line-height: 30px; overflow:hidden; text-overflow:ellipsis; -o-text-overflow:ellipsis; white-space:nowrap;}
 .stui-vodlist__text.downlist li a{ display: inline-block; padding: 0;}
 .stui-vodlist__text.downlist li a.btn{ padding: 4px 12px; margin-left: 10px;}
