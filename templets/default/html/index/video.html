@@ -1,0 +1,38 @@
+{if:mytheme:home_video.is}
+{seacms:menulist type={mytheme:home_video.type}}
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head clearfix">				
+				<h3 class="title">
+					{mytheme:home_video.title}[menulist:typename]
+				</h3>	
+				<a class="more text-muted" href="[menulist:link]">更多 <i class="fa fa-angle-right"></i></a>
+			</div>																			
+		</div>
+		<div class="myui-panel_bd clearfix">
+			<ul class="myui-vodlist clearfix">
+				{seacms:videolist type=[menulist:typeid] num={mytheme:home_video.num} order={mytheme:home_video.by}}
+				<li class="col-md-{mytheme:home_video.col} col-sm-{mytheme:col.sm_wide} col-xs-{mytheme:col.xs_wide}{subif:[videolist:i] < {mytheme:home_video.xs}} hidden-xs{end subif}{subif:[videolist:i] < {mytheme:home_video.xs}} hidden-sm{end subif}">
+					<div class="myui-vodlist__box">
+						<a class="myui-vodlist__thumb wide lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
+							<span class="play hidden-xs"></span>
+							<span class="pic-text text-right">
+								[videolist:{mytheme:pic.text_data2}]
+							</span>
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
+							<p class="text text-overflow text-muted hidden-xs">
+								{mytheme:pic.sub_text2}[videolist:{mytheme:pic.sub_data2}]
+							</p>
+						</div>
+					</div>								
+				</li>
+				{/seacms:videolist} 
+			</ul>															
+		</div>
+	</div>						
+</div>
+{/seacms:menulist}
+{end if}

@@ -288,6 +288,7 @@ CREATE TABLE `sea_erradd` (
   `ip` char(15) NOT NULL default '',
   `errtxt` mediumtext,
   `sendtime` int(10) unsigned NOT NULL default '0',
+  `ischeck` INT(1) NOT NULL,
   KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -441,6 +442,7 @@ CREATE TABLE `sea_topic` (
   `des` text,
   `vod` text NOT NULL,
   `keyword` TEXT NULL,
+  `addtime` INT(10) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `sort` (`sort`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

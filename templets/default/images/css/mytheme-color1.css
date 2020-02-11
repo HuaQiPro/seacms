@@ -1,0 +1,127 @@
+@charset "utf-8";
+/*!
+ * 版本：MYUI Copyright © 2019
+ * 作者：QQ726662013版权所有
+ * 官网：https://www.mytheme.cn
+ */
+
+/* style */
+.myui-panel,.myui-panel-box{ padding: 0;}
+.myui-panel.active,.myui-panel_hd{ padding: 10px;}
+.myui-panel-box.active{ margin: 0;}
+
+/* all  */
+body{ background: #292838; color: #999;}
+
+/* text */
+a,h1, h2, h3, h4, h5, h6,h1 a, h2 a, h3 a, h4 a, h5 a, h6 a{ color: #ddd;}
+a:hover{ color: cornflowerblue;}
+a.disabled{ cursor: not-allowed; opacity: 0.6;}
+.text-333{ color: #333;}
+.text-muted{ color: #999;}
+.text-red{ color: red;}
+.text-link{ color: blue;}
+.text-fff{ color: #fff;}
+
+/* form */
+.form-control{ background-color:#F5F5F5; color: #999999; border: 1px solid #eee;}
+.form-control:focus{ border-color:#ff9900; -webkit-box-shadow:inset 0 1px 1px rgba(255,136,0,.075),0 0 8px rgba(255,136,0,.6);}
+
+/* btn */
+.btn-default{ background-color: #eee; color: #333; background: linear-gradient(to right,#eeeeee 0,#f6f6f6 100%); box-shadow: 0 5px 10px rgba(246,246,246,.25);}
+.btn-warm{ background-color: #ff9900; background: linear-gradient(to right,#ff9900 0,#ff9f16 100%); box-shadow: 0 5px 10px rgba(255,111,0,.25);}
+.btn-primary{ background-color: #4fb1f7; background: linear-gradient(to right,#4fb1f7 0,#6bb8ee 100%); box-shadow: 0 5px 10px rgba(107,184,238,.25);}
+.btn-danger{ background-color: #fc000c; background: linear-gradient(to right,#fc000c 0,#f9444d 100%); box-shadow: 0 5px 10px rgba(249,68,77,.25);}
+.btn-info{ background-color: #5bc0de; background: linear-gradient(to right,#5bc0de 0,#7cc1d6 100%); box-shadow: 0 5px 10px rgba(124,193,214,.25);}
+.btn-gray{ background-color: #282828; color: #ddd; background: linear-gradient(to right,#282828 0,#3b3b3b 100%); box-shadow: 0 5px 10px rgba(59,59,59,.25);}
+.btn-warm,.btn-primary,.btn-danger,.btn-info{  color: #fff;}
+.btn-warm:hover,.btn-primary:hover,.btn-danger:hover,.btn-info:hover,.btn-gray:hover{ color: #fff;}
+.btn.disabled{ cursor: not-allowed; opacity: 0.6;}
+
+/* border */
+.border{ border-color: #383737;}
+.border-primary{ border-color: #4fb1f7;}
+.border-danger{ border-color: red;}
+.border-info{ border-color: #5bc0de;}
+
+/* line */
+.spot{ border-color: #ff9900;}
+.split-line{ background-color: #383737;}
+.top-line:before,.bottom-line:after,.top-line-dot:before,.bottom-line-dot:before{ border-color: #383737;}
+
+/* badge */
+.badge{ background-color: #eee; color: #333;}
+.badge-first{ background-color: #ff4a4a; color: #fff;}
+.badge-second{ background-color: #ff7701; color: #fff;}
+.badge-third{ background-color: #ffb400; color: #fff;}
+
+/* dropdown */
+.dropdown-box .item{ background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,.1);}
+
+/* pic-tag */
+.pic-tag{ background-color: rgba(0,0,0,0.6); color: #fff;}
+.pic-tag.active,.pic-tag-h{ background-color: #ff9900; color: #fff;}
+.pic-text,.pic-title-bottom{ background-repeat: no-repeat; background-image: linear-gradient(transparent,rgba(0,0,0,.5)); color: #fff;}
+.pic-text.active{ background: rgba(0,0,0,0.6); color: #fff;}
+.pic-title-top{background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0) 100%); color: #fff;}
+
+/* link */
+.myui-link__pic li img{ display: block; padding: 2px 6px; border-radius: 4px; background-color: #fff;}
+
+/* nav */
+.nav li.active a{ border-color: #ff9900; color: #ff9900;}
+.nav-tabs li .dropdown-box .item li a{ color: #333;}
+.nav-tabs li .dropdown-box .item li.active a{ color: #ff9900;}
+
+/* panel */
+.myui-panel-bg{background-color: #292838;}
+.myui-panel-bg2{background-color: #22212f;}
+
+/* vodlist */
+.myui-vodlist__bg{background-color: #f5f5f5;}
+.myui-vodlist__bg:hover{ box-shadow: 0 3px 5px rgba(0,0,0,.08);}
+
+/* text-list */
+.myui-vodlist__text.striped .striped-head,.myui-vodlist__text.to-color li:nth-of-type(odd){ background-color: #22212f;}
+
+/* table */
+.myui-table>thead>tr>th,.myui-table>tbody>tr>td, .myui-table>tbody>tr>th, .myui-table>tfoot>tr>td, .myui-table>tfoot>tr>th, .myui-table>thead>tr>td, .myui-table>thead>tr>th { border-color: #ddd;}
+
+/* playlist */
+.myui-content__list::-webkit-scrollbar,.myui-playdown__list::-webkit-scrollbar{ width: 4px; background-color: #f5f5f5;}
+.myui-content__list::-webkit-scrollbar-thumb,.myui-playdown__list::-webkit-scrollbar-thumb{background-color: #ccc;}
+
+/* player */
+.myui-player__video{ background-color: #000;}
+.myui-player__operate > li > a{ color: #999;}
+
+/* popup */
+.popup{ background-color: #f8f8f8;}
+.popup-head{ background-color: #fff;}
+
+/* content */
+.myui-content__detail .score .rating li .fa,.myui-content__detail .score .branch{ color: #ff9900;}
+
+/* flickity */
+.flickity-page-dots .dot{ background-color: #ff9900;}
+
+/* carousel */
+.carousel-indicators-dots li{ background-color: #ff9900;}
+.carousel-indicators-text li.active .title{ color: red;}
+.carousel-indicators-thumb li.active{ border: 3px solid #ff9900;}
+
+/* extra */
+.myui-extra li a{ background-color: #22212f; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);}
+.myui-extra li a.backtop{ background-color: rgba(0,0,0,0.6); color: #fff; }
+
+/* autocomplete */
+.autocomplete-suggestions{ background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.05);}
+.autocomplete-suggestion, .autocomplete-suggestions li,.autocomplete-suggestion, .autocomplete-suggestions li a{ color: #333;}
+.autocomplete-suggestions li strong{ color: red;}
+
+/* tabbar */
+.myui-nav__tabbar{background-color: #f8f8f8; border-color: #eee;}
+.myui-nav__tabbar .item .title{ color: #999;}
+
+/* footer */
+.myui-foot{ background-color: #292838;}

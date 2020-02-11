@@ -1,4 +1,4 @@
-<?
+<?php
 //删除目录
 //本程序由wm_chief原创，如要转载，请注明作者与来源(http://www.phome.net)
 class  del_path
@@ -42,4 +42,4 @@ function  wm_chief_path($del_path)
 }
 }
 //本程序由wm_chief原创，如要转载，请注明作者与来源(http://www.phome.net)
-?>
+ ?>

@@ -19,4 +19,4 @@ if(empty($mydbname)||empty($mypath))
 //±àÂë
 DoSetDbChar($b_dbchar);
 $usql=$empire->query("use `$mydbname`");
-?>
+ ?>

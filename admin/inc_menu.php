@@ -30,8 +30,10 @@ $menu=array (
 		'link'=>"index_body.php",
 		0=>"首页",
 		1=>"<a target='I2' href='index_body.php'>后台首页</a>",
-		2=>"<a target='I2' href='admin_menu.php'>快捷菜单</a>",		
-		3=>"",
+		2=>"<a target='I2' href='admin_info.php'>内容统计</a>",	
+		3=>"<a target='I2' href='admin_menu.php'>快捷菜单</a>",	
+		
+		4=>"",
 	),
 	'content'=>array (
 		'link'=>"admin_video.php?action=else",
@@ -58,7 +60,8 @@ $menu=array (
 		20=>"<a target='I2' href='admin_type_news.php'>新闻分类</a>",
 		21=>"<a target='I2' href='admin_news.php'>新闻管理</a>",
 		22=>"<a target='I2' href='admin_news.php?action=add'>新闻添加</a>",
-		23=>"<a target='I2' href='admin_news.php?n_recycled=ok'>新闻回收站</a>",
+		23=>"<a target='I2' href='admin_news.php?n_recycled=ok'>隐藏数据</a>",
+		24=>"<a target='I2' href='admin_news.php?n_commend=ok'>推荐数据</a>",
 		
 	),
 	'template'=>array (
@@ -107,10 +110,10 @@ $menu=array (
 		9=>"<a target='I2' href='admin_datarelate.php?action=fileperms'>文件权限检查</a>",
 		10=>"",
 		11=>"<a target='I2' href='admin_datarelate.php?action=sql'>SQL高级助手</a>",
-		12=>"<a target='I2' href='ebak/ChangeDb.php'>数据库备份</a>",
+		12=>"<a target='I2' href='ebak/ChangeDb.php?act=b'>数据库备份</a>",
 		13=>"<a target='I2' href='ebak/ReData.php'>数据库还原</a>",
 		14=>"<a target='I2' href='ebak/ChangePath.php'>备份文件管理</a>",
-		15=>"<a target='I2' href='ebak/ChangeDb.php'>数据库修复优化</a>",
+		15=>"<a target='I2' href='ebak/ChangeDb.php?act=y'>数据库修复优化</a>",
 	),
 	'gathersoft'=>array (
 		'link'=>"admin_collect.php?action=main",

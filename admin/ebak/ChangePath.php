@@ -1,10 +1,6 @@
 <?php
 error_reporting(0);
 session_start();
-$ini = ini_get_all();
-//print_r($ini);
-$short_open_tag=$ini['short_open_tag']['global_value'];
-if($short_open_tag !=1){echo '必须开启PHP短标签设置才可以正常使用！<br>修改php.ini文件 ，找到 short_open_tag = Off 这一行，将 Off 修改为 On，保存并重启web环境。';}
 
 function CheckPurview()
 {
@@ -179,4 +175,4 @@ if($_GET['toform'])
 	$form=$_GET['toform'];
 }
 require LoadAdminTemp('eChangePath.php');
-?>
+ ?>

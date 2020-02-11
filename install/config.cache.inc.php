@@ -82,6 +82,7 @@ $cfg_feedback_times = '50';
 $cfg_gbookstart = '1';
 $cfg_comment_times = '30';
 $cfg_feedbackcheck = '1';
+$cfg_gbcheck = '0';
 $cfg_feedback_ck = '1';
 $cfg_isfromsort = '0';
 $cfg_search_time = '3';
@@ -111,6 +112,6 @@ $cfg_cli_time = '8';
 $cfg_sitevisitejs = '';
 $cfg_description = '';
 $cfg_site_notice = '';
-$cfg_powerby = 'Copyright &#169; 2015-2018  All Rights Reserved';
+$cfg_powerby = 'Copyright &#169; 2015-2020  All Rights Reserved';
 $cfg_cjtime = '3';
 ?>

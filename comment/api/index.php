@@ -52,10 +52,10 @@ function Readmlist($id,$page,$size)
 	$ml=array();
 	if($id>0)
 	{
-		$sqlCount = "SELECT count(*) as dd FROM sea_comment WHERE m_type=$type AND v_id=$id ORDER BY id DESC";
+		$sqlCount = "SELECT count(*) as dd FROM sea_comment WHERE m_type=$type AND v_id=$id AND ischeck=1 ORDER BY id DESC";
 		$rs = $dsql ->GetOne($sqlCount);
 		$pCount = ceil($rs['dd']/$size);
-		$sql = "SELECT id,uid,username,dtime,reply,msg,agree,anti,pic,vote,ischeck FROM sea_comment WHERE m_type=$type AND v_id=$id ORDER BY id DESC limit ".($page-1)*$size.",$size ";
+		$sql = "SELECT id,uid,username,dtime,reply,msg,agree,anti,pic,vote,ischeck FROM sea_comment WHERE m_type=$type AND v_id=$id AND ischeck=1 ORDER BY id DESC limit ".($page-1)*$size.",$size ";
 		$dsql->setQuery($sql);
 		$dsql->Execute('commentmlist');
 		while($row=$dsql->GetArray('commentmlist'))
@@ -72,7 +72,7 @@ function Readrlist($ids,$page,$size)
 {
 	global $dsql,$type;
 	$rl=array();
-	$sql = "SELECT id,uid,username,dtime,reply,msg,agree,anti,pic,vote,ischeck FROM sea_comment WHERE m_type=$type AND id in ($ids) ORDER BY id DESC";
+	$sql = "SELECT id,uid,username,dtime,reply,msg,agree,anti,pic,vote,ischeck FROM sea_comment WHERE m_type=$type AND id in ($ids) AND ischeck=1 ORDER BY id DESC";
 	$dsql->setQuery($sql);
 	$dsql->Execute('commentrlist');
 	while($row=$dsql->GetArray('commentrlist'))

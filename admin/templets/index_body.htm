@@ -23,6 +23,12 @@ body {
 </style>
 </head>
 <body>
+<?php
+$ly_dsh = $dsql->GetOne("select count(*) as dd from sea_guestbook where ischeck=0");
+$bc_dsh = $dsql->GetOne("select count(*) as dd from sea_erradd where ischeck=0");
+$vpl_dsh = $dsql->GetOne("select count(*) as dd from sea_comment where m_type!=1 AND ischeck=0");
+$npl_dsh = $dsql->GetOne("select count(*) as dd from sea_comment where m_type=1 AND ischeck=0");
+?>
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;系统简要信息';</script>
 
@@ -30,15 +36,20 @@ body {
 	<div class="r_content">
 		<div class="r_content_1">
 		
-            <div class="S_info">&nbsp;系统信息摘要 【当前版本：<font color='#ff0000'><?php echo $cfg_version; ?></font>&nbsp;&nbsp;最新版本：<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/ver.js"> </script>】</div>
+            <div class="S_info">&nbsp;信息摘要 
+			【待审核留言 <a href="admin_comment.php?action=gbook"><font color='#ff0000'><?php echo $ly_dsh['dd']; ?></font></a> &nbsp;&nbsp;
+			待处理报错 <a href="admin_comment.php?action=reporterror"><font color='#ff0000'><?php echo $bc_dsh['dd']; ?></font></a> &nbsp;&nbsp;
+			待审核视频评论 <a href="admin_comment.php"><font color='#ff0000'><?php echo $vpl_dsh['dd']; ?></font></a> &nbsp;&nbsp;
+			待审核文章评论 <a href="admin_comment_news.php"><font color='#ff0000'><?php echo $npl_dsh['dd']; ?></font></a>】
+			</div>
             <div class="S_info2">
             
 			<div class="S_list">&nbsp;&nbsp;PHP版本：<?php echo @phpversion(); ?></div>
             <div class="S_list">GD版本：<?php echo @gdversion(); ?></div>
-            <div class="S_list">&nbsp;&nbsp;是否安全模式：<font color='red'><?php echo ($isSafeMode ? 'On' : 'Off')?></font></div>
+            <div class="S_list">&nbsp;&nbsp;是否安全模式：<?php echo ($isSafeMode ? 'On' : 'Off')?></div>
             <div class="S_list">支持上传的最大文件 ：<?php echo ini_get("post_max_size")?></div>
-            <div class="S_list">&nbsp;&nbsp;Register_Globals：<font color='red'><?php echo ini_get("register_globals") ? 'On' : 'Off'?></font></div>
-            <div class="S_list">Magic_Quotes_Gpc：<font color='red'><?php echo ini_get("magic_quotes_gpc") ? 'On' : 'Off'?></font></div>
+            <div class="S_list">&nbsp;&nbsp;Register_Globals：<?php echo ini_get("register_globals") ? 'On' : 'Off'?></div>
+            <div class="S_list">Magic_Quotes_Gpc：<?php echo ini_get("magic_quotes_gpc") ? 'On' : 'Off'?></div>
             <div class="S_list">&nbsp;&nbsp;是否允许打开远程连接：<?php echo ini_get("allow_url_fopen") ? '支持' : '不支持'?></div>
             <div class="S_list">其它必须函数检测：
 	<?php
@@ -46,7 +57,7 @@ body {
           $n = 0;
           foreach($needfunc as $k) {
           	if(!function_exists($k)) {
-          		echo "<font color='red'>[{$k}×]</font> ";
+          		echo "[{$k}×]";
           		$n++;
           	}
           }
@@ -54,7 +65,7 @@ body {
           	echo "符合要求";
           }
           else {
-          	echo "被禁用的函数可能导致部份功能无法使用！";
+          	echo "部分禁用";
           }
        ?></div>
 	   <div class="S_list">&nbsp;&nbsp;域名：<?php echo  @GetHostByName($_SERVER['SERVER_NAME']);echo " - "; echo $_SERVER['SERVER_PORT'] ?></div>
@@ -66,7 +77,7 @@ body {
         
             </div>
 <div  style="clear:left"></div>
-			<div class="v_info">&nbsp;相关说明</div>
+			<div class="v_info">&nbsp;程序版本【当前 <font color='#ff0000'><?php echo $cfg_version; ?></font>&nbsp;&nbsp;&nbsp;&nbsp;最新 <script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/ver.js"> </script>】</div>
 			<div class="v_show">
 <script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/info.js"> </script>
 			</div>

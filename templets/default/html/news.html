@@ -1,89 +1,64 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- <title>{news:title}_{news:subtitle}_{seacms:sitename}</title>
-<meta name="keywords" content="{news:title}" />
-<meta name="description" content="{news:title}" />  
-{seacms:load block/inc_header.html}
-<style>
-.hy-page {
-	margin:20px 0;
-	text-align:center
-}
-.hy-page ul li {
-	display:inline-block;
-	padding:0;
-	margin-left:10px
-}
-.hy-page ul li .num,.hy-page ul li a {
-	display:inline-block;
-	padding:8px 15px;
-	border-radius:4px
-}
-.hy-page-block {
-	padding:30px
-}
-/*分页样式*/
-.page{height:45px;line-height:33px;text-align:center;width:650px;overflow:hidden;margin:5px auto 0}
-.page span{float:left;height:33px;line-height:33px;margin-right:2px;padding:2px 14px;font-size:12px}
-.page em.nolink{font-style:normal;background-color:white;border:1px solid #DDDDDD;color:#999999;font-weight:400;height:33px;line-height:33px}
-.page input{display:none;}
-.page .btn{display:none;}
-.page em{background-color:#4cae4c;border:1px solid #4cae4c ;color:#000;float:left;font-weight:bold;height:31px;line-height:32px;margin:2px;padding:0px 14px;text-align:center;font-style:normal;margin-top:2px}
-.page a:link, .page a:visited{background-color:#FFFFFF;border:1px solid #DDDDDD;color:#333333;display:inline;float:left;height:32px;line-height:32px;margin-right:1px;padding:0px 14px;margin-left:1px;text-decoration:none;margin-top:2px}
-.page a:hover{background-color:#4cae4c;border:1px solid #4cae4c;padding:0px 14px;color:#000;text-decoration:none}
-
-</style>
+		{seacms:load seo/news.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
 	</head>
 	<body>
-{seacms:load newshead.html}
-	    <div class="container min">
-	        <div class="row">
-				<div class="myui-panel myui-panel-bg clearfix">					
-					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_bd col-pd clearfix">	
-							<h1 class="myui-article__title">{news:title}</h1>				
-							<p class="myui-article__sub bottom-line"><span class="text-muted hidden-xs">分类：</span>{news:typename}<span class="split-line"></span><span class="text-muted">人气：</span>{news:hit}<span class="split-line"></span></p>
-							<div class="myui-article__content mt20">
-<style>
-embed,video,#a2{width:100%;height:250px;overflow:hidden;}
-.divcss5 img {width:100%;height:auto;display: block}
-</style>
-<div class="divcss5 img">{news:subcontent}</div>
-<div class="hy-page clearfix">
-                        <ul class="page">
-                            {news:subpagenumber len=2} 
-                        </ul>
-                    </div>
-<br>
-{news:pre} 
-<br>
-{news:next}	
-							</div>						
+		{seacms:top}
+		<div class="container min">
+			<div class="row">
+                                {seacms:load newshead.html}
+				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+					<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd col-pd clearfix">
+								<h1 class="myui-article__title">{news:title}</h1>
+								<p class="myui-article__sub bottom-line">
+									<span class="text-muted hidden-xs">分类：</span>{news:typename}<span class="split-line"></span>来源：{seacms:sitename}<span class="split-line"></span>人气：{news:hit}<span class="split-line"></span>更新：{news:addtime}
+								</p>
+								<div class="myui-article__content mt20">
+									{news:subcontent}
+								</div>
+								<div class="hy-page clearfix">
+									<ul class="page">
+										{news:subpagenumber len=3} 
+									</ul>
+                             </div>
+							</div>
 						</div>
+						
+					</div>	
+					
+		<div class="myui-panel myui-panel-bg clearfix">
+						
+					<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd col-pd clearfix">
+								文章打分： {news:mark style=star len=5}	
+							</div>
 					</div>
-				</div>
-<div class="myui-panel myui-panel-bg clearfix">
+		</div>
+
+		<div class="myui-panel myui-panel-bg clearfix">
+						
 					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_bd">
-							<div class="col-xs-1">
-                            文章打分： {news:mark style=star len=5}		
-                        				</div>
-						</div>
-					</div>				
+							<div class="myui-panel_bd col-pd clearfix">
+								  {news:comment}	
+							</div>
+					</div>
+		</div>	
+					
+					
 				</div>
-<div class="myui-panel myui-panel-bg clearfix">
-					<div class="myui-panel-box clearfix">
-						<div class="myui-panel_bd">
-							<div class="col-xs-1">
-                                                        {news:comment}			
-                        				</div>
-						</div>
-					</div>				
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load block/art_code.html}
+					{seacms:load block/vod_hot.html}
+					{seacms:load block/art_hot.html}
 				</div>
+
 			</div>
-	    </div>
- {seacms:foot}
+		</div>
+		{seacms:foot}
 	</body>
 </html>

@@ -295,4 +295,4 @@ function EGInfo_ReturnHttpPath($selffile='eginfo.php'){
 	return $httpurl;
 }
 
-?>
+ ?>

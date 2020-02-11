@@ -27,7 +27,8 @@ if($action=="add")
 		$sort = $trow['dd'];
 		}
 	if (!is_numeric($sort)) $sort=1;
-	$in_query = "insert into `sea_topic`(name,enname,template,pic,sort,vod,keyword) Values('$name','$enname','$template','$pic','$sort',0,'$keyword')";
+	$addtime=time();
+	$in_query = "insert into `sea_topic`(name,enname,template,pic,sort,vod,keyword,addtime) Values('$name','$enname','$template','$pic','$sort',0,'$keyword','$addtime')";
 	if(!$dsql->ExecuteNoneQuery($in_query))
 	{
 		ShowMsg("增加专题失败，请检查您的输入是否存在问题！","-1");

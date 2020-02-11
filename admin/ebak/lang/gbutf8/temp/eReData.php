@@ -3,7 +3,7 @@ if(!defined('InEmpireBak'))
 {
 	exit();
 }
-?>
+ ?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -25,14 +25,14 @@ if(!defined('InEmpireBak'))
     <tr bgcolor="#FFFFFF"> 
       <td width="34%" height="25">恢复数据源文件：</td>
       <td width="66%" height="25"> 
-        <?=$bakpath?>
+        <?php echo $bakpath ?>
         / 
-        <input name="mypath" type="text" id="mypath" value="<?=$mypath?>"> <input type="button" name="Submit2" value="选择备份" onclick="javascript:window.open('ChangePath.php?change=1','','width=750,height=500,scrollbars=yes');"></td>
+        <input name="mypath" type="text" id="mypath" value="<?php echo $mypath ?>"> <input type="button" name="Submit2" value="选择备份" onclick="javascript:window.open('ChangePath.php?change=1','','width=750,height=500,scrollbars=yes');"></td>
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td height="25" valign="top">要导入的数据库：</td>
       <td height="25"> <select name="add[mydbname]" size="1" id="add[mydbname]" style="width:300">
-          <?=$db?>
+          <?php echo $db ?>
         </select></td>
     </tr>
     <tr bgcolor="#FFFFFF">
@@ -53,6 +53,6 @@ echo "<div align=center>";
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\"><font style=\"color:#666;\">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"//www.seacms.net/\"><font style=\"font-size:10px;\">POWER BY SEACMS</font></a></td></tr></table></div>\n</body>\n</html>";
-?>
+ ?>
 </body>
 </html>

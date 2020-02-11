@@ -102,7 +102,7 @@ function echoContent($vId)
 	if (strpos($content,"{news:keywords}")>0)
 	$content=str_replace("{news:keywords}",getKeywordsList($row['n_keyword'],"&nbsp;&nbsp;"),$content);
 	$n_pic=$row['n_pic'];
-	$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$n_pic,$ref)){$n_pic=str_ireplace($pickey,'',$ref[1]);}
+	
 	if(!empty($n_pic)){
 		if(strpos(' '.$n_pic,'://')>0){
 			$content=str_replace("{news:pic}",$n_pic,$content);
@@ -115,6 +115,7 @@ function echoContent($vId)
 	$content=str_replace("{news:author}",$row['n_author'],$content);
 	$content=str_replace("{news:from}",$row['n_from'],$content);
 	$content=str_replace("{news:addtime}",MyDate('Y-m-d H:i',$row['n_addtime']),$content);
+	$content=str_replace("{news:addtime2}",MyDate('Y-m-d\TH:i:s',$row['n_addtime']),$content);
 	$content=str_replace("{news:scorenum}",$row['n_score'],$content);
 	$content=str_replace("{news:outline}",$row['n_outline'],$content);
 	$content=str_replace("{news:commend}",$row['n_commend'],$content);

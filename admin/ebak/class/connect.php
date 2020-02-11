@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(0);
 if(PHP_VERSION<'5.3.0')
 {
 	@set_magic_quotes_runtime(0);
@@ -443,4 +443,4 @@ function Ebak_ReturnFourCheckRnd(){
 	$fourcheck=md5($ebak_set_ckrndvalfour.'!E-b-A-k!'.$set_username);
 	return $fourcheck;
 }
-?>
+ ?>

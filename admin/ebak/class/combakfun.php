@@ -324,7 +324,7 @@ define('EmpireBakConfig',TRUE);
 
 //------------ SYSTEM ------------
 HeaderIeChar();
-?>";
+ ?>";
 	$filename="class/config.php";
 	WriteFiletext_n($filename,$string);
 	printerror("SetDbSuccess","SetDb.php");
@@ -344,7 +344,7 @@ function Ebak_Rep($tablename,$dbname){
 	{
 		$sql1=$empire->query("REPAIR TABLE `$tablename[$i]`;");
     }
-	printerror("RepairTbSuccess","ChangeTable.php?mydbname=$dbname");
+	printerror("RepairTbSuccess","ChangeTable.php?act=y&mydbname=$dbname");
 }
 
 //忧化表
@@ -361,7 +361,7 @@ function Ebak_Opi($tablename,$dbname){
 	{
 		$sql1=$empire->query("OPTIMIZE TABLE `$tablename[$i]`;");
     }
-	printerror("OptimizeTbSuccess","ChangeTable.php?mydbname=$dbname");
+	printerror("OptimizeTbSuccess","ChangeTable.php?act=y&mydbname=$dbname");
 }
 
 //删除数据表
@@ -512,7 +512,7 @@ function Ebak_SaveSeting($add){
 \$dkeyboard='".addslashes($add['keyboard'])."';
 \$dwaitbaktime='".$add['waitbaktime']."';
 \$dbakdatatype=".$bakdatatype.";
-?>";
+ ?>";
 	$file="setsave/".$savename;
 	WriteFiletext_n($file,$str);
 	printerror("SetSaveSuccess","history.go(-1)");
@@ -670,4 +670,4 @@ function Ebak_RepPathFiletext($add){
 	}
 	printerror("RepPathFiletextSuccess","RepFiletext.php");
 }
-?>
+ ?>

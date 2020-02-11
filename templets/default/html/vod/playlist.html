@@ -1,0 +1,89 @@
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head active bottom-line clearfix">
+				<a class="more sort-button pull-right" href="javascript:;"><i class="fa fa-sort-amount-asc"></i> 排序</a>
+				<h3 class="title">
+					播放地址
+				</h3>
+				<ul class="nav nav-tabs active">
+					{playpage:playlist}
+					<li><a href="#playlist[playlist:i]" data-toggle="tab">[playlist:from]</a></li>
+					{/playpage:playlist}								
+				</ul>
+			</div>																		
+		</div>
+		<div class="tab-content myui-panel_bd">
+			{playpage:playlist}
+			<div id="playlist[playlist:i]" class="tab-pane fade in clearfix">
+				<p class="text-muted col-pd">
+					[playlist:intro]
+				</p>
+				<ul class="myui-content__list sort-list clearfix" style="max-height: 300px; overflow: auto;">
+					[playlist:link target=_self]
+				</ul>
+			</div>															
+			{/playpage:playlist}
+		</div>
+	</div>
+</div>
+<script src="images/js/xunlei.js"></script>
+{playpage:downlist}
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head active bottom-line clearfix">
+				<h3 class="title">
+					影片下载
+				</h3>
+			</div>
+		</div>
+			<ul class="stui-vodlist__text downlist col-pd clearfix" style="max-height: 300px; overflow: auto;">
+				<li class="striped-head clearfix">
+					<span class="col-md-wide-25 col-sm-wide-25 col-xs-wide-4">名称</span>
+					<span class="col-md-wide-5 col-sm-wide-45 hidden-xs">下载地址</span>
+					<span class="col-md-wide-25 col-sm-wide-3 col-xs-wide-6 text-right">操作</span>
+				</li>
+				<script type="text/javascript">
+					function echoDown(str,num){
+						var s=str.split("###");
+						for(var i=0;i<s.length;i++){
+							gurl=s[i].split("$");						
+							document.write('<li class="striped-head top-line clearfix"><span class="text col-md-wide-25 col-sm-wide-6 col-xs-wide-6"><input type="checkbox" name="down_url_list_'+ num +'" value="'+gurl[1]+'" class="down_url" /> '+gurl[0]+'</span><span class="col-md-wide-4 hidden-sm hidden-xs"><input class="form-control" type="text" name="" value="'+gurl[1]+'" /></span><span class="col-md-wide-35 col-sm-wide-4 col-xs-wide-4 text-right"><a class="btn btn-primary common_down" href=\"javascript:;\">迅雷下载</a><a href="javascript:;" class="btn btn-default hidden-xs thunderkk">看看播放</a></span></li>');
+						}
+					}
+				</script>
+				<script type="text/javascript">var GvodUrls[downlist:i] = "[downlist:linkstr]";echoDown(GvodUrls[downlist:i],0);</script>
+				<li class="striped-head top-line clearfix">
+					<span class="col-md-wide-25 col-sm-wide-25 col-xs-wide-4"><input type="checkbox" name="checkall" />   全选</span>
+					<span class="col-md-wide-5 col-sm-wide-45 hidden-xs">没有安装迅雷？<a target="_blank" href="http://dl.xunlei.com/">点击这里下载最新版迅雷 ></a></span>
+					<span class="col-md-wide-25 col-sm-wide-3 col-xs-wide-6 text-right"><a class="btn btn-default thunder_down_all" href="javascript:;" >迅雷下载选中文件</a></span>
+				</li>
+			</ul>					
+		</div>
+	</div>
+
+		<div class="stui-pannel_bd clearfix"></div>
+{/playpage:downlist}
+
+<script type="text/javascript">
+	$(".tab-pane:first,.nav-tabs li:first").addClass("active");
+	{if:{playpage:upid} == 1}
+	$(".sort-list li").addClass("col-md-6 col-sm-4 col-xs-2");
+	{elseif:{playpage:upid} == 3}
+	$(".sort-list li").addClass("col-md-6 col-sm-4 col-xs-2");
+	{else}
+	$(".sort-list li").addClass("col-md-8 col-sm-6 col-xs-4");
+	{end if}
+	$(".sort-list a").addClass("btn btn-default");
+	$(".sort-list a[style='color:red']").css("color","").removeClass("btn-gray").addClass("btn-warm active");
+</script>
+<!-- <div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_bd">
+			<div class="col-xs-1">
+				<div style="padding: 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位</h5></div>
+			</div>
+		</div>
+	</div>
+</div> -->

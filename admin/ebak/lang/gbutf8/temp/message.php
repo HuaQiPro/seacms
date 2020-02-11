@@ -3,7 +3,7 @@ if(!defined('InEmpireBak'))
 {
 	exit();
 }
-?>
+ ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -18,11 +18,11 @@ if(!defined('InEmpireBak'))
 <script>
       var pgo=0;
       function JumpUrl(){
-        if(pgo==0){ location='<?=$gotourl?>'; pgo=1; }
+        if(pgo==0){ location='<?php echo $gotourl ?>'; pgo=1; }
       }
 document.write("<br /><div class='mac_msg_jump'><div class='msg_jump_tit'>系统提示</div><div class='text'>");
-document.write("<?=$error?>");
-document.write("<br /><br /><a href='<?=$gotourl?>'><font style='color:#777777;'>点击这里手动跳转</font></a><br/></div></div>");
+document.write("<?php echo $error ?>");
+document.write("<br /><br /><a href='<?php echo $gotourl ?>'><font style='color:#777777;'>点击这里手动跳转</font></a><br/></div></div>");
 setTimeout('JumpUrl()',3000);</script>
 </center>
 </body>

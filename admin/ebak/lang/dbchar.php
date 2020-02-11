@@ -8,4 +8,4 @@ $dbcharr=Array(
 $langcharr=Array(
 	'0'=>'gbutf8,utf-8,Chinese simplified'
 	);
-?>
+ ?>

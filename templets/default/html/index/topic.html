@@ -1,0 +1,29 @@
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head clearfix">
+				<h3 class="title">
+					热门专题
+				</h3>
+				<a class="more text-muted" href="{seacms:topiclink}">更多 <i class="fa fa-angle-right"></i></a>
+			</div>
+		</div>
+		<div class="myui-panel_bd clearfix">
+			<ul class="myui-vodlist clearfix">
+				{seacms:topiclist num=4}
+				<li class="col-lg-4  col-md-5 col-sm-3 col-xs-2">
+					<div class="myui-vodlist__box myui-panel_bg">
+						<a class="myui-vodlist__thumb wide lazyload" href="[topiclist:link]" title="[topiclist:name]" data-original="[topiclist:pic]">
+							<span class="play hidden-xs"></span>
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-center text-overflow"><a href="[topiclist:link]" title="[topiclist:name]">[topiclist:name]</a></h4>
+							<p class="text text-center text-overflow text-muted">—— 收录[topiclist:count]个影片 ——</p>
+						</div>
+					</div>
+				</li>
+				{/seacms:topiclist}
+			</ul>
+		</div>
+	</div>
+</div>

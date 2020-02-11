@@ -64,8 +64,8 @@ if($author=='' || $errtxt=='') {
 		exit();
 	}
 
-	$query = "INSERT INTO `sea_erradd`(vid,author,ip,errtxt,sendtime)
-                  VALUES ('$id','$author','$ip','$errtxt','$time'); ";
+	$query = "INSERT INTO `sea_erradd`(vid,author,ip,errtxt,sendtime,ischeck)
+                  VALUES ('$id','$author','$ip','$errtxt','$time',0); ";
 	$dsql->ExecuteNoneQuery($query);
 	ShowMsg("谢谢您对本网站的支持，我们会尽快处理您的报错！","index.php");
 	exit();

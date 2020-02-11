@@ -1,9 +1,5 @@
 <?php
 
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
-header("Cache-Control: no-store, must-revalidate"); 
-header("Pragma: no-cache"); 
-
 require_once(dirname(__FILE__)."/config.php");
 require_once(sea_DATA."/config.user.inc.php");
 

@@ -187,4 +187,4 @@ class mysqlquery
 		return $this->r['version'];
 	}
 }
-?>
+ ?>

@@ -1,0 +1,28 @@
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head active bottom-line clearfix">
+				<h3 class="title">
+					热门资讯
+				</h3>	
+			</div>																		
+		</div>
+		<div class="myui-panel_bd clearfix">											
+			<ul class="myui-vodlist__media col-pd clearfix">
+				{seacms:newslist num=5 type=all order=hit}
+				<li>
+					<div class="detail detail-left">
+						<h5 class="title"><a href="[newslist:link]" title="[newslist:name]">[newslist:name len=20]</a></h5>										
+						<p class="margin-0 text-muted font-12">[newslist:typename]<span class="split-line"></span>[newslist:time style=yyyy-mm-dd]</p>
+					</div>
+					<div class="thumb">
+						<a class="myui-vodlist__thumb wide img-xs-110" href="[newslist:link]" title="[newslist:name]" style="background: url([newslist:pic]);">
+							<span class="play-v"></span>
+						</a>
+					</div>
+				</li>																	
+				{/seacms:newslist}
+			</ul>
+		</div>
+	</div>
+</div>

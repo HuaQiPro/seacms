@@ -315,7 +315,7 @@ function makeArticleById($vId)
 	$content=str_replace("{news:upid}",getUpId($vType,1),$content);
 	if (strpos($content,"{news:keywords}")>0) $content=str_replace("{news:keywords}",getKeywordsList($row['n_keyword'],"&nbsp;"),$content);
 	$n_pic=$row['n_pic'];
-	$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$n_pic,$ref)){$n_pic=str_ireplace($pickey,'',$ref[1]);}
+	
 	if(!empty($n_pic)){
 	if(strpos(' '.$n_pic,'://')>0){
 	$content=str_replace("{news:pic}",$n_pic,$content);
@@ -328,6 +328,7 @@ function makeArticleById($vId)
 	$content=str_replace("{news:author}",$row['n_author'],$content);
 	$content=str_replace("{news:from}",$row['n_from'],$content);
 	$content=str_replace("{news:addtime}",MyDate('Y-m-d H:i',$row['n_addtime']),$content);
+	$content=str_replace("{news:addtime2}",MyDate('Y-m-d\TH:i:s',$row['n_addtime']),$content);
 	$content=str_replace("{news:scorenum}",$row['n_score'],$content);
 	$content=str_replace("{news:scorenumer}",$row['n_scorenum'],$content);
 	$score=number_format($row[n_score]/$row[n_scorenum],1);
@@ -482,7 +483,7 @@ function makeContentById($vId)
 		if (strpos($content,"{playpage:keywords}")>0) $content=str_replace("{playpage:keywords}",getKeywordsList($row['v_tags'],"&nbsp;"),$content);
 		if (strpos($content,"{playpage:jqtype}")>0) $content=str_replace("{playpage:jqtype}",getJqList($row['v_jq'],"&nbsp;"),$content);
 		$v_pic=$row['v_pic'];
-		$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);}
+		
 		if(!empty($v_pic)){
 		if(strpos(' '.$v_pic,'://')>0){
 		$content=str_replace("{playpage:pic}",$v_pic,$content);
@@ -532,6 +533,7 @@ function makeContentById($vId)
 		$content=str_replace("{playpage:publisharea}",$row['v_publisharea'],$content);
 		$content=str_replace("{playpage:lang}",$row['v_lang'],$content);
 		$content=str_replace("{playpage:addtime}",MyDate('Y-m-d H:i',$row['v_addtime']),$content);
+		$content=str_replace("{playpage:addtime2}",MyDate('Y-m-d\TH:i:s',$row['v_addtime']),$content);
 		$content=str_replace("{playpage:state}",$row['v_state'],$content);
 		$content=str_replace("{playpage:commend}",$row['v_commend'],$content);
 		$content=str_replace("{playpage:des}",$v_des,$content);

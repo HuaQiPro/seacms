@@ -65,4 +65,4 @@ $ebak_set_ckrndvalfour='f383636eba6a26b797e30d1fac1c55eb';
 
 //------------ SYSTEM ------------
 HeaderIeChar();
-?>
+ ?>

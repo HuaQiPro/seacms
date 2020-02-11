@@ -79,7 +79,7 @@ $TotalPage = ceil($TotalResult/$numPerPage);
 if ($page>$TotalPage) $page=$TotalPage;
 $limitstart = ($page-1) * $numPerPage;
 if($limitstart<0) $limitstart=0;
-$sqlStr="select e.id,e.vid,e.author,e.ip,e.errtxt,e.sendtime,d.v_name,d.v_addtime,d.v_enname,d.tid from `sea_erradd` e left join sea_data d on d.v_id=e.vid order by e.sendtime desc limit $limitstart,$numPerPage";
+$sqlStr="select e.id,e.vid,e.author,e.ip,e.errtxt,e.sendtime,e.ischeck,d.v_name,d.v_addtime,d.v_enname,d.tid from `sea_erradd` e left join sea_data d on d.v_id=e.vid order by e.sendtime desc limit $limitstart,$numPerPage";
 ?>
 <form name="newslistform" method="post">
 <tr class="thead"><th colspan="15">报错管理</th></tr>
@@ -107,18 +107,21 @@ $v_id=$row->vid;
 $v_name=$row->v_name;
 ?>		
 <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
-<td height="30" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  class="checkbox" /><?php echo $row->id;?> </td>
+<td height="30" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  class="checkbox" /><?php echo $row->id; if($row->ischeck==0){echo '<font color="red">[未处理]</font>';}else{echo '[已处理]';}?> </td>
 <td class="td_border"><?php echo encodeHtml(cn_substr($row->errtxt,40));?>  <a href="?action=viewreporterror&id=<?php echo $row->id;?>">查看详情</a></td>
-<td class="td_border"><?php if(empty($v_name)) echo "该数据已删除"; else echo "<a href='".getContentLink($row->tid,$v_id,"",date('Y-n',$row->v_addtime),$row->v_enname)."' target='_blank' >{$v_name}({$v_id})</a>";?><a href='admin_video.php?action=edit&id=<?php echo $v_id;?>'> <font color="#FF0000">处理</font></a></td>
+<td class="td_border"><?php if(empty($v_name)) echo "该数据已删除"; else echo "<a href='".getContentLink($row->tid,$v_id,"",date('Y-n',$row->v_addtime),$row->v_enname)."' target='_blank' >{$v_name}({$v_id})</a>";?><a href='admin_video.php?action=edit&id=<?php echo $v_id;?>'> <font color="green">编辑</font></a></td>
 <td class="td_border"><?php echo $row->ip;?></td>
 <td class="td_border"><?php echo isCurrentDay($row->sendtime);?></td>
 <td class="td_border"><?php echo $row->author;?></td>
-<td class="td_border"><a onClick="if(confirm('确定要删除吗')){return true;}else{return false;}" href="?action=delreporterror&id=<?php echo $row->id;?>" >删除</a></td>
+<td class="td_border"><a onClick="if(confirm('确定要标记已处理吗')){return true;}else{return false;}" href="?action=checkreporterror&id=<?php echo $row->id;?>" ><?php if($row->ischeck==0){echo '未处理';}else{echo '已处理';} ?></a>&nbsp;&nbsp;<a onClick="if(confirm('确定要删除吗')){return true;}else{return false;}" href="?action=delreporterror&id=<?php echo $row->id;?>" >删除</a></td>
 </tr>
 <?php }?>	
     <tr>
-    <td colspan="5"><div class="cuspages"><div class="pages">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onClick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onClick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onClick="if(confirm('确定要删除吗')){newslistform.action='?action=delallreporterror';}else{return false}" class="rb1"  />
-    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=reporterror">首页</a> <a href="?page=<?php echo ($page-1);?>&action=reporterror">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=reporterror">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=reporterror">尾页</a></div></div>
+    <td colspan="5"><div class="cuspages"><div class="pages">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onClick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onClick="checkOthers('input','e_id[]')" />
+	<input type="submit" value="批量删除" onClick="if(confirm('确定要删除吗')){newslistform.action='?action=delallreporterror';}else{return false}" class="rb1"  />
+	<input type="submit" value="全部删除" onClick="if(confirm('确定要删除全部吗')){newslistform.action='?action=deltotalreporterror'}" class="rb1"/>
+	<input type="submit" value="标记处理" onClick="if(confirm('确定要标记已处理吗')){newslistform.action='?action=checkallreporterror'}" class="rb1"/>
+	&nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=reporterror">首页</a> <a href="?page=<?php echo ($page-1);?>&action=reporterror">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=reporterror">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=reporterror">尾页</a></div></div>
     </td></tr>
 <?php }?>
 </form>

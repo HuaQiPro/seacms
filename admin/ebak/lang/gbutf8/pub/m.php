@@ -63,4 +63,4 @@ $message_r=Array(
 	'NotPmaPath'=>'设置的 PMA 目录格式不对',
 	'NotToUseDefPass'=>'请修改默认的管理密码和验证随机码 (管理员设置)'
 );
-?>
+ ?>

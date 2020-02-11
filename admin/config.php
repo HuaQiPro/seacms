@@ -313,16 +313,17 @@ function uploadftp2($picUrl)
 }
 
 function cache_clear($dir) {
-  $dh=@opendir($dir);
-  while ($file=@readdir($dh)) {
-    if($file!="." && $file!="..") {
-      $fullpath=$dir."/".$file;
-      if(is_file($fullpath)) {
-          @unlink($fullpath);
-      }
-    }
-  }
-  closedir($dh); 
+
+
+       $dirname=$dir;
+       $handle = opendir($dirname);
+       while (($file = readdir($handle)) !== false) {
+           if ($file != '.' && $file != '..') {
+               $dir = $dirname .'/' . $file;
+               is_dir($dir) ? cache_clear($dir) : unlink($dir);
+           }
+       }
+       closedir($handle);
 }
 
 function getFolderList($cDir)

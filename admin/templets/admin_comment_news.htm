@@ -139,7 +139,7 @@ $TotalPage = ceil($TotalResult/$numPerPage);
 if ($page>$TotalPage) $page=$TotalPage;
 $limitstart = ($page-1) * $numPerPage;
 if($limitstart<0) $limitstart=0;
-$sqlStr="select c.id,c.v_id,c.username,c.ip,c.ischeck,c.dtime,c.msg,d.v_name,d.tid from `sea_comment` c left join sea_data d on d.v_id=c.v_id where 0=0 ". $whereStr ."and m_type=1 order by c.dtime desc limit $limitstart,$numPerPage";
+$sqlStr="select c.id,c.v_id,c.username,c.ip,c.ischeck,c.dtime,c.msg,d.n_title,d.tid from `sea_comment` c left join sea_news d on d.n_id=c.v_id where 0=0 ". $whereStr ."and m_type=1 order by c.dtime desc limit $limitstart,$numPerPage";
 ?>
 <form name="newslistform" method="post">
 <tr class="thead"><th colspan="15">评论管理 <input name="keyword" type="text" id="keyword" size="20" value="" > <input type="submit" name="selectBtn" value="查 询" class="btn" onclick="location.href='?keyword='+escape($('keyword').value);" /></th></tr>
@@ -155,7 +155,7 @@ echo "<tr align='center'><td colspan=\"15\">   没有记录</td></tr>";
 <tr>
 <td width="10%" height="30" class="td_btop3">ID </td>
 <td class="td_btop3">评论内容 </td>
-<td class="td_btop3">评论影片名称(ID)</td>
+<td class="td_btop3">评论文章名称(ID)</td>
 <td class="td_btop3">评论者IP </td>
 <td class="td_btop3">时间 </td>
 <td width="10%" class="td_btop3">评论人</td>
@@ -167,12 +167,12 @@ $dsql->Execute('comment_list');
 while($row=$dsql->GetObject('comment_list'))
 {
 $v_id=$row->v_id;
-$v_name=$row->v_name;
+$v_name=$row->n_title;
 ?>		
 <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
 <td height="30" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  class="checkbox" /><?php echo $row->id.".".IsCheck($row->ischeck);?> </td>
 <td class="td_border"><?php echo showFace(encodeHtml(cn_substr($row->msg,40)));?>  <a href="?action=viewcomment&id=<?php echo $row->id;?>">查看详情</a></td>
-<td class="td_border"><?php if(empty($v_name)) echo "该数据已删除"; else echo "<a href='".getContentLink($row->tid,$v_id,"")."' target='_blank' >{$v_name}({$v_id})</a>";?></td>
+<td class="td_border"><?php if(empty($v_name)) echo "该数据已删除"; else echo "<a href='".getArticleLink($row->tid,$v_id,"")."' target='_blank' >{$v_name}({$v_id})</a>";?></td>
 <td class="td_border"><?php echo $row->ip;?></td>
 <td class="td_border"><?php echo isCurrentDay($row->dtime);?></td>
 <td class="td_border"><?php echo empty($row->username)?'匿名用户':$row->username;?></td>

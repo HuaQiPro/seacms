@@ -188,7 +188,7 @@ function echoPlay($vId)
 	if (strpos($content,"{playpage:keywords}")>0) $content=str_replace("{playpage:keywords}",getKeywordsList($row['v_tags'],"&nbsp;&nbsp;"),$content);
 	if (strpos($content,"{playpage:jqtype}")>0) $content=str_replace("{playpage:jqtype}",getJqList($row['v_jq'],"&nbsp;&nbsp;"),$content);
 	$v_pic=$row['v_pic'];
-	$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_pic,$ref)){$v_pic=str_ireplace($pickey,'',$ref[1]);}
+	
 	if(!empty($v_pic)){
 		if(strpos(' '.$v_pic,'://')>0){
 		$content=str_replace("{playpage:pic}",$v_pic,$content);
@@ -199,7 +199,7 @@ function echoPlay($vId)
 	$content=str_replace("{playpage:pic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
 	}
 	$v_spic=$row['v_spic'];
-	$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_spic,$ref)){$v_spic=str_ireplace($pickey,'',$ref[1]);}
+	
 	if(!empty($v_spic)){
 		if(strpos(' '.$v_spic,'://')>0){
 		$content=str_replace("{playpage:spic}",$v_spic,$content);
@@ -211,7 +211,7 @@ function echoPlay($vId)
 	}
 	
 	$v_gpic=$row['v_gpic'];
-	$pickey=array('<','>','|',';','*','"','\'');if(preg_match('#(^.*?(?:\.bmp|\.jpg|\.png|\.gif|\.webp|\.jpeg|\.tif|\.psd|<|>|\*|\'|\"))#i',$v_gpic,$ref)){$v_gpic=str_ireplace($pickey,'',$ref[1]);}
+	
 	if(!empty($v_gpic)){
 		if(strpos(' '.$v_gpic,'://')>0){
 		$content=str_replace("{playpage:gpic}",$v_gpic,$content);
@@ -238,6 +238,7 @@ function echoPlay($vId)
 	$content=str_replace("{playpage:publisharea}",$row['v_publisharea'],$content);
 	$content=str_replace("{playpage:lang}",$row['v_lang'],$content);
 	$content=str_replace("{playpage:addtime}",MyDate('Y-m-d H:i',$row['v_addtime']),$content);
+	$content=str_replace("{playpage:addtime2}",MyDate('Y-m-d\TH:i:s',$row['v_addtime']),$content);
 	$content=str_replace("{playpage:state}",$row['v_state'],$content);
 	$content=str_replace("{playpage:commend}",$row['v_commend'],$content);
 	$content=str_replace("{playpage:des}",$v_des,$content);

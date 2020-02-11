@@ -1,326 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>《{playpage:name}》由{seacms:sitename}提供全集在线播放-{seacms:sitename}</title>
-<meta name="keywords" content="{playpage:name},{playpage:name}全集,{playpage:name}全集在线播放,{playpage:name}全集迅雷下载,{playpage:name}百度云播">
-<meta name="description" content="{seacms:sitename}提供{playpage:name}，{playpage:name}全集、{playpage:name}全集在线播放、{playpage:name}全集迅雷下载、{playpage:name}百度云播在线观看！"> 
-{seacms:load block/inc_header.html}
-<link rel="stylesheet" href="images/stui_block_color.css" type="text/css" />
-<link rel="stylesheet" href="images/stui_block.css" type="text/css" />
-<script src="/{seacms:sitepath}js/play.js"></script>
-<script type="text/javascript">var vod_name='{playpage:name len=10}',vod_url=window.location.href,vod_part='{playpage:part}';</script>
-</head>
-<body class="active">
- {seacms:top}
-	<div class="myui-player clearfix" style="background-color: #27272f;">
-		<div class="container">
-        	<div class="row">		
-        		<div class="myui-player__item clearfix" style="background-color: #1f1f1f;">
-        								<div class="col-md-wide-75 clearfix padding-0 relative" id="player-left">
-										<div class="myui-player__box player-fixed">
-	<a class="player-fixed-off" href="javascript:;" style="display: none;"><i class="fa fa-close"></i></a>	<div class="embed-responsive clearfix">
-				{playpage:playurlinfo}{playpage:player}
- 	</div>
-</div>
-<div class="clearfix" style="background-color: #1b1a25;">
-	<div class="col-md-wide-9">
-	<ul class="myui-player__operate">	
-			<li>
-		<a href="javascript:AddFav('{playpage:id}','')"><i class="fa fa-star"></i> 收藏</a>											
-	</li>
-		<li>
-		<a  href="javascript:void()" onclick="reportErr({playpage:id})"><i class="fa fa-close"></i> 报错</a>
-	</li>
-		<li>
-		<a href="javascript:;" onclick="window.location.reload()"><i class="fa fa-spinner"></i> 刷新</a>
-	</li>
-		<li>
-                <a class="digg_link" href="javascript:void()" onclick="diggVideo({playpage:id},'digg_num')">
-		    <i class="fa fa-thumbs-up"></i>
-		    <span class="digg_num">{playpage:diggnum}</span>
-		</a>
-	</li>
-	<li>
-                <a class="digg_link" href="javascript:void()" onclick="treadVideo({playpage:id},'tread_num')">
-	    	<i class="fa fa-thumbs-down"></i>
-		    <span class="digg_num">{playpage:treadnum}</span>
-		</a>
-	</li>
-	<li><a href="{playpage:preplaylink}"><i class="fa fa-caret-up"></i> 上集</a></li>
-	<li><a href="{playpage:nextplaylink}"><i class="fa fa-caret-down"></i> 下集</a></li>
-    <li><a href="{playpage:desktopurl}"><i class="fa fa-home"></i> 桌面</a></li>
-		<li class="dropdown-hover hidden-xs">
-		<a href="javascript:;"><i class="fa fa-qrcode font14"></i> 手机观看</a>
-		<div class="dropdown-box top fadeInDown clearfix">
-			<div class="item text-center">
-				<div class="qrcode-box active" style="background-color: #ffffff;">
-	<img class="icon" src="{seacms:ewm}" width="196"/>
-</div>
-<p>扫一扫用手机观看</p>
-			</div>
-		</div>
-	</li>
-</ul>
-</div>
-
-</div>
-<style type="text/css"> .embed-responsive{ padding-bottom: 56.25%;} </style>
-										<a class="is-btn hidden-sm hidden-xs" id="player-sidebar-is" href="javascript:;"><i class="fa fa-angle-right"></i></a>
+	<head>
+		{seacms:load seo/play.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+		<script src="/{seacms:sitepath}js/play.js"></script>
+	</head>
+	<body class="active">
+		<div class="myui-topbg clearfix"></div>
+		{seacms:top}		
+		<div class="myui-player clearfix">
+			<div class="container">
+				<div class="row">
+					<div class="myui-player__item clearfix" style="background-color: #1f1f1f;">
+						<div class="col-md-wide-75 clearfix padding-0 relative" id="player-left">
+							{seacms:load vod/player.html}
+							<a class="is-btn hidden-sm hidden-xs" id="player-sidebar-is" href="javascript:;"><i class="fa fa-angle-right"></i></a> 
+						</div>
+						<div class="col-md-wide-25 padding-0" id="player-sidebar" style="max-height:555px;overflow:scroll;">
+							<div class="myui-panel active clearfix">
+								<div class="myui-panel-box clearfix">
+									<div class="col-pd clearfix">
+										<div class="myui-panel__head active clearfix">
+											<h3 class="title text-fff">
+												{playpage:name}
+											</h3>	
 										</div>
-										<div class="col-md-wide-25 padding-0" id="player-sidebar">
-						<div class="myui-panel margin-0 clearfix">
-	<div class="myui-panel-box clearfix">
-		<div class="myui-panel__head active clearfix">
-			<h3 class="title text-fff">
-				{playpage:name}{playpage:from}			</h3>	
-		</div>
-		<div class="tab-content mb10">
-<div><ul class="myui-content__list playlist clearfix" id="playlist"><li class="col-md-2 col-sm-5 col-xs-3 active"> </li></ul></div>
-		</div>
-<!-- <div class="col-pd mb10">
-			<div style="padding: 80px  35px; background-color: #000; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位02</h5></div>		</div> -->
-				<div class="myui-panel_bd visible_ms">
-			<h5 class="text-center text-muted">—— 同主演推荐 ——</h5>
-			<ul class="myui-vodlist__bd clearfix">
-{seacms:videolist type=all num=4 order=time rel=y}
-								<li class="col-md-2 col-sm-4 col-xs-4">
-					<div class="myui-vodlist__box">
-	<a href="[videolist:link]" class="myui-vodlist__thumb lazyload" title="[videolist:name]" style="background: url([videolist:pic]);">	
-		<span class="play hidden-xs"></span>
-			<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
-				[videolist:score]分
-			</span>
-		<span class="pic-text text-center">[videolist:name]</span>
-	</a>																				
-</div>											
-				</li>			
-{/seacms:videolist}		
-							</ul>			
-		</div>	
-	</div>
-</div>
-
-					</div>
+										<div class="text-muted">
+											<ul class="nav nav-tabs pull-right">										
+												<li class="dropdown pb10 margin-0">
+													<a href="javascript:;" class="padding-0 text-fff" data-toggle="dropdown">换线路 <i class="fa fa-angle-down"></i></a>
+													<div class="dropdown-box bottom">
+														<ul class="item">
+															{playpage:playlist}
+															<li><a href="#player[playlist:i]" tabindex="-1" data-toggle="tab"><font color="{if:{playpage:from}==[playlist:from]}#FFA500{end if}">[playlist:from]</font></a></li>
+															{/playpage:playlist}
+														</ul>
+													</div>
+												</li>
+											</ul>
+											<span class="text-red">{playpage:score}分</span> / {playpage:typename} / {playpage:publisharea} / {playpage:publishtime}
+										</div>									
+										<div class="tab-content mb10">
+											{playpage:playlist}
+											<div id="player[playlist:i]" class="tab-pane fade in{if:{playpage:from}==[playlist:from]} active{end if} clearfix">
+												<ul class="myui-content__list playlist clearfix" id="playlist">
+													[playlist:link target=_self]
+												</ul>
+											</div>
+											{/playpage:playlist}
+										</div>
 									</div>
-				<div class="myui-player__data hidden-xs clearfix">
-					<h3>
-						<a class="text-fff" href="{playpage:link}">{playpage:name}</a>
-						<small class="text-muted">{playpage:note}</small>
-					</h3>
-					<p class="text-muted margin-0">
-						{playpage:addtime}更新 / <span class="text-red">{playpage:score}分</span> / <a class="text-muted" href="{playpage:typelink}">{playpage:typename}</a> / <a class="text-muted" href="/{seacms:sitepath}search.php?searchtype=5&tid={playpage:typeid}&area={playpage:publisharea}">{playpage:publisharea}</a> / <a class="text-muted" href="/{seacms:sitepath}search.php?searchtype=5&tid={playpage:typeid}&year={playpage:publishtime}">{playpage:publishtime}	</a>
-					</p>
-				</div>							
-			</div>
-		</div>
-	</div>
-		
-    <div class="container">
-        <div class="row">
-
-			<div class="row">
-                                <div class="col-md-wide-7 col-xs-1 padding-0">
-						<div class="myui-panel myui-panel-bg clearfix">
-			<div class="myui-panel-box clearfix">
-				<div class="myui-panel_hd">
-					<div class="myui-panel__head active bottom-line clearfix">
-						<a class="more sort-button pull-right" href="javascript:;"><i class="fa fa-sort-amount-asc"></i> 排序</a>						<h3 class="title">
-							<img src="images/icon_17.png">播放地址						</h3>
-						<ul class="nav nav-tabs active">	
-{playpage:playlist}							
-							<li><a href="#playlist[playlist:i]" data-toggle="tab">[playlist:from]</a></li>
-{/playpage:playlist}															
-						</ul>
-					</div>																		
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="tab-content myui-panel_bd">
-{playpage:playlist}
-					<div id="playlist[playlist:i]" class="tab-pane fade in clearfix">												
-			<ul class="stui-content__playlist  sort-list column8 clearfix">
-				[playlist:link target=_self]	
-			</ul>					
-	</div>
-{/playpage:playlist}
-</div>
-</div>
-</div>	
-				<script type="text/javascript">
-			$(".tab-pane:first,.nav-tabs li:first").addClass("active");
-		</script>		
-					
-					<div class="myui-panel myui-panel-bg clearfix">
-	<div class="myui-panel-box clearfix">
-		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					<img src="images/icon_5.png">剧情简介
-				</h3>						
-			</div>																		
-		</div>
-		<div class="myui-panel_bd">
-			<div class="col-pd text-collapse content">
-				<span class="sketch content">{playpage:des len=200}</span>
-				<span class="data" style="display: none;">{playpage:des}</span>
-				<a class="details" href="javascript:;">详情 <i class="fa fa-angle-down"></i></a>
-			</div>			
-		</div>			
-	</div>						
-</div>
-					
-				<div class="myui-panel myui-panel-bg clearfix">
-	<div class="myui-panel-box clearfix">
-		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					<img src="images/icon_6.png">猜你喜欢				</h3>		
-				<a class="more text-muted" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
-			</div>																		
-		</div>
-		<div class="myui-panel_bd">
-			<ul class="myui-vodlist__bd clearfix">
-{seacms:videolist type=current num=4 order=dayhit} 
-								<li class="col-lg-6 col-md-6 col-sm-4 col-xs-3">
-						<div class="myui-vodlist__box">
-			<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
-				<span class="play hidden-xs"></span>
-			<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
-				[videolist:score]分
-			</span>
-<span class="pic-text text-right">
-		[videolist:note len=10]</span>
-	</a>									
-	<div class="myui-vodlist__detail">
-		<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
-		<p class="text text-overflow text-muted hidden-xs">
-		[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]</p>
-	</div>										
-</div>												
-				</li>
- {/seacms:videolist} 
-{seacms:videolist type=current num=2 order=dayhit  start=5} 
-								<li class="col-lg-6 col-md-6 col-sm-4 col-xs-3 hidden-sm"">
-						<div class="myui-vodlist__box">
-			<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
-				<span class="play hidden-xs"></span>
-			<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
-				[videolist:score]分
-			</span>
-<span class="pic-text text-right">
-		[videolist:note len=10]</span>
-	</a>									
-	<div class="myui-vodlist__detail">
-		<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
-		<p class="text text-overflow text-muted hidden-xs">
-		[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]</p>
-	</div>										
-</div>												
-				</li>
- {/seacms:videolist}
-							</ul>			
-		</div>		
-	</div>						
-</div>	
-				<div class="myui-panel myui-panel-bg clearfix">
-	<div class="myui-panel-box clearfix">
-		<div class="myui-panel_bd">
-			<div class="myui-panel_hd">
-				<div class="myui-panel__head clearfix">
-					<h3 class="title">
-						<img src="images/icon_15.png">影片评论
-					</h3>						
-				</div>																		
-			</div>
-			<div class="myui-panel_bd">
-{playpage:comment}
 			</div>
 		</div>
-	</div>					
+		<div class="container">
+			<div class="row">
+				<div class="col-md-wide-7 col-xs-1 padding-0">
+					{seacms:load vod/like.html}
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+{playpage:comment}	
+	</div>				
 </div>
+				</div>
+			
+             <div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load vod/hot.html}
+				<!--	<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd">
+								<div class="col-xs-1">
+									<div style="padding: 100px 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位</h5></div>
+								</div>
+							</div>
+						</div>				
+					</div> -->
+				</div>
 			</div>
-                        <div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">	
-				<div class="myui-panel myui-panel-bg clearfix">
-	<div class="myui-panel-box clearfix">
-		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">
-				<h3 class="title">
-					<img src="images/icon_8.png">最近更新				</h3>	
-				<a class="more text-muted pull-right" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
-			</div>																		
 		</div>
-		<div class="myui-panel_bd">
-			<ul class="myui-vodlist__media active col-pd clearfix">
-{seacms:videolist type=current num=1 order=time} 
-									<li>
-	<div class="thumb">
-		<a class="myui-vodlist__thumb img-xs-70" style="background: url([videolist:pic]);" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]"></a>
-	</div>
-	<div class="detail detail-side">
-		<h4 class="title"><a href="[videolist:link]"><i class="fa fa-angle-right text-muted pull-right"></i> [videolist:name]</a></h4>
-		<p class="font-12"><span class="text-muted">类型：</span>[videolist:typename] <span class="text-muted">地区：</span>[videolist:publisharea]</p>		
-		<p class="font-12 margin-0"><span class="text-muted">主演：</span>[videolist:nolinkactor len=40]</p>
-	</div>																										
-</li>	
- {/seacms:videolist}
-							</ul>
-			<ul class="myui-vodlist__text col-pd clearfix">
-{seacms:videolist type=current num=3 order=hit}
-									<li>
-	<a href="[videolist:link]" title="[videolist:name]">
-		<span class="pull-right  text-muted hidden-md" style="color: ;">
-		HD</span>
-		<span class="badge badge-[videolist:i]">[videolist:i]</span>[videolist:name]</a>
-</li>
-{/seacms:videolist}
-{seacms:videolist type=current num=7 order=hit start=4}
-											<li>
-	<a href="[videolist:link]" title="[videolist:name]">
-		<span class="pull-right  text-muted hidden-md" style="color: ;">
-		[videolist:note]</span>
-		<span class="badge">[videolist:i]</span>[videolist:name]</a>
-</li>
-{/seacms:videolist}
-							</ul>	
-		</div>
-	</div>
-</div>
-
-				<div class="myui-panel myui-panel-bg clearfix">
-	<div class="myui-panel-box clearfix">
-		<div class="myui-panel_hd">
-			<div class="myui-panel__head clearfix">
-				<h3 class="title"><img src="images/icon_9.png">正在热播	</h3>	
-				<a class="more text-muted pull-right" href="{playpage:typelink}">更多  <i class="fa fa-angle-right"></i></a>
-			</div>																		
-		</div>
-		<div class="myui-panel_bd">
-			<ul class="myui-vodlist__media active col-pd clearfix">
-{seacms:videolist type=current num=5 order=hit}
-									<li>
-	<div class="thumb">
-		<a class="myui-vodlist__thumb wide img-xs-120" style="background: url([videolist:pic]);" href="[videolist:link]" title="[videolist:name]"></a>
-	</div>
-	<div class="detail detail-side">
-		<h4 class="title" style="margin-top: 0;"><a href="[videolist:link]">[videolist:name]</a></h4>
-		<p class="font-12 text-muted"><i class="fa fa-youtube-play"></i> [videolist:score]分</p>
-	</div>																				
-</li>
-{/seacms:videolist}
-							</ul>
-		</div>
-	</div>
-</div>	
-			</div></div>
-        </div>
-    </div>
-<script type="text/javascript">
-    	$(".MacPlayer").addClass("embed-responsive").css({"padding-bottom":"56.25%","z-index":"99"});
-		$("#playleft,.dplayer-video-wrap").css({"position":"inherit","overflow":"initial"});
-    </script>
-	<span class="mac_hits hits hide" data-mid="1" data-id="{playpage:id}" data-type="hits"></span>
-	<span class="mac_ulog_set hide" data-type="4" data-mid="1" data-id="{playpage:id}" data-sid="1" data-nid="1"></span>
-	<span class="vod_history hide" data-name="{playpage:name}" data-link="{playpage:playlink}"  data-pic="{playpage:link}" data-part="{playpage:part}" data-limit="10"></span>
- <div style="display:none;">{playpage:hit}</div>
- {seacms:foot}
-</body>
+		<script type="text/javascript">
+			{if:{playpage:upid} == 1}
+			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-3");
+			{elseif:{playpage:upid} == 3}
+			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-3");
+			{else}
+			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-4");
+			{end if}
+			$("#playlist a").addClass("btn btn-min btn-gray");
+			$("#playlist a[style='color:red']").css("color","").removeClass("btn-gray").addClass("btn-warm active").closest("li").addClass("active");
+		</script>
+		<script type="text/javascript">
+			MyTheme.Other.Roll('.tips','-30px');
+			$(".tips-close-btn").on("click",function(){
+				$(this).parents(".close-box").remove();
+				MyTheme.Other.Player();
+				Myui.Other.Topbg($("#player-left").outerHeight()+50);
+			});
+		</script>
+		<script type="text/javascript">
+			Myui.Other.Topbg($("#player-left").outerHeight()+50);
+		</script>
+		<span class="vod_history hide" data-name="{playpage:name}" data-link="{playpage:playlink}"  data-pic="{playpage:pic}" data-part="{playpage:part}" data-limit="10"></span>
+		
+		<div style="display:none;">{playpage:hit}</div>
+		{seacms:foot}
+	</body>
 </html>

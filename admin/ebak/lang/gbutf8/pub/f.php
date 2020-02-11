@@ -17,4 +17,4 @@ $fun_r=Array(
 	'TimeMinute'=>' 分钟',
 	'TimeSecond'=>' 秒'
 );
-?>
+ ?>

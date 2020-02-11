@@ -37,7 +37,7 @@
     <td colspan="3" height="90"><div class="header">
         <div class="logo" onClick="window.open('../');" style="cursor:pointer;">后台管理中心 - Power By SeaCMS</div>
         <div class="pannel">
-          <p>您好<em><?php echo $cuserLogin->getUserName(); ?></em>(
+          <p>您好 <em><?php echo $cuserLogin->getUserName(); ?></em>(
             <?php
         if($cuserLogin->getUserRank()==1) {
         	echo "系统管理员";
@@ -46,7 +46,7 @@
         	echo "网站编辑";
         }
         ?>
-            )&nbsp;&nbsp;&nbsp;&nbsp;<em><span onClick="clearCache()" style="cursor:pointer"><font color="#FF0000">[更新缓存]</font></span></em><span id="upcacheresult" style="color:#FF0000"></span>&nbsp;&nbsp; [<a href="exit.php" target="_top">退出</a>] [<a href="../" target="_blank">网站首页</a>]&nbsp;&nbsp;<a href="javascript:void(0);" onClick="view('gMenuMap');selfLabelWindefault('gMenuMap');"><img width="72"  height="18"  src="img/btn_map.gif" title="系统功能地图"  style="margin-bottom:-4px;"  /></a></p>
+            )&nbsp;&nbsp; [<a href="exit.php" target="_top">退出</a>] [<a href="../" target="_blank">网站首页</a>]&nbsp;&nbsp;&nbsp;&nbsp;<em><span onClick="clearCache()" style="cursor:pointer"><font color="#FF0000">[更新缓存]</font></span></em><span id="upcacheresult" style="color:#FF0000"></span>&nbsp;&nbsp;<a href="javascript:void(0);" onClick="view('gMenuMap');selfLabelWindefault('gMenuMap');"><img width="72"  height="18"  src="img/btn_map.gif" title="系统功能地图"  style="margin-bottom:-4px;"  /></a></p>
 </div>
         <div class="navbg"></div>
         <div class="nav"> 

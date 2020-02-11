@@ -1,11 +1,11 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 session_start();
 
-$ini = ini_get_all();
-//print_r($ini);
-$short_open_tag=$ini['short_open_tag']['global_value'];
-if($short_open_tag !=1){echo '必须开启PHP短标签设置才可以正常使用！<br>修改php.ini文件 ，找到 short_open_tag = Off 这一行，将 Off 修改为 On，保存并重启web环境。';}
+
+
+$act=$_GET['act'];
+if($act=="" OR empty($act)){$act="b";} //1为备份表 2为优化修复表
 
 function CheckPurview()
 {
@@ -182,11 +182,11 @@ $empire=new mysqlquery();
 if(!empty($phome_db_dbname))
 {
 	
-	echo $fun_r['GotoDefaultDb']."<script>self.location.href='ChangeTable.php?mydbname=".$phome_db_dbname."&keyboard=sea'</script>";
+	echo $fun_r['GotoDefaultDb']."<script>self.location.href='ChangeTable.php?mydbname=".$phome_db_dbname."&keyboard=sea&act=".$act."'</script>";
 	exit();
 }
 $sql=$empire->query("SHOW DATABASES");
 require LoadAdminTemp('eChangeDb.php');
 db_close();
 $empire=null;
-?>
+ ?>

@@ -25,6 +25,7 @@ if($page==0) $page=1;
 $whereStr="  ";
 if ($action=="nullpic") $whereStr.=" and d.v_pic=''";
 if ($n_recycled=="ok") $whereStr.=" and d.n_recycled=1";
+if ($n_commend=="ok") $whereStr.=" and d.n_commend>0";
 if (!empty($type)) $whereStr.=" and d.tid in (".getTypeId($type).")";
 if (!empty($keyword)) $whereStr.=" and d.n_title like '%".$keyword."%'";
 $whereorder = str_replace("where order","order",str_replace("where and","and",$whereStr.$orderStr));

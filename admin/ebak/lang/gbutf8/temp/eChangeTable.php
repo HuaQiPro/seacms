@@ -3,7 +3,10 @@ if(!defined('InEmpireBak'))
 {
 	exit();
 }
-?>
+$act=$_GET['act'];
+if($act=="" OR empty($act)){$act="b";} //1为备份表 2为优化修复表
+
+ ?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -109,20 +112,20 @@ function check()
 </script>
 </head>
 <body>
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;工具&nbsp;&raquo;&nbsp;数据库备份 ';</script>
+<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;工具&nbsp;&raquo;&nbsp;数据库 ';</script>
 
   <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb">
   <form name="ebakchangetb" method="post" action="phomebak.php" onsubmit="return check();">
-     <tr class="thead"><td class="td_title"  style="height:30px">备份数据
-        <input name="phome" type="hidden" id="phome" value="DoEbak">        <input name="mydbname" type="hidden" id="mydbname" value="<?=$mydbname?>">        </td>
+     <tr class="thead"><td class="td_title"  style="height:30px"><?php if($act=="y"){echo '优化修复数据表';} else {echo '备份数据';}  ?>
+        <input name="phome" type="hidden" id="phome" value="DoEbak">        <input name="mydbname" type="hidden" id="mydbname" value="<?php echo $mydbname ?>">        </td>
     </tr>
-    <tr> 
+    <tr <?php if($act=="y"){echo 'style="display:none;"';}  ?>> 
       <td height="30" bgcolor="#FFFFFF"> <!---<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#DBEAF5">
 
           <tr id="showsave" style="display:none">
             <td>&nbsp;</td>
             <td>保存文件名:setsave/ 
-              <input name="savename" type="text" id="savename" value="<?=$_GET['savefilename']?>">
+              <input name="savename" type="text" id="savename" value="<?php echo $_GET['savefilename'] ?>">
               <input name="Submit4" type="submit" id="Submit4" onClick="document.ebakchangetb.phome.value='DoSave';document.ebakchangetb.action='phome.php';" value="保存设置">
               <font color="#666666">(文件名请用英文字母,如：test)</font></td>
           </tr>
@@ -136,26 +139,26 @@ function check()
             </td>
           </tr>
         </table>-->
-        <table width="100%" class="tb">
-          <tr> 
-            <td width="22%" ><input style="display:none;" type="radio" name="baktype" value="0"<?=$dbaktype==0?' checked':''?>> 
+        <table width="100%" class="tb" >
+          <tr <?php if($act=="y"){echo 'style="display:none;"';}  ?>> 
+            <td width="22%" ><input style="display:none;" type="radio" name="baktype" value="0"<?php echo $dbaktype==0?' checked':'' ?>> 
               文件大小设置：</td>
             <td width="78%" height="23"> 每组备份大小: 
               <input name="filesize" type="text" id="filesize" value="1024" size="6">
               KB <font color="#666666">(1 MB = 1024 KB)</font></td>
           </tr>
           <tr style="display:none;"> 
-            <td><input type="radio" name="baktype" value="1"<?=$dbaktype==1?' checked':''?>> 
+            <td><input type="radio" name="baktype" value="1"<?php echo $dbaktype==1?' checked':'' ?>> 
               <strong>按记录数备份</strong></td>
             <td height="23">每组备份 
               <input name="bakline" type="text" id="bakline" value="1000" size="6">
               条记录， 
-              <input name="autoauf" type="checkbox" id="autoauf" value="1"<?=$dautoauf==1?' checked':''?>>
+              <input name="autoauf" type="checkbox" id="autoauf" value="1"<?php echo $dautoauf==1?' checked':'' ?>>
               自动识别自增字段<font color="#666666">(此方式效率更高)</font></td>
           </tr>
           <tr style="display:none;"> 
             <td>备份数据库结构</td>
-            <td height="23"><input name="bakstru" type="checkbox" id="bakstru" value="1"<?=$dbakstru==1?' checked':''?>>
+            <td height="23"><input name="bakstru" type="checkbox" id="bakstru" value="1"<?php echo $dbakstru==1?' checked':'' ?>>
               是 <font color="#666666">(没特殊情况，请选择)</font></td>
           </tr>
 		 
@@ -167,17 +170,17 @@ function check()
           </tr>
           <tr style="display:none;">
             <td>数据存放格式</td>
-            <td height="23"><input type="radio" name="bakdatatype" value="0"<?=$dbakdatatype==0?' checked':''?>>
+            <td height="23"><input type="radio" name="bakdatatype" value="0"<?php echo $dbakdatatype==0?' checked':'' ?>>
               正常
-              <input type="radio" name="bakdatatype" value="1"<?=$dbakdatatype==1?' checked':''?>>
+              <input type="radio" name="bakdatatype" value="1"<?php echo $dbakdatatype==1?' checked':'' ?>>
               十六进制方式<font color="#666666">(十六进制备份文件会占用更多的空间)</font></td>
           </tr>
-          <tr> 
+          <tr <?php if($act=="y"){echo 'style="display:none;"';}  ?>> 
             <td>存放目录</td>
             <td height="23"> 
-              <?=$bakpath?>
+              <?php echo $bakpath ?>
               / 
-              <input name="mypath" type="text" id="mypath" value="<?=$mypath?>" size="28"> 
+              <input name="mypath" type="text" id="mypath" value="<?php echo $mypath ?>" size="28"> 
               <font color="#666666"> 
               <input type="button" name="Submit2" value="选择目录" onclick="javascript:window.open('ChangePath.php?change=1&toform=ebakchangetb','','width=750,height=500,scrollbars=yes');">
               (目录不存在，系统会自动建立)</font></td>
@@ -186,33 +189,33 @@ function check()
             <td>备份选项</td>
             <td height="23">导入方式: 
               <select name="insertf" id="select">
-                <option value="replace"<?=$dinsertf=='replace'?' selected':''?>>REPLACE</option>
-                <option value="insert"<?=$dinsertf=='insert'?' selected':''?>>INSERT</option>
+                <option value="replace"<?php echo $dinsertf=='replace'?' selected':'' ?>>REPLACE</option>
+                <option value="insert"<?php echo $dinsertf=='insert'?' selected':'' ?>>INSERT</option>
               </select>
               , 
-              <input name="beover" type="checkbox" id="beover" value="1"<?=$dbeover==1?' checked':''?>>
+              <input name="beover" type="checkbox" id="beover" value="1"<?php echo $dbeover==1?' checked':'' ?>>
               完整插入，
-              <!---<input name="bakstrufour" type="checkbox" id="bakstrufour" value="1"<?=$dbakstrufour==1?' checked':''?>>
+              <!---<input name="bakstrufour" type="checkbox" id="bakstrufour" value="1"<?php echo $dbakstrufour==1?' checked':'' ?>>
               <a title="需要转换数据表编码时选择">转成MYSQL4.0格式</a>,--> 每组备份间隔： 
-              <input name="waitbaktime" type="text" id="waitbaktime" value="<?=$dwaitbaktime?>" size="2">
+              <input name="waitbaktime" type="text" id="waitbaktime" value="<?php echo $dwaitbaktime ?>" size="2">
               秒</td>
           </tr>
-          <tr> 
+          <tr <?php if($act=="y"){echo 'style="display:none;"';}  ?>> 
             <td valign="top">备份说明<br> <font color="#666666">(系统会生成一个readme.txt)</font></td>
-            <td height="23"><textarea name="readme" cols="80" rows="2" id="readme"><?=$dreadme?></textarea></td>
+            <td height="23"><textarea name="readme" cols="80" rows="2" id="readme"><?php echo $dreadme ?></textarea></td>
           </tr>
 		  <!---
           <tr> 
             <td valign="top">去除自增值的字段列表：<br> <font color="#666666">(格式：<strong>表名.字段名</strong><br>
               多个请用&quot;,&quot;格开)</font></td>
-            <td height="23"><textarea name="autofield" cols="80" rows="5" id="autofield"><?=$dautofield?></textarea></td>
+            <td height="23"><textarea name="autofield" cols="80" rows="5" id="autofield"><?php echo $dautofield ?></textarea></td>
           </tr>-->
         </table>
       </td>
     </tr>
 
 <tr>
-<td width="100%">选择要备份的表：( <a href="#ebak" onclick="SelectCheckAll(document.ebakchangetb)"><u>全选</u></a> | <a href="#ebak" onclick="reverseCheckAll(document.ebakchangetb);"><u>反选</u></a> )</td>
+<td width="100%">选择数据表：( <a href="#ebak" onclick="SelectCheckAll(document.ebakchangetb)"><u>全选</u></a> | <a href="#ebak" onclick="reverseCheckAll(document.ebakchangetb);"><u>反选</u></a> )</td>
  </tr>
 
     <tr>
@@ -260,45 +263,44 @@ function check()
 				}
 			}
 			$collation=$r[Collation]?$r[Collation]:'---';
-		  ?>
-          <tr id=tb<?=$r[Name]?>> 
+		   ?>
+          <tr id=tb<?php echo $r[Name] ?>> 
             <td height="23"> <div align="left"> 
-                <input name="tablename[]" type="checkbox" id="tablename[]" value="<?=$r[Name]?>" onclick="if(this.checked){tb<?=$r[Name]?>.style.backgroundColor='#F1F7FC';}else{tb<?=$r[Name]?>.style.backgroundColor='#ffffff';}"<?=$tbchecked?>>
+                <input name="tablename[]" type="checkbox" id="tablename[]" value="<?php echo $r[Name] ?>" onclick="if(this.checked){tb<?php echo $r[Name] ?>.style.backgroundColor='#F1F7FC';}else{tb<?php echo $r[Name] ?>.style.backgroundColor='#ffffff';}"<?php echo $tbchecked ?>>
               </div></td>
             <td height="23"> <div align="left">
-                <?=$r[Name]?>
+                <?php echo $r[Name] ?>
 </div></td>
             <td height="23"> <div align="left">
-                <?=$r[Type]?$r[Type]:$r[Engine]?>
+                <?php echo $r[Type]?$r[Type]:$r[Engine] ?>
               </div></td>
             <td><div align="left">
-				<?=$collation?>
+				<?php echo $collation ?>
               </div></td>
             <td height="23"> <div align="left">
-                <?=$r[Rows]?>
+                <?php echo $r[Rows] ?>
               </div></td>
             <td height="23"> <div align="left">
-                <?=Ebak_ChangeSize($datasize)?>
+                <?php echo Ebak_ChangeSize($datasize) ?>
               </div></td>
             <td height="23"> <div align="left">
-                <?=Ebak_ChangeSize($r[Data_free])?>
+                <?php echo Ebak_ChangeSize($r[Data_free]) ?>
               </div></td>
           </tr>
-          <?
+          <?php
 		  }
-		  ?>
+		   ?>
           
         </table></td>
     </tr><tr>
-            <td height="23">总表数:<?=$tablenum?>&nbsp;&nbsp;&nbsp;&nbsp;总数据条目:<?=$rownum?>&nbsp;&nbsp;&nbsp;&nbsp;空间占用:<?=Ebak_ChangeSize($totaldatasize)?></td></tr>
+            <td height="23">总表数:<?php echo $tablenum ?>&nbsp;&nbsp;&nbsp;&nbsp;总数据条目:<?php echo $rownum ?>&nbsp;&nbsp;&nbsp;&nbsp;空间占用:<?php echo Ebak_ChangeSize($totaldatasize) ?></td></tr>
     <tr class="header"> 
       <td height="25">
 <div id="go">
-          <input type="submit" name="Submit" value="开始备份" onclick="document.ebakchangetb.phome.value='DoEbak';document.ebakchangetb.action='phomebak.php';">
-          &nbsp;&nbsp; &nbsp;&nbsp;
-          <input type="submit" name="Submit2" value="修复数据表" onclick="document.ebakchangetb.phome.value='DoRep';document.ebakchangetb.action='phome.php';">
+          <input type="submit" name="Submit" <?php if($act=="y"){echo 'style="display:none;"';}  ?> value="开始备份" onclick="document.ebakchangetb.phome.value='DoEbak';document.ebakchangetb.action='phomebak.php';">
+          <input type="submit" name="Submit2" <?php if($act=="b"){echo 'style="display:none;"';}  ?> value="修复数据表" onclick="document.ebakchangetb.phome.value='DoRep';document.ebakchangetb.action='phome.php';">
           &nbsp;&nbsp; &nbsp;&nbsp; 
-          <input type="submit" name="Submit22" value="优化数据表" onclick="document.ebakchangetb.phome.value='DoOpi';document.ebakchangetb.action='phome.php';">
+          <input type="submit" name="Submit22" <?php if($act=="b"){echo 'style="display:none;"';}  ?> value="优化数据表" onclick="document.ebakchangetb.phome.value='DoOpi';document.ebakchangetb.action='phome.php';">
         &nbsp;&nbsp; &nbsp;&nbsp;  
 		</div></td>
     </tr>
@@ -309,20 +311,20 @@ function check()
 $ckmaxinputnum=Ebak_CheckFormVarNum($tablenum);
 if($ckmaxinputnum)
 {
-?>
+ ?>
 	<script>
-	document.getElementById("ckmaxinputnum").innerHTML="<font color=red><?=$ckmaxinputnum?></font>";
+	document.getElementById("ckmaxinputnum").innerHTML="<font color=red><?php echo $ckmaxinputnum ?></font>";
 	checkmaxinput.style.display="";
 	</script>
 <?php
 }
-?>
+ ?>
 <?php
 echo "<div align=center>";
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\"><font style=\"color:#666;\">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"//www.seacms.net/\"><font style=\"font-size:10px;\">POWER BY SEACMS</font></a></td></tr></table></div>\n</body>\n</html>";
-?>
+ ?>
 
 </body>
 </html>

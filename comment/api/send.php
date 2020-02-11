@@ -9,7 +9,8 @@ if(!isset($action))
 	$action = '';
 }
 
-$ischeck = $cfg_feedbackcheck=='Y' ? 0 : 1;
+if($cfg_gbcheck==1){$ischeck =0;}else{$ischeck =1;}
+
 $id = (isset($gid) && is_numeric($gid)) ? $gid : 0;
 $itype = (isset($ctype) && is_numeric($ctype)) ? $ctype : 0;
 $cparent = (isset($cparent) && is_numeric($cparent)) ? $cparent : 0;
