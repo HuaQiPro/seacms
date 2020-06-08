@@ -1,2 +1,0 @@
-﻿添加影片,admin_video.php?action=add
-管理影片,admin_video.php?action=else

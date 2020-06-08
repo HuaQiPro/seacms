@@ -1,1 +1,0 @@
-<?php $notify1 = ""; $notify2 = ""; $notify3 = "";  ?>
