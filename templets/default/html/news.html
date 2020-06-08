@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/news.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container min">
+			<div class="row">
+                                {seacms:load newshead.html}
+				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+					<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd col-pd clearfix">
+								<h1 class="myui-article__title">{news:title}</h1>
+								<p class="myui-article__sub bottom-line">
+									<span class="text-muted hidden-xs">分类：</span>{news:typename}<span class="split-line"></span>来源：{seacms:sitename}<span class="split-line"></span>人气：{news:hit}<span class="split-line"></span>更新：{news:addtime}
+								</p>
+								<div class="myui-article__content mt20">
+									{news:subcontent}
+								</div>
+								<div class="hy-page clearfix">
+									<ul class="page">
+										{news:subpagenumber len=3} 
+									</ul>
+                             </div>
+							</div>
+						</div>
+						
+					</div>	
+					
+		<div class="myui-panel myui-panel-bg clearfix">
+						
+					<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd col-pd clearfix">
+								文章打分： {news:mark style=star len=5}	
+							</div>
+					</div>
+		</div>
+
+		<div class="myui-panel myui-panel-bg clearfix">
+						
+					<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd col-pd clearfix">
+								  {news:comment}	
+							</div>
+					</div>
+		</div>	
+					
+					
+				</div>
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load block/art_code.html}
+					{seacms:load block/vod_hot.html}
+					{seacms:load block/art_hot.html}
+				</div>
+
+			</div>
+		</div>
+		{seacms:foot}
+	</body>
+</html>

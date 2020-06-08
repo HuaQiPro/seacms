@@ -1,0 +1,125 @@
+		<header class="myui-header__top clearfix" id="header-top">
+	<div class="container">	
+		<div class="row">				
+			<div class="myui-header__logo">			    	
+				<a class="logo" href="/">
+					<img class="img-responsive hidden-xs" src="images/img/logo.png" />
+					<img class="img-responsive visible-xs" src="images/img/logo_min.png" />
+				</a>					
+			</div>
+			<ul class="myui-header__menu nav-menu hidden-sm hidden-xs">
+				<li class=" {if:{seacms:currenttypeid}=-444}active{end if}"><a href="/">首页</a></li>
+				{seacms:menulist type=top}
+				<li class="{if:[menulist:typeid]={seacms:currenttypeid}}active{elseif:[menulist:typeid]={playpage:upid}}active{end if}"><a href="[menulist:link]">[menulist:typename]</a></li>
+				{/seacms:menulist}
+				<li><a href="/topic">专题</a></li>
+				<li><a href="/news">资讯</a></li>
+			</ul>
+			<ul class="myui-header__user">	
+				<li class="dropdown-hover">
+					<a href="javascript:;" title="播放记录"> <i class="fa fa-clock-o"></i></a>
+					<div class="dropdown-box fadeInDown">
+						<div class="item clearfix">
+							<p class="text-muted">
+								播放记录
+							</p>
+							<div class="history-list clearfix">
+								<script type="text/javascript">
+									var history_get = MyTheme.Cookie.Get("history");
+									if (history_get) {
+										var json = eval("(" + history_get + ")");
+										for (i = 0; i < json.length; i++) {
+											document.write("<p><a class='text-333' href='" + json[i].link + "' title='" + json[i].name +"'><span class='pull-right text-red'>" + json[i].part + "</span>" + json[i].name + "</a></p>");
+										}
+									} else {
+										document.write("<p style='padding: 80px 0; text-align: center'>您还没有看过影片哦</p>");
+									}
+								</script>
+							</div>
+				
+						</div>
+					</div>
+				</li>
+				<li><a href="/gbook.php" title="留言反馈"><i class="fa fa-commenting"></i></a></li>
+				<li><a href="/member.php" title="会员中心"><i class="fa fa-user"></i></a></li>
+				
+			</ul>
+		</div>
+	</div>
+	<div class="myui-header__search">
+		<div class="container">
+			<div class="row">
+				
+				<div class="search-hot hidden-xs pull-right" style="line-height: 48px;">
+					<span><i class="fa fa-send"></i></span>
+{seacms:menulist type=1}{seacms:smallmenulist type=[menulist:typeid]}				
+					<a href="[smallmenulist:link]">[smallmenulist:typename]</a>
+{/seacms:smallmenulist}{/seacms:menulist}
+				</div>
+				
+				
+				<ul class="">
+					
+					<li class="search-ul dropdown-hover">
+						<i class="fa fa-reorder"></i>
+						<div class="dropdown-box bottom fadeInDown clearfix">
+							<ul class="item nav-list clearfix">
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:{seacms:currenttypeid}=-444} btn-warm{else} btn-default{end if}" href="/">首页</a></li>
+{seacms:menulist type=top}{seacms:smallmenulist type=[menulist:typeid]}
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:[smallmenulist:typeid]={seacms:currenttypeid}} btn-warm{elseif:[smallmenulist:typeid]={playpage:upid}} btn-warm{else} btn-default{end if}" href="[smallmenulist:link]">[smallmenulist:typename]</a></li>
+								{/seacms:smallmenulist}{/seacms:menulist}
+{seacms:menulist type=3,4,41}
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:[menulist:typeid]={seacms:currenttypeid}} btn-warm{elseif:[menulist:typeid]={playpage:upid}} btn-warm{else} btn-default{end if}" href="[menulist:link]">[menulist:typename]</a></li>
+{/seacms:menulist}
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="/topic">专题</a></li>
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="/news">资讯</a></li>
+								
+								
+							</ul>
+						</div>
+					</li>
+					
+					
+					
+					<li class="search-select dropdown-hover" href="javascript:;">
+						<span class="text">视频</span> <i class="fa fa-caret-down text-666"></i>
+						<div class="dropdown-box bottom fadeInDown">
+							<div class="item">
+								<p class="vod" data-action="/search.php">视频</p>
+								<p class="news" data-action="/so.php">资讯</p>
+							</div>
+						</div>
+					</li>
+					
+					
+					<li class="search-box dropdown-hover" href="javascript:;">
+						<form id="search" name="search" method="get" action="/search.php" onSubmit="return qrsearch();">
+							<input type="text" id="wd" name="searchword" class="search_wd form-control" value="" placeholder="输入影片关键词..."
+							 autocomplete="off"/>
+							<button class="submit search_submit" id="searchbutton"><i class="fa fa-search"></i></button>
+						</form>
+						
+						<div id="word" class="autocomplete-suggestions active hidden-xs" style="display: none;">
+							<ul class="wordlist" style="max-height: 410px; overflow: auto;"></ul>
+						</div>
+						
+						
+						
+						<div class="search-dropdown-hot dropdown-box bottom fadeInDown">
+							<div class="item">
+								<p class="text-muted">
+									热门搜索
+								</p>
+{seacms:videolist type=all num=5 order=dayhit}
+								<p><a class="text-333" href="[videolist:link]" title="[videolist:name]"><span class="badge{if:[videolist:i] == 1} badge-first{elseif:[videolist:i] == 2} badge-second{elseif:[videolist:i] == 3} badge-third{end if}">[videolist:i]</span> [videolist:name]</a></p>
+								{/seacms:videolist}
+							</div>
+						</div>
+						
+						
+					</li>
+				</ul>
+			</div>
+		</div>						    
+	</div>
+</header>

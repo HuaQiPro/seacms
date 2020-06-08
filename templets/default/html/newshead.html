@@ -1,0 +1,20 @@
+					<div class="myui-panel myui-panel-bg clearfix">					
+					<div class="myui-panel-box clearfix">
+				<div class="myui-panel_hd">
+        		<div class="clearfix" data-align="left">
+                                                <li class="col-md-9 col-xs-3">
+						<a class="btn btn-block btn-{if:{seacms:currenttypeid}=-444}warm{end if}" href="{seacms:newslink}">
+							<span class="spot"></span>资讯首页
+						</a>
+					</li>
+{seacms:menulist type=top by=news}
+                                                <li class="col-md-9 col-xs-3">
+						<a class="btn btn-block btn-{if:[menulist:typeid]={seacms:currenttypeid}}warm{elseif:[menulist:typeid]={playpage:upid}}warm{end if}" href="[menulist:link]">
+							<span class="spot"></span>[menulist:typename]
+						</a>
+					</li>
+{/seacms:menulist}
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,1 @@
+<?php $smtpserver = "smtp.qq.com"; $smtpserverport = "465"; $smtpusermail = "12345@qq.com"; $smtpname = "海洋影视网"; $smtpuser = "12345@qq.com"; $smtppass = "123456789"; $smtpreg = "off"; $smtppsw = "off";  ?>

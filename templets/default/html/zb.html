@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/play.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+		<script src="/{seacms:sitepath}js/play.js"></script>
+	</head>
+	<body class="active">
+		<div class="myui-topbg clearfix"></div>
+		{seacms:top}		
+		<div class="myui-player clearfix">
+			<div class="container">
+				<div class="row">
+					<div class="myui-player__item clearfix" style="background-color: #1f1f1f;">
+						<div class="col-md-wide-75 clearfix padding-0 relative" id="player-left">
+<style>
+		* {
+	margin: 0px;
+	padding: 0px;
+}
+.wrap {
+	width: 100%;
+}
+.box {
+	width: 100%;
+	height: 0px;
+			/* 16:9padding-bottom:65.25%，4:3padding-bottom:75% */
+	padding-bottom: 65.25%;
+	position: relative;
+	background: black;
+}
+.box p {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	color: #000000;
+}
+</style>
+<div class="wrap">
+			<div class="box">
+<p><iframe id="iframe-player" name="iframe-player" src="{playpage:dz}" width="100%" height="100%" scrolling="no" frameborder="0"></iframe></p>
+                      </div>
+		</div>
+							<a class="is-btn hidden-sm hidden-xs" id="player-sidebar-is" href="javascript:;"><i class="fa fa-angle-right"></i></a> 
+						</div>
+						<div class="col-md-wide-25 padding-0" id="player-sidebar">
+							<div class="myui-panel active clearfix">
+								<div class="myui-panel-box clearfix">
+									<div class="col-pd clearfix">
+										<div class="myui-panel__head active clearfix">
+											<h3 class="title text-fff">
+												{playpage:name}
+											</h3>	
+										</div>
+										<div class="text-muted">
+											<ul class="nav nav-tabs pull-right">										
+												<li class="dropdown pb10 margin-0">
+													<a href="javascript:;" class="padding-0 text-fff" data-toggle="dropdown">换线路 <i class="fa fa-angle-down"></i></a>
+													<div class="dropdown-box bottom">
+														<ul class="item">
+															{playpage:playlist}
+															<li><a href="#player[playlist:i]" tabindex="-1" data-toggle="tab"><font color="{if:{playpage:from}==[playlist:from]}#FFA500{end if}">[playlist:from]</font></a></li>
+															{/playpage:playlist}
+														</ul>
+													</div>
+												</li>
+											</ul>
+											<span class="text-red">{playpage:score}分</span> / {playpage:typename} / {playpage:publisharea} / {playpage:publishtime}
+										</div>									
+										<div class="tab-content mb10">
+											{playpage:playlist}
+											<div id="player[playlist:i]" class="tab-pane fade in{if:{playpage:from}==[playlist:from]} active{end if} clearfix">
+												<ul class="myui-content__list playlist clearfix" id="playlist">
+													[playlist:link target=_self]
+												</ul>
+											</div>
+											{/playpage:playlist}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-wide-7 col-xs-1 padding-0">
+					{seacms:load vod/like.html}
+				</div>
+                                <div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load vod/hot.html}
+				<!--	<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd">
+								<div class="col-xs-1">
+									<div style="padding: 100px 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位</h5></div>
+								</div>
+							</div>
+						</div>				
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			{if:{playpage:upid} == 1}
+			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-3");
+			{elseif:{playpage:upid} == 3}
+			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-3");
+			{else}
+			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-4");
+			{end if}
+			$("#playlist a").addClass("btn btn-min btn-gray");
+			$("#playlist a[style='color:red']").css("color","").removeClass("btn-gray").addClass("btn-warm active").closest("li").addClass("active");
+		</script>
+		<script type="text/javascript">
+			MyTheme.Other.Roll('.tips','-30px');
+			$(".tips-close-btn").on("click",function(){
+				$(this).parents(".close-box").remove();
+				MyTheme.Other.Player();
+				Myui.Other.Topbg($("#player-left").outerHeight()+50);
+			});
+		</script>
+		<script type="text/javascript">
+			Myui.Other.Topbg($("#player-left").outerHeight()+50);
+		</script>
+		<span class="vod_history hide" data-name="{playpage:name}" data-link="{playpage:playlink}"  data-pic="{playpage:pic}" data-part="{playpage:part}" data-limit="10"></span>
+		
+		<div style="display:none;">{playpage:hit}</div>
+		{seacms:foot}
+	</body>
+</html>

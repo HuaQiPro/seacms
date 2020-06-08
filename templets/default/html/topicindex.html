@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/topicindex.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container">
+			<div class="row">
+				<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_bd">
+							<ul class="myui-vodlist clearfix">
+								{seacms:topicindexlist size=20}
+								<li class="col-lg-4  col-md-5 col-sm-3 col-xs-2">
+									<div class="myui-vodlist__box">
+										<a class="myui-vodlist__thumb wide lazyload" href="[topicindexlist:link]" title="[topicindexlist:name]"
+										 data-original="[topicindexlist:pic]">
+											<span class="play hidden-xs"></span>
+										</a>
+										<div class="myui-vodlist__detail">
+											<h4 class="title text-center text-overflow"><a href="[topicindexlist:link]" title="[topicindexlist:name]">[topicindexlist:name]</a></h4>
+											<p class="text text-center text-overflow text-muted hidden-xs">—— [topicindexlist:count]个影片 ——</p>
+										</div>
+									</div>
+								</li>
+								{/seacms:topicindexlist}
+							</ul>
+						</div>
+					</div>
+				</div>
+				<ul class="myui-page text-center clearfix">
+					<li><a class="btn btn-default" href="{topicindexlist:firstlink}">首页</a></li>
+					<li><a class="btn btn-default" href="{topicindexlist:backlink}">上一页</a></li>
+					{topicindexlist:pagenumber len=5}
+					<li class="hidden-xs"><a class="btn{if:{topicindexlist:page}==[pagenumber:page]} btn-warm{else} btn-default{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+					{/topicindexlist:pagenumber}
+					<li class="visible-xs"><a class="btn btn-warm">{topicindexlist:page}/{topicindexlist:pagecount}</a></li>
+					<li><a class="btn btn-default" href="{topicindexlist:nextlink}">下一页</a></li>
+					<li><a class="btn btn-default" href="{topicindexlist:lastlink}">尾页</a></li>
+				</ul>
+		<!--		<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_bd">
+							<div class="col-xs-1">
+								<div style="padding: 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位01</h5></div>
+							</div>
+						</div>
+					</div>				
+				</div> -->
+			</div>
+		</div>
+		{seacms:foot}
+	</body>
+</html>

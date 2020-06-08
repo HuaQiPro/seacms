@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/newspage.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container min">
+			<div class="row">
+                                {seacms:load newshead.html}
+				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+					<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_hd">
+								<div class="myui-panel__head active bottom-line clearfix">
+									<h3 class="title">
+										最新资讯
+									</h3>	
+								</div>																		
+							</div>
+							<div class="myui-panel_bd clearfix">											
+								<ul class="myui-vodlist__media col-pd clearfix">
+									{seacms:newspagelist size=11}
+									<li>
+										<div class="detail detail-left">
+											<h4 class="title"><a href="[newspagelist:link]" title="[newspagelist:name]">[newspagelist:name]</a></h4>		
+											<p class="desc text-666 hidden-sm hidden-xs">[newspagelist:content len=60]...</p>
+											<p class="margin-0 text-muted font-12">[newspagelist:typename]<span class="split-line"></span>[newspagelist:time style=yyyy-mm-dd]</p>
+										</div>
+										<div class="thumb">
+											<a class="myui-vodlist__thumb wide img-md-190 img-xs-130 lazyload" href="[newspagelist:link]" title="[newspagelist:name]" data-original="[newspagelist:pic]">
+												<span class="play-v"></span>
+											</a>
+										</div>
+									</li>															
+									{/seacms:newspagelist}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="myui-page text-center clearfix">
+						<li><a class="btn btn-default" href="{newspagelist:firstlink}">首页</a></li>
+						<li><a class="btn btn-default" href="{newspagelist:backlink}">上一页</a></li>
+						{newspagelist:pagenumber len=5}
+						<li class="hidden-xs"><a class="btn{if:{newspagelist:page}==[pagenumber:page]} btn-warm{else} btn-default{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+						{/newspagelist:pagenumber}
+						<li class="visible-xs"><a class="btn btn-warm">{newspagelist:page}/{newspagelist:pagecount}</a></li>
+						<li><a class="btn btn-default" href="{newspagelist:nextlink}">下一页</a></li>
+						<li><a class="btn btn-default" href="{newspagelist:lastlink}">尾页</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load block/art_code.html}
+					{seacms:load block/vod_hot.html}
+					{seacms:load block/art_hot.html}
+				</div>
+
+			</div>
+		</div>
+		{seacms:foot}
+	</body>
+</html>

@@ -1,0 +1,49 @@
+{if:mytheme:home_rank.is}
+<div class="myui-panel myui-panel-bg {mytheme:home_rank.self} clearfix">
+	<div class="myui-panel-box clearfix">														
+		{seacms:menulist type={mytheme:home_rank.id}}												
+		<div class="col-lg-{mytheme:home_rank.col} col-md-4 col-sm-2 col-xs-1 padding-0">
+			<div class="myui-panel_hd">
+				<div class="myui-panel__head active bottom-line clearfix">
+					<h3 class="title">
+						[menulist:typename]{mytheme:home_rank.title}
+					</h3>		
+					<a class="more text-muted" href="[menulist:link]">更多 <i class="fa fa-angle-right"></i></a>
+				</div>
+			</div>
+			<div class="myui-panel_bd clearfix">
+				
+				<ul class="myui-vodlist__media active col-pd clearfix">
+					{seacms:videolist type=[menulist:typeid] num=1 order={mytheme:home_rank.by}}
+					<li>
+						<div class="thumb">
+							<a class="myui-vodlist__thumb img-xs-70" style="background: url([videolist:pic]);" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]"></a>
+						</div>
+						<div class="detail detail-side">
+							<h4 class="title">
+								<a href="[videolist:link]"><i class="fa fa-angle-right text-muted pull-right"></i>[videolist:name]</a>
+							</h4>
+							<p class="font-12"><span class="text-muted">类型：</span>[videolist:typename] <span class="text-muted">地区：</span>[videolist:publisharea]</p>
+							<p class="font-12 margin-0"><span class="text-muted">主演：</span>[videolist:nolinkactor len=14]</p>
+						</div>
+					</li>
+					{/seacms:videolist}
+				</ul>
+				<ul class="myui-vodlist__text col-pd clearfix">
+					{seacms:videolist type=[menulist:typeid] num={mytheme:home_rank.num} order={mytheme:home_rank.by}}
+					<li>
+						<a href="[videolist:link]" title="[videolist:name]">
+							<span class="pull-right  text-muted visible-lg" style="color: ;">
+								[videolist:note len=10]</span>
+							<span class="badge{subif:[videolist:i] == 1} badge-first{elseif:[videolist:i] == 2} badge-second{elseif:[videolist:i] == 3} badge-third{end subif}">[videolist:i]</span>[videolist:name]
+						</a>
+					</li>
+					{/seacms:videolist}
+				</ul>
+			</div>
+		</div>
+		{/seacms:menulist}
+	</div>
+</div>	
+{end if}
+				

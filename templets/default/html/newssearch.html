@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/newssearch.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container min">
+			<div class="row">
+				
+					{seacms:load newshead.html}
+
+	
+				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+					<div class="myui-panel myui-panel-bg clearfix" id="searchList">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_hd">
+								<div class="myui-panel__head active bottom-line clearfix">
+									<h3 class="title">
+										与<span class="text-red">“{seacms:newssearchword}”</span> 相关的搜索结果
+									</h3>	
+								</div>																		
+							</div>
+							<div class="myui-panel_bd clearfix">											
+								<ul class="myui-vodlist__media col-pd clearfix">
+									{seacms:newssearchlist size=10}
+									<li>
+										<div class="detail detail-left">
+											<h4 class="title"><a href="[newssearchlist:link]" title="[newssearchlist:name]">[newssearchlist:name]</a></h4>		
+											<p class="desc text-666 hidden-sm hidden-xs">[newssearchlist:content len=60]...</p>
+											<p class="margin-0 text-muted font-12">[newssearchlist:typename]<span class="split-line"></span>[newssearchlist:time style=yyyy-mm-dd]</p>
+										</div>
+										<div class="thumb">
+											<a class="myui-vodlist__thumb wide img-md-190 img-xs-130 lazyload" href="[newssearchlist:link]" title="[newssearchlist:name]" data-original="[newssearchlist:pic]">
+												<span class="play-v"></span>
+											</a>
+										</div>
+									</li>															
+									{/seacms:newssearchlist}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="myui-page text-center clearfix">
+						<li><a class="btn btn-default" href="{newssearchlist:firstlink}">首页</a></li>
+						<li><a class="btn btn-default" href="{newssearchlist:backlink}">上一页</a></li>
+						{newssearchlist:pagenumber len=5}
+						<li class="hidden-xs"><a class="btn{if:{newssearchlist:page}==[pagenumber:page]} btn-warm{else} btn-default{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+						{/newssearchlist:pagenumber}
+						<li class="visible-xs"><a class="btn btn-warm">{newssearchlist:page}/{newssearchlist:pagecount}</a></li>
+						<li><a class="btn btn-default" href="{newssearchlist:nextlink}">下一页</a></li>
+						<li><a class="btn btn-default" href="{newssearchlist:lastlink}">尾页</a></li>
+					</ul>
+				</div>
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load block/art_code.html}
+					{seacms:load block/vod_hot.html}
+					{seacms:load block/art_hot.html}
+				</div>
+				
+			</div>
+		</div>
+<script type="text/javascript">var wdkey= /{seacms:newssearchword}/g;var wd=$('#searchList');wd[0].innerHTML=wd[0].innerHTML.replace(wdkey, "<font color=red>{seacms:newssearchword}</font>");</script>
+		{seacms:foot}
+	</body>
+</html>

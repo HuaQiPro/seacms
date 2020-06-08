@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/newsindex.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container min">
+			<div class="row">
+                                {seacms:load newshead.html}
+				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+					<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd">		
+								<div class="flickity center next clearfix" data-align="center" data-next="1" data-play="1500">
+									{seacms:newslist num=10 type=all order=dayhit}
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+										<div class="myui-vodlist__box">
+											<a class="myui-vodlist__thumb wide lazyload" href="[newslist:link]" title="[newslist:name]" data-original="[newslist:pic]">
+												<span class="pic-text text-center">[newslist:name]</span>
+											</a>															
+										</div>									
+									</div>
+									{/seacms:newslist}									
+								</div>	
+							</div>
+					   </div>
+					</div>
+					<div class="myui-panel myui-panel-bg clearfix">					
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_hd">
+								<div class="myui-panel__head active bottom-line clearfix">
+									<h3 class="title">
+										最新资讯
+									</h3>	
+								</div>																		
+							</div>
+							<div class="myui-panel_bd clearfix">											
+								<ul class="myui-vodlist__media col-pd clearfix">
+									{seacms:newslist num=10 type=all order=time}
+									<li>
+										<div class="detail detail-left">
+											<h4 class="title"><a href="[newslist:link]" title="[newslist:name]">[newslist:name]</a></h4>		
+											<p class="desc text-666 hidden-sm hidden-xs">[newslist:content len=60]...</p>
+											<p class="margin-0 text-muted font-12">[newslist:typename]<span class="split-line"></span>[newslist:time style=yyyy-mm-dd]</p>
+										</div>
+										<div class="thumb">
+											<a class="myui-vodlist__thumb wide img-md-190 img-xs-130 lazyload" href="[newslist:link]" title="[newslist:name]" data-original="[newslist:pic]">
+												<span class="play-v"></span>
+											</a>
+										</div>
+									</li>															
+									{/seacms:newslist}	
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load block/art_code.html}
+					{seacms:load block/vod_hot.html}
+					{seacms:load block/art_hot.html}
+				</div>				
+			</div>
+		</div>
+		{seacms:foot}
+	</body>
+</html>

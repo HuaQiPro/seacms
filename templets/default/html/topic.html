@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/topic.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container">
+			<div class="row">
+				<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="col-md-wide-3 col-xs-1">
+							<div class="myui-vodlist__thumb wide" style="background: url({seacms:topicpic});"></div>
+						</div>
+						<div class="col-md-wide-7 col-xs-1">
+							<h1 class="myui-article__title">{seacms:topicname}</h1>
+							<p class="myui-article__content mt20">{seacms:topicdes}</p>
+							<div class="bdshare bdsharebuttonbox hidden-sm hidden-xs">
+								<span class="bds_shere"></span>
+								<a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a> <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a> <a class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a> <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a> <a class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a> <a class="bds_tqf" data-cmd="tqf" title="分享到腾讯朋友"></a> <a class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a> 
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_hd">
+							<div class="myui-panel__head clearfix">
+								<span class="more text-muted pull-right hidden-xs">本专题共“{topicpagelist:recordcount}”部影片</span>
+								<h3 class="title">
+									该专题包含的影片
+								</h3>
+							</div>
+						</div>
+						<div class="myui-panel_bd clearfix">
+							<ul class="myui-vodlist clearfix">
+								{seacms:topicpagelist size=24 order=time}
+								<li class="col-lg-6  col-md-6 col-sm-4 col-xs-3">
+									<div class="myui-vodlist__box">
+										<a class="myui-vodlist__thumb lazyload" href="[topicpagelist:link]" title="[topicpagelist:name]"
+										 data-original="[topicpagelist:pic]">
+											<span class="play hidden-xs"></span>
+											<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+												[topicpagelist:score]分
+											</span>
+											<span class="pic-text text-right">
+												[topicpagelist:note]</span>
+										</a>
+										<div class="myui-vodlist__detail">
+											<h4 class="title text-overflow"><a href="[topicpagelist:link]" title="[topicpagelist:name]">[topicpagelist:name]</a></h4>
+											<p class="text text-overflow text-muted hidden-xs">
+												[topicpagelist:publishtime]/[topicpagelist:publisharea]/[topicpagelist:typename]</p>
+										</div>
+									</div>
+								</li>
+								{/seacms:topicpagelist}
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<ul class="myui-page text-center clearfix">
+					<li><a class="btn btn-default" href="{topicpagelist:firstlink}">首页</a></li>
+					<li><a class="btn btn-default" href="{topicpagelist:backlink}">上一页</a></li>
+					{topicpagelist:pagenumber len=5}
+					<li class="hidden-xs"><a class="btn{if:{topicpagelist:page}==[pagenumber:page]} btn-warm{else} btn-default{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+					{/topicpagelist:pagenumber}
+					<li class="visible-xs"><a class="btn btn-warm">{topicpagelist:page}/{topicpagelist:pagecount}</a></li>
+					<li><a class="btn btn-default" href="{topicpagelist:nextlink}">下一页</a></li>
+					<li><a class="btn btn-default" href="{topicpagelist:lastlink}">尾页</a></li>
+				</ul>
+				
+				
+			</div>
+		</div>
+		{seacms:foot}
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<div class="myui-panel radius-0 clearfix" id="index-hot" style="padding: 15px 0;">
+	<div class="myui-panel-box clearfix">
+		<div class="container">
+			<div class="row">
+				<div class="myui-panel_bd">
+					<div class="flickity next clearfix" data-align="left" data-next="1" data-play="1500">
+						{seacms:videolist type=all num=15 order=dayhit}
+						<div class="col-lg-6  col-md-6 col-sm-4 col-xs-3">
+							<div class="myui-vodlist__box">
+								<a href="[videolist:link]" class="myui-vodlist__thumb" title="[videolist:name]" style="background: url([videolist:pic]);">
+									<span class="play hidden-xs"></span>
+									<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+										[videolist:score]分
+									</span>
+									<span class="pic-text text-right">
+										[videolist:note]
+									</span>
+								</a>
+								<div class="myui-vodlist__detail">
+									<h4 class="title text-overflow"><a href="[videolist:link]" class="text-fff" title="[videolist:name]">[videolist:name]</a></h4>
+									<p class="text text-overflow text-muted hidden-xs">
+										主演：[videolist:nolinkactor]
+									</p>
+								</div>
+							</div>
+						</div>
+						{/seacms:videolist}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">Myui.Other.Topbg($("#index-hot").outerHeight()+110);</script>

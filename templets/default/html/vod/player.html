@@ -1,0 +1,64 @@
+<div class="myui-player__box player-fixed">
+	<div class="tips close-box" style="background-color: #181515;">
+		<a class="tips-close-btn pull-right" href="javascript:;"><i class="fa fa-close"></i></a>
+		<ul>
+			<li>正在播放：{playpage:name}-{playpage:part}</li>			
+			<li><i class="fa fa-volume-down"></i> 请勿相信视频中的任何广告</li>
+                        <li><i class="fa fa-volume-down"></i> 如播放卡顿，请切换播放源观看或刷新！</li>
+		</ul>
+	</div>
+	<a class="player-fixed-off" href="javascript:;" style="display: none;"><i class="fa fa-close"></i></a>
+	<div class="embed-responsive clearfix">
+		{playpage:playurlinfo}{playpage:player}
+	</div>
+</div>
+<ul class="myui-player__operate" style="background-color: #1b1a25;">
+		<li>
+			<a href="javascript:AddFav('{playpage:id}','')"><i class="fa fa-star"></i> 收藏</a>
+		</li>
+		<li>
+			<a href="javascript:viod()" onclick="reportErr({playpage:id})"><i class="fa fa-close"></i> 报错</a>
+		</li>
+		<li>
+			<a href="javascript:;" onclick="window.location.reload()"><i class="fa fa-spinner"></i> 刷新</a>
+		</li>
+		<li>
+			<a class="digg_link" href="javascript:viod()" onclick="diggVideo({playpage:id},'digg_num')">
+				<i class="fa fa-thumbs-up"></i>
+				<span id="digg_num">{playpage:diggnum}</span>
+			</a>
+		</li>
+		<li>
+			<a class="digg_link" href="javascript:viod()" onclick="treadVideo({playpage:id},'tread_num')">
+				<i class="fa fa-thumbs-down"></i>
+				<span id="tread_num">{playpage:treadnum}</span>
+			</a>
+		</li>
+		<li><a href="{playpage:preplaylink}"><i class="fa fa-caret-up"></i> 上集</a></li>
+		<li><a href="{playpage:nextplaylink}"><i class="fa fa-caret-down"></i> 下集</a></li>
+		<li class="dropdown-hover hidden-xs">
+			<a href="javascript:;"><i class="fa fa-qrcode font14"></i> 手机</a>
+			<div class="dropdown-box top fadeInDown clearfix">
+				<div class="item text-center">
+					<div class="qrcode-box active" style="background-color: {mytheme:qrcode.light};">
+						<img class="icon" src="images/img/favicon.ico" width="35" height="35" />
+						<span id="qrcode" data-link="0" data-dark="#000000" data-light="#ffffff"></span>
+					</div>
+					<p>扫一扫用手机观看</p>
+				</div>
+			</div>
+		</li>
+		<li class="dropdown-hover">
+			<a href="javascript:;"><i class="fa fa-share font14"></i> 分享</a>
+			<div class="dropdown-box bottom fadeInDown clearfix" style="margin-left: -130px;">
+				<div class="item text-center" style="width: 260px;">
+					<div class="col-pd" class="">
+						<p>复制下方内容粘贴给好友</p>
+						<p><textarea class="form-control content" rows="2">{seacms:sitename}，{seacms:siteurl}{playpage:link}</textarea></p>
+						<a class="btn btn-xs btn-primary myui-copy-html" href="javascript:;">点击复制</a>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+<style type="text/css">.embed-responsive {padding-bottom: 56.25%;}</style>

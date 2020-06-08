@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/search.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+	<div class="wrap">
+	    <div class="container min">
+	        <div class="row">
+	        	
+			   	<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_hd">
+							<div class="myui-panel__head active bottom-line clearfix">	
+								<h3 class="title">
+									 <span class="text-red">{seacms:searchword}</span>
+								</h3>
+							</div>
+						</div>
+						
+						<div class="myui-panel_bd col-pd clearfix">
+							<ul class="myui-vodlist__media clearfix" id="searchList">		
+ {seacms:searchlist size=10 order=time}										
+								<li class="active  clearfix">
+									<div class="thumb">									
+										<a class="myui-vodlist__thumb img-lg-150 img-xs-100 lazyload" href="[searchlist:link]" title="[searchlist:name]" data-original="[searchlist:pic]">
+											<span class="play hidden-xs"></span>
+												<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+				[searchlist:score]分
+			</span>
+<span class="pic-text text-right">
+		[searchlist:note]</span>
+										</a>																												
+									</div>
+									<div class="detail">
+								    	<h4 class="title"><a href="[searchlist:link]">[searchlist:name]</a></h4>
+								    	<p><span class="text-muted">导演：</span>[searchlist:director len=20]</p>
+										<p><span class="text-muted">主演：</span>[searchlist:actor len=20]</p>
+										<p><span class="text-muted">分类：</span>[searchlist:typename]<span class="split-line"></span><span class="text-muted hidden-xs">地区：</span>[searchlist:publisharea]<span class="split-line"></span><span class="text-muted hidden-xs">年份：</span>[searchlist:publishtime]</p>		
+										<p class="hidden-xs"><span class="text-muted">简介：</span>[searchlist:des len=60]<a href="[searchlist:link]">详情 ></a></p>
+										<p class="margin-0">
+											<a class="btn btn-sm btn-warm" href="[searchlist:link]"><i class="fa fa-play"></i> 立即播放</a>
+											<a class="btn btn-sm btn-default hidden-xs" href="[searchlist:link]">查看详情 <i class="fa fa-angle-right"></i></a>
+										</p>												    	    																									
+									</div>
+								</li>
+{/seacms:searchlist}
+															</ul>
+						</div>
+											</div>				
+				</div>	          
+				
+				<ul class="myui-page text-center clearfix">
+	<li><a class="btn btn-default" href="{searchlist:firstlink}">首页</a></li>
+	<li><a class="btn btn-default" href="{searchlist:backlink}">上一页</a></li>	
+{searchlist:pagenumber len=5}						
+		<li class="hidden-xs"><a class="btn  btn-{if:{searchlist:page}==[pagenumber:page]}warm{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+{/searchlist:pagenumber}
+		<li class="visible-xs"><a class="btn btn-warm">{searchlist:page}/{searchlist:pagecount}</a></li>
+	<li><a class="btn btn-default" href="{searchlist:nextlink}">下一页</a></li>
+	<li><a class="btn btn-default" href="{searchlist:lastlink}">尾页</a></li>							
+</ul>
+	        </div>
+	    </div>
+    </div>
+ {seacms:foot}
+</body>
+</html>

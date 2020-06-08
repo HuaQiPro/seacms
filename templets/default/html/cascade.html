@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/index.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		{seacms:top}
+		<div class="container">
+			<div class="row">
+				<div class="myui-panel active myui-panel-bg2 clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_hd">
+							<div class="myui-panel__head active bottom-line clearfix">
+								<a class="slideDown-btn more pull-right" href="javascript:;">收起 <i class="fa fa-angle-up"></i></a>
+								<h3 class="title">
+									{searchpage:typename} </h3>
+								<a class="more text-muted" href="/search.php?searchtype=5&tid={searchpage:type}">重置筛选</a>
+							</div>
+						</div>
+						<div class="myui-panel_bd">
+							<div class="slideDown-box">
+								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
+									<li>
+										<a class="text-muted btn">类型</a>
+									</li>
+									{seacms:smallmenulist type=son}
+									<li><a class="btn {if:{searchpage:type}= [smallmenulist:typeid]}btn-warm{end if}" href="[smallmenulist:link]"> [smallmenulist:typename]</a></li>
+									{/seacms:smallmenulist}
+								</ul>
+								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
+									<li>
+										<a class="btn text-muted">地区</a>
+									</li>
+									{seacms:areaitemlist}<li><a class="btn {if:[areaitemlist:value]=={searchpage:area}}btn-warm{end if}" href="[areaitemlist:link]">[areaitemlist:value]</a></li>{/seacms:areaitemlist}
+								</ul>
+                                                               <ul class="myui-screen__list nav-slide clearfix" data-align="left">
+									<li>
+										<a class="btn text-muted">状态</a>
+									</li>
+									{seacms:stateitemlist}<li><a class="btn {if:[stateitemlist:value]=={searchpage:state}}btn-warm{end if}" href="[stateitemlist:link]">[stateitemlist:value]</a></li>{/seacms:stateitemlist}
+								</ul>
+								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
+									<li>
+										<a class="btn text-muted">年份</a>
+									</li>
+									{seacms:yearitemlist}<li><a class="btn {if:[yearitemlist:value]=={searchpage:year}}btn-warm{end if}" href="[yearitemlist:link]">[yearitemlist:value]</a></li>{/seacms:yearitemlist}
+
+								</ul>
+								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
+									<li>
+										<a class="btn text-muted">语言</a>
+									</li>
+									{seacms:langitemlist}<li><a class="btn {if:[langitemlist:value]=={searchpage:lang}}btn-warm{end if}" href="[langitemlist:link]">[langitemlist:value]</a></li>{/seacms:langitemlist}
+
+								</ul>
+							</div>
+							<ul class="myui-screen__list nav-slide clearfix" data-align="left">
+								<li>
+									<a class="btn text-muted">排序</a>
+								</li>
+								<li> <a class="btn {if:{searchpage:ordername}==time}btn-warm{end if}" href="{searchpage:order-time-link}">时间</a></li>
+								<li> <a class="btn {if:{searchpage:ordername}==hit}btn-warm{end if}" href="{searchpage:order-hit-link}">人气</a></li>
+								<li> <a class="btn {if:{searchpage:ordername}==commend}btn-warm{end if}" href="{searchpage:order-commend-link}">评分</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- 筛选 -->
+				<div class="myui-panel myui-panel-bg clearfix">
+					<div class="myui-panel-box clearfix">
+						<div class="myui-panel_bd">
+							<ul class="myui-vodlist clearfix">
+								{seacms:cascadelist size=48 order=time}
+								<li class="col-lg-6  col-md-6 col-sm-4 col-xs-3">
+									<div class="myui-vodlist__box">
+										<a class="myui-vodlist__thumb lazyload" href="[cascadelist:link]" title="[cascadelist:name]" data-original="[cascadelist:pic]">
+											<span class="play hidden-xs"></span>
+											<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+												[cascadelist:score]分
+											</span>
+											<span class="pic-text text-right">
+												[cascadelist:note]
+											</span>
+										</a>
+										<div class="myui-vodlist__detail">
+											<h4 class="title text-overflow"><a href="[cascadelist:link]" title="[cascadelist:name]">[cascadelist:name]</a></h4>
+											<p class="text text-overflow text-muted hidden-xs">
+												主演：[cascadelist:actor]
+											</p>
+										</div>
+									</div>
+								</li>
+								{/seacms:cascadelist}
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<ul class="myui-page text-center clearfix">
+					<li><a class="btn btn-default" href="{cascadelist:firstlink}">首页</a></li>
+					<li><a class="btn btn-default" href="{cascadelist:backlink}">上一页</a></li>
+					{cascadelist:pagenumber len=5}
+					<li class="hidden-xs"><a class="btn{if:{cascadelist:page}==[pagenumber:page]} btn-warm{else} btn-default{end if}" href="[pagenumber:link]">[pagenumber:page]</a></li>
+					{/cascadelist:pagenumber}
+					<li class="visible-xs"><a class="btn btn-warm">{cascadelist:page}/{cascadelist:pagecount}</a></li>
+					<li><a class="btn btn-default" href="{cascadelist:nextlink}">下一页</a></li>
+					<li><a class="btn btn-default" href="{cascadelist:lastlink}">尾页</a></li>
+				</ul>
+			</div>
+		</div>
+		{seacms:foot}
+	</body>
+</html>

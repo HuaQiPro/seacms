@@ -1,0 +1,29 @@
+<div class="myui-panel myui-panel-bg clearfix {$mytheme.home_art.self}">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head active bottom-line clearfix">	
+				<h3 class="title">
+					最新资讯
+				</h3>	
+				<a class="more text-muted pull-left" href="{seacms:newslink}">更多 <i class="fa fa-angle-right"></i></a>
+			</div>																			
+		</div>	
+		<div class="myui-panel_bd clearfix">								
+			<ul class="myui-vodlist__media col clearfix">
+				{seacms:newslist num=9  order=time type=all}
+				<li class="col-lg-3 col-md-3 col-sm-2 col-xs-1">
+					<div class="detail detail-left">
+						<h5 class="title"><a href="[newslist:link]" title="[newslist:name]">[newslist:name]</a></h5>										
+						<p class="margin-0 text-muted font-12">[newslist:typename]<span class="split-line"></span>[newslist:time style=yyyy-mm-dd]</p>
+					</div>
+					<div class="thumb">
+						<a class="myui-vodlist__thumb wide img-xs-110 lazyload" href="[newslist:link]" title="[newslist:name]" data-original="[newslist:pic]">
+							<span class="play-v"></span>
+						</a>
+					</div>
+				</li>
+				{/seacms:newslist}
+			</ul>															
+		</div>								
+	</div>
+</div>
