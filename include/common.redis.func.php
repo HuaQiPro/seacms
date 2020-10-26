@@ -1,4 +1,4 @@
-<?php
+<?php 
 //包含函数库
 require_once(  dirname(__FILE__).'/inc/mysql.php' );
 //拼音的缓冲数组
@@ -202,7 +202,7 @@ function getRunTime($t1)
 
 function getPowerInfo()
 {
-	return "<p>Powered by <strong><a href=\"http://www.seacms.org\" title=\"".$GLOBALS['cfg_softname']."\" target=\"_blank\">".$GLOBALS['cfg_soft_enname']."</a></strong> <em>".$GLOBALS['cfg_version']."</em></p>";
+	return "<p>Powered by <strong><a href=\"http://www.seacms.net\" title=\"".$GLOBALS['cfg_softname']."\" target=\"_blank\">".$GLOBALS['cfg_soft_enname']."</a></strong> <em>".$GLOBALS['cfg_version']."</em></p>";
 }
 
 function dd2char($ddnum)
@@ -2993,7 +2993,7 @@ function updatecronscache()
 		$contents.= "\$collectPageNum = '".$collectPageNum."';\r\n";
 		$contents.= "\$getconnum = '".$autogetconnum."';";
 	}
-	$cachedata = "<?php\r\n//seacms cache file\r\n//Created on ".MyDate('Y-m-d H:i:s',time())."\r\n\r\nif(!defined('sea_INC')) exit('Access Denied');\r\n\r\n".$contents."\r\n\r\n?>";
+	$cachedata = "<?php \r\n//seacms cache file\r\n//Created on ".MyDate('Y-m-d H:i:s',time())."\r\n\r\nif(!defined('sea_INC')) exit('Access Denied');\r\n\r\n".$contents."\r\n\r\n?>";
 	if($fp = fopen($cachefile,'wb')) {
 		@flock($fp, LOCK_EX);
 		fwrite($fp, $cachedata);
@@ -3110,7 +3110,7 @@ function RWCache($name,$value='') {
             $dir   =  dirname($filename);
             // 目录不存在则创建
             if(!is_dir($dir))  mkdir($dir);
-            return file_put_contents($filename,"<?php\nreturn ".var_export($value,true).";\n?>");
+            return file_put_contents($filename,"<?php \nreturn ".var_export($value,true).";\n?>");
         }
     }
     if(isset($_cache[$name])) return $_cache[$name];

@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__).'/../include/common.php');
 require_once(sea_INC.'/check.admin.php');
 $cuserLogin = new userLogin();

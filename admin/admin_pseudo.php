@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 $RepWordFile=sea_DATA."/admin/repword.txt";
 $textsegment=sea_DATA.'/admin/textsegment.xml';

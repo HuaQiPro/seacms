@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 require(sea_INC.'/image.func.php');
 require_once("../include/common.php");

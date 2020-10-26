@@ -1,4 +1,4 @@
-<?php
+<?php 
 header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -8,7 +8,7 @@ if($action=="set")
 	$notify2= $_POST['notify2'];
 	$notify3= $_POST['notify3'];
 	$open=fopen("../data/admin/notify.php","w" );
-	$str='<?php ';
+	$str='<?php  ';
 	$str.='$notify1 = "';
 	$str.="$notify1";
 	$str.='"; ';
@@ -47,22 +47,22 @@ if($action=="set")
 <td colspan="5" class="td_title">会员消息通知</td>
 </tr>
 <tr>
-<?php require_once("../data/admin/notify.php"); ?>
+<?php  require_once("../data/admin/notify.php"); ?>
 
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-<br>通知1：<br><textarea name="notify1" style="width:600px; height:60px;"><?php echo $notify1;?></textarea>
+<br>通知1：<br><textarea name="notify1" style="width:600px; height:60px;"><?php  echo $notify1;?></textarea>
 </td>
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-<br>通知2：<br><textarea name="notify2" style="width:600px; height:60px;"><?php echo $notify2;?></textarea>
+<br>通知2：<br><textarea name="notify2" style="width:600px; height:60px;"><?php  echo $notify2;?></textarea>
 </td>
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-<br>通知3：<br><textarea name="notify3" style="width:600px; height:60px;"><?php echo $notify3;?></textarea>
+<br>通知3：<br><textarea name="notify3" style="width:600px; height:60px;"><?php  echo $notify3;?></textarea>
 </td>
 </tr>
 <tr>
@@ -88,7 +88,7 @@ if($action=="set")
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>

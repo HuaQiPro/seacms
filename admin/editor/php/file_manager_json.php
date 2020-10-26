@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 if(empty($_SESSION['sea_admin_id'])){die('ERR');}
 

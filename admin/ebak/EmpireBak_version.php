@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 define('EmpireBak_VERSION','5.1');
 

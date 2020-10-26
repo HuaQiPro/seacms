@@ -1,4 +1,4 @@
-<?php
+<?php 
 webscan_error();
 //引用配置文件
 require_once('webscan_cache.php');

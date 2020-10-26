@@ -1,4 +1,4 @@
-﻿<?php
+﻿<?php 
 if(!defined('sea_INC'))
 {
 	exit("Request Error!");
@@ -57,7 +57,7 @@ function SpGetNewInfo()
 	else {
 		$nurl = "test";
 	}
-	//$offUrl = "http://www.seacms.org/newinfo.php?version={$cfg_version}&formurl={$nurl}";
+	//$offUrl = "http://www.seacms.net/newinfo.php?version={$cfg_version}&formurl={$nurl}";
 	//return $offUrl;
 }
 

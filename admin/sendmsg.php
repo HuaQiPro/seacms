@@ -1,4 +1,4 @@
-<?PHP
+<?php 
 header("Content-Type:text/html;charset=utf-8");
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -36,7 +36,7 @@ if($ac !="post"){ ?>
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-用户账户：<input  name="username" value="<?php echo $username;?>" style="width:300px;">
+用户账户：<input  name="username" value="<?php  echo $username;?>" style="width:300px;">
 </td>
 </tr>
 <tr>
@@ -62,12 +62,12 @@ if($ac !="post"){ ?>
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>
 </html>
 
-<?php 
+<?php  
 }
 ?>

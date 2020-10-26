@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
 if(empty($action))
@@ -63,7 +63,7 @@ if($action=="delall")
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>

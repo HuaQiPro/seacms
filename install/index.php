@@ -1,4 +1,4 @@
-<?php
+<?php 
 @set_time_limit(0);
 error_reporting(0);
 $verMsg = ' V6.x UTF8';
@@ -272,7 +272,7 @@ else if($step==4)
 	$adminquery = "INSERT INTO `{$dbprefix}admin` (name,password,logincount,loginip,logintime,groupid,state) VALUES ('$adminuser', '".substr(md5($adminpwd),5,20)."', 0, '127.0.0.1', '".time()."', 1, 1);";
 	mysqli_query($conn,$adminquery);
 	
-	$flinkquery = "INSERT INTO `{$dbprefix}flink` (`id`, `sortrank`, `url`, `webname`, `msg`, `email`, `logo`, `dtime`, `ischeck`) VALUES (NULL, '0', 'http://www.seacms.org', '海洋cms', '', '', '', '1432312055', '1');";
+	$flinkquery = "INSERT INTO `{$dbprefix}flink` (`id`, `sortrank`, `url`, `webname`, `msg`, `email`, `logo`, `dtime`, `ischeck`) VALUES (NULL, '0', 'http://www.seacms.net', '海洋cms', '', '', '', '1432312055', '1');";
 	mysqli_query($conn,$flinkquery);
 
   mysqli_close($conn);
@@ -417,7 +417,7 @@ function save_uc_config($config, $file) {
 	$date = gmdate("Y-m-d H:i:s", time() + 3600 * 8);
 	$year = date('Y');
 	$config = <<<EOT
-<?php
+<?php 
 
 
 define('UC_CONNECT', '$uc_connnect');

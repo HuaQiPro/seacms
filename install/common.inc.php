@@ -1,4 +1,4 @@
-<?php
+<?php 
 //数据库连接信息
 $cfg_dbhost = '~dbhost~';
 $cfg_dbname = '~dbname~';

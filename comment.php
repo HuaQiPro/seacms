@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require_once("include/common.php");
 require_once(sea_INC.'/main.class.php');
@@ -27,4 +27,4 @@ if(empty($id))
 }
 ?>
 
-<iframe id="parentframe" width="100%" frameborder="0" scrolling="no" src="/<?php echo $GLOBALS['cfg_cmspath']; ?>comment/comment.html?id=<?php echo $id?>&type=<?php echo $itype?>&iscaptcha=<?php echo $GLOBALS['cfg_feedback_ck']; ?>&islogin=<?php echo (!empty($_SESSION['sea_user_auth'])?1:0) ;?>&title=" marginheight="0" marginwidth="0" name="comment" style="height:auto"></iframe>
+<iframe id="parentframe" width="100%" frameborder="0" scrolling="no" src="/<?php  echo $GLOBALS['cfg_cmspath']; ?>comment/comment.html?id=<?php  echo $id?>&type=<?php  echo $itype?>&iscaptcha=<?php  echo $GLOBALS['cfg_feedback_ck']; ?>&islogin=<?php  echo (!empty($_SESSION['sea_user_auth'])?1:0) ;?>&title=" marginheight="0" marginwidth="0" name="comment" style="height:auto"></iframe>

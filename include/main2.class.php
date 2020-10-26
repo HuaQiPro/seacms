@@ -1,4 +1,4 @@
-<?php
+<?php 
 @session_start();
 if (! defined ( 'sea_INC' )) {
 	exit ( "Request Error!" );
@@ -1898,22 +1898,10 @@ class MainClass_Template {
 					global $searchtype, $searchword;
 					switch (intval ( $searchtype )) {
 						case - 1 :
-							$whereStr = " where m.v_recycled=0 and (m.v_name like '%$searchword%' or m.v_actor like '%$searchword%' or m.v_director like '%$searchword%' or m.v_publisharea like '%$searchword%' or m.v_nickname like '%$searchword%'  or m.v_publishyear like '%$searchword%' or m.v_letter='$searchword' or m.v_tags='$searchword')";
-							break;
-						case 0 :
-							$whereStr = " where m.v_recycled=0 and m.v_name like '%$searchword%'";
+							$whereStr = " where m.v_recycled=0 and (m.v_name like '%$searchword%' or m.v_actor like '%$searchword%' or m.v_director like '%$searchword%' or m.v_nickname like '%$searchword%' or m.v_tags like '%$searchword%')";
 							break;
 						case 1 :
-							$whereStr = " where m.v_recycled=0 and m.v_actor like '%$searchword%'";
-							break;
-						case 2 :
-							$whereStr = " where m.v_recycled=0 and m.v_publisharea like '%$searchword%'";
-							break;
-						case 3 :
-							$whereStr = " where m.v_recycled=0 and m.v_publishyear like '%$searchword%'";
-							break;
-						case 4 :
-							$whereStr = " where m.v_recycled=0 and m.v_letter='" . strtoupper ( $searchword ) . "'";
+							$whereStr = " where m.v_recycled=0 and m.v_name like '%$searchword%'";
 							break;
 					}
 					break;
@@ -2404,22 +2392,10 @@ class MainClass_Template {
 					global $searchtype, $searchword;
 					switch (intval ( $searchtype )) {
 						case - 1 :
-							$whereStr = " where n_recycled=0 and (n_title like '%$searchword%' or n_keyword like '%$searchword%')";
-							break;
-						case 0 :
-							$whereStr = " where n_recycled=0 and n_title like '%$searchword%'";
+							$whereStr = " where n_recycled=0 and (n_title like '%$searchword%' or n_keyword like '%$searchword%' or n_author like '%$searchword%' or n_from like '%$searchword%')";
 							break;
 						case 1 :
-							$whereStr = " where n_recycled=0 and n_author like '%$searchword%'";
-							break;
-						case 2 :
-							$whereStr = " where n_recycled=0 and n_from like '%$searchword%'";
-							break;
-						case 3 :
-							$whereStr = " where n_recycled=0 and n_outline like '%$searchword%'";
-							break;
-						case 4 :
-							$whereStr = " where n_recycled=0 and n_letter='" . strtoupper ( $searchword ) . "'";
+							$whereStr = " where n_recycled=0 and n_title like '%$searchword%'";
 							break;
 					}
 					break;

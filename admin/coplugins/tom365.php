@@ -1,4 +1,4 @@
-<?php
+<?php 
 //for tom365 only
 function tom365($str)
 {

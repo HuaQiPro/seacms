@@ -1,4 +1,4 @@
-<?php
+<?php 
 header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -70,16 +70,16 @@ CheckPurview();
     }
     function makeinfo()
     {
-        $("#sp_makeinfo").html("<iframe width='100%' height='200' src='admin_makehtml2.php?action=daysview&password=<?php echo $cfg_cookie_encode; ?>' scrolling='auto'></iframe>");
+        $("#sp_makeinfo").html("<iframe width='100%' height='200' src='admin_makehtml2.php?action=daysview&password=<?php  echo $cfg_cookie_encode; ?>' scrolling='auto'></iframe>");
     }
     function makeindex()
     {
-        $("#sp_makeindex").html("<iframe width='100%' height='200' src='admin_makehtml2.php?action=index&by=video&password=<?php echo $cfg_cookie_encode; ?>' scrolling='auto'></iframe>");
+        $("#sp_makeindex").html("<iframe width='100%' height='200' src='admin_makehtml2.php?action=index&by=video&password=<?php  echo $cfg_cookie_encode; ?>' scrolling='auto'></iframe>");
     }
     function maketype()
     {
         
-     $("#sp_maketype").html("<iframe width='100%' height='200' src='admin_makehtml2.php?action=allchannel&password=<?php echo $cfg_cookie_encode; ?>' scrolling='auto'></iframe>");
+     $("#sp_maketype").html("<iframe width='100%' height='200' src='admin_makehtml2.php?action=allchannel&password=<?php  echo $cfg_cookie_encode; ?>' scrolling='auto'></iframe>");
         
     }
     function reflogin()
@@ -117,7 +117,7 @@ CheckPurview();
                 <td width="50%" rowspan="4"> <div style=""> 
 				
 				<select id="ds_url" name="ds_url" multiple="" style=" width:250px;height:300px">				
-<?php
+<?php 
 $sqlStr="select * from `sea_zyk` order by zid ASC";
 $dsql->SetQuery($sqlStr);
 $dsql->Execute('flink_list');
@@ -126,9 +126,9 @@ while($row=$dsql->GetObject('flink_list'))
 $aid=$row->id;
 ?>
 
-<option value="admin_reslib2.php?ac=day&rid=<?php echo $row->zid; ?>&url=<?php echo $row->zapi ?>&password=<?php echo $cfg_cookie_encode; ?>">【<?php echo $row->zid; ?>】【<?php echo $row->zname ?>】</option>
+<option value="admin_reslib2.php?ac=day&rid=<?php  echo $row->zid; ?>&url=<?php  echo $row->zapi ?>&password=<?php  echo $cfg_cookie_encode; ?>">【<?php  echo $row->zid; ?>】【<?php  echo $row->zname ?>】</option>
 
-<?php
+<?php 
 }
 ?>
 </select>

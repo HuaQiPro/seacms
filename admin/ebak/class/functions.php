@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 //-------------- 用户相关函数 ----------------
 
@@ -496,7 +496,7 @@ function Ebak_DoEbak($add){
 	{
 		$add['dbchar']='';
 	}
-	$string="<?php
+	$string="<?php 
 	\$b_table=\"".$b_table."\";
 	".$d_table."
 	\$b_baktype=".$add['baktype'].";
@@ -544,7 +544,7 @@ function Ebak_BakExe($t,$s,$p,$mypath,$alltotal,$thenof,$fnum,$stime=0){
 	{
 		$stime=time();
 	}
-	$header="<?php
+	$header="<?php 
 define('InEmpireBakData',TRUE);
 require(\"../../inc/header.php\");
 ";
@@ -714,7 +714,7 @@ function Ebak_BakExeT($t,$s,$p,$mypath,$alltotal,$thenof,$fnum,$auf='',$aufval=0
 	{
 		$stime=time();
 	}
-	$header="<?php
+	$header="<?php 
 define('InEmpireBakData',TRUE);
 require(\"../../inc/header.php\");
 ";
@@ -891,11 +891,11 @@ function Ebak_EchoBakSt($tbname,$tbnum,$tb,$rnum,$r){
 	 ?>
 	<br><br>
 	<table width="90%" border="0" align="center" cellpadding="3" cellspacing="1">
-		<tr><td height="25">Table Name&nbsp;:&nbsp;<b><?php echo $tbname ?></b></td></tr>
-		<tr><td height="25">Table&nbsp;:&nbsp;<b><?php echo $table ?></b></td></tr>
-		<tr><td height="25">Record&nbsp;:&nbsp;<b><?php echo $record ?></b></td></tr>
+		<tr><td height="25">Table Name&nbsp;:&nbsp;<b><?php  echo $tbname ?></b></td></tr>
+		<tr><td height="25">Table&nbsp;:&nbsp;<b><?php  echo $table ?></b></td></tr>
+		<tr><td height="25">Record&nbsp;:&nbsp;<b><?php  echo $record ?></b></td></tr>
 	</table><br><br>
-	<?php
+	<?php 
 }
 
 //输出恢复进度条
@@ -905,11 +905,11 @@ function Ebak_EchoReDataSt($tbname,$tbnum,$tb,$pnum,$p){
 	 ?>
 	<br><br>
 	<table width="90%" border="0" align="center" cellpadding="3" cellspacing="1">
-		<tr><td height="25">Table Name&nbsp;:&nbsp;<b><?php echo $tbname ?></b></td></tr>
-		<tr><td height="25">Table&nbsp;:&nbsp;<b><?php echo $table ?></b></td></tr>
-		<tr><td height="25">File&nbsp;:&nbsp;<b><?php echo $record ?></b></td></tr>
+		<tr><td height="25">Table Name&nbsp;:&nbsp;<b><?php  echo $tbname ?></b></td></tr>
+		<tr><td height="25">Table&nbsp;:&nbsp;<b><?php  echo $table ?></b></td></tr>
+		<tr><td height="25">File&nbsp;:&nbsp;<b><?php  echo $record ?></b></td></tr>
 	</table><br><br>
-	<?php
+	<?php 
 }
 
 //取得表记录数

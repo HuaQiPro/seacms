@@ -1,4 +1,4 @@
-<?php
+<?php 
 error_reporting(0);
 @set_time_limit(0);
 define('sea_ADMIN', preg_replace("|[/\\\]{1,}|",'/',dirname(__FILE__) ) );
@@ -469,7 +469,7 @@ function viewFoot()
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\">本页面用时".
-	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.org/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
+	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.net/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
 }
 
 function viewHead($str)
@@ -486,9 +486,9 @@ function viewHead($str)
 <script src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
-<?php }?>
+<?php  }?>
 
-<?php
+<?php 
 @set_time_limit(0);
 ob_implicit_flush();
 
@@ -560,9 +560,9 @@ if($action=="list")
       </tr>
       <tr>
         <th colspan="4"> <ul class="ul">
-          <li><a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;url=<?php echo $url;?>">全部</a></li>
+          <li><a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;url=<?php  echo $url;?>">全部</a></li>
           
-          <?php
+          <?php 
           	
 				foreach($xml->class->ty as $ty)
 				{
@@ -583,9 +583,9 @@ if($action=="list")
 						$isbangding = "<font color='red'>未绑定</font>";
 					}
 					?>
-           <li><a href="?ac=list&amp;url=<?php echo $var_url?>&amp;rid=<?php echo $rid ?>&amp;t=<?php echo $ty['id']?>" ><?php echo $ty; ?></a>&nbsp;&nbsp;<label id="bind_<?php echo $rid ?>_<?php echo $ty['id'] ?>"><b><a href="#" onClick="setBindType('<?php echo $rid ?>_<?php echo $ty['id'] ?>',0)"><?php echo $isbangding ?></a></b></label></li>
+           <li><a href="?ac=list&amp;url=<?php  echo $var_url?>&amp;rid=<?php  echo $rid ?>&amp;t=<?php  echo $ty['id']?>" ><?php  echo $ty; ?></a>&nbsp;&nbsp;<label id="bind_<?php  echo $rid ?>_<?php  echo $ty['id'] ?>"><b><a href="#" onClick="setBindType('<?php  echo $rid ?>_<?php  echo $ty['id'] ?>',0)"><?php  echo $isbangding ?></a></b></label></li>
                     
-                    <?php
+                    <?php 
 				}
 		  
 		  ?>
@@ -595,11 +595,11 @@ if($action=="list")
       <tr>
         <th colspan="4"> <div class="cuspages" style="margin:0">
           <div class="pages" style="margin:0">
-          共 <?php echo($totalcount)?> 条数据 每页 <?php echo $pagesize; ?> 条 当前 <?php echo $currentpage?>/<?php echo $pagecount?> 
+          共 <?php  echo($totalcount)?> 条数据 每页 <?php  echo $pagesize; ?> 条 当前 <?php  echo $currentpage?>/<?php  echo $pagecount?> 
           页码
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=1&amp;url=<?php echo $var_url?>">首页</a>
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=<?php echo ($pg-1) ?>&amp;url=<?php echo $var_url?>">上一页</a>
-          <?php 
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=1&amp;url=<?php  echo $var_url?>">首页</a>
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($pg-1) ?>&amp;url=<?php  echo $var_url?>">上一页</a>
+          <?php  
 		  	for($i=$pg-3;$i<($pg+4);$i++)
 			{
 				if($i<1){}
@@ -607,40 +607,40 @@ if($action=="list")
 				else{
 			
 		  ?>
-          <a href='?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=<?php echo ($i) ?>&amp;url=<?php echo $var_url?>'><?php echo $i;?></a>
-          <?php
+          <a href='?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($i) ?>&amp;url=<?php  echo $var_url?>'><?php  echo $i;?></a>
+          <?php 
 			}
 			}
 		  ?>
           
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=<?php echo ($pg+1) ?>&amp;url=<?php echo $var_url?>">下一页</a>
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=<?php echo ($pagecount) ?>&amp;url=<?php echo $var_url?>">尾页</a>&nbsp;&nbsp;
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($pg+1) ?>&amp;url=<?php  echo $var_url?>">下一页</a>
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($pagecount) ?>&amp;url=<?php  echo $var_url?>">尾页</a>&nbsp;&nbsp;
           跳转
             <input type="text" id="skip" value="" onKeyUp="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
             &nbsp;&nbsp;
-            <input type="button" value="确定" class="btn" onClick="location.href='?ac=list&amp;rid=<?php echo $rid;?>&amp;url=<?php echo $var_url?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg='+$('skip').value;"/>
+            <input type="button" value="确定" class="btn" onClick="location.href='?ac=list&amp;rid=<?php  echo $rid;?>&amp;url=<?php  echo $var_url?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg='+$('skip').value;"/>
           </div>
         </div>
         </th>
       </tr>
     </thead>
     <form action="?" method="get">
-      <input type="hidden" name="ac" value="<?php echo $action?>" />
-      <input type="hidden" name="rid" value="<?php echo $rid?>" />
-      <input type="hidden" name="t" value="<?php echo $t;?>" />
-      <input type="hidden" name="h" value="<?php echo $h;?>" />
-      <input type="hidden" name="url" value="<?php echo $var_url?>" />
+      <input type="hidden" name="ac" value="<?php  echo $action?>" />
+      <input type="hidden" name="rid" value="<?php  echo $rid?>" />
+      <input type="hidden" name="t" value="<?php  echo $t;?>" />
+      <input type="hidden" name="h" value="<?php  echo $h;?>" />
+      <input type="hidden" name="url" value="<?php  echo $var_url?>" />
       <tr>
         <th colspan="4"> &nbsp;
           <input type="button" class="btn" style="width:65px" onClick="checkOthers('input','ids[]')" value="全选反选" />
           &nbsp;
           <input type="button" class="btn" style="width:45px" onClick="$('choose').submit();" value="采集"/>
           &nbsp;
-          <a onClick="ajaxFunction('?ac=day&amp;url=<?php echo $var_url?>&rid=<?php echo $rid;?>&t=<?php echo $t;?>&h=24&backurl='+encodeURIComponent('admin_reslib2.php?password=<?php echo $ukey ?>&ac=list&amp;url=<?php echo $var_url?>&rid=<?php echo $rid;?>'))" href="#" >
+          <a onClick="ajaxFunction('?ac=day&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>&t=<?php  echo $t;?>&h=24&backurl='+encodeURIComponent('admin_reslib2.php?password=<?php  echo $ukey ?>&ac=list&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>'))" href="#" >
           <div class="btn" style="display:inline;width:65px;text-align:center;">采集当天</div></a>
           &nbsp;
-          <a onClick="ajaxFunction('?ac=type&amp;url=<?php echo $var_url?>&rid=<?php echo $rid;?>&t=<?php echo $t;?>&backurl='+encodeURIComponent('admin_reslib2.php?password=<?php echo $ukey ?>&ac=list&amp;url=<?php echo $var_url?>&rid=<?php echo $rid;?>'))" href="#" >
-          <div class="btn" style="<?php if($t<1){ ?>display:none;<?php }else{?>display:inline;<?php }?>width:65px;text-align:center;">一键采集该分类</div></a>
+          <a onClick="ajaxFunction('?ac=type&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>&t=<?php  echo $t;?>&backurl='+encodeURIComponent('admin_reslib2.php?password=<?php  echo $ukey ?>&ac=list&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>'))" href="#" >
+          <div class="btn" style="<?php  if($t<1){ ?>display:none;<?php  }else{?>display:inline;<?php  }?>width:65px;text-align:center;">一键采集该分类</div></a>
           &nbsp;
           <input type="button" class="btn" style="width:65px" onClick="location.reload()" value="刷新网页"/>
           &nbsp;&nbsp;查询：
@@ -648,16 +648,16 @@ if($action=="list")
           &nbsp;
           <input type="submit" class="btn" name="submit" value="搜 索" />
           &nbsp;
-          <select name="select" onChange="location.href='?ac=list&amp;url=<?php echo $var_url?>&rid=<?php echo $rid;?>&t='+this.options[this.selectedIndex].value+'&h=&pg=&wd='">
+          <select name="select" onChange="location.href='?ac=list&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>&t='+this.options[this.selectedIndex].value+'&h=&pg=&wd='">
             <option value="">按分类查看</option>
-            <?php
+            <?php 
 				foreach($xml->class->ty as $ty)
 				{
 
           			?>
-                     <option value="<?php echo $ty['id']?>"><?php echo $ty;?></option>
+                     <option value="<?php  echo $ty['id']?>"><?php  echo $ty;?></option>
                     
-                    <?php
+                    <?php 
 				}
 				
 			?>
@@ -681,11 +681,11 @@ if($action=="list")
     </tbody>
 <form action="?" method="post" name="choose" id="choose">
 <input type="hidden" name="ac" value="select">
-<input type="hidden" name="rid" value="<?php echo($rid)?>">
-<input type="hidden" name="backurl" value="?ac=list&rid=<?php echo($rid)?>&t=<?php echo $t;?>&h=<?php echo $h;?>&wd=<?php echo $wd;?>&pg=<?php echo $pg;?>&amp;url=<?php echo $var_url?>">
-<input type="hidden" name="url" value="<?php echo $var_url?>" />
+<input type="hidden" name="rid" value="<?php  echo($rid)?>">
+<input type="hidden" name="backurl" value="?ac=list&rid=<?php  echo($rid)?>&t=<?php  echo $t;?>&h=<?php  echo $h;?>&wd=<?php  echo $wd;?>&pg=<?php  echo $pg;?>&amp;url=<?php  echo $var_url?>">
+<input type="hidden" name="url" value="<?php  echo $var_url?>" />
  
-    <?php
+    <?php 
 	
 	foreach($xml->list->video as $video)
 	{
@@ -703,13 +703,13 @@ if($action=="list")
 		}
 		?>
         	<tr>
-		<td nowrap="nowrap"><input type="checkbox" class="checkbox" name="ids[]" value="<?php echo $video->id; ?>" id="<?php echo $video->id; ?>" <?php echo $ch; ?>/><label for="<?php echo $video->id; ?>"><?php echo $video->name; ?><font color="#FF0000"><?php echo $video->note; ?></font></label></td>
-		<td nowrap="nowrap"><a href="?ac=list&t=<?php echo $video->tid; ?>&rid=<?php echo $rid;?>"><?php echo $video->type; ?></a></td>
-		<td nowrap="nowrap"><?php echo $video->dt; ?></td>
-		<td nowrap="nowrap"><?php echo $video->last; ?></td>
+		<td nowrap="nowrap"><input type="checkbox" class="checkbox" name="ids[]" value="<?php  echo $video->id; ?>" id="<?php  echo $video->id; ?>" <?php  echo $ch; ?>/><label for="<?php  echo $video->id; ?>"><?php  echo $video->name; ?><font color="#FF0000"><?php  echo $video->note; ?></font></label></td>
+		<td nowrap="nowrap"><a href="?ac=list&t=<?php  echo $video->tid; ?>&rid=<?php  echo $rid;?>"><?php  echo $video->type; ?></a></td>
+		<td nowrap="nowrap"><?php  echo $video->dt; ?></td>
+		<td nowrap="nowrap"><?php  echo $video->last; ?></td>
 	</tr>
 
-        <?php
+        <?php 
 	}
 	?>
 	</form>
@@ -717,11 +717,11 @@ if($action=="list")
     <tr>
       <td colspan="4"><div class="cuspages" style="margin:0">
           <div class="pages" style="margin:0">
-          共 <?php echo($totalcount)?> 条数据 每页 <?php echo $pagesize; ?> 条 当前 <?php echo $currentpage?>/<?php echo $pagecount?> 
+          共 <?php  echo($totalcount)?> 条数据 每页 <?php  echo $pagesize; ?> 条 当前 <?php  echo $currentpage?>/<?php  echo $pagecount?> 
           页码
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=1&amp;url=<?php echo $var_url?>">首页</a>
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=<?php echo ($pg-1) ?>&amp;url=<?php echo $var_url?>">上一页</a>
-          <?php 
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=1&amp;url=<?php  echo $var_url?>">首页</a>
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($pg-1) ?>&amp;url=<?php  echo $var_url?>">上一页</a>
+          <?php  
 		  	for($i=$pg-3;$i<($pg+4);$i++)
 			{
 				if($i<1){}
@@ -729,18 +729,18 @@ if($action=="list")
 				else{
 			
 		  ?>
-          <a href='?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg=<?php echo ($i) ?>&amp;url=<?php echo $var_url?>'><?php echo $i;?></a>
-          <?php
+          <a href='?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($i) ?>&amp;url=<?php  echo $var_url?>'><?php  echo $i;?></a>
+          <?php 
 			}
 			}
 		  ?>
           
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;url=<?php echo $var_url?>&amp;pg=<?php echo ($pg+1) ?>">下一页</a>
-          <a href="?ac=list&amp;rid=<?php echo $rid;?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;url=<?php echo $var_url?>&amp;pg=<?php echo ($pagecount) ?>">尾页</a>&nbsp;&nbsp;
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;url=<?php  echo $var_url?>&amp;pg=<?php  echo ($pg+1) ?>">下一页</a>
+          <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;url=<?php  echo $var_url?>&amp;pg=<?php  echo ($pagecount) ?>">尾页</a>&nbsp;&nbsp;
           跳转
             <input type="text" id="skip2" value="" onKeyUp="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
             &nbsp;&nbsp;
-            <input type="button" value="确定" class="btn" onClick="location.href='?ac=list&amp;rid=<?php echo $rid;?>&amp;url=<?php echo $var_url?>&amp;t=<?php echo $t ?>&amp;h=<?php echo $h ?>&amp;wd=<?php echo $wd ?>&amp;pg='+$('skip2').value;"/>
+            <input type="button" value="确定" class="btn" onClick="location.href='?ac=list&amp;rid=<?php  echo $rid;?>&amp;url=<?php  echo $var_url?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg='+$('skip2').value;"/>
           </div>
         </div></td>
     </tr>
@@ -752,7 +752,7 @@ if($action=="list")
     
     
 
-	<?php
+	<?php 
 	bottom();
 
 }
@@ -1040,7 +1040,7 @@ function top()
 </head>
 <body bgcolor="#F7FBFF">
 <div class="container" id="cpcontainer">
-<?php
+<?php 
 }
 
 function bottom()
@@ -1049,6 +1049,6 @@ function bottom()
 </div>
 </body>
 </html> 
-<?php
+<?php 
 }
 ?>

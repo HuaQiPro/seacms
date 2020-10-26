@@ -1,4 +1,4 @@
-<?php
+<?php 
 $message_r=array();
 $message_r=Array(
 	'NotMkdir'=>'建立目录不成功，请检查bdata目录权限!',

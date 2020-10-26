@@ -1,4 +1,4 @@
-<?php
+<?php 
 header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -7,7 +7,7 @@ if($action=="set")
 	$v= $_POST['v'];
 	$ip = $_POST['ip'];
 	$open=fopen("../data/admin/ip.php","w" );
-	$str='<?php ';
+	$str='<?php  ';
 	$str.='$v = "';
 	$str.="$v";
 	$str.='"; ';
@@ -44,18 +44,18 @@ if($action=="set")
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-<?php require_once("../data/admin/ip.php"); ?>
+<?php  require_once("../data/admin/ip.php"); ?>
 功能开关：
-<input type="radio" name="v" value="0" <?php if($v==0) echo 'checked';?>>关闭
+<input type="radio" name="v" value="0" <?php  if($v==0) echo 'checked';?>>关闭
 &nbsp;&nbsp;
-<input type="radio" name="v" value="1" <?php if($v==1) echo 'checked';?>>开启
+<input type="radio" name="v" value="1" <?php  if($v==1) echo 'checked';?>>开启
  * 是否启用ip限制，启用后非登记ip无法访问网站后台 
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-允许IP：<textarea name="ip" style="width:500px; height:100px;"><?php echo $ip;?></textarea>
+允许IP：<textarea name="ip" style="width:500px; height:100px;"><?php  echo $ip;?></textarea>
  * 允许设置多个ip，每行一个
 </td>
 </tr>
@@ -82,7 +82,7 @@ if($action=="set")
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>

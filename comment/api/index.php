@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require_once("../../include/common.php");
 $id = (isset($gid) && is_numeric($gid)) ? $gid : 0;

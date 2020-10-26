@@ -1,4 +1,4 @@
-<?php
+<?php 
 // search jsonp server v1.2  form seacms by  nohacks.cn
 
 require_once("include/common.php");

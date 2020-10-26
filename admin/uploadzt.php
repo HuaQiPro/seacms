@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 $up = new uploader();
 $up->config(array('saveDir'=>'../uploads/zt'));

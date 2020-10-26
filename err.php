@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require_once("include/common.php");
 require_once(sea_INC."/filter.inc.php");
@@ -87,15 +87,15 @@ if($author=='' || $errtxt=='') {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
     <body  style="font-size:12px;background-color:#D7EDFA;height:22px;line-height:22px;">
-        <form id="reporterr" action="?id=<?php echo $id ?>&action=add" method="post" onSubmit="return checkReportErr()">
-		<input type="hidden" id="vid" name="vid"  value="<?php echo $id2 ?>">
+        <form id="reporterr" action="?id=<?php  echo $id ?>&action=add" method="post" onSubmit="return checkReportErr()">
+		<input type="hidden" id="vid" name="vid"  value="<?php  echo $id2 ?>">
             <div class="err">
 			<h2>失效影片，我们会在第一时间内修正</h2>
                <p style="padding-bottom:5px;">昵称:<input type="text" id="author" name="author"  value="匿名"  size="15"><font color="#FF0000">*必填</font></p>
 			
-                <p>详情:<textarea id="errtxt"  name="errtxt" style="width:270px;height:88px" rows=5 cols=30><?php echo $errtxt2 ?></textarea>
+                <p>详情:<textarea id="errtxt"  name="errtxt" style="width:270px;height:88px" rows=5 cols=30><?php  echo $errtxt2 ?></textarea>
                 <font color="#FF0000">*必填</font></p>
-				<?php
+				<?php 
 				$vcode="<p>验证：<input name=\"validate\" type=\"text\" id=\"vdcode\" style=\"width:50px;text-transform:uppercase;\" class=\"text\" tabindex=\"3\"/> <img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"cursor:pointer\" onClick=\"this.src=this.src+'?get=' + new Date()\"/><span class=\"red\"></span></p>";
 				if($cfg_feedback_ck=='1'){echo $vcode;}
 				?>

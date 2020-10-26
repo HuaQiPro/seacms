@@ -1,4 +1,4 @@
-<?php
+<?php 
 $cfg_mb_open = '0';
 $cfg_mb_allowreg = '1';
 $cfg_md_mailtest = '0';

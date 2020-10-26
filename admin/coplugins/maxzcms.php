@@ -1,4 +1,4 @@
-<?php
+<?php 
 //for >=maxzcms2.0 only
 function maxzcms($str)
 {

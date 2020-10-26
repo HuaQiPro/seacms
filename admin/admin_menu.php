@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 $defaultIcoFile = sea_ROOT.'/data/admin/quickmenu.txt';
 $myIcoFile = sea_ROOT.'/data/admin/quickmenu-'.$cuserLogin->getUserID().'.txt';

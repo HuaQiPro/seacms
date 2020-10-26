@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(!file_exists("data/common.inc.php"))
 {
     header("Location:install/index.php");

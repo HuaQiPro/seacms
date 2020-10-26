@@ -1,4 +1,4 @@
-<?php
+<?php 
 function RunMagicQuotes(&$str)
 {
 	if(!get_magic_quotes_gpc()) {

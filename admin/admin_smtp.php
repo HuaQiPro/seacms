@@ -1,4 +1,4 @@
-<?php	
+<?php 	
 header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -10,7 +10,7 @@ if($action=="set")
 	$token = $_POST['smtpuser'];
 	$token = $_POST['smtppass'];
 	$open=fopen("../data/admin/smtp.php","w" );
-	$str='<?php ';	
+	$str='<?php  ';	
 	$str.='$smtpserver = "';
 	$str.="$smtpserver";
 	$str.='"; ';
@@ -65,43 +65,43 @@ if($action=="set")
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-<?php require_once("../data/admin/smtp.php"); ?>
-SMTP地址：<input  name="smtpserver" value="<?php echo $smtpserver;?>">
+<?php  require_once("../data/admin/smtp.php"); ?>
+SMTP地址：<input  name="smtpserver" value="<?php  echo $smtpserver;?>">
  * SMTP发信服务器地址，必须支持SSL链接，如：smtp.qq.com 
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-SMTP端口：<input name="smtpserverport" value="<?php echo $smtpserverport;?>">
+SMTP端口：<input name="smtpserverport" value="<?php  echo $smtpserverport;?>">
  * SMTP服务器使用的SSL端口，如：465
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-SMTP邮箱：<input name="smtpusermail" value="<?php echo $smtpusermail;?>">
+SMTP邮箱：<input name="smtpusermail" value="<?php  echo $smtpusermail;?>">
  * 用于发信的地址，如：1234@qq.com
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-SMTP昵称：<input name="smtpname" value="<?php echo $smtpname;?>">
+SMTP昵称：<input name="smtpname" value="<?php  echo $smtpname;?>">
  * 用于显示的发信名称，如：海洋影视网
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-SMTP账户：<input name="smtpuser" value="<?php echo $smtpuser;?>">
+SMTP账户：<input name="smtpuser" value="<?php  echo $smtpuser;?>">
  * 用于发信的邮件账户，如：1234@qq.com
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-SMTP密码：<input name="smtppass" value="<?php echo $smtppass;?>">
+SMTP密码：<input name="smtppass" value="<?php  echo $smtppass;?>">
  * SMTP服务器的用户密码或者授权码
 </td>
 </tr>
@@ -110,16 +110,16 @@ SMTP密码：<input name="smtppass" value="<?php echo $smtppass;?>">
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-注册需要激活：<input type="radio" name="smtpreg" value="off" <?php if($smtpreg=='off') echo 'checked';?>>关闭
+注册需要激活：<input type="radio" name="smtpreg" value="off" <?php  if($smtpreg=='off') echo 'checked';?>>关闭
 &nbsp;&nbsp;
-<input type="radio" name="smtpreg" value="on" <?php if($smtpreg=='on') echo 'checked';?>>开启
+<input type="radio" name="smtpreg" value="on" <?php  if($smtpreg=='on') echo 'checked';?>>开启
 </td>
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-找回密码功能：<input type="radio" name="smtppsw" value="off" <?php if($smtppsw=='off') echo 'checked';?>>关闭
+找回密码功能：<input type="radio" name="smtppsw" value="off" <?php  if($smtppsw=='off') echo 'checked';?>>关闭
 &nbsp;&nbsp;
-<input type="radio" name="smtppsw" value="on" <?php if($smtppsw=='on') echo 'checked';?>>开启
+<input type="radio" name="smtppsw" value="on" <?php  if($smtppsw=='on') echo 'checked';?>>开启
 </td>
 </tr>
 <tr>
@@ -156,7 +156,7 @@ SMTP密码：<input name="smtppass" value="<?php echo $smtppass;?>">
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>

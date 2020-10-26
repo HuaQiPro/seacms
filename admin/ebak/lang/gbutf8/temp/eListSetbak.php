@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(!defined('InEmpireBak'))
 {
 	exit();
@@ -21,7 +21,7 @@ function ChangeSet(filename)
 	var ok=confirm("确认要导入?");
 	if(ok)
 	{
-		opener.parent.ebakmain.location.href='ChangeTable.php?mydbname=<?php echo $mydbname ?>&savefilename='+filename;
+		opener.parent.ebakmain.location.href='ChangeTable.php?mydbname=<?php  echo $mydbname ?>&savefilename='+filename;
 		window.close();
 	}
 }
@@ -37,10 +37,10 @@ function ChangeSet(filename)
 <br>
 <table width="500" border="0" cellpadding="3" cellspacing="1" class="tableborder">
   <tr class="header"> 
-    <td width="63%" height="25"> <div align="center">保存设置文件名<?php echo $onclickword ?></div></td>
+    <td width="63%" height="25"> <div align="center">保存设置文件名<?php  echo $onclickword ?></div></td>
     <td width="37%"><div align="center">操作</div></td>
   </tr>
-  <?php
+  <?php 
   while($file=@readdir($hand))
   {
   	if($file!="."&&$file!=".."&&$file!="index.html"&&is_file("setsave/".$file))
@@ -69,10 +69,10 @@ function ChangeSet(filename)
    ?>
   <tr bgcolor="#FFFFFF"> 
     <td height="25"> <div align="left"><img src="images/txt.gif" width="19" height="16">&nbsp; 
-        <?php echo $showfile ?> </div></td>
-    <td><div align="center">&nbsp;[<?php echo $showdel ?>]</div></td>
+        <?php  echo $showfile ?> </div></td>
+    <td><div align="center">&nbsp;[<?php  echo $showdel ?>]</div></td>
   </tr>
-  <?php
+  <?php 
      }
   }
    ?>

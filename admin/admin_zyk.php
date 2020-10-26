@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
 if(empty($action))
@@ -59,7 +59,7 @@ elseif($action=="del")
 <tbody><tr class="thead">
 <td colspan="5" class="td_title">资源库列表</td>
 </tr>
-<?php
+<?php 
 $sqlStr="select * from `sea_zyk` order by zid ASC";
 $dsql->SetQuery($sqlStr);
 $dsql->Execute('flink_list');
@@ -69,13 +69,13 @@ $aid=$row->id;
 ?>
 
 <tr>
-<td width="60" align="left" height="30" class="td_border">&nbsp;<a href="?action=del&id=<?php echo $row->zid; ?>">删除该库</a>&nbsp;&nbsp;</td>
+<td width="60" align="left" height="30" class="td_border">&nbsp;<a href="?action=del&id=<?php  echo $row->zid; ?>">删除该库</a>&nbsp;&nbsp;</td>
 <td align="left"  height="30" class="td_border">
-【ID<?php echo $row->zid; ?>】【<?php echo $row->zname ?>】 - [<?php echo $row->zapi ?>] - [<?php echo $row->zinfo ?>]
+【ID<?php  echo $row->zid; ?>】【<?php  echo $row->zname ?>】 - [<?php  echo $row->zapi ?>] - [<?php  echo $row->zinfo ?>]
 </td>
 </tr>
 
-<?php
+<?php 
 }
 ?>
 
@@ -126,7 +126,7 @@ $aid=$row->id;
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>

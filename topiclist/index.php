@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/../include/common.php");
 //前置跳转start
 $cs=$_SERVER["REQUEST_URI"];

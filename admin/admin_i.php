@@ -1,4 +1,4 @@
-<?php
+<?php 
 header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -34,8 +34,8 @@ if($action=="set")
 </tr>
 <tr bgcolor="#FFF" style="background-color:#FFF;">
 <td width="80%" align="left" height="30" class="td_border">
-<?php $v1=file_get_contents("../data/admin/i.txt"); ?>
-&nbsp;&nbsp;<input name="v" type="text" id="v" value=<?php echo $v1 ?> style="width:50px;text-transform:uppercase;"> *为0时关闭该功能
+<?php  $v1=file_get_contents("../data/admin/i.txt"); ?>
+&nbsp;&nbsp;<input name="v" type="text" id="v" value=<?php  echo $v1 ?> style="width:50px;text-transform:uppercase;"> *为0时关闭该功能
 </td>
 </tr>
 
@@ -57,7 +57,7 @@ if($action=="set")
 	</div>
 </div>
 
-<?php
+<?php 
 viewFoot();
 ?>
 

@@ -1,4 +1,4 @@
-<?php
+<?php 
 $PLUS=array (
   'HideVideo' => 
   array (

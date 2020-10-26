@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(!defined('sea_ADMIN'))
 {
 	exit("Request Error!");

@@ -1,4 +1,4 @@
-<?php                   
+<?php                    
 require_once('../include/common.php');
 require_once('../include/main.class.php');
 require_once('../include/link.func.php');

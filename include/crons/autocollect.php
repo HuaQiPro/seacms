@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(!defined('sea_INC'))
 {
 	exit("Request Error!");

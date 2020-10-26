@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 error_reporting(0);
 function lib_replace_end_tag($str)  

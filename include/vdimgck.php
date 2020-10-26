@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 
 //获取随机字符

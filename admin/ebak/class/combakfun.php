@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 //验证是否使用默认密码和默认验证随机码
 function Ebak_CheckIsDefPass($add){
@@ -260,7 +260,7 @@ function Ebak_SetDb($add){
 		$add['sebaklang']='gb,gbk';
 	}
 	$langr=explode(',',$add['sebaklang']);
-	$string="<?php
+	$string="<?php 
 if(!defined('InEmpireBak'))
 {
 	exit();
@@ -494,7 +494,7 @@ function Ebak_SaveSeting($add){
 		}
 		$tblist=",".$tblist;
 	}
-	$str="<?php
+	$str="<?php 
 \$dbaktype=".$baktype.";
 \$dfilesize=".$filesize.";
 \$dbakline=".$bakline.";

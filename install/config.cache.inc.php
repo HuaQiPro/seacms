@@ -1,4 +1,4 @@
-<?php
+<?php 
 $cfg_runmode = '1';
 $cfg_stoptime = '3';
 $cfg_makemode = 'dir1';
@@ -65,8 +65,8 @@ $cfg_cookie_encode = '~cookie_encode~';
 $cfg_gatherpicset = '0';
 $cfg_df_style = 'default';
 $cfg_df_mstyle = 'default';
-$cfg_ewm = 'http://www.seacms.org/ewm.jpg';
-$cfg_mhost = 'http://m.seacms.org';
+$cfg_ewm = 'http://www.seacms.net/ewm.jpg';
+$cfg_mhost = 'http://m.seacms.net';
 $cfg_mskin = '0';
 $cfg_df_html = 'html';
 $cfg_upload_dir = 'uploads';
@@ -85,6 +85,7 @@ $cfg_feedbackcheck = '1';
 $cfg_gbcheck = '0';
 $cfg_feedback_ck = '1';
 $cfg_isfromsort = '0';
+$cfg_search_type = '-1';
 $cfg_search_time = '3';
 $cfg_iscache = '1';
 $cfg_cachetime = '20';

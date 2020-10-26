@@ -1,6 +1,6 @@
-<?php
+<?php 
 /*
-	[seacms1.0] (C)2011-2012 seacms.org
+	[seacms1.0] (C)2011-2012 seacms.net
 */
 ob_implicit_flush();
 require_once(dirname(__FILE__)."/config.php");

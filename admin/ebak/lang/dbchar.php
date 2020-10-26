@@ -1,4 +1,4 @@
-<?php
+<?php 
 //MYSQL Char
 $dbcharr=Array(
 	'0'=>'utf8'

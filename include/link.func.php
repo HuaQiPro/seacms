@@ -1,4 +1,4 @@
-<?php 
+<?php  
 //获取视频首页链接 
 function getIndexLink()
 {

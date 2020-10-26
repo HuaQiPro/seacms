@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once("include/common.php");
 $name=$_REQUEST['name'];
 $url=$_REQUEST['url'];

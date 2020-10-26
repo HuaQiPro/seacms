@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(function_exists("opcache_reset")){opcache_reset();} 
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();

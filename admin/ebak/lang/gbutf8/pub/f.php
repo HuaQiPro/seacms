@@ -1,4 +1,4 @@
-<?php
+<?php 
 $fun_r=array();
 $fun_r=Array(
 	'StartToBak'=>'初始化备份成功，正在进入表备份．．．．．．',

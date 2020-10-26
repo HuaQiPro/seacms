@@ -1,4 +1,4 @@
-<?php
+<?php 
 error_reporting(0);
 require_once('webscan/webscan.php');
 define('sea_INC', preg_replace("|[/\\\]{1,}|",'/',dirname(__FILE__) ) );

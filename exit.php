@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require_once("include/common.php");
 unset($_SESSION['sea_user_id']);

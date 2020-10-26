@@ -1,4 +1,4 @@
-<?php
+<?php 
 header('Content-Type:text/html;charset=utf-8');
 require_once(dirname(__FILE__)."/config.php");
 CheckPurview();
@@ -7,7 +7,7 @@ if($action=="set")
 	$weburl= $_POST['weburl'];
 	$token = $_POST['token'];
 	$open=fopen("../data/admin/ping.php","w" );
-	$str='<?php ';
+	$str='<?php  ';
 	$str.='$weburl = "';
 	$str.="$weburl";
 	$str.='"; ';
@@ -44,15 +44,15 @@ if($action=="set")
 </tr>
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-<?php require_once("../data/admin/ping.php"); ?>
-登记域名：<input  name="weburl" value="<?php echo $weburl;?>">
- * 百度站长平台里登记的域名，必须保持完全一致，如www.seacms.org、demo.seacms.org 
+<?php  require_once("../data/admin/ping.php"); ?>
+登记域名：<input  name="weburl" value="<?php  echo $weburl;?>">
+ * 百度站长平台里登记的域名，必须保持完全一致，如www.seacms.net、demo.seacms.net 
 </td>
 </tr>
 
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
-准入密钥：<input name="token" value="<?php echo $token;?>">
+准入密钥：<input name="token" value="<?php  echo $token;?>">
  * 百度站长平台里提供的准入秘钥，在百度站长平台-链接提交-修改准入密钥处查看
 </td>
 </tr>
@@ -89,7 +89,7 @@ if($action=="set")
 </div>
 	</div>
 </div>
-<?php
+<?php 
 viewFoot();
 ?>
 </body>

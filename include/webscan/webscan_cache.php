@@ -1,4 +1,4 @@
-<?php
+<?php 
 define('WEBSCAN_U_KEY', 'key');
 define('WEBSCAN_API_LOG', 'http://127.0.0.1');
 define('WEBSCAN_UPDATE_FILE','http://127.0.0.1');

@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 require_once(sea_DATA."/mark/inc_photowatermark_config.php");
 require_once(sea_DATA."/config.ftp.php");

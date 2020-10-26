@@ -1,4 +1,4 @@
-<?php
+<?php 
 error_reporting(0);
 if(PHP_VERSION<'5.3.0')
 {

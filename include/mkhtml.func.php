@@ -1,4 +1,4 @@
-<?php
+<?php 
 function makeIndex($by='video')
 {
 	global $mainClassObj;

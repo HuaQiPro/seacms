@@ -1,4 +1,4 @@
-<?php
+<?php 
 error_reporting(0);
 function lib_replace_end_tag($str)  
 {  
@@ -73,10 +73,9 @@ foreach($_GET as $k=>$v)
 	$schwhere.= "&$k=".urlencode($$k);
 }
 $schwhere = ltrim($schwhere,'&');
-
 $page = (isset($page) && is_numeric($page)) ? $page : 1;
-$searchtype = (isset($searchtype) && is_numeric($searchtype)) ? $searchtype : -1;
-$tid = (isset($tid) && is_numeric($tid)) ? intval($tid) : 0;
+if($searchtype != 5){$searchtype=$cfg_search_type;}
+$tid = (isset($tid) && is_numeric($tid)) ? $tid : 0;
 if(!isset($searchword)) $searchword = '';
 $action = $_REQUEST['action'];
 $searchword = RemoveXSS(stripslashes($searchword));
@@ -191,23 +190,11 @@ if(check_str($page,$key)){ShowMsg('请勿输入危险字符！','index.php','0',
 	if (empty($pSize)) $pSize=12;
 	switch (intval($searchtype)) {
 		case -1:
-			$whereStr=" where v_recycled=0 and (v_name like '%$searchword%' or v_actor like '%$searchword%' or v_director like '%$searchword%' or v_publisharea like '%$searchword%'  or v_publishyear like '%$searchword%' or v_letter='$searchword' or v_tags='$searchword' or v_nickname like '%$searchword%')";
-		break;
-		case 0:
-			$whereStr=" where v_recycled=0 and v_name like '%$searchword%'";	
+			$whereStr=" where v_recycled=0 and (v_name like '%$searchword%' or v_actor like '%$searchword%' or v_director like '%$searchword%' or v_tags like '%$searchword%' or v_nickname like '%$searchword%')";
 		break;
 		case 1:
-			$whereStr=" where v_recycled=0 and v_actor like '%$searchword%'";
-		break;
-		case 2:
-			$whereStr=" where v_recycled=0 and v_publisharea like '%$searchword%'";
-		break;
-		case 3:
-			$whereStr=" where v_recycled=0 and v_publishyear like '%$searchword%'";
-		break;
-		case 4:
-			$whereStr=" where v_recycled=0 and v_letter='".strtoupper($searchword)."'";
-		break;
+			$whereStr=" where v_recycled=0 and v_name like '%$searchword%'";	
+		break;		
 		case 5:
 			$whereStr=" where v_recycled=0";
 			if(!empty($tid)) $whereStr.=" and (tid in (".getTypeId($tid).") or FIND_IN_SET('".$tid."',v_extratype)<>0)";

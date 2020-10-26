@@ -1,4 +1,4 @@
-<?php 
+<?php  
 $lang['channellistInfo']['0']="<font color='red'> 对不起，无记录 </font>";
 $lang['channellistInfo']['1']="指定分类错误";
 $lang['searchlistInfo']['0']="对不起，没有找到任何记录,您可以<a target='_blank' href='gbook.php?key=";

@@ -1,4 +1,4 @@
-<?php
+<?php 
 require(substr(dirname(__FILE__),0,-3).'class/connect.php');
 if(!defined('InEmpireBak'))
 {

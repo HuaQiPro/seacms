@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 //取得php配置参数
 function EGInfo_ReturnPHPiniVar($var){

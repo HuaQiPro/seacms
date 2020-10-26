@@ -20,7 +20,7 @@
 <body>
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;采集&nbsp;&raquo;&nbsp;资源库列表 ';</script>
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 require_once(sea_DATA."/mark/inc_photowatermark_config.php");
 CheckPurview();
@@ -29,7 +29,7 @@ echo "<script>openCollectWin(400,'auto','上次采集未完成，继续采集？
 ?>
 <div class="S_info">&nbsp;资源库列表&nbsp;&nbsp;&nbsp;&nbsp;【如果分类绑定过多，某些情况下可能会导致采集错误，请先清除分类绑定】</div>
 <table width="98%"  align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="margin-top:15px; margin-left:10px;" id="list" class="list">
-<?php
+<?php 
 $sqlStr="select * from `sea_zyk` order by zid ASC";
 $dsql->SetQuery($sqlStr);
 $dsql->Execute('flink_list');
@@ -38,20 +38,20 @@ while($row=$dsql->GetObject('flink_list'))
 $aid=$row->id;
 ?>
   <tr>
-    <td width="20"><?php echo $row->zid; ?></td>
-    <td class="bi"><a href="admin_reslib.php?ac=list&rid=<?php echo $row->zid; ?>&url=<?php echo $row->zapi; ?>"><strong>【<?php echo $row->zname; ?>】</strong><?php echo $row->zinfo; ?></a></td>
-    <td><a href="admin_reslib.php?ac=day&rid=<?php echo $row->zid; ?>&url=<?php echo $row->zapi; ?>">采集当天</a></td>
-    <td><a href="admin_reslib.php?ac=week&rid=<?php echo $row->zid; ?>&url=<?php echo $row->zapi; ?>">采集本周</a></td>
-    <td><a href="admin_reslib.php?ac=all&rid=<?php echo $row->zid; ?>&url=<?php echo $row->zapi; ?>">采集所有</a></td>
-    <td><a href="admin_reslib.php?ac=list&rid=<?php echo $row->zid; ?>&url=<?php echo $row->zapi; ?>">分类绑定</a></td>
+    <td width="20"><?php  echo $row->zid; ?></td>
+    <td class="bi"><a href="admin_reslib.php?ac=list&rid=<?php  echo $row->zid; ?>&url=<?php  echo $row->zapi; ?>"><strong>【<?php  echo $row->zname; ?>】</strong><?php  echo $row->zinfo; ?></a></td>
+    <td><a href="admin_reslib.php?ac=day&rid=<?php  echo $row->zid; ?>&url=<?php  echo $row->zapi; ?>">采集当天</a></td>
+    <td><a href="admin_reslib.php?ac=week&rid=<?php  echo $row->zid; ?>&url=<?php  echo $row->zapi; ?>">采集本周</a></td>
+    <td><a href="admin_reslib.php?ac=all&rid=<?php  echo $row->zid; ?>&url=<?php  echo $row->zapi; ?>">采集所有</a></td>
+    <td><a href="admin_reslib.php?ac=list&rid=<?php  echo $row->zid; ?>&url=<?php  echo $row->zapi; ?>">分类绑定</a></td>
   </tr>
-<?php
+<?php 
 }
 ?>  
 </table>
-<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.org/api/union.js"></script>
+<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/union.js"></script>
 <div style="height:30px; clear:both;"> </div>
-<?php
+<?php 
 viewFoot();exit();	
 ?>
 </body>

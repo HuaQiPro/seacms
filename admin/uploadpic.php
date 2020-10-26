@@ -1,4 +1,4 @@
-<?php
+<?php 
 $config=array();
 
 $config['type']=array("flash","img"); //上传允许type值

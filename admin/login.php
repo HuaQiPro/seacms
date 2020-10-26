@@ -1,4 +1,4 @@
-<?php
+<?php 
 //彻底禁止蜘蛛抓取
 if(preg_match("/(googlebot|baiduspider|sogou|360spider|bingbot|Yahoo|spider|bot)/i", $_SERVER['HTTP_USER_AGENT']))
 {header('HTTP/1.1 403 Forbidden'); header("status: 403 Forbidden");}

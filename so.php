@@ -1,4 +1,4 @@
-<?php
+<?php 
 error_reporting(0);
 function lib_replace_end_tag($str)  
 {  
@@ -65,7 +65,7 @@ if($GLOBALS['cfg_mskin']==4 AND $GLOBALS['isMobile']==1){header("location:$cfg_m
 require_once(sea_INC."/main.class.php");
 require_once(sea_INC."/splitword.class.php");
 $page = (isset($page) && is_numeric($page)) ? $page : 1;
-$searchtype = (isset($searchtype) && is_numeric($searchtype)) ? $searchtype : -1;
+$searchtype=$cfg_search_type;
 $searchword = isset($searchword) && $searchword ? $searchword:'';
 $searchword = FilterSearch(stripslashes($searchword));
 $searchword = addslashes(cn_substr($searchword,20));
@@ -107,23 +107,12 @@ function echoSearchPage()
 	if (empty($pSize)) $pSize=12;
 	switch (intval($searchtype)) {
 		case -1:
-			$whereStr=" where n_recycled=0 and (n_title like '%$searchword%' or n_keyword like '%$searchword%')";
-		break;
-		case 0:
-			$whereStr=" where n_recycled=0 and n_title like '%$searchword%'";	
+			$whereStr=" where n_recycled=0 and (n_title like '%$searchword%' or n_keyword like '%$searchword%' or n_author like '%$searchword%' or n_from like '%$searchword%')";
 		break;
 		case 1:
-			$whereStr=" where n_recycled=0 and n_author like '%$searchword%'";
+			$whereStr=" where n_recycled=0 and n_title like '%$searchword%'";	
 		break;
-		case 2:
-			$whereStr=" where n_recycled=0 and n_from like '%$searchword%'";
-		break;
-		case 3:
-			$whereStr=" where n_recycled=0 and n_outline like '%$searchword%'";
-		break;
-		case 4:
-			$whereStr=" where n_recycled=0 and n_letter='".strtoupper($searchword)."'";
-		break;
+
 	}
 	$sql="select count(*) as dd from sea_news ".$whereStr;
 	$row = $dsql->GetOne($sql);

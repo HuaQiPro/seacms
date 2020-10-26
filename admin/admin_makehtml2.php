@@ -1,4 +1,4 @@
-<?php
+<?php 
 error_reporting(0);
 @set_time_limit(0);
 define('sea_ADMIN', preg_replace("|[/\\\]{1,}|",'/',dirname(__FILE__) ) );
@@ -470,7 +470,7 @@ function viewFoot()
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\">本页面用时".
-	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.org/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
+	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.net/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
 }
 
 function viewHead($str)
@@ -487,7 +487,7 @@ function viewHead($str)
 <script src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
-<?php }
+<?php  }
 ob_implicit_flush();
 set_time_limit(0);
 require_once(sea_INC.'/main2.class.php');

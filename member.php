@@ -19,7 +19,7 @@
 <script src="pic/member/jquery.min.js"></script>
 <script type="text/javascript" src="pic/member/bootstrap.min.js"></script>
 </head>
-<?php
+<?php 
 session_start();
 require_once("include/common.php");
 require_once(sea_INC.'/main.class.php');
@@ -309,10 +309,9 @@ if($action=='chgpwdsubmit')
 		ShowMsg('两次输入密码不一致','-1');	
 		exit();	
 	}
-	$email = str_ireplace('base64', "", $email);
-	$email = str_ireplace('(', "", $email);
-	$email = str_ireplace(')', "", $email);
-	$email = str_ireplace('%', "", $email);
+	$result  = filter_var($email, FILTER_VALIDATE_EMAIL);if($result==false){ShowMsg('请输入正确的邮箱地址','-1');exit();}
+	$nickname = RemoveXSS(stripslashes($nickname));
+	$nickname = addslashes(cn_substr($nickname,60));
 	if(!empty($newpwd)||!empty($email)||!empty($nickname))
 	{
 	if(empty($newpwd)){$pwd = $oldpwd;} else{$pwd = substr(md5($newpwd),5,20);};
@@ -734,7 +733,7 @@ function hiddenpic(){
 	$("preview").style.display="none";
 }
 </script>
-<?php
+<?php 
 }
 elseif($action=='buy')
 {
@@ -893,7 +892,7 @@ function hiddenpic(){
 	$("preview").style.display="none";
 }
 </script>
-<?php
+<?php 
 }
 else
 {

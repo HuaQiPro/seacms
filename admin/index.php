@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once(dirname(__FILE__)."/config.php");
 require_once(sea_ADMIN.'/inc_menu.php');
 $defaultIcoFile = sea_ROOT.'/data/admin/quickmenu.txt';

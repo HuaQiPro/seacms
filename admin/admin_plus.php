@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 require_once(dirname(__FILE__)."/config.php");
 
@@ -110,7 +110,7 @@ class Main_db
         $data = preg_replace('!\/\/.*?[\r\n]|\/\*[\S\s]*?\*\/!', '', preg_replace('/(?:\<\?php|\?\>)/', '', file_get_contents($file)));       
         //按php语句分组
         $lines = preg_split('/[;]+/s', $data,-1,PREG_SPLIT_NO_EMPTY);	 
-        $word ="<?php\r\n";
+        $word ="<?php \r\n";
        //更新变量
         foreach ($lines as $value){
           $value= trim($value);
