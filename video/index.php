@@ -254,14 +254,13 @@ function echoPlay($vId)
 	$content = $mainClassObj->paresPreNextVideo($content,$vId,$typeFlag,$vType);
 	$content = $mainClassObj->paresPreVideo($content,$vId,$typeFlag,$vType);
 	$content = $mainClassObj->paresNextVideo($content,$vId,$typeFlag,$vType);
-	if (strpos($content,"{playpage:part}")>0||strpos($content,"{playpage:from}")>0)
-	{
-		$partName=getPartName2($row['v_playdata'],$id,$from);
-		$partNameN=getPartName2($row['v_playdata'],$id,$from+1);
-		$content = str_replace("{playpage:from}",$partName[0],$content);
-		$content = str_replace("{playpage:part}",$partName[1],$content);
-		$content = str_replace("{playpage:dz}",$partName[2],$content);
-	}
+	$partName=getPartName2($row['v_playdata'],$id,$from);
+	$partNameN=getPartName2($row['v_playdata'],$id,$from+1);
+	$content = str_replace("{playpage:from}",$partName[0],$content);
+	$content = str_replace("{playpage:part}",$partName[1],$content);
+	$content = str_replace("{playpage:dz}",$partName[2],$content);
+	$content = str_replace("{playpage:ename}",$partName[3],$content);
+
 //隐藏的播放地址start
 $str=$row['v_playdata'];
 $arr1=array();

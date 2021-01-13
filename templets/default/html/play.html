@@ -17,7 +17,7 @@
 							{seacms:load vod/player.html}
 							<a class="is-btn hidden-sm hidden-xs" id="player-sidebar-is" href="javascript:;"><i class="fa fa-angle-right"></i></a> 
 						</div>
-						<div class="col-md-wide-25 padding-0" id="player-sidebar" style="max-height:555px;overflow:scroll;">
+						<div class="col-md-wide-25 padding-0" id="player-sidebar" style="max-height:555px;overflow-y:auto;">
 							<div class="myui-panel active clearfix">
 								<div class="myui-panel-box clearfix">
 									<div class="col-pd clearfix">
@@ -44,7 +44,7 @@
 										<div class="tab-content mb10">
 											{playpage:playlist}
 											<div id="player[playlist:i]" class="tab-pane fade in{if:{playpage:from}==[playlist:from]} active{end if} clearfix">
-												<ul class="myui-content__list playlist clearfix" id="playlist">
+												<ul class="myui-content__list playlist clearfix player-{playpage:ename}" id="playlist">
 													[playlist:link target=_self]
 												</ul>
 											</div>
@@ -92,7 +92,7 @@
 			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-4");
 			{end if}
 			$("#playlist a").addClass("btn btn-min btn-gray");
-			$("#playlist a[style='color:red']").css("color","").removeClass("btn-gray").addClass("btn-warm active").closest("li").addClass("active");
+			$(".player-{playpage:ename} a:contains('{playpage:part}')").removeClass("btn-gray").addClass("btn-warm active").closest("li").addClass("active");
 		</script>
 		<script type="text/javascript">
 			MyTheme.Other.Roll('.tips','-30px');
