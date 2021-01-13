@@ -6,31 +6,32 @@ if(!defined('sea_INC'))
 @set_time_limit(0);
 if(!class_exists("MainClass_Template")) require_once(sea_INC.'/main2.class.php');
 
-//清理缓存
-autocache_clear(sea_ROOT.'/data/cache');
-//生成首页
-makeIndex();
-//生成地图页，默认关闭，如果想开启，去掉前面的//即可
-//makeAllmovie();
-//生成自定义页面
+/*
+帮助提示： 去掉行前面的 // 即可开启，反之关闭！
+帮助提示： 去掉行前面的 // 即可开启，反之关闭！
+帮助提示： 去掉行前面的 // 即可开启，反之关闭！
+帮助提示： 去掉行前面的 // 即可开启，反之关闭！
+帮助提示： 去掉行前面的 // 即可开启，反之关闭！
+*/
+
+autocache_clear(sea_ROOT.'/data/cache'); //清理缓存
+//makeAllmovie(); //生成地图页
 $flag = 1 ;
-automakeallcustom();
-//生成百度地图，默认关闭，如果想开启，去掉前面的//即可
-//makeBaidu();
-//生成百度结构化数据，默认关闭，如果想开启，去掉前面的//即可
-//makeBaidux();
-//生成google地图，默认关闭，如果想开启，去掉前面的//即可
-//makeGoogle();
-//生成rss页面，默认关闭，如果想开启，去掉前面的//即可
-//makeRss();
-//如果是静态运行
+automakeallcustom(); //生成自定义页面
+//makeBaidu();  //生成百度地图
+//makeBaidux();  //生成百度结构化数据
+//makeGoogle();  //生成google地图
+//makeRss(); //生成rss页面
+
 if($cfg_runmode=='0'){
-	//生成今日更新内容
-	automakeDay();
-	//生成专辑首页，默认关闭，如果想开启，去掉前面的//即可
-	//automakeTopicIndex();
-	//生成专辑页，默认关闭，如果想开启，去掉前面的//即可
-	//automakeAllTopic();
+makeIndex();  //生成首页	
+automakeDay();  //生成今日更新内容和列表
+//automakeTopicIndex();  //生成专辑首页
+//automakeAllTopic();  //生成专辑页
+}
+if($cfg_runmode2=='0'){
+makeIndex('news');  //生成新闻首页
+automakeNewsDay(); //生成今日更新新闻内容和列表
 }
 
 function automakeDay()
@@ -80,6 +81,53 @@ function automakeDay()
 	}
 }
 
+function automakeNewsDay()
+{
+	global $dsql;
+	$today_start = mktime(0,0,0,date('m'),date('d'),date('Y'));
+	$today_end = mktime(0,0,0,date('m'),date('d')+1,date('Y'));
+	$wheresql = " and `n_addtime` BETWEEN '{$today_start}' AND '{$today_end}'";
+	$pagesize=100;
+	if(!$pCount){
+	$rowc=$dsql->GetOne("SELECT count(*) as dd FROM `sea_news` WHERE `n_recycled`=0 ".$wheresql);
+	$totalnum = $rowc['dd'];
+	if($totalnum==0) return false;
+	$TotalPage = ceil($totalnum/$pagesize);
+	}else{
+	$TotalPage = $pCount;
+	}
+	$sql="select n_id from sea_news where n_recycled=0 $wheresql";
+	$dsql->SetQuery($sql);
+	$dsql->Execute('makeDay');
+	while($row=$dsql->GetObject('makeDay'))
+	{
+		makeArticleById($row->n_id);
+	}
+	$ids="";
+	$sqlt="SELECT tid from sea_news where n_recycled=0 ".$wheresql." GROUP BY tid";
+	$dsql->SetQuery($sqlt);
+	$dsql->Execute('makeDayt');
+	while($rowt=$dsql->GetObject('makeDayt'))
+	{
+		if(!isTypeHide($rowt->tid)){
+			if(empty($ids)) $ids=$rowt->tid; else $ids.=",".$rowt->tid;
+		}
+	}
+
+	if(!empty($ids)){
+		$tl=getTypeListsOnCache();
+		foreach($tl as $vv){
+			if (strpos(" ,".$ids.",",",".$vv->tid.",")>0){
+				if ($vv->upid>0 && strpos(" ,".$ids.",",",".$vv->tid.",")==0) $ids=$vv->tid.",".$ids;
+			}
+		}
+	}
+	if(!empty($ids)){
+		automakeNewsChannelByIDS($ids);
+		return true;
+	}
+}
+
 function automakeChannelByIDS($ids)
 {
 	$typeIdArray = array();
@@ -87,6 +135,16 @@ function automakeChannelByIDS($ids)
 	foreach($typeIdArray as $typeId)
 	{
 		automakeChannelById($typeId);
+	}
+}
+
+function automakeNewsChannelByIDS($ids)
+{
+	$typeIdArray = array();
+	$typeIdArray = explode(",",$ids);
+	foreach($typeIdArray as $typeId)
+	{
+		automakeNewsChannelById($typeId);
 	}
 }
 
@@ -166,6 +224,11 @@ function automakeChannelById($typeId)
 		$content=$mainClassObj->parseIf($content);
 		createTextFile($content,sea_ROOT.$channelLink);
 	}
+}
+
+function automakeNewsChannelById($typeId)
+{
+	makeNewsChannelById($typeId);
 }
 
 function automakeTopicIndex()

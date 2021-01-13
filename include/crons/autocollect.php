@@ -43,6 +43,7 @@ function autogetlistsbyid($id)
 	$pica=getrulevalue($loopstr,"pica");
 	$picb=getrulevalue($loopstr,"picb");
 	$pic_trim=getrulevalue($loopstr,"pic_trim");
+	
 	//处理页面链接
 	$pageset=$attrDictionary["pageset"];
 	if($pageset==0){
@@ -69,6 +70,7 @@ function autogetlistsbyid($id)
 			$listurl =$dourl[$i][0];
 			$html = cget($listurl,$sock);
 			$html = ChangeCode($html,$coding);
+			
 			if($html=='')
 			{
 				//echo "读取网址： $listurl 时失败！\r\n";
@@ -89,15 +91,17 @@ function autogetlistsbyid($id)
 			}
 			if(trim($picmode)==1 && trim($pica) !='' && trim($picb) != '' )
 			{
-				$picrulex = $mlinka.'(.*)'.$mlinkb;
+				$picrulex = $pica.'(.*)'.$picb;
 				$piclink = GetHtmlarray($html,$picrulex);
-				foreach($piclink as $s)
+				foreach($piclink as $key=>$s)
 				{
 					if(!empty($pic_trim)) $s=Gettrimvalue($pic_trim,$s);
-					$links[][pic] = FillUrl($listurl,$s);
+					$links[$key][pic] = FillUrl($listurl,$s);
+					
 				}
 			}
 			$per_count = !$per_count?count($links):$per_count;
+			
 			if (!empty($links))
 			{
 				for ($j=0;$j<count($links);$j++)

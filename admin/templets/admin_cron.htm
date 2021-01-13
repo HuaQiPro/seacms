@@ -20,9 +20,10 @@
         <tr>
           <td class="tipsblock">
 &nbsp;*&nbsp;&nbsp;本功能为定时任务自动版，访客访问前台页面时即可自动触发，不需要打开后台管理。<br>
-&nbsp;*&nbsp;&nbsp;请谨慎使用本功能，合理设置执行间隔时间，以免造成服务器崩溃。<br>
+&nbsp;*&nbsp;&nbsp;请谨慎使用本功能，合理设置执行间隔时间，延长PHP脚本执行时间，以免造成服务器崩溃。<br>
 &nbsp;*&nbsp;&nbsp;网站前台模板必须调用js/common.js和js/function.js两个系统js文件才可以正常执行。<br>
-&nbsp;*&nbsp;&nbsp;定时生成功能支持多个模块生成，请修改/include/crons/automakehtml.php文件进行配置后使用。					
+&nbsp;*&nbsp;&nbsp;默认只生成首页/新闻首页/24小时有更新的内容和列表，修改/include/crons/automakehtml.php可配置更多项目。	<br>
+&nbsp;*&nbsp;&nbsp;自动采集时不建议同时下载视频海报图片，可能会造成脚本超时或者服务器崩溃。					
 			</td>
         </tr>
 </table>
@@ -31,6 +32,7 @@ if($action=="edit")
 {
 ?>
       <form name="form1" method="post" action="?action=editsave&id=<?php echo $id;?>">
+	  <input type="hidden" name="zf" id="zf" value="<?php echo $cron['filename'];?>">
         <table border="0" cellpadding="0" cellspacing="0" align="center" class="tb">
           <tr class="thead">
             <th colspan="15">编辑计划任务 - <?php echo $cron['name'];?></th>
@@ -80,13 +82,32 @@ if($action=="edit")
             <td colspan="2">资源来源:</td>
           </tr>
           <tr>
-            <td><select name="resourcefrom" id="resourcefrom" style="width:220px;">
-                <script> </script>
-                <script>makeColOption(<?php echo $rid;?>)</script>
-              </select></td>
+            <td>
+			<select name="resourcefrom" id="resourcefrom">
+                <?php 
+                $sqlz="select * from sea_zyk";
+                $rsz=$dsql->getOne($sqlz);
+                if(!is_array($rsz))
+                {
+                	echo "<option value='0'>无资源库接口，请先添加</option>";
+                }
+                else
+                {
+                    $dsql->SetQuery($sqlz);
+                    $dsql->Execute('resourcefrom');
+                    while($row=$dsql->GetArray('resourcefrom'))
+                    {
+					$skey= '$'.$row[zid].'$';
+					if(strpos($cron['filename'],$skey) !==false){$ischeck='selected';}else{$ischeck='';}
+                    echo "<option ".$ischeck." value=\"".$row[zid]."#".$row[zapi]."\">".$row[zid].".".$row[zname]."</option>";
+                    }
+				}
+                ?>
+                </select>
+			</td>
             <td>选择资源库来源(请选择已经绑定好分类的来源，这样可以做到自动入库)</td>
           </tr>
-          <?php }elseif(strpos($cron['filename'],'#')>0){
+          <?php }elseif(strpos($cron['filename'],'autocollect.php') !==false){
            	    $filename = $cron['filename'];
                 $filenameArr=explode("#",$filename);
                 $collectID=$filenameArr[1];
@@ -100,6 +121,52 @@ if($action=="edit")
             <td><select name="collectIDa">
                 <?php 
                 $sql="select tid,tname from sea_co_type where cotype=0";
+                $rs=$dsql->getOne($sql);
+                if(!is_array($rs))
+                {
+                	echo "<option value='0'>无自定义采集项目，请先添加</option>";
+                }
+                else
+                {
+                    $dsql->SetQuery($sql);
+                    $dsql->Execute('getCollectID');
+                    while($row=$dsql->GetArray('getCollectID'))
+                    {
+                    echo "<option value=\"".$row[tid]."\" ".($collectID==$row['tid']?'selected':'').">".$row[tid].".".$row[tname]."</option>";
+                    }
+				}
+                ?>
+                </select></td>
+            <td>自动采集的ID,不能为空</td>
+          </tr>
+          <tr>
+            <td colspan="2">采集页数:</td>
+          </tr>
+          <tr>
+            <td><input name="collectPageNum" value="<?php echo $collectPageNum;?>" type="text" class="txt" /></td>
+            <td>每次自动采集多少列表页,0为不采集,不能为空</td>
+          </tr>
+          <tr>
+            <td colspan="2">采集条数:</td>
+          </tr>
+          <tr>
+            <td><input name="autogetconnum" value="<?php echo $autogetconnum;?>" type="text" class="txt" /></td>
+            <td>每次自动采集多少条最新数据,0为不采集,不能为空</td>
+          </tr>
+          <?php }elseif(strpos($cron['filename'],'autocollectnews.php') !==false){
+           	    $filename = $cron['filename'];
+                $filenameArr=explode("#",$filename);
+                $collectID=$filenameArr[1];
+                $collectPageNum=$filenameArr[2];
+                $autogetconnum=$filenameArr[3];
+          ?>
+          <tr>
+            <td colspan="2">采集ID:</td>
+          </tr>
+          <tr>
+            <td><select name="collectIDa">
+                <?php 
+                $sql="select tid,tname from sea_co_type where cotype=1";
                 $rs=$dsql->getOne($sql);
                 if(!is_array($rs))
                 {
@@ -191,32 +258,35 @@ echo "<tr><td>".$t[0]."</td><td>".$t[2]."</td><td>".$t[1]."</td><td>".$t[3]."</t
           </div>
           <select style="margin:8px 8px 0px 8px;" on onchange="selecPlan(this.options[this.selectedIndex].value)" name="PlanMode">
             <option value="1">定时生成</option>
-            <!---<option value="3">定时备份</option>--->
-             <!---<option value="0">定时采集</option>--->
-            <option value="2">定时自定义采集</option>
+            <option value="0">资源库采集</option>
+            <option value="2">视频自定义采集</option>
+			<option value="4">新闻自定义采集</option>
           </select>
           <div style="margin:8px">
             <input type="text" class="txt" name="newname" value="" size="20"  onchange="this.onkeyup();" onkeyup="this.value=this.value.replace(/$/g,'');"/>
             &nbsp;计划任务名称(<span style="color:#F00">*</span>)</div>
             
           <div style="margin:0 8px;display:none;" id="collectItem">
-		  <ul>
-            <font color="red" size="3"><strong>
-				<br>
-				&nbsp;海洋cms官方不提供任何视频资源。
-				<br>
-				&nbsp;此处选项已禁止使用。
-				<br><br>
-				</strong>
-			</font>
-              <li>
-                <select name="resourcefrom" id="resourcefrom" style="width:220px;">
-                
-                </select></li>
-           	
-            </ul>
-			
-		    
+
+                <select name="resourcefrom" id="resourcefrom">
+                <?php 
+                $sqlz="select * from sea_zyk";
+                $rsz=$dsql->getOne($sqlz);
+                if(!is_array($rsz))
+                {
+                	echo "<option value='0'>无资源库接口，请先添加</option>";
+                }
+                else
+                {
+                    $dsql->SetQuery($sqlz);
+                    $dsql->Execute('resourcefrom');
+                    while($row=$dsql->GetArray('resourcefrom'))
+                    {
+                    echo "<option value=\"".$row[zid]."#".$row[zapi]."\">".$row[zid].".".$row[zname]."</option>";
+                    }
+				}
+                ?>
+                </select>		    
           </div>
            
           <div style="margin:0 8px;display:none;" id="autocollectItem">
@@ -238,8 +308,33 @@ echo "<tr><td>".$t[0]."</td><td>".$t[2]."</td><td>".$t[1]."</td><td>".$t[3]."</t
                     }
 				}
                 ?>
-                </select>
-                &nbsp;<font color="red">提示：自定义采集和资源库采集是两个不同模块</font><br />
+                </select><br>
+                <input name="collectPageNum" value="1" type="text" class="txt"   />
+                &nbsp;每次自动采集多少列表页,0为不采集,不能为空<br />
+   	            <input name="autogetconnum" value="10" type="text" class="txt"   />
+                &nbsp;每次自动采集最新的多少条数据,0为不采集,不能为空
+          </div>
+		  
+		   <div style="margin:0 8px;display:none;" id="autocollectItemnews">
+                <select name="collectIDnews">
+                <?php 
+                $sqln="select tid,tname from sea_co_type where cotype=1";
+                $rsn=$dsql->getOne($sqln);
+                if(!is_array($rsn))
+                {
+                	echo "<option value='0'>无自定义采集项目，请先添加</option>";
+                }
+                else
+                {
+                    $dsql->SetQuery($sqln);
+                    $dsql->Execute('getCollectIDnews');
+                    while($row=$dsql->GetArray('getCollectIDnews'))
+                    {
+                    echo "<option value=\"".$row[tid]."\">".$row[tid].".".$row[tname]."</option>";
+                    }
+				}
+                ?>
+                </select><br>
                 <input name="collectPageNum" value="1" type="text" class="txt"   />
                 &nbsp;每次自动采集多少列表页,0为不采集,不能为空<br />
    	            <input name="autogetconnum" value="10" type="text" class="txt"   />

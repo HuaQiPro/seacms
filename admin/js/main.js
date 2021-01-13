@@ -749,14 +749,24 @@ function selecPlan(selecVal)
 	{
 		view('collectItem');
 		hide('autocollectItem');
+		hide('autocollectItemnews');
 	}else if(selecVal=='2')
 	{
 		view('autocollectItem');
 		hide('collectItem');
-	}else
+		hide('autocollectItemnews');
+	}
+	else if(selecVal=='4')
+	{
+		view('autocollectItemnews');
+		hide('collectItem');
+		hide('autocollectItem');
+	}
+	else
 	{
 		hide('autocollectItem');
 		hide('collectItem');
+		hide('autocollectItemnews');
 	}
 }
 

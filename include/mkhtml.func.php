@@ -1681,7 +1681,7 @@ function makeBaidu()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成baidu地图</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidu&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成baidu地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidu&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1722,11 +1722,56 @@ function makeBaidu()
 	}
 }
 
+function makeBaidun()
+{
+	global $dsql,$flag,$makenum,$allmakenum;
+	if ($flag!=1){
+		return "<br><div align=center><b>生成baidu地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidun&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+	}else{
+		$stringEcho = '';
+		$makenum = empty($makenum) ? 100 : intval($makenum);
+		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
+		$pagesize = $makenum;
+		$pCount = ceil($allmakenum/$pagesize);
+		$allcount=getDataCount("all");
+		$allpage=ceil($allcount/$pagesize);
+		if ($pCount>$allpage) $pCount=$allpage;
+		for($i=1;$i<=$pCount;$i++){
+			$limitstart = ($i-1) * $pagesize;
+			$sql="select * from sea_news order by n_addtime desc limit $limitstart,$pagesize";
+			$dsql->SetQuery($sql);
+			$dsql->Execute('makeBaidu');
+			$baiduStr =  "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n
+							<urlset>\n";
+			while($row=$dsql->GetObject('makeBaidu'))
+			{
+				$baiduStr .= "<url>\n
+							  <loc><![CDATA[".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."]]></loc>\n
+							  <lastmod><![CDATA[".MyDate('Y-m-d',$row->n_addtime)."]]></lastmod>\n
+							  <changefreq>always</changefreq>\n
+							  <priority>1.0</priority>\n	
+							  </url>\n";
+			}
+			$baiduStr .= "</urlset>\n";
+			$baiduStr=$baiduStr;
+			if ($i==1) $xmlUrl=""; else $xmlUrl="_".$i;
+			createTextFile($baiduStr,sea_ROOT."/xml/baidun".$xmlUrl.".xml");
+			$stringEcho .= $GLOBALS['cfg_basehost']."/xml/".$GLOBALS['cfg_cmspath']."baidun".$xmlUrl.".xml"." 生成完毕 <a target='_blank' href='../xml/baidun".$xmlUrl.".xml'><font color=red>浏览</font></a><br>";
+			@ob_flush();
+			@flush();
+			if($i==$pCount){
+				$stringEcho .="生成完毕";
+				return $stringEcho;
+			}
+		}
+	}
+}
+
 function makeGoogle()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成google地图</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成google地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1775,12 +1820,65 @@ function makeGoogle()
 	}
 }
 
+function makeGooglen()
+{
+	global $dsql,$flag,$makenum,$allmakenum;
+	if ($flag!=1){
+		return "<br><div align=center><b>生成google地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+	}else{
+		$stringEcho = '';
+		$makenum = empty($makenum) ? 100 : intval($makenum);
+		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
+		$pagesize = $makenum;
+		$pCount = ceil($allmakenum/$pagesize);
+		$allcount=getDataCount("all");
+		$allpage=ceil($allcount/$pagesize);
+		if ($pCount>$allpage) $pCount=$allpage;
+		for($i=1;$i<=$pCount;$i++){
+			$limitstart = ($i-1) * $pagesize;
+			$sql="select * from sea_news order by n_addtime desc limit $limitstart,$pagesize";
+			$dsql->SetQuery($sql);
+			$dsql->Execute('makeGoogle');
+			$googleStr =  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
+							<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n
+							<url>\n
+							<loc>".$GLOBALS['cfg_basehost']."</loc>\n
+							<lastmod>".MyDate('Y-m-d',time())."</lastmod>\n
+							<changefreq>hourly</changefreq>\n
+							<priority>1.0</priority>\n
+							</url>\n";
+			while($row=$dsql->GetObject('makeGoogle'))
+			{
+				$vDes = empty($row->n_content) ? "" : $row->n_content;
+				$vName = empty($row->n_title) ? "" : $row->n_title;
+				$googleStr .= "<url>\n
+										  <loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</loc>\n
+										  <lastmod>".MyDate('Y-m-d',$row->n_addtime)."</lastmod>\n
+										  <changefreq>daily</changefreq>\n
+										  <priority>1.0</priority>\n
+										  </url>\n";
+			}
+			$googleStr .= "</urlset>\n";
+			$googleStr=$googleStr;
+			if ($i==1) $xmlUrl=""; else $xmlUrl="_".$i;
+			createTextFile($googleStr,sea_ROOT."/xml/googlen".$xmlUrl.".xml");
+			$stringEcho .= $GLOBALS['cfg_basehost']."/xml/".$GLOBALS['cfg_cmspath']."googlen".$xmlUrl.".xml"." 生成完毕 <a target='_blank' href='../xml/googlen".$xmlUrl.".xml'><font color=red>浏览</font></a><br>";
+			@ob_flush();
+			@flush();
+			if($i==$pCount){
+				$stringEcho .= "生成完毕";
+				return $stringEcho;
+			}
+		}
+	}
+}
+
 function makeRss()
 {
 	require_once(sea_INC.'/charset.func.php');
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成RSS地图</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rss&flag=1&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成RSS地图 视频</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rss&flag=1&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$sql="select d.v_id,d.v_name,d.v_pic,d.v_actor,d.v_addtime,d.v_enname,d.tid,c.body as v_des from sea_data d left join sea_content c on c.v_id=d.v_id order by d.v_addtime desc limit 0,$makenum";
@@ -1817,13 +1915,54 @@ function makeRss()
 }
 
 
+function makeRssn()
+{
+	require_once(sea_INC.'/charset.func.php');
+	global $dsql,$flag,$makenum,$allmakenum;
+	if ($flag!=1){
+		return "<br><div align=center><b>生成RSS地图 新闻</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rssn&flag=1&makenum='+$('makenum').value\" /></div>";
+	}else{
+		$makenum = empty($makenum) ? 100 : intval($makenum);
+		$sql="select * from sea_news order by n_addtime desc limit 0,$makenum";
+		$dsql->SetQuery($sql);
+		$dsql->Execute('makeRss');
+		$rssStr =  "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n
+					<rss version='2.0'>\n
+					<channel>\n
+					<title><![CDATA[".$GLOBALS['cfg_webname']."]]></title>\n
+					<description><![CDATA[".$GLOBALS['cfg_description']."]]></description>\n
+					<link>".$GLOBALS['cfg_basehost']."</link>\n
+					<language>zh-cn</language>\n
+					<docs>".$GLOBALS['cfg_webname']."</docs>\n
+					<generator>Rss Powered By ".$GLOBALS['cfg_basehost']."</generator>\n
+					<image>\n
+						<url>".$GLOBALS['cfg_basehost']."/pic/logo.gif</url>\n
+					</image>\n";
+		while($row=$dsql->GetObject('makeRss'))
+		{
+			$vDes = empty($row->n_content) ? "" : $row->n_content;
+			$vName = empty($row->n_title) ? "" : $row->n_title;
+			$rssStr .= "<item>\n
+							<title><![CDATA[".$vName."]]></title>\n
+							<link>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</link>\n
+							<author><![CDATA[".$row->v_actor."]]></author>\n
+							<pubDate>".MyDate('Y-m-d H:i:s',$row->n_addtime)."</pubDate>\n
+							<description><![CDATA[".msubstr(html2text($vDes),0,300,'utf-8',false)."]]></description>\n	
+						   </item>\n";
+		}
+		$rssStr .= "</channel></rss>\n";
+		createTextFile($rssStr,sea_ROOT."/xml/rssn.xml");
+		return $GLOBALS['cfg_basehost']."/xml/".$GLOBALS['cfg_cmspath']."rssn.xml"." 生成完毕 <a target='_blank' href='../xml/rssn.xml'><font color=red>浏览</font></a><br>";
+	}
+}
+
 //生成百度站内搜索数据
 
 function makeBaidux()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成百度站内搜索数据</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidux&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成百度站内搜索数据 视频</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidux&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$sqlt="select tid,tname from sea_type";
 		$dsql->SetQuery($sqlt);
@@ -1898,3 +2037,74 @@ $baiduxStr .= "</urlset>\n";
 	}
 }
 
+function makeBaiduxn()
+{
+	global $dsql,$flag,$makenum,$allmakenum;
+	if ($flag!=1){
+		return "<br><div align=center><b>生成百度站内搜索数据 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baiduxn&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+	}else{
+		$sqlt="select tid,tname from sea_type";
+		$dsql->SetQuery($sqlt);
+		$dsql->Execute('ztype');
+		while($rowt=$dsql->GetObject('ztype'))
+		{
+			$t[$rowt->tid]="$rowt->tname";
+		}
+			
+		$stringEcho = '';
+		$makenum = empty($makenum) ? 2000 : intval($makenum);
+		$allmakenum = empty($allmakenum) ? 10000 : intval($allmakenum);
+		$pagesize = $makenum;
+		$pCount = ceil($allmakenum/$pagesize);
+		$allcount=getDataCount("all");
+		$allpage=ceil($allcount/$pagesize);
+		if ($pCount>$allpage) $pCount=$allpage;
+		for($i=1;$i<=$pCount;$i++){
+			$limitstart = ($i-1) * $pagesize;
+			$sql="select * from sea_news order by n_addtime desc limit $limitstart,$pagesize";
+			$dsql->SetQuery($sql);
+			$dsql->Execute('makeBaiduxn');
+$baiduxStr =  "<?xml version=\"1.0\" encoding=\"utf-8\" ?>
+<urlset>\n";
+while($row=$dsql->GetObject('makeBaiduxn'))
+{
+if(strpos($row->n_pic,"http")=== false)
+{$n_pic=$GLOBALS['cfg_basehost']."/".$row->n_pic;}
+else
+{$n_pic=$row->n_pic;}
+$baiduxStr .= "<url>
+<loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</loc>
+<lastmod>".date('Y-m-d',$row->n_addtime)."T".date('H:i:s',$row->n_addtime)."</lastmod>
+<changefreq>always</changefreq>
+<priority>1.0</priority>
+<data>
+<display>
+<name>".str_replace("&","",strip_tags($row->n_title))."</name>
+<image>".$n_pic."</image>
+<description>".str_replace("&","",strip_tags(cn_substr_utf8($row->n_content,200,0)))."</description>
+<genre>".$t[$row->tid]."</genre>
+<premiere>
+<datePublished>".date('H:i:s',$row->n_addtime)."-".rand(10,12)."-".rand(10,30)."</datePublished>
+</premiere>
+<aggregateRating>
+<ratingValue>".rand(1,9).".0</ratingValue>
+<bestRating>10</bestRating>
+</aggregateRating>
+</display>
+</data>
+</url>\n";
+}
+$baiduxStr .= "</urlset>\n";
+			$baiduxStr=$baiduxStr;
+			if ($i==1) $xmlUrl=""; else $xmlUrl="_".$i;
+			createTextFile($baiduxStr,sea_ROOT."/xml/baiduxn".$xmlUrl.".xml");
+			$stringEcho .= $GLOBALS['cfg_basehost']."/xml/".$GLOBALS['cfg_cmspath']."baiduxn".$xmlUrl.".xml"." 生成完毕 <a target='_blank' href='../xml/baiduxn".$xmlUrl.".xml'><font color=red>浏览</font></a><br>";
+			@ob_flush();
+			@flush();
+			if($i==$pCount){
+				$stringEcho .="生成完毕";
+				return $stringEcho;
+			}
+		}
+	}
+}

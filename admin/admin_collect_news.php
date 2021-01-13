@@ -523,7 +523,7 @@ elseif($action=="tempdatabase")
 elseif($action=="editNews")
 {
 	$id = isset($id) && is_numeric($id) ? $id : 0;
-	//读取影片信息
+	//读取新闻信息
 	$query = "select * from sea_co_news where n_id='$id' ";
 	$vrow = $dsql->GetOne($query);
 	if(!is_array($vrow))
@@ -567,10 +567,10 @@ elseif($action=="saveVideo")
 			$updateSql = "update sea_co_news set ".$updateSql." where n_id=".$n_id;
 			if(!$dsql->ExecuteNoneQuery($updateSql))
 			{
-				ShowMsg('更新影片出错，请检查',-1);
+				ShowMsg('更新新闻出错，请检查',-1);
 				exit();
 			}
-			ShowMsg("影片更新成功",$v_back);
+			ShowMsg("新闻更新成功",$v_back);
 			exit();
 			break;
 	}
@@ -586,17 +586,17 @@ elseif($action=="delallTempData")
 	if($do=="all")
 	{
 		$dsql->ExecuteNoneQuery("delete from sea_co_news");
-		ShowMsg("影片全部删除成功","?action=tempdatabase");
+		ShowMsg("新闻全部删除成功","?action=tempdatabase");
 		exit();
 	}
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要删除的影片","-1");
+		ShowMsg("请选择需要删除的新闻","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("delete from sea_co_news where n_id in(".$ids.")");
-	ShowMsg("影片删除成功","?action=tempdatabase");
+	ShowMsg("新闻删除成功","?action=tempdatabase");
 	exit();
 }
 elseif($action=="import")
@@ -628,7 +628,7 @@ elseif($action=="import")
 			$idsArray[]=$row->n_id;
 		}
 		if(count($idsArray)>0){
-			echo "正在导入影片,当前是第<font color='red'>".$page."</font>页,共<font color='red'>".$TotalPage."</font>页,共<font color='red'>".$TotalResult."</font>部影片<hr />";
+			echo "正在导入新闻,当前是第<font color='red'>".$page."</font>页,共<font color='red'>".$TotalPage."</font>页,共<font color='red'>".$TotalResult."</font>部新闻<hr />";
 			import2Base($idsArray,$vtype);
 			unset($idsArray);
 			echo "<br>暂停3秒后继续导入<script language=\"javascript\">setTimeout(function (){location.href='?action=".$action."&smode=".$smode."&type=".$vtype."&page=".($page+1)."&pcount=".$TotalPage."&rcount=".$TotalResult."&result=".$result."';},3000);</script>";
@@ -639,7 +639,7 @@ elseif($action=="import")
 	}else{
 		if(empty($e_id))
 		{
-			ShowMsg("请选择需要删除的影片","-1");
+			ShowMsg("请选择需要删除的新闻","-1");
 			exit();
 		}
 		import2Base($e_id,$vtype);
@@ -1016,7 +1016,10 @@ function rel2abs($rel, $base)
         $abs .= ':' . $port;
     $abs .= $path . '/' . $rel . (isset($query) ? '?' . $query : '');
     /* replace '//' or '/./' or '/foo/../' with '/' */
-    $re = ['#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#'];
+    //$re = ['#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#'];
+	$re=array();
+	$re[] = '#(/\.?/)#';
+	$re[] = '#/(?!\.\.)[^/]+/\.\./#';
     for ($n = 1; $n > 0; $abs = preg_replace($re, '/', $abs, -1, $n)) {
     }
     /* absolute URL is ready! */

@@ -497,10 +497,22 @@ elseif($action=="baidu")
 	echo makeBaidu();
 	echoFoot();
 }
+elseif($action=="baidun")
+{
+	echoHead();
+	echo makeBaidun();
+	echoFoot();
+}
 elseif($action=="google")
 {
 	echoHead();
 	echo makeGoogle();
+	echoFoot();
+}
+elseif($action=="googlen")
+{
+	echoHead();
+	echo makeGooglen();
 	echoFoot();
 }
 elseif($action=="rss")
@@ -509,10 +521,22 @@ elseif($action=="rss")
 	echo makeRss();
 	echoFoot();
 }
+elseif($action=="rssn")
+{
+	echoHead();
+	echo makeRssn();
+	echoFoot();
+}
 elseif($action=="baidux")
 {
 	echoHead();
 	echo makeBaidux();
+	echoFoot();
+}
+elseif($action=="baiduxn")
+{
+	echoHead();
+	echo makeBaiduxn();
 	echoFoot();
 }
 else

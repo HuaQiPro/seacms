@@ -88,13 +88,18 @@ elseif($action=="editsave")
 	}
 	if(!isset($collectIDa))
 	{
+		$downpic = isset($downpic)?1:0;
 		$rfromarr =  explode('#',$_POST['resourcefrom']);
 		$rid = $rfromarr[0];
 		$url = $rfromarr[1];
-		$filename = "autoreslib.php".'$'.$rid.'$'.$url;
+		$filename = "autoreslib.php".'$'.$rid.'$'.$url.'$'.$downpic;
 	}else
 	{
-		$filename = "autocollect.php".'#'.$_POST['collectIDa'].'#'.$_POST['collectPageNum'].'#'.$_POST['autogetconnum'];
+		
+		if(strpos($zf,'autocollectnews')!== false)
+		{$filename = "autocollectnews.php".'#'.$_POST['collectIDa'].'#'.$_POST['collectPageNum'].'#'.$_POST['autogetconnum'];}
+		else
+		{$filename = "autocollect.php".'#'.$_POST['collectIDa'].'#'.$_POST['collectPageNum'].'#'.$_POST['autogetconnum'];}
 	}
 	if(!isset($filenamenew)){
 		$dsql->ExecuteNoneQuery("UPDATE sea_crons SET weekday='$weekdaynew', day='$daynew', hour='$hournew', minute='$minutenew', filename='".trim($filename)."' WHERE cronid='$id'");
@@ -154,6 +159,12 @@ elseif($action=="addCron")
 	elseif($PlanMode==2)
 	{
 		$filename = "autocollect.php".'#'.$_POST['collectID'].'#'.$_POST['collectPageNum'].'#'.$_POST['autogetconnum'];
+		$dsql->ExecuteNoneQuery("INSERT INTO sea_crons (name, type, available, weekday, day, hour, minute, nextrun,filename)
+			VALUES ('".dhtmlspecialchars($newname)."', 'user', '0', '$weekdaynew', '$daynew', '$hournew', '$minutenew', '$timestamp','$filename')");
+	}
+	elseif($PlanMode==4)
+	{
+		$filename = "autocollectnews.php".'#'.$_POST['collectID'].'#'.$_POST['collectPageNum'].'#'.$_POST['autogetconnum'];
 		$dsql->ExecuteNoneQuery("INSERT INTO sea_crons (name, type, available, weekday, day, hour, minute, nextrun,filename)
 			VALUES ('".dhtmlspecialchars($newname)."', 'user', '0', '$weekdaynew', '$daynew', '$hournew', '$minutenew', '$timestamp','$filename')");
 	}
