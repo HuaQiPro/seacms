@@ -1,22 +1,54 @@
 # 更新内容
 
-新增：用户购买会员折扣
+新增：采集时标题替换
 
-优化：充值卡可以自定义面值
+新增：后台影片购买记录
 
-优化：会员系统部分界面
+新增：后台会员组购买记录
 
+新增：前台充值记录记录
+
+新增：前台会员组购买记录
+
+优化：发送用户消息逻辑
+
+优化：部分界面
+
+修复：后台充值记录只能显示1条记录
+
+修复：当前播放和vip集数css冲突的问题
+
+修复：默认模板播放器侧栏收缩功能
 
 # 升级步骤
 
-【第一步】修改admin为你的实际后台目录名称，覆盖上传升级文件
+【第一步】进入后台 - 工具 - SQL高级助手，执行如下SQL语句：
 
-【第二步】更新缓存
+ALTER TABLE `sea_buy` ADD `vpaypoints` INT(10) NOT NULL DEFAULT '0' AFTER `vfrom`;
 
+DROP TABLE IF EXISTS `sea_hyzbuy`;
+
+CREATE TABLE `sea_hyzbuy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uname` varchar(20) NOT NULL,
+  `gid` int(6) NOT NULL,
+  `paypoints` int(10) NOT NULL,
+  `mon` int(6) NOT NULL,
+  `paytime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+【第二步】修改admin为你的实际后台目录名称，覆盖上传升级文件
+
+【第三步】更新缓存
 
 # 重要提示
 
-① 本升级包仅支持v12.4版本升级到v12.5，其它版本请勿使用！
+① 先修改admin为你的实际后台目录名称，再覆盖上传升级文件
+
+② 如果使用的不是官方默认模板，请勿替换模板目录templets
+
+③ 本升级包仅支持v12.5版本升级到v12.6，其它版本请勿使用！
 
 
 
