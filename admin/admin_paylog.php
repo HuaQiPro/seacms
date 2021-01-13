@@ -43,7 +43,7 @@ elseif($action=="delall")
 }
 
 
-include(sea_ADMIN.'/templets/admin_pay.htm');
+include(sea_ADMIN.'/templets/admin_paylog.htm');
 exit();
 
 ?>

@@ -70,7 +70,7 @@ require_once("../include/common.php");
 require_once("../include/main.class.php");
 require_once("../data/config.cache.inc.php");
 //设置每次推送的条数
-$tnum = 2;
+$tnum = 10;
 $remain = $_REQUEST['remain'];
 $remain = isset($remain) ? intval($remain) : $tnum;
 /*百度推送系统更新，不再限制推送条数，但remain参数保留，始终为1,为了防止官方把remain参数再次用上，这边也把remain保留，但不影响推送功能 
@@ -140,7 +140,7 @@ if(isset($result_json["remain"]))
 }
 else
 {
-    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[文章]今天百度推送次数已达上限！请明天再推送!<br /><br />";
+    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[文章]推送已达上限或密钥信息错误！<br /><br />";
     viewFoot();
     exit();
 }
@@ -157,7 +157,7 @@ require_once("../include/common.php");
 require_once("../include/main.class.php");
 require_once("../data/config.cache.inc.php");
 //设置每次推送的条数
-$tnum = 2;
+$tnum = 10;
 $remain = $_REQUEST['remain'];
 $remain = isset($remain) ? intval($remain) : $tnum;
 /*百度推送系统更新，不再限制推送条数，但remain参数保留，始终为1,为了防止官方把remain参数再次用上，这边也把remain保留，但不影响推送功能 
@@ -227,7 +227,7 @@ if(isset($result_json["remain"]))
 }
 else
 {
-    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[视频]今天百度推送次数已达上限！请明天再推送!<br /><br />";
+    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[视频]推送已达上限或密钥信息错误！<br /><br />";
 	viewFoot();
     exit();
 }

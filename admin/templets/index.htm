@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head><meta name="robots" content="noindex,nofollow">
 <title>管理中心 - 海洋CMS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -10,6 +9,7 @@
 <script src="img/admin.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <script src="img/drag.js" type="text/javascript"></script>
+
 <style type="text/css">
 #gMenuMap {
 	text-align:left;
@@ -31,19 +31,236 @@
 	border-right:solid 1px #B5CFD9;
 }
 </style>
+<script>
+window.onload = function() {
+    if (document.cookie.indexOf('lock=1') != -1) {
+        document.oncontextmenu = function() {
+
+            return false;
+        }
+        document.onkeydown = function() {
+
+            if (window.event && window.event.keyCode == 123) {
+
+                event.keyCode = 0;
+                event.returnValue = false;
+            }
+            if (window.event && window.event.keyCode == 13) {
+                check();
+            }
+            if (window.event && window.event.keyCode == 8) {
+
+                window.event.returnValue = false;
+            }
+		e = window.event || e;
+        var k = e.keyCode;
+
+        if ((e.ctrlKey == true && k == 82) || (k == 116)
+                || (e.ctrlKey == true && k == 116)||k==114) {
+            e.keyCode = 0;
+           
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+ 
+        }
+
+        if (e.ctrlKey && k == 78){
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+            }
+
+        if (k == 122) {
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+        }
+     
+        if ((e.shiftKey && k == 121)||(e.ctrlKey && k == 121)){
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+            }
+  
+        if ((e.altKey) && (k== 115)) {
+            window.showModelessDialog("about:blank", "",
+                    "dialogWidth:1px;dialogheight:1px");
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+        }
+        if ((e.altKey)
+                && ((k == 37) || (k == 39))) {
+            
+            e.keyCode = 0;
+            e.returnValue = false;
+            e.cancelBubble = true;
+            return false;
+        }
+
+        }
+        ShowContent(false);
+    }
+
+
+    var delay = 604800* 1000,
+        timer;
+
+    function startTimer() {
+        clearTimeout(timer);
+        timer = setTimeout(TimerHandler, delay);
+    }
+
+    function TimerHandler() {
+        document.cookie = 'lock=1';
+        
+        document.onmousemove = null;
+        document.oncontextmenu = function() {
+
+            return false;
+        }
+        document.onkeydown = function() {
+
+            if (window.event && window.event.keyCode == 123) {
+
+                event.keyCode = 0;
+                event.returnValue = false;
+            }
+			if (window.event && window.event.keyCode == 13) {
+                check();
+            }
+
+            if (window.event && window.event.keyCode == 8) {
+
+                window.event.returnValue = false;
+            }
+
+        }
+        ShowContent(false);
+    }
+
+    function ShowContent(show) {
+        // document.getElementById('dvContent').style.display = show ? 'block' : 'none';
+        document.getElementById('dvPassword').style.display = show ? 'none' : 'block';
+        document.getElementById('bgdvPassword').style.display = show ? 'none' : 'block';
+		
+    }
+
+
+    function check() {
+		var upwd=document.getElementById('txtPwd').value;
+		var uname="<?php echo $cuserLogin->getUserName(); ?>";
+		ajax.get(
+		"admin_ajax.php?action=locks&uname="+uname+"&upwd="+upwd+"", 
+		function(obj) {
+			if(obj.responseText == 'ok'){
+				document.cookie = 'lock=0';			
+				ShowContent(true);
+				startTimer() 
+				document.oncontextmenu = null
+				document.onkeydown = null
+			}else{
+				document.getElementById('txtPwd').value= '';
+			}
+		}
+	);
+    }
+
+    document.onmousemove = startTimer;
+    var obt = document.getElementById("bt");
+    obt.onclick = function() {
+        check();
+    }
+    startTimer();
+}
+
+function ShowContents() {
+    document.cookie = 'lock=1';
+    document.oncontextmenu = function() {
+        return false;
+    }
+    document.onkeydown = function() {
+
+        if (window.event && window.event.keyCode == 123) {
+
+            event.keyCode = 0;
+            event.returnValue = false;
+        }
+		if (window.event && window.event.keyCode == 13) {
+                check();
+            }
+
+        if (window.event && window.event.keyCode == 8) {
+  
+            window.event.returnValue = false;
+        }
+
+    }
+    //document.getElementById('dvContent').style.display = show ? 'block' : 'none';
+    document.getElementById('dvPassword').style.display = 'block';
+    document.getElementById('bgdvPassword').style.display = 'block';
+}
+
+function refreshFrame(){
+    document.getElementById('I2').contentWindow.location.reload(true);
+}
+
+
+</script>
 </head>
 <body style="margin: 0px" scroll="no">
+<div id="bgdvPassword" style="position:absolute; top:0px;left:0px;width:100%;height:100%;background:linear-gradient(-45deg, #10568a, #416ea5, #23a6d5, #23d5ab);opacity:1;z-index:888;display:none"></div>
+<div id="dvPassword" style="position: absolute;
+    top:20px;
+	right:20px;;
+    width: 160px;
+    height: 40px;
+    border-radius: 4px;
+    background:rgb(79 150 200);
+	text-align: center;
+	z-index:999;
+    display: none;">
+    <div style="position: absolute; padding:5px;">
+		<input type="password" style="display:none"/>
+        <input autofocus="autofocus" autocomplete="new-password" autocomplete="off" onfocus="this.type='password' placeholder="登陆密码" type="password" id="txtPwd" style="height: 28px;
+    width: 90px;
+    background: #7dbce1;
+    border: 0;
+	padding-left: 4px;
+    line-height: 28px;
+    float: left;">
+        <input type="button" id="bt" value="解锁"  style='height: 28px;
+    width: 50px;
+    background: #10725d;
+    margin-left:3px;
+    border: 0px;
+    text-align: center;
+    margin-top: 1px;
+    border-radius:2px;
+	font-size: 12px;
+	font-weight:500;
+    color: #fff;font-family: "Microsoft YaHei" ! important;letter-spacing: 2px;'>
+    </div>
+</div>
 <table cellpadding="0" cellspacing="0" width="100%" height="100%">
   <tr>
     <td colspan="3" height="90"><div class="header">
-        <div class="logo" onClick="window.open('../');" style="cursor:pointer;">后台管理中心 - Power By SeaCMS</div>
-        <div class="pannel">
-          <p> 
-		  <em style="background:#cedce6;padding-left: 6px;padding-right: 6px;border-radius: 6px;padding-bottom: 1px;">
-		  <img src="img/user.png" style="margin-bottom:-1px;height: 10px;padding-right:2px;"  /><?php echo $cuserLogin->getUserName(); ?></em>&nbsp;&nbsp; 
-		  <a href="exit.php" target="_top">退出账户</a>&nbsp;&nbsp;
+        <div class="logo"></div>
+        <div class="pannel" style="line-height:28px;">
+          <p>  
+		  <span style="cursor:pointer"  onclick="javascript:refreshFrame();" ><img src="img/sx.png"  alt="刷新" title="刷新"  style="height: 16px;padding-right:10px;margin-bottom: -3px;"  /></span>
+		  <span style="cursor:pointer"  onClick="ShowContents();" ><img src="img/lock.png" alt="锁屏" title="锁屏" style="height: 16px;padding-right:10px;margin-bottom: -3px;"  /></span>
+		  
+		  <em style="background:#cedce6;padding-left: 6px;padding-right: 6px;border-radius: 6px;margin-bottom: -1px;">
+		  <img src="img/user.png" style="height: 10px;padding-right:2px;"  /><?php echo $cuserLogin->getUserName(); ?></em>
+		  <a href="exit.php" target="_top">退出</a>&nbsp;&nbsp;
 		  <a href="../" target="_blank">网站首页</a>&nbsp;&nbsp;
-		  <em><span onClick="clearCache()" style="cursor:pointer">更新缓存</span></em><span id="upcacheresult" style="color:#0099cc"></span>&nbsp;&nbsp;<a href="javascript:void(0);" onClick="view('gMenuMap');selfLabelWindefault('gMenuMap');"><img src="img/34.gif" title="系统功能地图"  style="margin-bottom:-1px;"  /></a></p>
+		  <em><span onClick="clearCache()" style="cursor:pointer">更新缓存</span></em><span id="upcacheresult" style="color:#0099cc"></span>&nbsp;&nbsp;<a href="javascript:void(0);" onClick="view('gMenuMap');selfLabelWindefault('gMenuMap');"><img src="img/34.gif" title="功能地图" alt="功能地图" style="margin-bottom: -2px;" /></a></p>
 </div>
         <div class="navbg"></div>
         <div class="nav"> 
@@ -137,7 +354,7 @@ foreach($menu AS $key => $value)
         <p>WWW.SEACMS.NET</p>
       </div></td>
     <td class="menutd2" valign="middle" width="1"><div id="fm" class="fm3"> </div></td>
-    <td valign="top" class="maincontent"><iframe src="index_body.php" name="I2" width="100%" height="100%" frameborder="0"scrolling="yes" style="overflow: visible;"></iframe></td>
+    <td valign="top" class="maincontent"><iframe src="index_body.php" name="I2" id="I2" width="100%" height="100%" frameborder="0"scrolling="yes" style="overflow: visible;"></iframe></td>
   </tr>
 </table>
 <div id="gMenuMap" class="popdiv" style="width:900px;top:100px;z-index:1000; display:none;"> </div>

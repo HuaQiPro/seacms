@@ -106,7 +106,7 @@
     var dp = new DPlayer({
         container: document.getElementById('playerCnt'),
         autoplay: true,
-        screenshot: false,
+        screenshot: true,
         video: {
             url: videoUrl,
             type:type
@@ -116,10 +116,28 @@
         
         contextmenu: [
           
-            {text:"Xyplayer X3 ",link:""},
+            {text:"分享本站给朋友们吧！",link:""},
 
         ]
     });
+	
+//试看
+	dp.on('timeupdate', function () {
+	var vtry_time=xyplay['try'];
+	var vjifen=xyplay['jifen'];
+	var vjifenname=xyplay['jifenname'];
+	var vhouz=xyplay['houz'];
+	var vippart=parseInt(xyplay.part);
+	var viparr2=xyplay.vipp;
+	var viparr=Object.values(viparr2);
+	var vpart3=vpart2-1;
+          if (IsInArray(viparr,vippart) && vtry_time > 0 && dp.video.currentTime > vtry_time) {
+                 dp.pause();
+				 dp.fullScreen.cancel('playerCnt');
+				 dp.destroy();
+document.write("<a style='text-align: center;display: block;color: #fff;background-color: #009f95;width: 250px;height: 33px;margin: auto;margin-top: 100px;line-height: 33px;border-radius: 4px;font-weight: bold;font-size:12px;text-decoration:none;' href=/video/?"+vid+"-"+vfrom+"-"+vpart3+vhouz+"&action=pay&from2="+vpart3+">试看结束，此视频收费<font style='color:#c11a1a;text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de;'>"+vjifen+"</font>"+vjifenname+"&nbsp;&nbsp;点击购买</a>");                    
+           }
+});
 	
 
 	//绑定准备就绪回调
@@ -215,9 +233,10 @@ function IsInArray(arr,value){
             function myplay(url) { 
 var vippart=parseInt(xyplay.part)+1;
 var houz=xyplay['houz'];
+var vtry=xyplay['try'];
 var viparr2=xyplay.vipp;
 var viparr=Object.values(viparr2);
-if(IsInArray(viparr,vippart)){top.location.href="/video/?"+vid+"-"+vfrom+"-"+vpart2+houz;}	           	
+if(IsInArray(viparr,vippart) && vtry =='0' ){top.location.href="/video/?"+vid+"-"+vfrom+"-"+vpart2+houz;}	           	
                 videoUrl=url; did=hex_md5(videoUrl);
                 headtime= Number(getCookie(did));
                 dp.switchVideo({url: videoUrl});

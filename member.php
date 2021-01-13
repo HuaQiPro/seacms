@@ -18,6 +18,23 @@
 <link href="pic/member/style.min.css" rel="stylesheet" type="text/css" />
 <script src="pic/member/jquery.min.js"></script>
 <script type="text/javascript" src="pic/member/bootstrap.min.js"></script>
+<script type="text/javascript" src="pic/member/layer.js"></script>
+<style>
+.sc{padding:6px 6px 6px 6px;text-align: center;}
+.sc input{margin-top:3px;margin-button:3px;width:120px;}
+</style>
+<script>
+//全屏弹出层
+    var show=function (id,points,pname) {
+        var index = layer.open({
+            type: 1,
+			anim: 'up',
+			style: 'position:fixed; bottom:0px; left:0; width: 100%; padding:10px 0; border:none;',
+            title:"选择时长",
+			content: '<div class="sc"><input type="submit" class="btn btn-info btn-sm" value="单月&nbsp;&nbsp;'+points*1+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=1"><br><input type="submit" class="btn btn-info btn-sm" value="三月&nbsp;&nbsp;'+points*3+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=3"><br><input type="submit" class="btn btn-info btn-sm" value="半年&nbsp;&nbsp;'+points*6+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=6"><br><input type="submit" class="btn btn-info btn-sm" value="一年&nbsp;&nbsp;'+points*12+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=12"></div>'
+        }); 
+    }
+</script>
 </head>
 <?php 
 session_start();
@@ -368,22 +385,24 @@ elseif($action=='hyz')
 	$gid = intval($gid);
 	if(empty($gid))
 	{showMsg("请选择要购买的会员组","member.php?action=cc");exit;}
+	$mon = intval($mon);
+	if(empty($mon))
+	{showMsg("请选择要购买的时长","member.php?action=cc");exit;}
 	$sqlhyz1="SELECT * FROM sea_member_group where gid='$gid'"; 
 	$rowhyz1 = $dsql->GetOne($sqlhyz1);
     if(!is_array($rowhyz1)){
         showMsg("会员组不存在","-1");exit;
     }else{
-		$hyzjf=$rowhyz1['g_upgrade']; //购买会员组所需积分  
+		$hyzjf=$rowhyz1['g_upgrade']*$mon; //购买会员组所需积分  
     }
 	//获取会员基本信息
 	$uname=$_SESSION['sea_user_name'];
-	$uname = RemoveXSS($uname);
-	$sqlhyz2="SELECT * FROM sea_member where username='$uname'"; 
+	$sqlhyz2="SELECT points FROM sea_member where username='$uname'"; 
 	$rowhyz2 = $dsql->GetOne($sqlhyz2);
     if(!is_array($rowhyz2)){
         showMsg("会员信息不存在","-1");exit;
     }else{
-		$userjf=$rowhyz2['points']; //购买会员组所需积分
+		$userjf=$rowhyz2['points']; //会员剩余积分
     }
 	
 	if($userjf<$hyzjf)
@@ -393,23 +412,35 @@ elseif($action=='hyz')
 	else
 	{
 		$ntime=time();
-		$vipendtime=$ntime+2592000;
-		$dsql->executeNoneQuery("UPDATE sea_member SET points=points-$hyzjf,gid=$gid,vipendtime=$vipendtime where username='$uname'");
-		showMsg("恭喜！购买会员组成功，重新登陆后会员组生效！","login.php");exit;
+		if($_SESSION['sea_user_group']==$gid){$ntime=$rowhyz2['vipendtime'];}
+		$vipendtime1=2678400*$mon;
+		$vipendtime=$ntime+$vipendtime1;
+		$sql="UPDATE sea_member SET points=points-$hyzjf,gid=$gid,vipendtime=$vipendtime where username='$uname'";
+		$dsql->executeNoneQuery($sql);
+		showMsg("恭喜！购买会员组成功！","member.php");exit;
 	}
 	
 }
 elseif($action=='cc')
 {
-	$ccgid=intval($_SESSION['sea_user_group']);
 	$ccuid=intval($_SESSION['sea_user_id']);
+	$cc2=$dsql->GetOne("select * from sea_member where id=$ccuid");
+	$ccgid=$cc2['gid'];	
+	$_SESSION['sea_user_group'] = $ccgid;
 	$cc1=$dsql->GetOne("select * from sea_member_group where gid=$ccgid");
 	$ccgroup=$cc1['gname'];
 	$ccgroupupgrade=$cc1['g_upgrade'];
-	$cc2=$dsql->GetOne("select * from sea_member where id=$ccuid");
+	
 	$ccjifen=$cc2['points'];
 	$ccemail=$cc2['email'];
 	$ccvipendtime=$cc2['vipendtime'];
+	if($ccvipendtime<time()){
+		$_SESSION['sea_user_group'] = 2;
+		$dsql->ExecuteNoneQuery("update `sea_member` set gid=2 where id=$ccuid");
+		if($ccgid !=2){
+			ShowMsg("您购买的会员组已到期，请注意续费!","member.php",0,5000);exit;
+		}
+	}
 	if($ccgid==2){$ccvipendtime='无限期';}else{$ccvipendtime=date('Y-m-d H:i:s',$ccvipendtime);}
 	$cclog=$cc2['logincount'];
 	$ccnickname=$cc2['nickname'];
@@ -513,18 +544,20 @@ if(empty($msgbody) OR $msgbody =="" OR $msgstate=='y'){$notify4css='display:none
 								<li><span class="text-muted">会员时限：</span>{$ccvipendtime}</li>
 EOT;
 			                echo  "<li><span class=\"text-muted\">用户级别：</span>{$ccgroup}</li><br><span class=\"text-muted\">升级会员：</span>";
-							$sql="select * from sea_member_group where g_upgrade > $ccgroupupgrade";
+							$sql="select * from sea_member_group where g_upgrade >= $ccgroupupgrade and gid>2";
 							
 							$dsql->SetQuery($sql);
 							$dsql->Execute('al');
 							while($rowr=$dsql->GetObject('al'))
 							{
-								echo "&nbsp;<input type=\"submit\" class=\"btn btn-default btn-sm\" value='".$rowr->gname."(".$rowr->g_upgrade."{$cfg_pointsname}/月)' onClick=\"self.location='?action=hyz&gid=".$rowr->gid."';\">";
+								if($ccgid==$rowr->gid){$xufei='续费&nbsp;';}else{$xufei='';}
+								echo "&nbsp;<input type=\"submit\" class=\"btn btn-info btn-xs\" value='".$xufei.$rowr->gname."' onClick=\"show(".$rowr->gid.",".$rowr->g_upgrade.",'".$cfg_pointsname."');\">";
 							}
+								if($cfg_kami==""){$kamistyle='style="display:none;"';}
 								echo
 			                     "<li><span class=\"text-muted\">当前积分：</span>{$ccjifen} {$cfg_pointsname}</li>".
 			                     "<li><span class=\"text-muted\">推广链接：</span>{$_SERVER['HTTP_HOST']}/i.php?uid={$_SESSION['sea_user_id']}</li>".
-			                    "<form action=\"?action=cz\" method=\"post\"><li class=\"cckkey\"><span class=\"text-muted\">充值积分：</span><input type=text name=cckkey class=\"form-control\" id=cckkey placeholder=\"输入充值卡卡号\" > <input type=submit name=cckb id=cckb value='充值{$cfg_pointsname}' class=\"btn btn-warning\"></li></form></div>";
+			                    "<form action=\"?action=cz\" method=\"post\"><li class=\"cckkey\"><span class=\"text-muted\">充值积分：</span><input type=text name=cckkey class=\"form-control\" id=cckkey placeholder=\"输入充值卡卡号\" > <input type=submit name=cckb id=cckb value='{$cfg_pointsname}充值' class=\"btn btn-primary\">&nbsp;&nbsp;<a target=\"_blank\" class=\"btn btn-danger\" ".$kamistyle." href=\"".$cfg_kami."\">购买充值卡</a></li></form></div>";
 			echo <<<EOT
 												
 																			

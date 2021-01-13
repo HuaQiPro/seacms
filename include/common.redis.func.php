@@ -293,12 +293,13 @@ function GetIP()
 
 function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 {
+	global $cfg_basehost;
 	if(empty($GLOBALS['cfg_phpurl']))
 	{
 		$GLOBALS['cfg_phpurl'] = '..';
 	}
 	$htmlhead  = "<html>\r\n<head>\r\n<title>提示信息</title>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no\">\r\n";
-	$htmlhead .= "<base target='_self'/>\r\n<style>body{background:#f9fafd;color:#818181}a {text-decoration: none}.mac_msg_jump{width:90%;max-width:420px;min-height:60px;margin:5% auto 0;border: 1px solid #293846;border-radius: 4px;height: 200px;box-shadow: 0px 1px 2px rgba(0,0,0,0.1);border: 1px solid #0099CC;}.mac_msg_jump .title{margin-bottom:11px}.mac_msg_jump .text{margin-top: 50px;font-size:14px;color:#555;font-weight: normal;}.msg_jump_tit{height: 32px;padding: 0px;line-height: 32px;font-size: 14px;color: #DFE4ED;text-align: left;background: #0099CC;}</style></head>\r\n<body leftmargin='0' topmargin='0'>\r\n<center>\r\n<script>\r\n";
+	$htmlhead .= "<base target='_self'/>\r\n<style>body{background:#f9fafd;color:#818181}a {text-decoration: none}.mac_msg_jump{width:90%;max-width:420px;min-height:60px;margin:5% auto 0;border: 1px solid #293846;border-radius: 4px;min-height: 200px;box-shadow: 0px 1px 2px rgba(0,0,0,0.1);border: 1px solid #0099CC;}.mac_msg_jump .title{margin-bottom:11px}.mac_msg_jump .text{margin-top: 50px;font-size:14px;color:#555;font-weight: normal;}.msg_jump_tit{height: 32px;padding: 0px;line-height: 32px;font-size: 14px;color: #DFE4ED;text-align: left;background: #0099CC;}</style></head>\r\n<body leftmargin='0' topmargin='0'>\r\n<center>\r\n<script>\r\n";
 	$htmlfoot  = "</script>\r\n$extraJs</center>\r\n</body>\r\n</html>\r\n";
 
 	if($limittime==0)
@@ -330,10 +331,10 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
         if(pgo==0){ location='$gourl'; pgo=1; }
       }\r\n";
 		$rmsg = $func;
-		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'><div class='msg_jump_tit'><img style='padding-left: 5px;padding-right: 2px;height: 14px;margin-bottom: 2px;vertical-align: middle;'; src='".$GLOBALS ['cfg_cmspath']."/pic/i1.png'>系统提示</div>";
+		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'><div class='msg_jump_tit'><img style='padding-left: 5px;padding-right: 2px;height: 14px;margin-bottom: 2px;vertical-align: middle;'; src='{$cfg_basehost}/pic/i1.png'>系统提示</div>";
 	    $rmsg .= "<div class='text'>\");\r\n";
 
-		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 8px;'; src='".$GLOBALS ['cfg_cmspath']."/pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
+		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 8px;'; src='{$cfg_basehost}/pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
 		$rmsg .= "document.write(\"";
 		if($onlymsg==0)
 		{
@@ -1215,6 +1216,12 @@ function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyl
 		{
 			$viparr=array_flip(array_slice($urlArray,0,$urlCount,true));		
 		}
+	
+	elseif(strpos($vip,'f')!==false)
+	{
+		$vips=str_ireplace('f', "", $vip);
+		$viparr=array_flip(array_slice($urlArray,$vips,NULL,true));
+	}
 	else
 	{
 		$viparr2=explode(',',$vip);
@@ -1548,10 +1555,11 @@ function csubstr($text, $start=0, $limit=12) {
 }
 
 function setCache($p_cacheName,$sql="",$arr=""){
-        global $dsql,$cfg_iscache,$cfg_cachetime,$cfg_cachemark;
+        global $dsql,$cfg_iscache,$cfg_cachetime,$cfg_cachemark,$cfg_redishost,$cfg_redisport,$cfg_redispsw;
         $p_cacheName=$cfg_cachemark.$p_cacheName;
         $redis = new redis();  
-        $redis->connect('127.0.0.1', 6379);  
+        $redis->connect($cfg_redishost,$cfg_redisport);
+		if($cfg_redispsw !=""){$redis->auth($cfg_redispsw);}
         $ttl=$redis->TTL($p_cacheName);
         if ($ttl < 1 ){
                 if (!empty($sql)){
@@ -1573,10 +1581,11 @@ function setCache($p_cacheName,$sql="",$arr=""){
 }
 
 function getCache($p_cacheName){
-        global $cfg_cachemark;
+        global $cfg_cachemark,$cfg_redishost,$cfg_redisport,$cfg_redispsw;
         $p_cacheName=$cfg_cachemark.$p_cacheName;
         $redis = new redis();  
-        $redis->connect('127.0.0.1', 6379);  
+        $redis->connect($cfg_redishost,$cfg_redisport);
+		if($cfg_redispsw !=""){$redis->auth($cfg_redispsw);}	
         $ttl=$redis->TTL($p_cacheName);
         if ($ttl > 0 ){
                 return unserialize($redis->GET($p_cacheName));
@@ -2498,10 +2507,11 @@ function checkNewsRunMode()
 
 function chkFileCache($cacheName)
 {
-        global $cfg_cachemark;
+        global $cfg_cachemark,$cfg_redishost,$cfg_redisport,$cfg_redispsw;
         $cacheName=$cfg_cachemark.$cacheName;
         $redis = new redis();  
-        $redis->connect('127.0.0.1', 6379);  
+        $redis->connect($cfg_redishost,$cfg_redisport); 
+		if($cfg_redispsw !=""){$redis->auth($cfg_redispsw);}	
         $ttl=$redis->TTL($cacheName);
         if ($ttl > 0){
                 return true;
@@ -2512,10 +2522,11 @@ function chkFileCache($cacheName)
 
 function setFileCache($cacheName,$cacheValue)
 {
-        global $cfg_cachetime,$cfg_cachemark;
+        global $cfg_cachetime,$cfg_cachemark,$cfg_redishost,$cfg_redisport,$cfg_redispsw;
         $cacheName=$cfg_cachemark.$cacheName;
         $redis = new redis();  
-        $redis->connect('127.0.0.1', 6379);  
+        $redis->connect($cfg_redishost,$cfg_redisport);
+		if($cfg_redispsw !=""){$redis->auth($cfg_redispsw);}		
         if ($redis->SETEX($cacheName,$cfg_cachetime*60,$cacheValue)){
                 return true;
         }else{
@@ -2525,10 +2536,11 @@ function setFileCache($cacheName,$cacheValue)
 
 function getFileCache($cacheName)
 {
-        global $cfg_cachemark;
+        global $cfg_cachemark,$cfg_redishost,$cfg_redisport,$cfg_redispsw;
         $cacheName=$cfg_cachemark.$cacheName;
         $redis = new redis();  
-        $redis->connect('127.0.0.1', 6379);  
+        $redis->connect($cfg_redishost,$cfg_redisport);
+		if($cfg_redispsw !=""){$redis->auth($cfg_redispsw);}		
         return $redis->GET($cacheName);
 }
 
@@ -3321,6 +3333,19 @@ function getUserAuth($id,$flag)
 	@session_start();
 	$usergroup=$_SESSION["sea_user_group"];
 	if (empty($usergroup)) { $usergroup=1; } else { $usergroup=intval($usergroup);}
+	
+	if($usergroup>2){
+	$ccuid=intval($_SESSION['sea_user_id']);
+	global $dsql;
+	$cc2=$dsql->GetOne("select vipendtime from sea_member where id=$ccuid");
+	$ccvipendtime=$cc2['vipendtime'];
+		if($ccvipendtime<time()){
+			$_SESSION['sea_user_group'] = 2;
+			$dsql->ExecuteNoneQuery("update `sea_member` set gid=2 where id=$ccuid");
+		}
+	}
+	
+	
 	$result=false;
 	if ($flag== "list"){
 		$flag = "1";

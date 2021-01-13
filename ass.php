@@ -52,7 +52,10 @@ class SetQuerybyseacms
   
    {
 
-	global $dsql,$cfg_iscache;
+	global $dsql,$cfg_iscache,$cfg_search_type;
+	
+	if($cfg_search_type =='0'){return '搜索系统已关闭！';	}
+
 	$rows=array();
 	
 	$this->dsql = $dsql;
@@ -87,7 +90,7 @@ class SetQuerybyseacms
   
    {
    	
-   	global $dsql;
+   	global $dsql,$cfg_pointsname;
 
 
 		//echo $url.$vid.$vfrom,$vpart;
@@ -109,8 +112,10 @@ class SetQuerybyseacms
         }
 	  $houz=getfileSuffix();
 	  
-	$row2=$dsql->GetOne("SELECT v_vip FROM sea_data where v_id=".$vid);
+	$row2=$dsql->GetOne("SELECT v_vip,v_try,v_money FROM sea_data where v_id=".$vid);
 	$vip=$row2['v_vip'];
+	$try=$row2['v_try'];
+	$jifen=$row2['v_money'];
 	if($starget!=""){
 		$target=" target=\"".$starget."\"";
 	}else{
@@ -133,6 +138,11 @@ class SetQuerybyseacms
 	elseif(strpos($vip,'a')!==false)
 	{
 			$viparr=array_flip(array_slice($urlArray2,0,$urlCount,true));		
+	}
+	elseif(strpos($vip,'f')!==false)
+	{
+		$vips=str_ireplace('f', "", $vip);
+		$viparr=array_flip(array_slice($urlArray2,$vips,NULL,true));
 	}
 	else
 	{
@@ -157,7 +167,7 @@ $uid = intval($uid);
 	  if(empty($viparr)){$viparr=array(-1,-2);}
 	  if(empty($vipdelarr)){$vipdelarr=array(-1);}
 	  $viparr2=array_diff($viparr,$vipdelarr);
-      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray,'houz'=>$houz,'vipp'=>$viparr2);
+      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray,'houz'=>$houz,'vipp'=>$viparr2,'try'=>$try,'jifen'=>$jifen,'jifenname'=>$cfg_pointsname);
 
 
      return '';

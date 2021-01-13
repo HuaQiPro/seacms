@@ -40,7 +40,7 @@ form{float:left;}
         $cckno = 0;
     }
 	
-	$w=" where ckey <> '' ";
+	$w=" where id <> '' ";
     $numPerPage=30;
     $page = isset($page) ? intval($page) : 1;
     if($page==0) $page=1;
@@ -56,12 +56,8 @@ form{float:left;}
 	{$w.=" and climit=$climit";}
 	else
 	{$w.='';}
-	
-	if($action=="search")
-	{
-		$ckey=$_POST['ckey'];
-		if (!empty($ckey)) $w =" where ckey='$ckey'";
-	}
+	if (!empty($ckey)) {$w.=" and ckey like '%$ckey%'";}
+
 	
 	//计算有多少条数据
     $csqlStr="select count(*) as dd from sea_cck ".$w;
@@ -84,7 +80,7 @@ form{float:left;}
     <div class="r_content_1">
       <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="15" class="td_title">&nbsp;充值卡管理&nbsp;&nbsp;【当前总金额<font color=red><?php echo $cckt ?></font>元&nbsp;已充值<font color=red><?php echo $cckyes ?></font>元&nbsp;未使用<font color=red><?php echo $cckno ?></font>元】
+          <td colspan="15" class="td_title">&nbsp;充值卡管理&nbsp;&nbsp;【当前总金额<font color=red><?php echo $cckt ?></font>积分&nbsp;已充值<font color=red><?php echo $cckyes ?></font>积分&nbsp;未使用<font color=red><?php echo $cckno ?></font>积分】
             </td>
         </tr>
         <tr>
@@ -94,13 +90,13 @@ form{float:left;}
               &nbsp;生成充值卡：数量&nbsp;<input  name="num" type="text" id="num" size="5" value="10">
               张&nbsp;
               <select name="limit" id="limit">
-                <option value="1">1元</option>
-				<option value="5">5元</option>
-				<option value="10">10元</option>
-				<option value="50">50元</option>
-				<option value="100">100元</option>
-				<option value="500">500元</option>
-				<option value="1000">1000元</option>
+                <option value="1">1 积分</option>
+				<option value="5">5 积分</option>
+				<option value="10">10 积分</option>
+				<option value="50">50 积分</option>
+				<option value="100">100 积分</option>
+				<option value="500">500 积分</option>
+				<option value="1000">1000 积分</option>
               </select>
 			  <input type="submit" name="selectBtn" value="生 成" class="btn"  />
 			  </form>
@@ -110,13 +106,13 @@ form{float:left;}
 			  <select id='climit' name='climit' style="width:80px" onChange="self.location.href='?cstatus=<?php echo $cstatus ?>&climit='+this.options[this.selectedIndex].value">
 			    <option value=''>选择金额</option>
 				<option value='all'>全部金额</option>
-                <option value="1">1元</option>
-				<option value="5">5元</option>
-				<option value="10">10元</option>
-				<option value="50">50元</option>
-				<option value="100">100元</option>
-				<option value="500">500元</option>
-				<option value="1000">1000元</option>
+                <option value="1">1 积分</option>
+				<option value="5">5 积分</option>
+				<option value="10">10 积分</option>
+				<option value="50">50 积分</option>
+				<option value="100">100 积分</option>
+				<option value="500">500 积分</option>
+				<option value="1000">1000 积分</option>
 				</select>
 				&nbsp;
 				<select id='cstatus' name='cstatus' style="width:80px" onChange="self.location.href='?climit=<?php echo $climit ?>&cstatus='+this.options[this.selectedIndex].value">
@@ -188,10 +184,10 @@ $copy.=$row->ckey."\n"
         <tr>
           <td height="30" colspan="11" class="td_border">
             <div class="cuspages">
-              <div class="pages"> &nbsp;页次：<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&cstatus=<?php echo $cstatus ?>&climit=<?php echo $climit;?>">首页</a> <a href="?page=<?php echo ($page-1);?>&cstatus=<?php echo $cstatus ?>&climit=<?php echo $climit;?>">上一页</a> <a href="?page=<?php echo ($page+1);?>&cstatus=<?php echo $cstatus ?>&climit=<?php echo $climit;?>">下一页</a> <a href="?page=<?php echo $TotalPage;?>&cstatus=<?php echo $cstatus ?>&climit=<?php echo $climit;?>">尾页</a>&nbsp;&nbsp;跳转
+              <div class="pages"> &nbsp;页次：<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&cstatus=<?php echo $cstatus ?>&ckey=<?php echo $ckey ?>&climit=<?php echo $climit;?>">首页</a> <a href="?page=<?php echo ($page-1);?>&cstatus=<?php echo $cstatus ?>&ckey=<?php echo $ckey ?>&climit=<?php echo $climit;?>">上一页</a> <a href="?page=<?php echo ($page+1);?>&cstatus=<?php echo $cstatus ?>&ckey=<?php echo $ckey ?>&climit=<?php echo $climit;?>">下一页</a> <a href="?page=<?php echo $TotalPage;?>&cstatus=<?php echo $cstatus ?>&ckey=<?php echo $ckey ?>&climit=<?php echo $climit;?>">尾页</a>&nbsp;&nbsp;跳转
                 <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
                 &nbsp;&nbsp;
-                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&cstatus=<?php echo $cstatus ?>&climit=<?php echo $climit;?>';"/>
+                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&cstatus=<?php echo $cstatus ?>&ckey=<?php echo $ckey ?>&climit=<?php echo $climit;?>';"/>
               </div>
             </div>
  </td>

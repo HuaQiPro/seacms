@@ -464,7 +464,7 @@ var init = {
       <tr>
         <td>网站地址:</td>
         <td ><input type="text" name="edit___cfg_basehost" size="30" value="<?php echo $cfg_basehost;?>">
-          如填写:http://www.seacms.net,注意地址最后不要加'/'</td>
+          例如:http://www.seacms.net,注意地址最后不要加'/'</td>
       </tr>
       <tr>
         <td>网站路径:</td>
@@ -474,12 +474,17 @@ var init = {
 	  <tr>
         <td>二维码图片:</td>
         <td ><input type="text" name="edit___cfg_ewm" size="30" value="<?php echo $cfg_ewm;?>">
-          如填写:http://www.seacms.net/ewm.jpg</td>
+          例如:http://www.seacms.net/ewm.jpg</td>
+      </tr>
+	  <tr>
+        <td>卡密销售网址:</td>
+        <td ><input type="text" name="edit___cfg_kami" size="30" value="<?php echo $cfg_kami;?>">
+          例如:http://www.seacms.net/</td>
       </tr>
       <tr>
         <td>cookie加密码:</td>
         <td ><input type="text" name="edit___cfg_cookie_encode" size="30" value="<?php echo $cfg_cookie_encode;?>">
-          保存cookie时候加密所用，可加强网站的安全性</td>
+          可加强网站的安全性</td>
       </tr>
       
 	  </table>
@@ -777,11 +782,13 @@ var init = {
           &nbsp;&nbsp;如开启、将对播放来源按设置进行排序；如关闭、将节省部分性能</td>
       </tr>
 	  <tr>
-        <td width="103"  align="left" class="td_border">搜索效率选项:</td>
-        <td class="td_border">复杂:
-          <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
+        <td width="103"  align="left" class="td_border">搜索功能选项:</td>
+        <td class="td_border">禁止:
+          <input type="radio" name="edit___cfg_search_type"  value="0" <?php if ($cfg_search_type=='0') echo "checked";?> class="radio"/>
           &nbsp;&nbsp;快速:
-          <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>&nbsp;&nbsp;复杂：搜索影片名称/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速：仅搜索影片名称/新闻标题，搜索速度快</td>
+		  <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
+          &nbsp;&nbsp;复杂:
+          <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>&nbsp;&nbsp;设置为复杂搜索影片名/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速仅搜索影片名/新闻标题</td>
       </tr>
       <tr>
         <td >搜索间隔时间:</td>
@@ -805,21 +812,31 @@ var init = {
                 <input type="text" name="edit___cfg_cachetime"  size="5" value="<?php echo $cfg_cachetime;?>">
                 分钟
                 &nbsp;&nbsp;&nbsp; 缓存标识:
-                <input name="edit___cfg_cachemark" type="text" id="edit___cfg_cachemark" value="<?php echo "E".MyDate('YmdHis',time());?>" size="13" />
+                <input name="edit___cfg_cachemark" type="text" id="edit___cfg_cachemark" value="<?php echo $cfg_cachemark;?>" size="13" />
                 &nbsp;&nbsp;</span>
               &nbsp;&nbsp;关闭:
                 <input type="radio" name="edit___cfg_iscache" onclick="selectCache(this.value)" value="0" <?php if ($cfg_iscache=='0') echo "checked";?> class="radio">
           </td>
       </tr>
-	  
-	   <tr>
+	   
+	  <tr>
         <td>缓存类型:</td>
         <td class="td_border">文件缓存:
                 <input type="radio" name="edit___cfg_cachetype"  value="file" <?php if ($cfg_cachetype=='file') echo "checked";?> class="radio">
               &nbsp;&nbsp;&nbsp;&nbsp;Redis缓存:
                 <input type="radio" name="edit___cfg_cachetype"  value="redis" <?php if ($cfg_cachetype=='redis') echo "checked";?> class="radio">
-          &nbsp;Redis需主机支持（可修改include/common.redis.func.php和admin?/admin_ajax.php自定义Redis配置）
 		  </td>
+      </tr>
+	  
+	   <tr>
+        <td>Redis缓存配置:</td>
+        <td class="td_border">
+             主机：<input name="edit___cfg_redishost" type="text" id="edit___cfg_redishost" value="<?php echo $cfg_redishost;?>" size="15" />
+			 &nbsp;&nbsp;
+			 端口：<input name="edit___cfg_redisport" type="text" id="edit___cfg_redisport" value="<?php echo $cfg_redisport;?>" size="5" />
+			 &nbsp;&nbsp;
+			 密码：<input name="edit___cfg_redispsw"  type="text" id="edit___cfg_redispsw" value="<?php echo $cfg_redispsw;?>" size="15" />
+		  &nbsp;为空表示不需要密码</td>
       </tr>
 	  
       <tr id="sqlcache">

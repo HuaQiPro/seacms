@@ -16,7 +16,7 @@
 <div class="r_content">
 	<div class="r_content_1">
 <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb_style">
-<tr class="thead"><th  colspan="7" style="font-weight:bold"><font color="green">标签向导【已停止更新，请访问官网获取最新模板标签文档】<br /></th></tr>
+<tr class="thead"><th  colspan="7" style="font-weight:bold"><font color="green">标签向导【因标签众多，此向导仅做部分标签演示，全部标签请访问官网技术文档】<br /></th></tr>
 <tr><td class="td_border">
 <input type="button" class="rb1" value="menulist(菜单导航标签)"  style="width:250px;"  onclick="self.location.href='?action=menulist'"/><br>
 <input type="button" class="rb1" value="videolist(影片列表标签)"  style="width:250px;"  onclick="self.location.href='?action=videolist'" /><br>
@@ -50,7 +50,6 @@ if($action=="videolist"){
 		if (isNaN($("start").value)){alert('起点必须为数字');wherestr+=" start=1"}else{if($("start").value>1){wherestr+=" start="+$("start").value}}
 		if ($("order").options[$("order").selectedIndex].value!='time'){wherestr+=" order="+$("order").options[$("order").selectedIndex].value}
 		if ($("typetext").value!="all"){wherestr+=" type="+$("typetext").value}
-		if ($("topic").options[$("topic").selectedIndex].value!=0){wherestr+=" topic="+$("topic").options[$("topic").selectedIndex].value}
 		if ($("time").options[$("time").selectedIndex].value!=0){wherestr+=" time="+$("time").options[$("time").selectedIndex].value}
 		if ($("commend").options[$("commend").selectedIndex].value!=''){wherestr+=" commend="+$("commend").options[$("commend").selectedIndex].value}else{wherestr+=""}
 		wherestr="<b>标签说明:调用视频列表</b><br>{seacms:videolist"+wherestr+"}<br>"

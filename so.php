@@ -64,6 +64,13 @@ if($GLOBALS['cfg_mskin']==4 AND $GLOBALS['isMobile']==1){header("location:$cfg_m
 //前置跳转end
 require_once(sea_INC."/main.class.php");
 require_once(sea_INC."/splitword.class.php");
+
+if($cfg_search_type =='0')
+{
+	ShowMsg("搜索系统关闭！","index.php","0",$cfg_search_time*1000);
+	exit();
+}
+
 $page = (isset($page) && is_numeric($page)) ? $page : 1;
 $searchtype=$cfg_search_type;
 $searchword = isset($searchword) && $searchword ? $searchword:'';
