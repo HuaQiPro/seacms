@@ -51,13 +51,15 @@ $uid=$_SESSION['sea_user_id'];
 $uid = intval($uid);
 if($action=="pay")
 {
-		$row3 = $dsql->GetOne("Select * From sea_buy where vid=$vid and uid=$uid ");
+		$vid = (isset($vid) && is_numeric($vid) ? $vid : 0);
+		$from2 = (isset($from2) && is_numeric($from2) ? $from2 : 0);
+		$row3 = $dsql->GetOne("Select * From sea_buy where vid=$vid and vfrom=$from2 and uid=$uid ");
 		$turl= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-		$turl= str_replace('&action=pay','',$turl);
+		$turl= str_replace('&action=pay&from2='.$from2,'',$turl);
 		$turl= "//".$turl;
 		if(!is_array($row3))
 		{
-			$dsql->ExecuteNoneQuery("insert into sea_buy values('','$uid','$vid','".time()."')");
+			$dsql->ExecuteNoneQuery("insert into sea_buy values('','$uid','$vid','$from2','".time()."')");
 			$rowpay = $dsql->GetOne("Select * From sea_data where v_id=$vid");
 			$vmoneypay=$rowpay['v_money'];
 			$sqlpay="Update sea_member set points = points-$vmoneypay where id=$uid";
@@ -74,9 +76,8 @@ echoPlay($vid);
 
 function echoPlay($vId)
 {
-	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname;
+	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname,$payid;
 	
-
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
 	$vType=$row['tid'];
@@ -95,21 +96,52 @@ function echoPlay($vId)
 	if (strpos(" ,".getHideTypeIDS().",",",".$vType.",")>0){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
 	if ($row['v_recycled']==1){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();};
 	if ($cfg_user == 1){
-        if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
-		if($vmoney >0 AND empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}
-		if($vmoney >0 AND $_SESSION['sea_user_id'] >0)
+		
+		$rowvip=$dsql->GetOne("SELECT v_vip FROM sea_data where v_id=".$vId);
+		$vip=$rowvip['v_vip'];
+		$urlArray=getLinkArr($row['v_playdata'],$id);
+		$totalLinkvip = count($urlArray);
+		
+		if(strpos($vip,'s')!==false)
 		{
-			$row2=$dsql->GetOne("Select vid from sea_buy where vid='$vId' and uid='$uid'");
+			$vips=str_ireplace('s', "", $vip);
+			$viparr=array_flip(array_slice($urlArray,0,$vips,true));
+		}
+		elseif(strpos($vip,'e')!==false)
+		{
+			$vipe=str_ireplace('e', "", $vip);
+			$vipes=$totalLinkvip - $vipe;
+			$viparr=array_flip(array_slice($urlArray,$vipes,$vipe,true));		
+		}
+		elseif(strpos($vip,'a')!==false)
+		{
+			$viparr=array_flip(array_slice($urlArray,0,$totalLinkvip,true));		
+		}
+		else
+		{
+			$viparr2=explode(',',$vip);
+			foreach ($viparr2 as $value) 
+			{
+			  $viparr[]=$value-1;
+			}
+		}
+
+		
+        if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
+		if(in_array($from,$viparr) AND empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
+		if(in_array($from,$viparr) AND $_SESSION['sea_user_id'] >0 AND $vmoney>0)
+		{
+			$row2=$dsql->GetOne("Select * from sea_buy where vid='$vId' and vfrom=$from and uid='$uid'");
 			if(!is_array($row2))
 			{
 				$row6=$dsql->GetOne("Select * from sea_member where id='$uid'");
 				if($row6['points']<$vmoney)
 				{
-					showMsg("抱歉，".$cfg_pointsname."不足，系统将跳转至充值页面。","../member.php",0,5000); exit();
+					showMsg("抱歉，".$cfg_pointsname."不足，系统将跳转至充值中心","../member.php",0,5000); exit();
 				}
 				else
 				{
-					selectMsg("该视频需消耗【".$vmoney.$cfg_pointsname."】，确定或取消??","//".$_SERVER['HTTP_HOST']."/video/?".$vId."-".$id."-".$from.getfileSuffix()."&action=pay","javascript:history.go(-1)"); exit();
+					selectMsg("该视频需消耗【".$vmoney.$cfg_pointsname."】，确定或取消??","//".$_SERVER['HTTP_HOST']."/video/?".$vId."-".$id."-".$from.getfileSuffix()."&action=pay&from2=".$from,"javascript:history.go(-1)"); exit();
 					
 				}
 			}
@@ -316,7 +348,7 @@ $str=implode('$$$',$arr1); //最终地址
 /*---------插件管理---------*/
      
 $password=$row['v_psd'];
-if(!empty($password)){
+if(!empty($password) AND !in_array($from,$viparr)){
 		if($_POST['password'] !== $password)  {
 		$content = str_replace("{playpage:player}","<!DOCTYPE html><html><head><title>请输入视频播放口令后继续</title></head><body leftmargin='0' topmargin='0'><center><div style='font-size:12px; width:100%;height:100%;'><div style='width:200px; height:50px;text-align:left; margin-top:30px;'>请输入密码后继续：<br /><form action='' method='post'><input style='border:1px solid #3374b4;height:33px;line-height:33px;padding-left:5px' type='password' name='password' /><input style='border:1px solid #3374b4;background:#3374b4;padding:7px 10px;color:#fff;text-decoration:none;vertical-align:top' type='submit' value='播 放' /></form></div></div><br><img style='margin:15px 0 5px 0' src='".$GLOBALS ['cfg_ewm']."' height='100' width='100'><br/>扫描二维码关注微信<br />回复<font color='red'>".$vId."</font>获取播放口令</center></body></html>",$content);
 		}
@@ -386,5 +418,13 @@ function getLinkNum($playData,$m){
 	$playDataarray2=explode("$$",$playDataarray1[$m]);
 	$playDataarray3=$playDataarray2[1];
 	return count(explode('#',$playDataarray3))-1; 
+}
+
+function getLinkArr($playData,$m){
+	//if(strpos($playData,"$$$")>0){
+	$playDataarray1=explode("$$$",$playData);
+	$playDataarray2=explode("$$",$playDataarray1[$m]);
+	$playDataarray3=$playDataarray2[1];
+	return explode('#',$playDataarray3);
 }
 ?>

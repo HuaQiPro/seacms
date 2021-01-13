@@ -554,16 +554,8 @@ function CheckSql($db_string,$querytype='select')
 	if($querytype=='select')
 	{
 		$notallow1 = "[^0-9a-z@\._-]{1,}(union|sleep|benchmark|load_file|outfile)[^0-9a-z@\.-]{1,}";
-
 		//$notallow2 = "--|/\*";
 		if(m_eregi($notallow1,$db_string)){exit('SQL check');}
-		if(m_eregi('<script',$db_string)){exit('SQL check');}
-		if(m_eregi('/script',$db_string)){exit('SQL check');}
-		if(m_eregi('script>',$db_string)){exit('SQL check');}
-		if(m_eregi('if:',$db_string)){exit('SQL check');}
-		if(m_eregi('--',$db_string)){exit('SQL check');}
-		if(m_eregi('char(',$db_string)){exit('SQL check');}
-		if(m_eregi('*/',$db_string)){exit('SQL check');}
 	}
 
 	//完整的SQL检查

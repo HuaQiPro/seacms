@@ -1186,7 +1186,10 @@ function getPlayerParas()
 }
 
 function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyle='li'){
-	global $cfg_isalertwin;
+	global $cfg_isalertwin,$dsql;
+	$row=$dsql->GetOne("SELECT v_vip FROM sea_data where v_id=".$vId);
+	$vip=$row['v_vip'];
+
 	$paras=getPlayerParas();
 	if(empty($url)) return '';
 	if($starget!=""){
@@ -1196,16 +1199,44 @@ function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyl
 	}
 	$urlArray=explode("#",$url);
 	$urlCount=count($urlArray);
+	
+	if(strpos($vip,'s')!==false)
+	{
+		$vips=str_ireplace('s', "", $vip);
+		$viparr=array_flip(array_slice($urlArray,0,$vips,true));
+	}
+	elseif(strpos($vip,'e')!==false)
+	{
+		$vipe=str_ireplace('e', "", $vip);
+		$vipes=$urlCount - $vipe;
+		$viparr=array_flip(array_slice($urlArray,$vipes,$vipe,true));		
+	}
+	elseif(strpos($vip,'a')!==false)
+		{
+			$viparr=array_flip(array_slice($urlArray,0,$urlCount,true));		
+		}
+	else
+	{
+		$viparr2=explode(',',$vip);
+		foreach ($viparr2 as $value) 
+		{
+		  $viparr[]=$value-1;
+		}
+	}
+	//print_r($viparr);die;
+	
+	
 	$urlStr="";
 	for($i=0;$i<=$urlCount;$i++){
 		if(!empty($urlArray[$i])){
 			$singleUrlArray=explode("$",$urlArray[$i]);
 			if (count($singleUrlArray)<2) $singleUrlArray=Array("","","");
 			if($paras[0]==$ifrom && $i==$paras[1]) $style=" class=\"playon\" "; else $style="";
+			if(in_array($i,$viparr)){$vipstyle=' class = "playvip" ';} else {$vipstyle="";}
 			if ($cfg_isalertwin){
 				$urlStr.="<".$listyle."><a title='".$singleUrlArray[0]."' href=\"javascript:openWin('".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."',".($GLOBALS['cfg_alertwinw']).",".($GLOBALS['cfg_alertwinh']).",250,100,1)\"".$style.">".$singleUrlArray[0]."</a></".$listyle.">";
 			}else{
-				$urlStr.="<".$listyle.$style." id=\"".$ifrom.$i."\"><a title=\"".$singleUrlArray[0]."\" href=\"".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."\"".$target.">".$singleUrlArray[0]."</a></".$listyle.">";
+				$urlStr.="<".$listyle.$style.$vipstyle." id=\"".$ifrom.$i."\"><a title=\"".$singleUrlArray[0]."\" href=\"".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."\"".$target.">".$singleUrlArray[0]."</a></".$listyle.">";
 			}
 		}
 	}

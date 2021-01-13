@@ -751,7 +751,7 @@ elseif($action=='buy')
 	$select_from = ($page - 1) * $pcount.','; 
 	$pre_page = ($page == 1)? 1 : $page - 1; 
 	$next_page= ($page == $page_count)? $page_count : $page + 1 ; 
-	$dsql->setQuery("select * from sea_buy where uid=".$uid." ORDER BY kptime DESC limit ".($page-1)*$pcount.",$pcount");
+	$dsql->setQuery("select * from sea_buy where uid=".$uid." group by vid ORDER BY kptime DESC limit ".($page-1)*$pcount.",$pcount");
 	$dsql->Execute('buylist');
 	echo <<<EOT
 	<body>

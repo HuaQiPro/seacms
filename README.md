@@ -1,32 +1,29 @@
-# 更新内容
+# 升级内容
 
-① 修复某些情况下视频重复采集的问题
+① 修复采集偶尔出现sql check的问题
 
-② 新增Jplayer音频播放器
+② 增加分集VIP功能，可指定前n集/后n集/a全部/1,3,4,9集需付费
 
-③ 修复自定义采集一处细节过滤
+③ 增加漫画功能（单独提供，不在主程序集成）
 
-#升级方法
 
-【第一步】后台 - 工具 - SQL高级助手，执行：
+# 升级步骤
+【第一步】修改admin为你的实际后台目录名称，覆盖上传升级文件
 
-ALTER TABLE `sea_data` CHANGE `v_name` `v_name` CHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
+【第二步】后台 - 工具 - SQL高级助手，执行：
 
-【第二步】进入后台 - 系统 - 播放来源管理
+    ALTER TABLE `sea_data` ADD `v_vip` VARCHAR(255) NOT NULL AFTER `v_money`;
+	
+    ALTER TABLE `sea_buy` ADD `vfrom` INT(11) NOT NULL DEFAULT '0' AFTER `vid`;
+	
+【第三步】更新缓存
 
-	 添加来源，信息如下：
-	 
-	 名称：Jplayer音频
-	 
-	 后缀：jplayer
-
-【第三步】覆盖上传升级文件
-
-【第四步】更新缓存
 
 #重要提示
 
-① 本升级包仅支持v10.8版本升级到v10.9，其它版本请勿使用！
+① 本升级包仅支持v10.9版本升级到v11，其它版本请勿使用！
+
+
 
 
 目录介绍
