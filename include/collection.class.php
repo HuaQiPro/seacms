@@ -72,6 +72,16 @@ class Collect
 		
 		$v_data['v_enname'] = Pinyin($v_data['v_name']);
 		$v_data['v_letter'] = strtoupper(substr($v_data['v_enname'],0,1));
+		
+		// 影片关键词过滤 跳过采集
+		global $cfg_cjjump;
+		$jumparr = explode('|',$cfg_cjjump);
+		foreach ($jumparr as $value)
+				  {
+					  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
+				  }
+		
+		
 		if(is_numeric($localId))
 		{		
 			$v_data['v_ismake'] = 0;
@@ -145,12 +155,14 @@ class Collect
 				if($v_data['v_actor']=="" OR empty($v_data['v_actor'])){$v_data['v_actor']="内详";}
 				if($v_data['v_director']=="" OR empty($v_data['v_director'])){$v_data['v_director']="内详";}
 				
-			   if($listconf["inithit"]=='-1'){
-				   $v_data['v_hit']=mt_rand(1,9999);
-			   }else{
-				   $v_data['v_hit']=0;
-			   }
-			   
+			   global $cfg_cj_rq,$cfg_cj_rq_s,$cfg_cj_rq_e,$cfg_cj_dc,$cfg_cj_dc_s,$cfg_cj_dc_e,$cfg_cj_pf,$cfg_cj_pf_s,$cfg_cj_pf_e;
+				//pf
+				if($cfg_cj_pf=='1'){$v_data['v_scorenum'] = 1; $v_data['v_score'] = mt_rand($cfg_cj_pf_s,$cfg_cj_pf_e);}
+				//dc
+				if($cfg_cj_dc=='1'){$v_data['v_digg'] = mt_rand($cfg_cj_dc_s,$cfg_cj_dc_e); $v_data['v_tread'] = mt_rand($cfg_cj_dc_s,$cfg_cj_dc_e);}
+				//rq
+				if($cfg_cj_rq=='1'){$v_data['v_hit'] = mt_rand($cfg_cj_rq_s,$cfg_cj_rq_e);}
+					   
 			  //开始处理播放区域
 			  if(trim($itemconf["splay"])==1){
 				  $playareahtml=Geturlarray($html,getrulevalue($loopstr,"plista").'[内容]'.getrulevalue($loopstr,"plistb"));
@@ -281,6 +293,14 @@ class Collect
 					  return "{$echo_id} ".$lurl."\t<font color=red>影片名为空，跳过保存</font>.<br>";
 				  }
 				  
+				  // 影片关键词过滤 跳过采集
+				  global $cfg_cjjump;
+				  $jumparr = explode('|',$cfg_cjjump);
+				  foreach ($jumparr as $value)
+				  {
+					  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
+				  }
+				  
 			      $sql = "update `sea_co_url` set succ='1' where uid=".$row['uid'];
 				  $dsql->ExecuteNoneQuery($sql);
 				  
@@ -302,14 +322,14 @@ class Collect
 	
 	public function _insert_database($v_data)
 	{
-		global $dsql,$cfg_cj_rq,$cfg_cj_rq_s,$cfg_cj_rq_e,$cfg_cj_dc,$cfg_cj_dc_s,$cfg_cj_pf,$cfg_cj_pf_s,$cfg_cj_pf_e;
+		global $dsql,$cfg_cj_rq,$cfg_cj_rq_s,$cfg_cj_rq_e,$cfg_cj_dc,$cfg_cj_dc_s,$cfg_cj_dc_e,$cfg_cj_pf,$cfg_cj_pf_s,$cfg_cj_pf_e;
 		
 		//pf
-		if($cfg_cj_pf=='1'){$v_data['v_scorenum'] = 1; $v_data['v_score'] = rand($cfg_cj_pf_s,$cfg_cj_pf_e);}
+		if($cfg_cj_pf=='1'){$v_data['v_scorenum'] = 1; $v_data['v_score'] = mt_rand($cfg_cj_pf_s,$cfg_cj_pf_e);}
 		//dc
-		if($cfg_cj_dc=='1'){$v_data['v_digg'] = rand($cfg_cj_dc_s,$cfg_cj_dc_e); $v_data['v_tread'] = rand($cfg_cj_dc_s,$cfg_cj_dc_e);}
+		if($cfg_cj_dc=='1'){$v_data['v_digg'] = mt_rand($cfg_cj_dc_s,$cfg_cj_dc_e); $v_data['v_tread'] = mt_rand($cfg_cj_dc_s,$cfg_cj_dc_e);}
 		//rq
-		if($cfg_cj_rq=='1'){$v_data['v_hit'] = rand($cfg_cj_rq_s,$cfg_cj_rq_e);}
+		if($cfg_cj_rq=='1'){$v_data['v_hit'] = mt_rand($cfg_cj_rq_s,$cfg_cj_rq_e);}
 		
 		$v_data['v_pic'] = gatherPicHandle($v_data['v_pic']);
 		$v_des = $v_data['v_des'];
@@ -447,7 +467,7 @@ class Collect
 			$v_where="(".$v_where.")";
 		}else 
 		{*/
-			$v_data['v_name'] = str_replace(array('HD','BD','DVD','VCD','TS','【完结】','【】','[]','()','\''),'',$v_data['v_name']);
+			//$v_data['v_name'] = str_replace(array('HD','BD','DVD','VCD','TS','【完结】','【】','[]','()','\''),'',$v_data['v_name']);
 			$v_where="v_name='".$v_data['v_name']."'";
 //		}
 		
