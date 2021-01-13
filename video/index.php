@@ -387,8 +387,8 @@ function parsePlayPart($templatePath,$currentTypeId,$vtag)
 	$content=$mainClassObj->parseSelf($content);
 	$content=$mainClassObj->parseGlobal($content);	
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
 	$content=$mainClassObj->parseTopicList($content);
 	$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
 	return $content;

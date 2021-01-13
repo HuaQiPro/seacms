@@ -165,8 +165,8 @@ else
 	$t=$mainClassObj->parseGlobal($t);
 	$t=$mainClassObj->parseAreaList($t);
 	$t=$mainClassObj->parseMenuList($t,"");
-	$t=$mainClassObj->parseVideoList($t,-444);
-	$t=$mainClassObj->parseNewsList($t,-444);
+	$t=$mainClassObj->parseVideoList($t,-444,'','');
+	$t=$mainClassObj->parseNewsList($t,-444,'','');
 	$t=$mainClassObj->parseTopicList($t);
 	$t=replaceCurrentTypeId($t,-444);
 	$t=$mainClassObj->parseIf($t);

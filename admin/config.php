@@ -565,7 +565,7 @@ function viewFoot()
 	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"//www.seacms.net/\"><font style=\"font-size:10px;\">POWER BY SEACMS</font></a></td></tr></table></div>";
 }
 $union=$CmsScrpits.$CmsDomain.$CmsUnion.$CmsFileType.$CmsBihe.$CmsScrpite;
-function viewHead($str)
+function viewHead()
 {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

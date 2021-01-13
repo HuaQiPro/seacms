@@ -99,8 +99,8 @@ function parseChannelPart($templatePath,$currentTypeId)
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content = str_replace("{newspagelist:typetext}",getTypeText($currentTypeId,1),$content);
 	return $content;

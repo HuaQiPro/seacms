@@ -290,18 +290,18 @@ if(check_str($page,$key)){ShowMsg('请勿输入危险字符！','index.php','0',
 		$content = str_replace("{searchpage:money}",$money2,$content);
 		$content = str_replace("{searchpage:ver}",$ver,$content);
 		$content=$mainClassObj->parsePageList($content,"",$page,$pCount,$TotalResult,"cascade");
-		$content=$mainClassObj->parseSearchItemList($content,"type");
-		$content=$mainClassObj->parseSearchItemList($content,"year");
-		$content=$mainClassObj->parseSearchItemList($content,"area");
-		$content=$mainClassObj->parseSearchItemList($content,"letter");
-		$content=$mainClassObj->parseSearchItemList($content,"lang");
+		$content=$mainClassObj->parseSearchItemList($content,"type",'');
+		$content=$mainClassObj->parseSearchItemList($content,"year",'');
+		$content=$mainClassObj->parseSearchItemList($content,"area",'');
+		$content=$mainClassObj->parseSearchItemList($content,"letter",'');
+		$content=$mainClassObj->parseSearchItemList($content,"lang",'');
 		$jqupid=getUpId($tid);
 		if($jqupid==0 OR $jqupid=='0'){$jqupid=$tid;}
 		if($jqupid=='' OR empty($jqupid)){$jqupid='0';}
 		$content=$mainClassObj->parseSearchItemList($content,"jq",$jqupid);
-		$content=$mainClassObj->parseSearchItemList($content,"state");
-		$content=$mainClassObj->parseSearchItemList($content,"ver");
-		$content=$mainClassObj->parseSearchItemList($content,"money");
+		$content=$mainClassObj->parseSearchItemList($content,"state",'');
+		$content=$mainClassObj->parseSearchItemList($content,"ver",'');
+		$content=$mainClassObj->parseSearchItemList($content,"money",'');
 	}else
 	{
 		$content=$mainClassObj->parsePageList($content,"",$page,$pCount,$TotalResult,"search");
@@ -324,8 +324,8 @@ function parseSearchPart($templatePath)
 	$content=$mainClassObj->parseSelf($content);
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parsenewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parsenewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;
 }

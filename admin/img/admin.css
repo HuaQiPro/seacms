@@ -95,7 +95,7 @@ table.tdk th,table.tdk td{border:none}
 	
 	.pannel{position:absolute;z-index:4;line-height:32px;top:61px;right:20px;}
 	.pannel a{color:#666}
-	.pannel em{margin-right:5px;font-weight:700}
+	.pannel em{}
 	.pannel em a{text-decoration:underline}
 	.pannel p{float:left;}
 	
@@ -111,7 +111,7 @@ table.tdk th,table.tdk td{border:none}
 		.nav li.navon{margin-top:0px;background:url(btn_block.png) no-repeat; font-weight:bold;}
 		.nav li.navon em{display:block;}
 		.nav li.navon em img{ display:none;}
-		.nav li.navon em a{display:block;color:#FFF; font-weight:bold; margin-left:18px;margin-top:8px;}
+		.nav li.navon em a{display:block;color:#FFF;  margin-left:18px;margin-top:8px;}
 		.nav li.navon em a:hover{color:#FFF;}
 		.iamhere{clear:both;height:32px; margin-top:-10px;}
 		.iamhere p{padding-left:10px;line-height:32px;border-left:1px solid #FFF;background:url(navbg.png) repeat-x 0 0;height:32px }	
@@ -122,8 +122,8 @@ table.tdk th,table.tdk td{border:none}
 	.menu ul{position:absolute;top:10px;list-style:none;width:100%;}
 	.menu li{height:30px;overflow:hidden;line-height:30px;padding-left:1em}
 	.menu li a{height:100%;display:block;padding-left:30px;background:url(repno.gif) no-repeat 15px -31px;color:#5a5b65;font-size:14px;}
-	.menu li a:hover{text-decoration:none;background:#E6F2FB url(repno.gif) no-repeat 15px -31px;color:#2366A8}
-	.menu li a.menucurr,.menu li a.menucurr:hover{text-decoration:none;background:#E6F2FB url(repno.gif) no-repeat 13px -80px;color:#3792d0}
+	.menu li a:hover{text-decoration:none;background: url(repno.gif) no-repeat 15px -31px;color:#2366A8}
+	.menu li a.menucurr,.menu li a.menucurr:hover{text-decoration:none;background: url(repno.gif) no-repeat 13px -80px;color:#3792d0}
 	.menu li.menuspace{font-size:0;height:1px;margin:5px 0px 5px 10px;background:url(menuspace.jpg) no-repeat 0 0;overflow:hidden}
 .maincontent{padding-top:1px;background:url(bg_repx_hb.gif) repeat-x}
 

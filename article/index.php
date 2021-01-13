@@ -172,7 +172,7 @@ function parseContentPart($templatePath,$currentTypeId,$vtag)
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
 	$content=$mainClassObj->parseVideoList($content,$currentTypeId,$topid,$vtag);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;
 }

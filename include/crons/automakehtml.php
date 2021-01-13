@@ -1,3 +1,8 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body style="display:none;">
 <?php 
 if(!defined('sea_INC'))
 {
@@ -150,80 +155,7 @@ function automakeNewsChannelByIDS($ids)
 
 function automakeChannelById($typeId)
 {
-	global $dsql,$cfg_iscache,$mainClassObj;
-	$typeId = empty($typeId) ? 0 : intval($typeId);
-	$channelTmpName=getTypeTemplateOnCache($typeId);
-	$channelTmpName=empty($channelTmpName) ? "channel.html" : $channelTmpName;
-	$channelTemplatePath = "/templets/".$GLOBALS['cfg_df_style']."/".$GLOBALS['cfg_df_html']."/".$channelTmpName;
-	$pSize = getPageSizeOnCache($channelTemplatePath,"channel",$channelTmpName);
-	if (empty($pSize)) $pSize=12;
-	$typeIds = getTypeIdOnCache($typeId);
-	$typename=getTypeNameOnCache($typeId);
-	//echoBegin($typename,"channel");
-	$sql="select count(*) as dd from sea_data where tid in (".$typeIds.")";
-	$row = $dsql->GetOne($sql);
-	if(is_array($row))
-	{
-		$TotalResult = $row['dd'];
-	}
-	else
-	{
-		$TotalResult = 0;
-	}
-	$pagesize = $pSize;
-	$pCount = ceil($TotalResult/$pSize);
-	$currentTypeId = $typeId;
-	$GLOBALS[tid]=$currentTypeId;
-	$cacheName = "parse_channel_".$currentTypeId;
-	if($cfg_iscache){
-		if(chkFileCache($cacheName)){
-			$content = getFileCache($cacheName);
-		}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
-			$content = str_replace("{channelpage:typename}",$typename,$content);
-			setFileCache($cacheName,$content);
-		}
-	}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
-			$content = str_replace("{channelpage:typename}",$typename,$content);
-	}
-	$content=str_replace("{seacms:member}",front_member(),$content);
-	$content = str_replace("{channelpage:order-hit-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=hit&tid=".$typeId,$content);
-	$content = str_replace("{channelpage:order-hitasc-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=hitasc&tid=".$typeId,$content);
-	
-	$content = str_replace("{channelpage:order-id-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=id&tid=".$typeId,$content);
-	$content = str_replace("{channelpage:order-idasc-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=idasc&tid=".$typeId,$content);
-	
-	$content = str_replace("{channelpage:order-time-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=time&tid=".$typeId,$content);
-	$content = str_replace("{channelpage:order-timeasc-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=timeasc&tid=".$typeId,$content);
-	
-	$content = str_replace("{channelpage:order-commend-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=commend&tid=".$typeId,$content);
-	$content = str_replace("{channelpage:order-commendasc-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=commendasc&tid=".$typeId,$content);
-	
-	$content = str_replace("{channelpage:order-score-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=score&tid=".$typeId,$content);
-	$content = str_replace("{channelpage:order-scoreasc-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=scoreasc&tid=".$typeId,$content);
-	$content=str_replace("<head>",'<head><script>var seatype="list"; var seaid='.$currentTypeId.';var seapage='.$i.';</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$content);
-	$tempStr = $content;
-	if (isTypeHide($typeId)){
-		return true;
-	}
-	if($TotalResult == 0){
-		$channelLink=str_replace($GLOBALS['cfg_cmspath'],"",getChannelPagesLink($currentTypeId,1));
-		$tempStr = str_replace("{channelpage:page}",1,$tempStr);
-		$content=$tempStr;
-		$content=$mainClassObj->ParsePageList($content,$typeIds,1,$pCount,$TotalResult,"channel",$currentTypeId);
-		$content=$mainClassObj->parseIf($content);
-		createTextFile($content,sea_ROOT.$channelLink);
-	}
-	for($i=1;$i<=$pCount;$i++){
-		$channelLink=str_replace($GLOBALS['cfg_cmspath'],"",getChannelPagesLink($currentTypeId,$i));
-		$tempStr2 = str_replace("{channelpage:page}",$i,$tempStr);
-		$tempStr2=str_replace("<head>",'<head><script>var seatype="list"; var seaid='.$currentTypeId.';var seapage='.$i.';</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$tempStr2);
-		$content=$tempStr2;
-		$content=$mainClassObj->ParsePageList($content,$typeIds,$i,$pCount,$TotalResult,"channel",$currentTypeId);
-		$content=$mainClassObj->parseIf($content);
-		createTextFile($content,sea_ROOT.$channelLink);
-	}
+	makeChannelById($typeId);
 }
 
 function automakeNewsChannelById($typeId)
@@ -255,7 +187,7 @@ function automakeTopicIndex()
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"");
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content);
+	$content=$mainClassObj->parseVideoList($content,'','','');
 	$content=$mainClassObj->parseLinkList($content);
 	$content=replaceCurrentTypeId($content,-444);
 		$content=str_replace("{seacms:member}",front_member(),$content);
@@ -291,65 +223,11 @@ function automakeAllTopic()
 
 function automakeTopicById($topicId)
 {
-	global $dsql,$cfg_iscache,$mainClassObj;
-	$sql="select id,name,template,enname from sea_topic where id =".$topicId;
-	$row = $dsql->GetOne($sql);
-	if(!is_array($row)) return FALSE;
-	$rowc=$dsql->GetOne("select count(*) as dd from sea_data where v_topic=".$topicId);
-	$topicTemplatePath="/templets/".$GLOBALS['cfg_df_style']."/".$GLOBALS['cfg_df_html']."/".$row['template'];
-	$cacheName="parse_topic_".$topicId;
-	$page_size = getPageSizeOnCache($topicTemplatePath,"topicpage",$row['template']);
-	if (empty($page_size)) $page_size=12;
-	if(is_array($rowc))
-	{
-		$TotalResult = $rowc['dd'];
-	}
-	else
-	{
-		$TotalResult = 0;
-	}
-	$pCount = ceil($TotalResult/$page_size);
-	$topicName=$row['name'];
-	$topicEnname=$row['enname'];
-	$currentTopicId = $row['id'];
-	$currrent_topic_id=$row['id'];
-	if($cfg_iscache){
-		if(chkFileCache($cacheName)){
-			$content = getFileCache($cacheName);
-		}else{
-			$content = parseCachePart("topic",$topicTemplatePath);
-			$content = str_replace("{seacms:topicname}",$topicName,$content);
-			$content = str_replace("{seacms:currrent_topic_id}",$currrent_topic_id,$content);
-			setFileCache($cacheName,$content);
-		}
-	}else{
-			$content = parseCachePart("topic",$topicTemplatePath);
-			$content = str_replace("{seacms:topicname}",$topicName,$content);
-			$content = str_replace("{seacms:currrent_topic_id}",$currrent_topic_id,$content);
-	}
-		$content=str_replace("{seacms:member}",front_member(),$content);
-		$content=str_replace("<head>",'<head><script>var seatype="topic"; var seaid='.$currentTopicId.';var seapage='.$i.';</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$content);
-	$mystr = $content;
-	if($TotalResult == 0){
-		$content=$mystr;
-		$content=$mainClassObj->ParsePageList($content,$topicId,1,$pCount,$TotalResult,"topicpage",$currrent_topic_id);
-		$content=$mainClassObj->parseIf($content);
-		$topiclink=sea_ROOT.str_replace($GLOBALS['cfg_cmspath'],"",getTopicLink($topicEnname,1));
-		createTextFile($content,$topiclink);
-	}else{
-		for($i=1;$i<=$pCount;$i++){
-			$content =$mystr;
-			$content=str_replace("<head>",'<head><script>var seatype="topic"; var seaid='.$currentTopicId.';var seapage='.$i.';</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$content);
-			$content=$mainClassObj->ParsePageList($content,$topicId,$i,$pCount,$TotalResult,"topicpage",$currrent_topic_id);
-			$content=$mainClassObj->parseIf($content);
-			$topiclink=sea_ROOT.str_replace($GLOBALS['cfg_cmspath'],"",getTopicLink($topicEnname,$i));
-			createTextFile($content,$topiclink);
-		}
-	}
+	makeTopicById($topicId);
 }
 
 
-function autoparseCachePart($pageType,$templatePath,$currentTypeId="-444")
+function autoparseCachePart($pageType,$templatePath,$currentTypeId=-444)
 {
 	global $mainClassObj;
 	switch ($pageType) {
@@ -374,8 +252,8 @@ function autoparseCachePart($pageType,$templatePath,$currentTypeId="-444")
 			$content=$mainClassObj->parseGlobal($content);
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{newspagelist:typetext}",getTypeText($currentTypeId,1),$content);
 			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
@@ -389,7 +267,7 @@ function autoparseCachePart($pageType,$templatePath,$currentTypeId="-444")
 			$content=$mainClassObj->parseGlobal($content);
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
 		break;
@@ -402,7 +280,7 @@ function autoparseCachePart($pageType,$templatePath,$currentTypeId="-444")
 			$content=$mainClassObj->parseGlobal($content);
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
 		break;
@@ -414,10 +292,10 @@ function autoparseCachePart($pageType,$templatePath,$currentTypeId="-444")
 			$content=$mainClassObj->parseGlobal($content);
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content=$mainClassObj->parseLinkList($content);
-			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
+			$content = str_replace("{seacms:currenttypeid}",-444,$content);
 		break;
 		case "parse_article_":
 			$content=loadFile(sea_ROOT.$templatePath);
@@ -429,8 +307,8 @@ function autoparseCachePart($pageType,$templatePath,$currentTypeId="-444")
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content=$mainClassObj->parseLinkList($content);
 			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
@@ -469,8 +347,8 @@ function automakeCustomInfo($templatename)
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=replaceCurrentTypeId($content,-444);
@@ -515,3 +393,5 @@ function automakeallcustom()
 	}
 }
 ?>
+</body>
+</html>

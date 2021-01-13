@@ -192,8 +192,8 @@ function parseContentPart($templatePath,$currentTypeId,$vtag)
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;
 }

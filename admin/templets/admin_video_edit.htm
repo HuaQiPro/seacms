@@ -28,9 +28,6 @@
         <form action="?action=save&acttype=edit" method="post" name="addform" id="addform" >
       <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb_style">
           <tr>
-            <td colspan="3" class="td_title">&nbsp;修改视频数据</td>
-          </tr>
-          <tr>
             <td width="70"  height="30"  class="td_border">&nbsp;影片名称：</td>
             <td class="td_border"><input type="text" name="v_name" id="v_name" autocomplete="off" onChange="checkRepeat();" autofocus value="<?php echo $vrow['v_name']?>" size="23" /><span id="v_name_ok"></span>
               拼音：<input type="text" size="23" id="v_enname" name="v_enname" value="<?php echo $vrow['v_enname'] ?>"  onchange="this.value=this.value.replace(/[^\w]+/ig,'')">

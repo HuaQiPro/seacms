@@ -7,9 +7,7 @@
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <style type="text/css">
-input {
-	height:12px;
-}
+
 .txt {
 	width:250px;
 }
@@ -36,9 +34,7 @@ input {
 	text-align:right;
 	border-right:1px solid #DEEFFA;
 }
-.rb1 {
-	height:22px
-}
+
 .red {
 	color:red
 }
@@ -183,8 +179,8 @@ $n_id=$row->n_id;
           </tr>
           <tr>
             <td height="30" colspan="9" class="td_border"><div class="cuspages" style="float:right">
-                <div class="pages">页次<?php echo $page;?>/<?php echo $TotalPage;?>每页<?php echo $numPerPage;?> &nbsp;&nbsp; 总收录数据条<?php echo $TotalResult;?> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=1">首页</a> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=<?php echo ($page-1);?>">上一页</a> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=<?php echo ($page+1);?>">下一页</a> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=<?php echo $TotalPage;?>">尾页</a> 转到
-                  <input type="text" class="txt" id="toPage" value="1" style="width:30px"/>
+                <div class="pages">页次<?php echo $page;?>/<?php echo $TotalPage;?>每页<?php echo $numPerPage;?> &nbsp;&nbsp; 总收录数据条<?php echo $TotalResult;?> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=1">首页</a> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=<?php echo ($page-1);?>">上一页</a> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=<?php echo ($page+1);?>">下一页</a> <a href="?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page=<?php echo $TotalPage;?>">尾页</a> 跳转
+                  <input type="text" class="txt" id="toPage" value="" style="width:30px"/>
                   <input type="button" value="跳 转" onclick="location.href='?action=tempdatabase&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&playfrom=<?php echo $playfrom;?>&page='+$('toPage').value" class="rb1">
                 </div>
               </div>

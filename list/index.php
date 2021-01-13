@@ -117,8 +117,8 @@ function parseChannelPart($templatePath,$currentTypeId)
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content = str_replace("{channelpage:typetext}",getTypeText($currentTypeId),$content);
 	$content = str_replace("{channelpage:keywords}",getTypeKeywords($currentTypeId),$content);

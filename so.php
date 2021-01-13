@@ -160,8 +160,8 @@ function parseSearchPart($templatePath)
 	$content=$mainClassObj->parseSelf($content);
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"");
-	$content=$mainClassObj->parseVideoList($content);
-	$content=$mainClassObj->parseNewsList($content);
+	$content=$mainClassObj->parseVideoList($content,'','','');
+	$content=$mainClassObj->parseNewsList($content,'','','');
 	$content=$mainClassObj->parseNewsAreaList($content);
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;

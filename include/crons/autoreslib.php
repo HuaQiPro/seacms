@@ -1,3 +1,8 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body style="display:none;">
 <?php 
 if(!defined('sea_INC')||!defined('sea_ROOT')||!defined('sea_DATA'))
 {
@@ -100,3 +105,5 @@ function autocache_clear($dir) {
   closedir($dh); 
 }
 ?>
+</body>
+</html>

@@ -19,8 +19,8 @@ function makeIndex($by='video')
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=$mainClassObj->parseIf($content);
@@ -63,8 +63,8 @@ function makeAllmovie($by='video')
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=$mainClassObj->parseIf($content);
@@ -106,8 +106,8 @@ function makeVideoJs($by='video')
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseIf($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
@@ -847,14 +847,14 @@ function makeChannelById($typeId)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
@@ -961,7 +961,7 @@ function makeNewsChannelById($typeId)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
@@ -970,7 +970,7 @@ function makeNewsChannelById($typeId)
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
@@ -1056,13 +1056,13 @@ function makeLengthChannelById($typeId,$startpage,$endpage)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 	}
@@ -1132,14 +1132,14 @@ function makeLengthPartById($typeId,$startpage,$endpage)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
@@ -1251,9 +1251,9 @@ function makeTopicIndex($page=1)
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"");
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content);
-	$content=$mainClassObj->parseTopicList($content);
-	$content=$mainClassObj->parseNewsList($content);
+	$content=$mainClassObj->parseVideoList($content,'','','');
+	$content=$mainClassObj->parseTopicList($content,'','','');
+	$content=$mainClassObj->parseNewsList($content,'','','');
 	$content=$mainClassObj->parseLinkList($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$tempStr = $content;
@@ -1354,7 +1354,7 @@ function makeTopicById($topicId)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("topic",$topicTemplatePath);
+			$content = parseCachePart("topic",$topicTemplatePath,'','');
 			$content = str_replace("{seacms:topicname}",$topicName,$content);
 			$content = str_replace("{seacms:topicdes}",$topicDes,$content);
 			$content = str_replace("{seacms:topickeyword}",$topicKeyword,$content);
@@ -1363,12 +1363,11 @@ function makeTopicById($topicId)
 			$content = str_replace("{seacms:topicspic}",$topicsPic,$content);
 			$content = str_replace("{seacms:topicgpic}",$topicgPic,$content);			
 			$content = str_replace("{seacms:topiccontent}",$topicContent,$content);
-			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);
-			
+			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);			
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("topic",$topicTemplatePath);
+			$content = parseCachePart("topic",$topicTemplatePath,'','');
 			$content = str_replace("{seacms:topicname}",$topicName,$content);
 			$content = str_replace("{seacms:topicdes}",$topicDes,$content);
 			$content = str_replace("{seacms:topickeyword}",$topicKeyword,$content);
@@ -1379,6 +1378,7 @@ function makeTopicById($topicId)
 			$content = str_replace("{seacms:topiccontent}",$topicContent,$content);
 			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);
 	}
+	
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$mystr = $content;
 	if($TotalResult == 0){
@@ -1422,8 +1422,8 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{channelpage:typetext}",getTypeText($currentTypeId),$content);
 			$content = str_replace("{channelpage:keywords}",getTypeKeywords($currentTypeId),$content);
@@ -1440,8 +1440,8 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{newspagelist:typetext}",getTypeText($currentTypeId,1),$content);
 		break;
@@ -1456,7 +1456,7 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 			$content=$mainClassObj->parseTopicList($content);
 		break;
@@ -1471,22 +1471,22 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 			$content=$mainClassObj->parseTopicList($content);
 		break;
 		case "topic":
 			$content=loadFile(sea_ROOT.$templatePath);
 			$content=$mainClassObj->parseTopAndFoot($content);
-			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
+			$content = str_replace("{seacms:currenttypeid}",-444,$content);
 			$content=$mainClassObj->parseSelf($content);
 			$content=$mainClassObj->parseHistory($content);
 			$content=$mainClassObj->parseGlobal($content);
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 			$content=$mainClassObj->parseTopicList($content);
 			$content=$mainClassObj->parseLinkList($content);
 		break;
@@ -1502,7 +1502,7 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
 			$content=$mainClassObj->parseVideoList($content,$currentTypeId,$topic,$vtag);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
 			$content=$mainClassObj->parseTopicList($content);
 			$content=$mainClassObj->parseLinkList($content);
 	}
@@ -1652,8 +1652,8 @@ function makeCustomInfo($templatename)
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=replaceCurrentTypeId($content,-444);

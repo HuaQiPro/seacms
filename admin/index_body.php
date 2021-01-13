@@ -337,7 +337,7 @@ function Cmsgetreferer()
 	return $url;
 }
 echo '<div  style="clear:left"></div>';
-echo '<div class="S_info">&nbsp;欢迎访问官方主页获取帮助：<a href="//www.seacms.net" target="_blank" >www.seacms.net</a></div>';
+echo '<div class="S_info" style="margin-top:10px;">&nbsp;<img src="img/i3.png" style="width: 12px;height:12px;vertical-align: middle;padding-right: 2px;margin-bottom: 1px;">欢迎访问官方主页获取帮助&nbsp;|&nbsp;<img src="img/rss.gif" style="width: 10px;height:10px;vertical-align: middle;padding-right: 2px;"><a href="//www.seacms.net" target="_blank" >www.seacms.net</a></div>';
 echo '</div></div></div>';
 viewFoot();
 ?>

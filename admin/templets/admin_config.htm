@@ -4,17 +4,196 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="robots" content="noindex,nofollow" />
 <TITLE>站点配置-系统-seacms后台管理</TITLE>
+<script src="js/jquery.js"></script>
 <link href="img/style.css" rel="stylesheet" type="text/css" />
 <script src="../js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
+<style>
+ul,li {
+	list-style:none
+}
+.tabClick {
+	background:#f3f3f3;
+	overflow:hidden
+}
+.tabClick li {
+	height:30px;
+	line-height:30px;
+	width:115px;
+	float:left;
+	text-align:center
+}
+.tabClick li.active {
+	transition:0.1s;
+	font-weight:bold;
+	background: #dceffe;
+}
+.tabCon {
+	overflow:hidden
+}
+.tabBox {
+	position:relative
+}
+.tabList {
+
+
+}
+
+</style>
+<script>
+window.onload = function() {
+    var windowWidth = document.body.clientWidth; //window 宽度;
+    var wrap = document.getElementById('wrap');
+    var tabClick = wrap.querySelectorAll('.tabClick')[0];
+    var tabLi = tabClick.getElementsByTagName('li');
+
+    var tabBox = wrap.querySelectorAll('.tabBox')[0];
+    var tabList = tabBox.querySelectorAll('.tabList');
+
+    var lineBorder = wrap.querySelectorAll('.lineBorder')[0];
+    var lineDiv = lineBorder.querySelectorAll('.lineDiv')[0];
+
+    var tar = 0;
+    var endX = 0;
+    var dist = 0;
+
+    tabBox.style.overflow = 'hidden';
+    tabBox.style.position = 'relative';
+    tabBox.style.width = windowWidth * tabList.length + "px";
+
+    for (var i = 0; i < tabLi.length; i++) {
+        tabList[i].style.width = windowWidth + "px";
+        tabList[i].style.display = 'table-cell';
+    }
+
+    for (var i = 0; i < tabLi.length; i++) {
+        tabLi[i].start = i;
+        tabLi[i].onclick = function() {
+            var star = this.start;
+            for (var i = 0; i < tabLi.length; i++) {
+                tabLi[i].className = '';
+            };
+            tabLi[star].className = 'active';
+            init.lineAnme(lineDiv, windowWidth / tabLi.length * star)
+            init.translate(tabBox, windowWidth, star);
+            endX = -star * windowWidth;
+        }
+    }
+
+    function OnTab(star) {
+        if (star < 0) {
+            star = 0;
+        } else if (star >= tabLi.length) {
+            star = tabLi.length - 1
+        }
+        for (var i = 0; i < tabLi.length; i++) {
+            tabLi[i].className = '';
+        };
+
+        tabLi[star].className = 'active';
+        init.translate(tabBox, windowWidth, star);
+        endX = -star * windowWidth;
+    };
+
+    tabBox.addEventListener('touchstart', chstart, false);
+    tabBox.addEventListener('touchmove', chmove, false);
+    tabBox.addEventListener('touchend', chend, false);
+    //按下
+    function chstart(ev) {
+        ev.preventDefault;
+        var touch = ev.touches[0];
+        tar = touch.pageX;
+        tabBox.style.webkitTransition = 'all 0s ease-in-out';
+        tabBox.style.transition = 'all 0s ease-in-out';
+    };
+    //滑动
+    function chmove(ev) {
+        var stars = wrap.querySelector('.active').start;
+        ev.preventDefault;
+        var touch = ev.touches[0];
+        var distance = touch.pageX - tar;
+        dist = distance;
+        init.touchs(tabBox, windowWidth, tar, distance, endX);
+        init.lineAnme(lineDiv, -dist / tabLi.length - endX / 4);
+    };
+    //离开
+    function chend(ev) {
+        var str = tabBox.style.transform;
+        var strs = JSON.stringify(str.split(",", 1));
+        endX = Number(strs.substr(14, strs.length - 18));
+
+        if (endX > 0) {
+            init.back(tabBox, windowWidth, tar, 0, 0, 0.3);
+            endX = 0
+        } else if (endX < -windowWidth * tabList.length + windowWidth) {
+            endX = -windowWidth * tabList.length + windowWidth
+            init.back(tabBox, windowWidth, tar, 0, endX, 0.3);
+        } else if (dist < -windowWidth / 3) {
+            OnTab(tabClick.querySelector('.active').start + 1);
+            init.back(tabBox, windowWidth, tar, 0, endX, 0.3);
+        } else if (dist > windowWidth / 3) {
+            OnTab(tabClick.querySelector('.active').start - 1);
+        } else {
+            OnTab(tabClick.querySelector('.active').start);
+        }
+        var stars = wrap.querySelector('.active').start;
+        init.lineAnme(lineDiv, stars * windowWidth / 4);
+
+    };
+};
+
+var init = {
+    translate: function(obj, windowWidth, star) {
+        obj.style.webkitTransform = 'translate3d(' + -star * windowWidth + 'px,0,0)';
+        obj.style.transform = 'translate3d(' + -star * windowWidth + ',0,0)px';
+        obj.style.webkitTransition = 'all 0.3s ease-in-out';
+        obj.style.transition = 'all 0.3s ease-in-out';
+    },
+    touchs: function(obj, windowWidth, tar, distance, endX) {
+        obj.style.webkitTransform = 'translate3d(' + (distance + endX) + 'px,0,0)';
+        obj.style.transform = 'translate3d(' + (distance + endX) + ',0,0)px';
+    },
+    lineAnme: function(obj, stance) {
+        obj.style.webkitTransform = 'translate3d(' + stance + 'px,0,0)';
+        obj.style.transform = 'translate3d(' + stance + 'px,0,0)';
+        obj.style.webkitTransition = 'all 0.1s ease-in-out';
+        obj.style.transition = 'all 0.1s ease-in-out';
+    },
+    back: function(obj, windowWidth, tar, distance, endX, time) {
+        obj.style.webkitTransform = 'translate3d(' + (distance + endX) + 'px,0,0)';
+        obj.style.transform = 'translate3d(' + (distance + endX) + ',0,0)px';
+        obj.style.webkitTransition = 'all ' + time + 's ease-in-out';
+        obj.style.transition = 'all ' + time + 's ease-in-out';
+    },
+}
+</script>
 </head>
 <body>
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;设置&nbsp;&raquo;&nbsp;站点配置 ';</script>
 <div class="container" id="cpcontainer"> 
-  <!--当前导航-->
+<div class="wrap" id="wrap">
+    <ul class="tabClick">
+        <li class="active">网站基本设置</li>
+        <li>网站资料设置</li>
+        <li>采集工具设置</li>
+        <li>模板路径设置</li>
+		<li>会员插件设置</li>
+        <li>性能效率设置</li>
+        <li>网站其它设置</li>
+    </ul>
+    <div class="lineBorder">
+        <div class="lineDiv">
+            
+        </div>
+    </div>
+    <div class="tabCon">
+        <div class="tabBox">
   <form method="post" action="?dopost=save">
-    <input type="hidden" name="isalertwin_old" value="0"/>
+  <input type="hidden" name="isalertwin_old" value="0"/>
+  <!--当前导航-->
+<div class="tabList">
+    
     <table class="tb">
 
       <tr class="thead">
@@ -265,10 +444,21 @@
               </tr>
             </tbody>
           </table></td>
+      </tr> 
+	  </table>
+</div>
+	  
+	  
+	  
+	  
+<div class="tabList"><table class="tb">
+<tr class="thead">
+        <td colspan="2"><strong>网站资料设置<a name="rule" id="rule"></a></strong></td>
       </tr>
       <tr>
+	  
         <td>网站名称:</td>
-        <td width="661"><input type="text" name="edit___cfg_webname" size="30" value="<?php echo $cfg_webname;?>">
+        <td ><input type="text" name="edit___cfg_webname" size="30" value="<?php echo $cfg_webname;?>">
           请尽快修改网站名称</td>
       </tr>
       <tr>
@@ -291,19 +481,47 @@
         <td ><input type="text" name="edit___cfg_cookie_encode" size="30" value="<?php echo $cfg_cookie_encode;?>">
           保存cookie时候加密所用，可加强网站的安全性</td>
       </tr>
-      <tr class="thead">
+      
+	  </table>
+</div>
+	  
+	  
+	  
+	  
+<div class="tabList"><table class="tb">
+<tr class="thead">
         <td colspan="2"><strong>采集工具设置<a name="rule" id="rule"></a></strong></td>
       </tr>
       <tr>
+	  
         <td >智能采集设置:</td>
-        <td ><label>
-            <input type="checkbox" name="edit___cfg_gatherset[]" value="0" id="gatherset1" <?php if(strpos($cfg_gatherset,'0')!==false)echo 'checked'?> />分类识别</label>&nbsp;&nbsp;
-          <label>
-            <input type="checkbox" name="edit___cfg_gatherset[]" value="1" id="gatherset2" <?php if(strpos($cfg_gatherset,'1')!==false)echo 'checked'?>/>不添加新影片</label>
+        <td > 
+		<label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="1" id="gatherset2" <?php if(strpos($cfg_gatherset,'1')!==false)echo 'checked'?>/>不添加新数据</label>
 		  &nbsp;&nbsp;
 		  <label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="0" id="gatherset1" <?php if(strpos($cfg_gatherset,'0')!==false)echo 'checked'?> />分类识别</label>
+		&nbsp;&nbsp;
+		  <label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="4" id="gatherset1" <?php if(strpos($cfg_gatherset,'4')!==false)echo 'checked'?> />年代识别</label>
+			&nbsp;&nbsp;
+		  <label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="5" id="gatherset1" <?php if(strpos($cfg_gatherset,'5')!==false)echo 'checked'?> />地区识别</label>
+			&nbsp;&nbsp;
+		  <label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="6" id="gatherset1" <?php if(strpos($cfg_gatherset,'6')!==false)echo 'checked'?> />语言识别</label>
+			&nbsp;&nbsp;
+		  <label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="7" id="gatherset1" <?php if(strpos($cfg_gatherset,'7')!==false)echo 'checked'?> />导演识别</label>
+			&nbsp;&nbsp;        
+		  <label>
+		  &nbsp;&nbsp;
+		  <label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="8" id="gatherset1" <?php if(strpos($cfg_gatherset,'8')!==false)echo 'checked'?> />主演识别</label>
+			&nbsp;&nbsp;        
+		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="3" id="gatherset3" <?php if(strpos($cfg_gatherset,'3')!==false)echo 'checked'?>/>
-            按播放下载地址判断是否更新 </label>
+            播放/下载地址识别 </label>
 			&nbsp;&nbsp;
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="Y" id="gatherset4" <?php if(strpos($cfg_gatherset,'Y')!==false)echo 'checked'?>/>
@@ -394,8 +612,15 @@
         <td ><input type="text" name="edit___cfg_cjjump" size="35" value="<?php echo $cfg_cjjump;?>"> &nbsp;
           影片名包含关键词则跳过采集，多个关键词用 | 分割</td>
       </tr>
+	  </table>
+</div>
+	  
+	  
+	  
+	  
+<div class="tabList"><table class="tb">	 
       <tr class="thead">
-        <td colspan="2"><strong>模板与路径设置</strong></td>
+        <td colspan="2"><strong>模板路径设置</strong></td>
       </tr>
       <tr>
         <td>桌面端模板选择:</td>
@@ -456,21 +681,27 @@
       </tr>
       <tr>
         <td>图片文件夹:</td>
-        <td width="661"><input type="text" name="edit___cfg_upload_dir" size="15" value="<?php echo $cfg_upload_dir;?>"/>
+        <td ><input type="text" name="edit___cfg_upload_dir" size="15" value="<?php echo $cfg_upload_dir;?>"/>
           位于根目录下</td>
       </tr>
       <tr>
         <td>JS广告文件夹:</td>
-        <td width="661"><input type="text" name="edit___cfg_ads_dir" size="15" value="<?php echo $cfg_ads_dir;?>"/>
+        <td ><input type="text" name="edit___cfg_ads_dir" size="15" value="<?php echo $cfg_ads_dir;?>"/>
           位于根目录的js文件夹下</td>
       </tr>
       <tr>
         <td width="103"  align="left" class="td_border">数据备份目录:</td>
         <td ><input type="text" name="edit___cfg_backup_dir" size="15" readonly value="bdata"/>
           位于后台管理文件夹/ebak下，禁止修改</td>
-      </tr>
+      </tr></table>
+</div>
+	  
+	  
+	  
+	  
+<div class="tabList"><table class="tb">	  
       <tr class="thead">
-        <td colspan="2"><strong>会员系统/插件设置<a name="chajian" id="chajian"></a></strong></td>
+        <td colspan="2"><strong>会员插件设置<a name="chajian" id="chajian"></a></strong></td>
       </tr>
       <tr>
         <td>会员系统开关:</td>
@@ -539,7 +770,7 @@
       </tr>
       <tr>
         <td >来源排序:</td>
-        <td width="661">开启:
+        <td >开启:
           <input type="radio" name="edit___cfg_isfromsort" value="1" <?php if ($cfg_isfromsort=='1') echo "checked";?> class="radio" >
           &nbsp;&nbsp;关闭:
           <input type="radio" name="edit___cfg_isfromsort" value="0" <?php if ($cfg_isfromsort=='0') echo "checked";?> class="radio" >
@@ -553,12 +784,18 @@
           <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>&nbsp;&nbsp;复杂：搜索影片名称/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速：仅搜索影片名称/新闻标题，搜索速度快</td>
       </tr>
       <tr>
-        <td width="661">搜索间隔时间:</td>
+        <td >搜索间隔时间:</td>
         <td class="td_border"><input type="text" name="edit___cfg_search_time" id="edit___cfg_search_time" value="<?php echo $cfg_search_time;?>" size="3" />
           秒</td>
-      </tr>
+      </tr></table>
+</div>
+	  
+	  
+	  
+	  
+<div class="tabList"><table class="tb">	  
       <tr class="thead">
-        <td colspan="2"><strong>搜索/动态/缓存设置</strong></td>
+        <td colspan="2"><strong>性能效率设置</strong></td>
       </tr>
       <tr>
         <td>缓存开关:</td>
@@ -618,9 +855,15 @@
 	$iplist = @fread($fp,filesize($iplisttxt));
 	@fclose($fp);echo $iplist;?>
 </textarea></td>
-      </tr>
+      </tr></table>
+</div>
+	  
+	  
+	  
+	  
+<div class="tabList"><table class="tb">	  
       <tr class="thead">
-        <td colspan="2"><strong>其它设置</strong></td>
+        <td colspan="2"><strong>网站其它设置</strong></td>
       </tr>
       <tr>
         <td>过滤留言:</td>
@@ -733,7 +976,7 @@
       </tr>
       <tr>
         <td>站点描述:</td>
-        <td width="661"><textarea cols="90" rows="3" name="edit___cfg_description"><?php echo $cfg_description;?></textarea></td>
+        <td ><textarea cols="90" rows="3" name="edit___cfg_description"><?php echo $cfg_description;?></textarea></td>
       </tr>
       <tr>
         <td   width="79">关键词:</td>
@@ -742,16 +985,26 @@
       <tr>
         <td>网站版权信息</td>
         <td><textarea cols="90" rows="3" name="edit___cfg_powerby"><?php echo $cfg_powerby;?></textarea></td>
-      </tr>
+      </tr></table>
+</div>
+
+
+</div>
+    </div>	  
+	  
+	  
+	  
+  <table class="tb">	  
       <tr>
-        <td></td>
-        <td><input type="submit" value="确认更新" class="btn"></td>
+        <td><input type="submit" value="提交确认" class="btn"></td>
       </tr>
     </table>
   </form>
   <?php
 viewFoot();
 ?>
+
+</div>
 </div>
 </body>
 </html>
