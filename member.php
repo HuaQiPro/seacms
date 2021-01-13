@@ -397,7 +397,7 @@ elseif($action=='hyz')
     }
 	//获取会员基本信息
 	$uname=$_SESSION['sea_user_name'];
-	$sqlhyz2="SELECT points FROM sea_member where username='$uname'"; 
+	$sqlhyz2="SELECT points,vipendtime FROM sea_member where username='$uname'"; 
 	$rowhyz2 = $dsql->GetOne($sqlhyz2);
     if(!is_array($rowhyz2)){
         showMsg("会员信息不存在","-1");exit;
