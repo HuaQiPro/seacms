@@ -11,7 +11,7 @@ if ( $up )
 {
 	$spic = $up->_fileName;
 	echo "<script>parent.document.getElementById('addform').v_pic.value='".str_replace('../','',$up->_fileUrl)."';</script>";
-	echo "<table><tr><td bgcolor=#FBFEFF>".$spic."上传成功！[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";
+	echo "<table><tr><td bgcolor=#FBFEFF>上传成功！[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";
 	exit( );
 }
 echo "<table><tr><td bgcolor=#FBFEFF>".$pic[1]."[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";

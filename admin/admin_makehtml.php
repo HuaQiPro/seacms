@@ -331,7 +331,6 @@ elseif($action=="allpart")
 	}else{
 		echoHead();
 		makeNewsChannelById($typeId);
-		echoPartSuspend(($curTypeIndex+1),$action3);
 		echoFoot();
 	}
 }
@@ -414,14 +413,50 @@ elseif($action=="alltopic")
 {
 	checkRunMode();
 	echoHead();
-	makeAllTopic();
+	
+	$numPerPage=10;
+	$page = isset($page) ? intval($page) : 1;
+	if($page==0) $page=1;
+	
+	$csqlStr="select count(*) as dd from sea_topic";
+    $row = $dsql->GetOne($csqlStr);
+    if(is_array($row)){
+        $TotalResult = $row['dd'];
+    }else{
+        $TotalResult = 0;
+    }
+    $TotalPage = ceil($TotalResult/$numPerPage);
+    
+    $limitstart = ($page-1) * $numPerPage;
+    if($limitstart<0) $limitstart=0;
+	
+	if($page > $TotalPage){echo '<br>全部专题生成完毕';echoFoot();exit();}
+	else{
+		$sql="select id from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
+		//die($sql);
+		$dsql->SetQuery($sql);
+		$dsql->Execute('al');
+		//$row=$dsql->GetObject('al');
+		$rows=array();
+		while($rowr=$dsql->GetObject('al')){$rows[]=$rowr->id;}
+		unset($rowr);
+		//print_r($rows);
+		if(!is_array($rows)) exit("不存在专题");
+		for($i=0;$i<count($rows);$i++){
+			makeTopicById($rows[$i]);
+		}
+		$nextpage=$page+1;
+		echo "<br>暂停".$cfg_stoptime."秒后继续生成<script language=\"javascript\">setTimeout(\"makeNextPage();\",".$cfg_stoptime."000);function makeNextPage(){location.href='?action=alltopic&page=".$nextpage."';}</script>";
+	
+	}
 	echoFoot();
 }
 elseif($action=="topicindex")
 {
 	checkRunMode();
 	echoHead();
-	makeTopicIndex();
+
+	makeTopicIndex($page);
 	echoFoot();
 }
 elseif($action=="custom")

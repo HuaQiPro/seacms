@@ -36,7 +36,7 @@ if ( $up )
 		}
 		echo "<script>parent.document.getElementById('addform').v_pic.value='$spath';</script>";
 	}
-	echo "<table><tr><td bgcolor=#FBFEFF>".$spic."上传成功！[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";
+	echo "<table><tr><td bgcolor=#FBFEFF>上传成功！[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";
 	exit( );
 }
 echo "<table><tr><td bgcolor=#FBFEFF>".$pic[1]."[　<a href=# onclick=history.go(-1)>重新上传</a>　]</td></tr></table>";
@@ -46,7 +46,7 @@ class uploader {
         var $saveDir = 'uploads/allimg';
         var $subDir = 'Ym';
         var $allowExts = array('jpg', 'gif',  'png', 'rar', 'zip', 'bmp');
-        var $maxSize = '2048';
+        var $maxSize = '5120';
         var $hasThumb = 0; //是否生成缩略图
         var $imageWidth= '300';
         var $thumbWidth = '100';
@@ -166,7 +166,7 @@ class uploader {
                         return ;
                 }
                 //上传图片宽度超过定义则进行裁剪,否则直接复制
-                if($this->_width > $this->imageWidth) {
+                if($this->_width > $this->imageWidth AND $this->imageWidth !=0 ) {
                         //根据定义的宽度生成图片
                         $this->image($this->imageWidth);
                 }
@@ -174,6 +174,7 @@ class uploader {
                         //图片宽度没有超过定义则直接复制,这会极大加快处理速度(GD太消耗系统资源)
                         copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
                 }
+
                 //如果设置自动缩略图var $hasThumb = 1则生成缩略图
                 if($this->hasThumb) {
                         $this->_destination = $this->_savePath."/".'image_'.date('dHis').'_thumb'.'.'.$this->_fileExt;

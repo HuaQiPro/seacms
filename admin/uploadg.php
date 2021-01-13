@@ -36,7 +36,7 @@ if ( $up )
 		}
 		echo "<script>parent.document.getElementById('addform').v_gpic.value='$spath';</script>";
 	}
-	echo "<table><tr><td bgcolor=#FBFEFF>".$spic."上传成功！[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";
+	echo "<table><tr><td bgcolor=#FBFEFF>上传成功！[<a href=# onclick=history.go(-1)>重新上传</a>]</td></tr></table>";
 	exit( );
 }
 echo "<table><tr><td bgcolor=#FBFEFF>".$pic[1]."[　<a href=# onclick=history.go(-1)>重新上传</a>　]</td></tr></table>";
@@ -46,13 +46,13 @@ class uploader {
         var $saveDir = 'uploads/allimg';
         var $subDir = 'Ym';
         var $allowExts = array('jpg', 'gif',  'png', 'rar', 'zip', 'bmp');
-        var $maxSize = '2048';
+        var $maxSize = '5120';
         var $hasThumb = 0; //是否生成缩略图
         var $imageWidth= '300';
         var $thumbWidth = '100';
         
         function __construct($markup,$markdown,$marktype,$wwidth,$wheight,$waterpos,$watertext,$fontsize,$fontcolor,$marktrans,$diaphaneity,$markimg){
-        	$this->_markup = $markup;
+        	$this->_markup = 0;
         	$this->_markdown = $markdown;
         	$this->_marktype = $marktype;
         	$this->_wwidth = $wwidth;

@@ -1076,6 +1076,32 @@ class MainClass_Template {
 									$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . 'pic/nopic.gif', $loopstrVlistNew );
 								}
 								break;
+							case "spic" :
+								$v_pic = $row->n_spic;
+								
+								if (! empty ( $v_pic )) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
+									} else {
+										$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrVlistNew );
+									}
+								} else {
+									$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . 'pic/nopic.gif', $loopstrVlistNew );
+								}
+								break;
+							case "gpic" :
+								$v_pic = $row->n_gpic;
+								
+								if (! empty ( $v_pic )) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+										$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrVlistNew );
+									} else {
+										$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrVlistNew );
+									}
+								} else {
+									$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . 'pic/nopic.gif', $loopstrVlistNew );
+								}
+								break;
 							case "keyword" :
 								$v_actor = $row->n_keyword;
 								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
@@ -1213,6 +1239,8 @@ class MainClass_Template {
 				$vcompany = $attrDictionary ["company"];
 				$vreweek = $attrDictionary ["reweek"];
 				$vrel = $attrDictionary ["rel"];
+				$vdirector = $attrDictionary ["director"];
+				$vactor = $attrDictionary ["actor"];
 				unset ( $attrDictionary );
 				switch ($vorder) {
 					case "id" :
@@ -1380,15 +1408,15 @@ class MainClass_Template {
 				else
 					$whereLetter = "";
 				if (! empty ( $vlang ))
-					$whereLang = " and m.v_lang ='" . strtoupper ( $vlang ) . "' ";
+					$whereLang = " and m.v_lang ='" .$vlang. "' ";
 				else
 					$whereLang = "";
 				if (! empty ( $varea ))
-					$whereArea = " and m.v_publisharea ='" . strtoupper ( $varea ) . "' ";
+					$whereArea = " and m.v_publisharea ='" .$varea. "' ";
 				else
 					$whereArea = "";
 				if (! empty ( $vyear ))
-					$whereYear = " and m.v_publishyear ='" . strtoupper ( $vyear ) . "' ";
+					$whereYear = " and m.v_publishyear ='" .$vyear. "' ";
 				else
 					$whereYear = "";
 				if (! empty ( $vjq ))
@@ -1400,15 +1428,26 @@ class MainClass_Template {
 				else
 					$whereReweek = "";
 				if (! empty ( $vtvs ))
-					$whereTvs = " and m.v_tvs ='" . strtoupper ( $vtvs ) . "' ";
+					$whereTvs = " and m.v_tvs ='" .$vtvs. "' ";
 				else
 					$whereTvs = "";
 				if (! empty ( $vver ))
-					$whereVer = " and m.v_ver ='" . strtoupper ( $vver ) . "' ";
+					$whereVer = " and m.v_ver ='" .$vver. "' ";
 				else
 					$whereVer = "";
+				
+				if (! empty ( $vdirector ))
+					$whereDirector = " and m.v_director like '%".$vdirector."%'";
+				else
+					$whereDirector = "";
+				
+				if (! empty ( $vactor ))
+					$whereActor = " and m.v_actor like '%".$vactor."%'";
+				else
+					$whereActor = "";
+				
 				if (! empty ( $vcompany ))
-					$whereCompany = " and m.v_company ='" . strtoupper ( $vcompany ) . "' ";
+					$whereCompany = " and m.v_company ='" .$vcompany. "' ";
 				else
 					$whereCompany = "";
 				if (! empty ( $vstate )) {
@@ -1484,11 +1523,12 @@ class MainClass_Template {
 					default :
 						$whereTime = "";
 				}
-				$whereStr = str_replace ( "where  and ", "where ", " where m.v_recycled=0" . $whereType . $whereLetter . $whereLang . $whereArea . $whereYear . $whereTopic . $whereTime . $whereState . $whereCommend . $whereJq . $whereReweek . $whereTvs . $whereCompany . $whereRel . $whereSid . $whereNtag . $whereVer );
+				$whereStr = str_replace ( "where  and ", "where ", " where m.v_recycled=0" . $whereType . $whereLetter . $whereLang . $whereArea . $whereYear . $whereTopic . $whereTime . $whereState . $whereCommend . $whereJq . $whereReweek . $whereTvs . $whereCompany . $whereRel . $whereSid . $whereNtag . $whereVer . $whereDirector . $whereActor );
+				
 				if (trim ( $whereStr ) == "where")
 					$whereStr = "";
 				$sql = "select m.*," . $field_des . "," . $field_playdata . " from sea_data m " . $left_des . $left_playdata . $whereStr . $orderStr . " LIMIT $vstart,$vnum";
-				// echo $sql.'<br>';
+				//echo $sql.'<br>';
 				if ($cfg_issqlcache || $cfg_runmode == '0') {
 					$mycachefile = md5 ( 'videolist' . $whereStr . $orderStr . $vstart . $vnum );
 					setCache ( $mycachefile, $sql );
@@ -2408,6 +2448,20 @@ class MainClass_Template {
 							break;
 					}
 					break;
+				case "topicnewspage" :
+					
+					// echo '====='.$typeId.'===='; //专题id
+					$sql = "select news from sea_topic where id='$typeId'";
+					//die($sql);
+					$rows = array ();
+					$this->dsql->SetQuery ( $sql );
+					$this->dsql->Execute ( 'al' );
+					$rowr = $this->dsql->GetObject ( 'al' );
+					//print_r($rowr->news);die();
+					$zpagevid = str_replace ( "ttttt", ",", $rowr->news );
+					$whereStr = " where n_recycled=0 and n_id in ($zpagevid)";
+				
+					break;
 			}
 			$sql = "select * from sea_news " . $whereStr . " " . $orderStr . " limit $limitstart,$row";
 			$cquery = "Select count(*) as dd From `sea_news` " . $whereStr;
@@ -2579,6 +2633,34 @@ class MainClass_Template {
 								}
 								
 								break;
+							case "spic" :
+								$v_pic = $row->n_spic;
+								
+								if (! empty ( $v_pic )) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
+									} else {
+										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );
+									}
+								} else {
+									$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . 'pic/nopic.gif', $loopstrChannelNew );
+								}
+								
+								break;
+							case "gpic" :
+								$v_pic = $row->n_gpic;
+								
+								if (! empty ( $v_pic )) {
+									if (strpos ( ' ' . $v_pic, '://' ) > 0) {
+										$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_pic, $loopstrChannelNew );
+									} else {
+										$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . ltrim ( $v_pic, '/' ), $loopstrChannelNew );
+									}
+								} else {
+									$loopstrChannelNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . 'pic/nopic.gif', $loopstrChannelNew );
+								}
+								
+								break;
 							case "hit" :
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->n_hit, $loopstrChannelNew );
 								break;
@@ -2668,7 +2750,7 @@ class MainClass_Template {
 				} else {
 					$TotalResult = 0;
 				}
-				$sql = "select name,id,pic,enname,des from sea_topic" . $whereTopic . " order by sort desc limit $start,$num";
+				$sql = "select * from sea_topic" . $whereTopic . " order by sort desc limit $start,$num";
 				if ($TotalResult == 0) {
 					$loopstrTotal = $lang ['topicpageInfo'] ['0'];
 				} else {
@@ -2732,7 +2814,31 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "uploads/zt/" . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . "/" . $pic, $loopstrTopiclistNew );
+									}
+								} else {
+									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
+								}
+								break;
+							case "spic" :
+								$pic = $row->spic;
+								if (! empty ( $pic )) {
+									if (strpos ( ' ' . $pic, '://' ) > 0) {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
+									} else {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . "/" . $pic, $loopstrTopiclistNew );
+									}
+								} else {
+									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
+								}
+								break;
+							case "gpic" :
+								$pic = $row->gpic;
+								if (! empty ( $pic )) {
+									if (strpos ( ' ' . $pic, '://' ) > 0) {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
+									} else {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . "/" . $pic, $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -2758,6 +2864,40 @@ class MainClass_Template {
 								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
 								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
 								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
+								break;
+							case "keyword" :
+								$des = Html2Text ( $row->keyword );
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
+								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
+								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
+								break;
+							case "content" :
+								$des = Html2Text ( $row->content );
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
+								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
+								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
+								break;
+							case "addtime" :
+								$timestyle = "";
+								$videoTime = $row->addtime;
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$timestyle = empty ( $fieldAttr ) ? "m-d" : $fieldAttrarr [1];
+								switch (trim ( $timestyle )) {
+									case "yyyy-mm-dd" :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "Y-m-d", $videoTime ), $loopstrTopiclistNew );
+										break;
+									case "yy-mm-dd" :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "y-m-d", $videoTime ), $loopstrTopiclistNew );
+										break;
+									case "yyyy-m-d" :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "Y-n-j", $videoTime ), $loopstrTopiclistNew );
+										break;
+									case "mm-dd" :
+									default :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "m-d", $videoTime ), $loopstrTopiclistNew );
+								}
 								break;
 						}
 					}
@@ -2795,7 +2935,7 @@ class MainClass_Template {
 				}
 				$TotalPage = ceil ( $TotalResult / $vsize );
 				$limitstart = ($currentPage - 1) * $vsize;
-				$sql = "select name,id,pic,enname,des from sea_topic order by sort desc limit $limitstart,$vsize";
+				$sql = "select * from sea_topic order by sort desc limit $limitstart,$vsize";
 				if ($TotalResult == 0) {
 					$loopstrTotal = $lang ['topicpageInfo'] ['0'];
 				} else {
@@ -2851,7 +2991,31 @@ class MainClass_Template {
 									if (strpos ( ' ' . $pic, '://' ) > 0) {
 										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
 									} else {
-										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "uploads/zt/" . $pic, $loopstrTopiclistNew );
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . "/" . $pic, $loopstrTopiclistNew );
+									}
+								} else {
+									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
+								}
+								break;
+							case "spic" :
+								$pic = $row->spic;
+								if (! empty ( $pic )) {
+									if (strpos ( ' ' . $pic, '://' ) > 0) {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
+									} else {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . "/" . $pic, $loopstrTopiclistNew );
+									}
+								} else {
+									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
+								}
+								break;
+							case "gpic" :
+								$pic = $row->gpic;
+								if (! empty ( $pic )) {
+									if (strpos ( ' ' . $pic, '://' ) > 0) {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $pic, $loopstrTopiclistNew );
+									} else {
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $GLOBALS ['cfg_cmspath'] . "/" . $pic, $loopstrTopiclistNew );
 									}
 								} else {
 									$loopstrTopiclistNew = str_replace ( $matchfieldvalue, "/" . $GLOBALS ['cfg_cmspath'] . "pic/nopic.gif", $loopstrTopiclistNew );
@@ -2876,6 +3040,40 @@ class MainClass_Template {
 								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
 								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
 								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
+								break;
+							case "keyword" :
+								$des = Html2Text ( $row->keyword );
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
+								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
+								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
+								break;
+							case "content" :
+								$des = Html2Text ( $row->content );
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
+								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
+								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
+								break;
+							case "addtime" :
+								$timestyle = "";
+								$videoTime = $row->addtime;
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$timestyle = empty ( $fieldAttr ) ? "m-d" : $fieldAttrarr [1];
+								switch (trim ( $timestyle )) {
+									case "yyyy-mm-dd" :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "Y-m-d", $videoTime ), $loopstrTopiclistNew );
+										break;
+									case "yy-mm-dd" :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "y-m-d", $videoTime ), $loopstrTopiclistNew );
+										break;
+									case "yyyy-m-d" :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "Y-n-j", $videoTime ), $loopstrTopiclistNew );
+										break;
+									case "mm-dd" :
+									default :
+										$loopstrTopiclistNew = str_replace ( $matchfieldvalue, MyDate ( "m-d", $videoTime ), $loopstrTopiclistNew );
+								}
 								break;
 						}
 					}

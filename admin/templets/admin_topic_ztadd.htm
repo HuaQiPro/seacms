@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link  href="img/style.css" rel="stylesheet" type="text/css" />
+<title>专题添加</title>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/main.js" type="text/javascript"></script>
+<script charset="utf-8" src="editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="editor/lang/zh-CN.js"></script>
+<script>
+        KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id', {
+                uploadJson : 'editor/php/upload_json.php',
+                fileManagerJson : 'editor/php/file_manager_json.php',
+                allowFileManager : true,
+				afterBlur: function(){this.sync();}
+        });
+        });
+</script>
+<style type="text/css">
+select {
+	font-size:12px;
+}
+form{float:left;}
+</style>
+<script>
+var _1;
+function onUpClick(tg,el){
+	_1=el;openWindow2(101,320,25,0);
+	var msgDiv=$("msg");
+	var _t = tg.offsetTop;
+    var _l = tg.offsetLeft;
+    while (tg = tg.offsetParent){_t+=tg.offsetTop; _l+=tg.offsetLeft;}
+    msgDiv.style.cssText+="border:1px solid #55BBFF;background: #C1E7FF;padding:3px 0px 3px 4px;"
+	msgDiv.style.top = (_t-1)+"px";
+    msgDiv.style.left = (_l-1)+"px";
+	msgDiv.innerHTML='<button type="button" class="btn" style="margin:0 6px 0 0;height:23px;float:right;padding:0;" onclick="closeWin()">关闭</button><iframe src="uploadzt.htm" scrolling="no" topmargin="0" width="280" height="50" marginwidth="0" marginheight="0" frameborder="0" align="center"></iframe>';
+}
+
+function onUploadBack(fn){
+	if(!!_1) _1.value=fn;
+	closeWin();
+}
+</script>
+</head>
+<body>
+<!--当前导航-->
+<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;专题&nbsp;&raquo;&nbsp;专题添加';</script>
+
+<div class="r_main">
+  <div class="r_content">
+    <div class="r_content_1">
+      <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="15" class="td_title">&nbsp;专题新增：
+            </td>
+        </tr>
+
+<form id="topicform" action="?action=add" method="post" name="topicform">
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;专题名称：</td>
+            <td height="30" class="td_border"><input name="name"  size="50" value=""></td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;英文别名：</td>
+            <td height="30" class="td_border"><input name="enname"  size="50" value="">  如不填写系统将自动生成拼音英文</td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;专题模板：</td>
+            <td height="30" class="td_border"><input name="template"  size="50" value="topic.html"></td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;图片地址：</td>
+            <td height="30" class="td_border"><input type="text" name="pic" value="" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['pic'])">浏览..</button>
+              </td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;幻灯图片：</td>
+            <td height="30" class="td_border"><input type="text" name="spic" value="" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['spic'])">浏览..</button>
+              </td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;背景图片：</td>
+            <td height="30" class="td_border"><input type="text" name="gpic" value="" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['gpic'])">浏览..</button>
+              </td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;SEO关键词：</td>
+            <td height="30" class="td_border"><input name="keyword"  size="50" value=""></td>
+</tr>
+<tr>
+            <td width="90" height="30" align="right" class="td_border">&nbsp;SEO描述：</td>
+            <td height="30" class="td_border"><input name="des"  size="50" value=""></td>
+</tr>
+<tr>
+            <td class="td_border">&nbsp;专题介绍：</td>
+            <td class="td_border">
+			<textarea id="editor_id" name="content" style="width:700px;height:300px;"></textarea>
+			</td>
+</tr>
+<tr>
+            <input type="hidden" name="id" value="<?php echo $id;?>">
+			<td height="40" colspan="2" align="left" class="td_border">&nbsp;
+             <input type="submit" name="Submit" value="确认保存" class="rb1" onClick="if($('name').value.length==0){alert('请填写专题名称');return false;};}"/>
+              &nbsp;&nbsp;
+              <input type="reset" name="reset" value="清除重置" class="rb1"/></td>
+          </tr>
+
+</form>
+
+
+		
+
+      </table>
+    </div>
+  </div>
+</div>
+<?php
+viewFoot();
+?>
+</body>
+</html>

@@ -51,8 +51,25 @@ function echoTopic()
 						$topicDes=$rows[0]->des;
 						$topicKeyword=$rows[0]->keyword;
 						$topicName=$rows[0]->name;
+						$topicContent=$rows[0]->content;
+						$topicAddtime=$rows[0]->addtime;
+						
 						$topicPic=$rows[0]->pic;
-						$topicPic=$GLOBALS['cfg_cmspath']."uploads/zt/".$topicPic;
+						if(empty($topicPic)){$topicPic="/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";}
+						elseif(strpos($topicPic,'://')>0){$topicPic=$topicPic;}
+						else{$topicPic=$GLOBALS['cfg_cmspath']."/".$topicPic;}
+						
+						$topicsPic=$rows[0]->spic;
+						if(empty($topicsPic)){$topicsPic="/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";}
+						elseif(strpos($topicsPic,'://')>0){$topicsPic=$topicsPic;}
+						else{$topicsPic=$GLOBALS['cfg_cmspath']."/".$topicsPic;}
+						
+						$topicgPic=$rows[0]->gpic;
+						if(empty($topicgPic)){$topicgPic="/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";}
+						elseif(strpos($topicgPic,'://')>0){$topicgPic=$topicgPic;}
+						else{$topicgPic=$GLOBALS['cfg_cmspath']."/".$topicgPic;}
+		
+
 	$page_size = getPageSizeOnCache($topicTemplatePath,"topicpage",$row['template']);
 	if (empty($page_size)) $page_size=12;
 	if(is_array($aa))
@@ -68,22 +85,24 @@ function echoTopic()
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseTopicPart($topicName,$topicTemplatePath,$id,$topicDes,$topicKeyword,$topicPic);
+			$content = parseTopicPart($topicName,$topicTemplatePath,$id,$topicDes,$topicContent,$topicAddtime,$topicKeyword,$topicPic,$topicsPic,$topicgPic);
 			$content = str_replace("{seacms:currrent_topic_id}",$currentTopicId,$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseTopicPart($topicName,$topicTemplatePath,$id,$topicDes,$topicKeyword,$topicPic);
+			$content = parseTopicPart($topicName,$topicTemplatePath,$id,$topicDes,$topicContent,$topicAddtime,$topicKeyword,$topicPic,$topicsPic,$topicgPic);
 			$content = str_replace("{seacms:currrent_topic_id}",$currentTopicId,$content);
 	}
 	$content=$mainClassObj->ParsePageList($content,$id,$page,$pCount,$TotalResult,"topicpage",$currentTopicId);
+	$content=$mainClassObj->parseNewsPageList($content,$id,1,$TotalResult,"topicnewspage",$currentTopicId);
+	                       
 	$content=$mainClassObj->parseIf($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	echo str_replace("{seacms:runinfo}",getRunTime($t1),$content);
 
 }
 
-function parseTopicPart($ptopicName,$templatePath,$id,$ptopicDes,$ptopicKeyword,$ptopicPic)
+function parseTopicPart($ptopicName,$templatePath,$id,$ptopicDes,$ptopicContent,$ptopicAddtime,$ptopicKeyword,$ptopicPic,$ptopicsPic,$ptopicgPic)
 {
 	global $mainClassObj;
 	$content=loadFile(sea_ROOT.$templatePath);
@@ -100,17 +119,12 @@ function parseTopicPart($ptopicName,$templatePath,$id,$ptopicDes,$ptopicKeyword,
 	$content=$mainClassObj->parseLinkList($content);
 	$content = str_replace("{seacms:topicname}",$ptopicName,$content);
 	$content = str_replace("{seacms:topicdes}",$ptopicDes,$content);
+	$content = str_replace("{seacms:topiccontent}",$ptopicContent,$content);
+	$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$ptopicAddtime),$content);
 	$content = str_replace("{seacms:topickeyword}",$ptopicKeyword,$content);
-	if(!empty($ptopicPic)){
-	if(strpos(' '.$ptopicPic,'://')>0){
-	$ptopicPic=str_replace('uploads/zt/','',$ptopicPic);
-	}else{
-	$ptopicPic= "/".$GLOBALS['cfg_cmspath'].$ptopicPic;
-	}
-	}else{
-	$ptopicPic= "/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";
-	}
 	$content = str_replace("{seacms:topicpic}",$ptopicPic,$content);
+	$content = str_replace("{seacms:topicspic}",$ptopicsPic,$content);
+	$content = str_replace("{seacms:topicgpic}",$ptopicgPic,$content);
 	return $content;
 }
 ?>

@@ -59,7 +59,7 @@ if($cuserLogin->getUserID()==-1 OR $_SESSION['hashstr'] !== $hashstr)
 function makeTopicSelect($selectName,$strSelect,$topicId)
 {
 	global $dsql,$cfg_iscache;
-	$sql="select id,name from sea_topic order by id desc limit 0,300";
+	$sql="select id,name from sea_topic order by id desc limit 0,50";
 	if($cfg_iscache){
 	$mycachefile=md5('array_Topic_Lists_all');
 	setCache($mycachefile,$sql);

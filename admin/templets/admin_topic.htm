@@ -42,18 +42,17 @@ function onUploadBack(fn){
                      </tr>
                      </table>
 <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb_style">
-    <TR align="center">
-      <TD height="30" width="7%" bgcolor="#FFFFFF" class="td_btop3">ID</TD>
-      <TD height="30" width="8%" bgcolor="#FFFFFF" class="td_btop3">专题名称</TD>
-      <TD height="30" width="7%" bgcolor="#FFFFFF" class="td_btop3">专题模板</TD>
-       <TD height="30" width="7%" bgcolor="#FFFFFF" class="td_btop3">专题别名</TD>
-       <TD height="30" width="15%" bgcolor="#FFFFFF" class="td_btop3">专题图片</TD>
-	   <TD height="30" width="6%" bgcolor="#FFFFFF" class="td_btop3">关键词</TD>
-       <TD height="30" width="6%" bgcolor="#FFFFFF" class="td_btop3">专题描述</TD>
-       <TD height="30" width="6%" bgcolor="#FFFFFF" class="td_btop3">专题视频</TD>
-       <TD height="30" width="6%" bgcolor="#FFFFFF" class="td_btop3">视频数量</TD>
-      <TD height="30" width="7%" bgcolor="#FFFFFF" class="td_btop3">排序</TD>
-      <TD height="30" width="11%" bgcolor="#FFFFFF" class="td_btop3">操作</TD>
+    <TR>
+      <TD height="30" width="5%" bgcolor="#FFFFFF" class="td_btop3">ID</TD>
+      <TD height="30" width="40%" bgcolor="#FFFFFF" class="td_btop3">专题名称</TD>
+   
+       <TD height="30" width="10%" bgcolor="#FFFFFF" class="td_btop3">专题视频</TD>
+       <TD height="30" width="10%" bgcolor="#FFFFFF" class="td_btop3">专题新闻</TD>
+	   <?php if($cfg_runmode=='0'){?>
+       <td height="30" width="10%" bgcolor="#FFFFFF" class="td_btop3">生成</td>
+       <?php }?>
+      <TD height="30" width="5%" bgcolor="#FFFFFF" class="td_btop3">排序</TD>
+      <TD height="30" bgcolor="#FFFFFF" class="td_btop3">操作</TD>
     </TR>
 
 <?php
@@ -82,6 +81,8 @@ $sql="select * from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
 				if(!is_array($row))
 				{
                     $ts=$row->vod;
+					$tsn=$row->news;
+					
 					if($ts !=="")
 					{
         			$ta=explode("ttttt",$ts);
@@ -90,37 +91,54 @@ $sql="select * from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
 					{
 					$tcount=0;
 					}
+					
+					if($tsn !=="")
+					{
+        			$tan=explode("ttttt",$tsn);
+        			$tcountn=count($tan);
+					}else
+					{
+					$tcountn=0;
+					}
 				}
 				else
 				{
 					$tcount=0;
+					$tcountn=0;
 				}
+	if ($GLOBALS ['cfg_runmode'] == '0') {
+	$topicLink = "/" . $GLOBALS ['cfg_cmspath'] . $GLOBALS ['cfg_filesuffix'] . "/" . $row->enname . $GLOBALS ['cfg_filesuffix2'];
+	}
+	if ($GLOBALS ['cfg_runmode'] == '1') 
+	{
+		$topicLink = "/" . $GLOBALS ['cfg_cmspath'] . $GLOBALS ['cfg_filesuffix'] . "/?" . $row->id . $GLOBALS ['cfg_filesuffix2'];
+	}
+	if ($GLOBALS ['cfg_runmode'] == '2') {
+		$topicLink = "/" . $GLOBALS ['cfg_cmspath'] . $GLOBALS ['cfg_filesuffix'] . "/" . $row->id . $GLOBALS ['cfg_filesuffix2'];
+	}
 ?>  
-     <TR align="center" bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'" <?php if($id==$row->id){?> class="editlast"<?php }?> name="topictr" id="topictr<?php echo $row->id;?>" >
-      <TD height="30" width="7%"  bgcolor="#FFFFFF" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  checked="checked"  class="checkbox" /><?php echo $row->id;?></TD>
-      <TD bgcolor="#FFFFFF" width="8%" class="td_border"><input type="text" name="name<?php echo $row->id;?>" value="<?php echo $row->name;?>"/></TD>
-      <td bgcolor="#FFFFFF" width="7%" class="td_border"><input type="text" name="template<?php echo $row->id;?>" value="<?php echo $row->template;?>" size="15" /></td>
-      <td bgcolor="#FFFFFF" width="7%"class="td_border"><input type="text" name="enname<?php echo $row->id;?>" value="<?php echo $row->enname;?>" size="15" /></td>
-      <td bgcolor="#FFFFFF" width="15%" class="td_border"><input type="text" name="pic<?php echo $row->id;?>" value="<?php echo $row->pic;?>" /><button type="button" class="rb1" style="border:0" onclick="onUpClick(this,this.form.elements['pic<?php echo $row->id;?>'])">浏览..</button></td>
+     <TR bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'" <?php if($id==$row->id){?> class="editlast"<?php }?> name="topictr" id="topictr<?php echo $row->id;?>" >
+      <TD height="30"   bgcolor="#FFFFFF" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  checked="checked"  class="checkbox" /><?php echo $row->id;?></TD>
+      <TD bgcolor="#FFFFFF"  class="td_border"><a href="<?php echo $topicLink ?>" target="_blank"><?php echo $row->name;?></a></TD>
+  
+      <TD bgcolor="#FFFFFF" class="td_border"><a href="admin_topic_vod.php?tid=<?php echo $row->id;?>"><img src='img/icon_l01.gif'> <?php echo $tcount-1;?></a>
+      </TD>
 	  
-	  <TD bgcolor="#FFFFFF" width="10%" class="td_border"><input type="text" name="keyword<?php echo $row->id;?>" value="<?php echo $row->keyword;?>"/></TD>
-	  
-      <TD bgcolor="#FFFFFF" width="6%" class="td_border"><img <?php if($row->des){?>src='img/modify1.gif'<?php }else{?>src='img/modify.gif'<?php }?>  title='修改专题描述' style="cursor:pointer" onClick="viewCurrentTopicTr('<?php echo $row->id;?>');openTopicDesWin('topicdes','<?php echo $row->id;?>')" /></TD>
-      
-      
-      <TD bgcolor="#FFFFFF" width="6%" class="td_border"><a href="admin_topic_vod.php?tid=<?php echo $row->id;?>"><img <?php if($row->vod){?>src='img/icon_l02.gif'<?php }else{?>src='img/icon_l01.gif'<?php }?> ></a>
+	  <TD bgcolor="#FFFFFF" class="td_border"><a href="admin_topic_news.php?tid=<?php echo $row->id;?>"><img src='img/icon_l01.gif'> <?php echo $tcountn-1;?></a>
       </TD>
       
-      <TD bgcolor="#FFFFFF" width="6%" class="td_border"><font color="red"><?php echo $tcount-1;?></font></TD>
+     <?php if($cfg_runmode=='0'){?>
+            <td bgcolor="#FFFFFF" class="td_border"><?php isztMake($row->enname,$row->id);?></td>
+     <?php }?>
       
       
-      <TD bgcolor="#FFFFFF" width="7%" class="td_border"><input name="sort<?php echo $row->id;?>" type="text" value="<?php echo $row->sort;?>" size="5" /></TD>
-      <TD bgcolor="#FFFFFF" width="11%" class="td_border"><a  href="?action=last&id=<?php echo $row->id;?>">上移</a> <a  href="?action=next&id=<?php echo $row->id;?>">下移</a> <a  onclick="if(confirm('确定要删除吗')){return true;}else{return false;}" href="?action=del&id=<?php echo $row->id;?>">删除</a></TD>
+      <TD bgcolor="#FFFFFF"  class="td_border"><input name="sort<?php echo $row->id;?>" type="text" value="<?php echo $row->sort;?>" size="5" /></TD>
+      <TD bgcolor="#FFFFFF"  class="td_border"><a  href="?action=ztedit&id=<?php echo $row->id;?>">编辑</a>&nbsp;&nbsp;&nbsp;<a  href="?action=last&id=<?php echo $row->id;?>">上移</a>&nbsp;&nbsp;&nbsp;<a  href="?action=next&id=<?php echo $row->id;?>">下移</a>&nbsp;&nbsp;&nbsp;<a  onclick="if(confirm('确定要删除吗')){return true;}else{return false;}" href="?action=del&id=<?php echo $row->id;?>">删除</a></TD>
     </TR>
 <?php }?>
 							
                   
- <tr><td height="30" colspan="8" class="td_border" bgcolor="#FFFFFF">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onclick="if(confirm('确定要删除吗')){topicform.action='?action=delall';}else{return false}" class="rb1"  />&nbsp;&nbsp;<input type="submit" value="批量修改选中专题" name="Submit" class="rb1" onclick="topicform.action='?action=edit';" /></td></tr>
+ <tr><td height="30" colspan="8" class="td_border" bgcolor="#FFFFFF">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onclick="if(confirm('确定要删除吗')){topicform.action='?action=delall';}else{return false}" class="rb1"  />&nbsp;&nbsp;<input type="submit" value="批量修改排序" name="Submit" class="rb1" onclick="topicform.action='?action=edit';" /></td></tr>
                   
      </form>
 <tr>
@@ -135,38 +153,11 @@ $sql="select * from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
  </td>
         </tr>	 
 </table> 
-<form action="?action=add" method="post">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb_style">
-	  <tr><td colspan="8" class="td_title">&nbsp;添加专题</td></tr>
-	  <tr>
-		<TD height="30"  bgcolor="#FFFFFF" >&nbsp;名称<font color='red'>＊</font>：<input type="text" size="20" name="name" />&nbsp;&nbsp;&nbsp;
-		模板：<input type="text" name="template" size="20"/>&nbsp;&nbsp;&nbsp;
-		别名：<input type="text" name="enname"  size="20"/>&nbsp;&nbsp;&nbsp;
-		图片：<input type="text" name="pic"  size="20"/>	&nbsp;&nbsp;&nbsp;
-		排序：<input type="text" size="3" name="sort"/>&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;<input type="submit" value="添加专题" class="rb1" /></TD>
-	  </tr>
-	</table>
-</form>
+
 		</div>
 	</div>
 </div>
 
-<div id="topicdes" style="top:100px; display:none;" class="popdiv">
-	<div class="poptitie"><img src="img/btn_close.gif" alt="关闭" onClick="$('topicdes').style.display='none'" />专题描述修改 </div>
-    <div class="popbody"><div>
- <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<form id="formdes" action="admin_ajax.php?action=submittopicdes" method="post">
-<tr>
-  <td width="554" >专题简介：<br>
-  <input type="hidden" name="f_id" id="f_id">
-  <textarea cols="72" rows="14" name="f_des" id="f_des"></textarea></td><td></td>
-</tr>
-<tr><td><input type="button" onClick="submitTopicDes('topicdes')" value="修     改" class="rb1" /></td></tr>
-</form>
-</table>
-</div></div>
-</div>
 <script type="text/javascript" src="js/drag.js"></script>	
 
 <?php

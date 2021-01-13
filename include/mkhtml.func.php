@@ -314,17 +314,41 @@ function makeArticleById($vId)
 	$content=str_replace("{news:url}",$GLOBALS['cfg_basehost'].$contentLink,$content);
 	$content=str_replace("{news:upid}",getUpId($vType,1),$content);
 	if (strpos($content,"{news:keyword}")>0) $content=str_replace("{news:keyword}",getnewsKeywordsList($row['n_keyword'],"&nbsp;"),$content);
-	$n_pic=$row['n_pic'];
 	
+	$n_pic=$row['n_pic'];	
 	if(!empty($n_pic)){
-	if(strpos(' '.$n_pic,'://')>0){
-	$content=str_replace("{news:pic}",$n_pic,$content);
-	}else{
-	$content=str_replace("{news:pic}",'/'.$GLOBALS['cfg_cmspath'].ltrim($n_pic,'/'),$content);
-	}
+		if(strpos(' '.$n_pic,'://')>0){
+		$content=str_replace("{news:pic}",$n_pic,$content);
+		}else{
+		$content=str_replace("{news:pic}",'/'.$GLOBALS['cfg_cmspath'].ltrim($n_pic,'/'),$content);
+		}
 	}else{
 	$content=str_replace("{news:pic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
 	}
+	
+	$n_spic=$row['n_spic'];	
+	if(!empty($n_spic)){
+		if(strpos(' '.$n_spic,'://')>0){
+		$content=str_replace("{news:spic}",$n_spic,$content);
+		}else{
+		$content=str_replace("{news:spic}",'/'.$GLOBALS['cfg_cmspath'].ltrim($n_spic,'/'),$content);
+		}
+	}else{
+	$content=str_replace("{news:spic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
+	}
+	
+	$n_gpic=$row['n_gpic'];	
+	if(!empty($n_gpic)){
+		if(strpos(' '.$n_gpic,'://')>0){
+		$content=str_replace("{news:gpic}",$n_gpic,$content);
+		}else{
+		$content=str_replace("{news:gpic}",'/'.$GLOBALS['cfg_cmspath'].ltrim($n_gpic,'/'),$content);
+		}
+	}else{
+	$content=str_replace("{news:gpic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
+	}
+	
+	
 	$content=str_replace("{news:author}",$row['n_author'],$content);
 	$content=str_replace("{news:from}",$row['n_from'],$content);
 	$content=str_replace("{news:addtime}",MyDate('Y-m-d H:i',$row['n_addtime']),$content);
@@ -750,10 +774,10 @@ function makeArticleByChannel($channel,$isIncludeSub)
 	$totalnum = $rowc['dd'];
 	if (isNewsTypeHide($channel) || $totalnum==0){
 		if (empty($action2)){
-			echo "该分类<font color='red'>".$typeZnName."</font>无视频或已生成完毕<br>";
+			echo "该分类<font color='red'>".$typeZnName."</font>无内容或已生成完毕<br>";
 			return true;
 		}elseif($action2=="allnewscontent"){
-			echo "该分类<font color='red'>".$typeZnName."</font>无视频或已生成完毕<br>";
+			echo "该分类<font color='red'>".$typeZnName."</font>无内容或已生成完毕<br>";
 			echoContentSuspendPerPart(($curTypeIndex+1),$action2,$action3);
 			return true;
 		}
@@ -903,7 +927,7 @@ function makeChannelById($typeId)
 
 function makeNewsChannelById($typeId)
 {
-	global $dsql,$cfg_iscache,$mainClassObj;
+	global $dsql,$cfg_iscache,$mainClassObj,$page,$index, $action3,$action,$cfg_basehost ;
 	$typeId = empty($typeId) ? 0 : intval($typeId);
 	$channelTmpName=getTypeTemplate($typeId,1);
 	$channelTmpName=empty($channelTmpName) ? "newspage.html" : $channelTmpName;
@@ -912,7 +936,7 @@ function makeNewsChannelById($typeId)
 	if (empty($pSize)) $pSize=12;
 	$typeIds = getTypeId($typeId,1);
 	$typename=getNewsTypeName($typeId);
-	echoBegin($typename,"channel");
+	
 	$sql="select count(*) as dd from sea_news where tid in (".$typeIds.")";
 	$row = $dsql->GetOne($sql);
 	if(is_array($row))
@@ -926,6 +950,11 @@ function makeNewsChannelById($typeId)
 	$pCount = ceil($TotalResult/$pSize);
 	$currentTypeId = $typeId;
 	$cacheName = "parse_newschannel_".$currentTypeId;
+	if($page<1) $page=1;
+	$mstart = ($page-1)*100+1;
+	$mend = $page*100;
+	if($mend>$pCount) $mend = $pCount;
+	echoBegin($typename,"channel",$mstart,$mend);
 	if($cfg_iscache){
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
@@ -961,8 +990,12 @@ function makeNewsChannelById($typeId)
 		$content=$mainClassObj->parseIf($content);
 		createTextFile($content,sea_ROOT.$channelLink);
 		echoEach($typename,1,'..'.$channelLink,"newspage");
+	
 	}
-	for($i=1;$i<=$pCount;$i++){
+	
+
+	
+	for($i=$mstart;$i<=$mend;$i++){
 		$channelLink=str_replace($GLOBALS['cfg_cmspath'],"",getnewspageLink($currentTypeId,$i));
 		$tempStr = str_replace("{channelpage:page}",$i,$tempStr);
 		$tempStr=str_replace("<head>",'<head><script>var seatype="newslist"; var seaid='.$currentTypeId.';var seapage='.$i.';</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$tempStr);
@@ -973,6 +1006,21 @@ function makeNewsChannelById($typeId)
 		echoEach($typename,$i,'..'.$channelLink,"newspage");
 		@ob_flush();
 		@flush();
+	}
+	$n = ceil($pCount/100);
+	if($page<$n)
+	{
+		$page++;
+		echoChannelSuspend($index, $action3 , $page ,$typeId);
+	}else
+	{
+		if($action=='newschannel')
+		{
+			echo '恭喜此分类搞定';
+			die;
+		}
+		$page=1;
+		echoChannelSuspend($index+1, $action3 , $page ,$typeId);
 	}
 }
 
@@ -987,7 +1035,7 @@ function makeLengthChannelById($typeId,$startpage,$endpage)
 	if (empty($pSize)) $pSize=12;
 	$typeIds = getTypeId($typeId);
 	$typename=getTypeNameOnCache($typeId);
-	echoBegin($typename,"channel");
+	echo '生成<font style="color:red;">'.$typename.'</font>栏目页面';
 	$sql="select count(*) as dd from sea_data where tid in (".$typeIds.")";
 	$row = $dsql->GetOne($sql);
 	if(is_array($row))
@@ -1175,9 +1223,9 @@ function makePartByIDS()
 	}
 }
 
-function makeTopicIndex()
+function makeTopicIndex($page=1)
 {
-	global $mainClassObj, $dsql;
+	global $mainClassObj, $dsql,$cfg_stoptime;
 	$row = $dsql->GetOne("select template from sea_topic");
 	$templatePath="/templets/".$GLOBALS['cfg_df_style']."/".$GLOBALS['cfg_df_html']."/topicindex.html";
 	$rowc=$dsql->GetOne("select count(*) as dd from sea_topic");
@@ -1191,7 +1239,8 @@ function makeTopicIndex()
 	{
 		$TotalResult = 0;
 	}
-	$pCount=ceil($TotalResult/$page_size);
+	$pCount=ceil($TotalResult/$page_size); //总页数
+	
 	$content=loadFile(sea_ROOT.$templatePath);
 	$content=$mainClassObj->parseTopAndFoot($content);
 	$content=replaceCurrentTypeId($content,-444);
@@ -1206,7 +1255,12 @@ function makeTopicIndex()
 	$content=$mainClassObj->parseLinkList($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$tempStr = $content;
-	for($i=1;$i<=$pCount;$i++)
+	
+	
+	$s=$page;
+	if($s>1) {$s=$page*5;$s=$s-4;}
+
+	for($i=$s;$i<=$s+4;$i++)
 	{
 		$content=$tempStr;
 		$content=$mainClassObj->parseTopicIndexList($content,$i);
@@ -1216,8 +1270,10 @@ function makeTopicIndex()
 		createTextFile($content,$topicindexname);
 		$topicindexname="../".$GLOBALS['cfg_album_name']."/".($i==1?'':'index'.$i.$GLOBALS['cfg_filesuffix2']);
 		echo "专题列表第".$i."页生成完毕 <a target='_blank' href='".$topicindexname."'><font color=red>浏览专题列表</font></a><br>";
+        if($i>=$pCount){echo '<br>专题列表生成完毕';echoFoot();exit();}		
 	}
-	
+	$nextpage=$page+1;
+	echo "<br>暂停".$cfg_stoptime."秒后继续生成<script language=\"javascript\">setTimeout(\"makeNextPage();\",".$cfg_stoptime."000);function makeNextPage(){location.href='?action=topicindex&page=".$nextpage."';}</script>";
 }
 
 function makeAllTopic()
@@ -1269,18 +1325,25 @@ function makeTopicById($topicId)
 	$topicName=$row['name'];
 	$topicDes=$row['des'];
 	$topicKeyword=$row['keyword'];
-	$topicPic=$row['pic'];
-	$topicPic=$GLOBALS['cfg_cmspath']."uploads/zt/".$topicPic;
 	
-	if(!empty($topicPic)){
-	if(strpos(' '.$topicPic,'://')>0){
-	$topicPic=str_replace('uploads/zt/','',$topicPic);
-	}else{
-	$topicPic= "/".$GLOBALS['cfg_cmspath'].$topicPic;
-	}
-	}else{
-	$topicPic= "/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";
-	}
+	$topicContent=$row['content'];
+	$topicAddtime=$row['addtime'];
+						
+	$topicPic=$row['pic'];
+	if(empty($topicPic)){$topicPic="/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";}
+	elseif(strpos($topicPic,'://')>0){$topicPic=$topicPic;}
+	else{$topicPic=$GLOBALS['cfg_cmspath']."/".$topicPic;}
+	
+	$topicsPic=$row['spic'];
+	if(empty($topicsPic)){$topicsPic="/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";}
+	elseif(strpos($topicsPic,'://')>0){$topicsPic=$topicsPic;}
+	else{$topicsPic=$GLOBALS['cfg_cmspath']."/".$topicsPic;}
+	
+	$topicgPic=$row['gpic'];
+	if(empty($topicgPic)){$topicgPic="/".$GLOBALS['cfg_cmspath']."pic/nopic.gif";}
+	elseif(strpos($topicgPic,'://')>0){$topicgPic=$topicgPic;}
+	else{$topicgPic=$GLOBALS['cfg_cmspath']."/".$topicgPic;}
+	
 	
 	$topicEnname=$row['enname'];
 	$currentTopicId = $row['id'];
@@ -1295,6 +1358,11 @@ function makeTopicById($topicId)
 			$content = str_replace("{seacms:topickeyword}",$topicKeyword,$content);
 			$content = str_replace("{seacms:currrent_topic_id}",$currrent_topic_id,$content);
 			$content = str_replace("{seacms:topicpic}",$topicPic,$content);
+			$content = str_replace("{seacms:topicspic}",$topicsPic,$content);
+			$content = str_replace("{seacms:topicgpic}",$topicgPic,$content);			
+			$content = str_replace("{seacms:topiccontent}",$topicContent,$content);
+			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);
+			
 			setFileCache($cacheName,$content);
 		}
 	}else{
@@ -1304,12 +1372,17 @@ function makeTopicById($topicId)
 			$content = str_replace("{seacms:topickeyword}",$topicKeyword,$content);
 			$content = str_replace("{seacms:currrent_topic_id}",$currrent_topic_id,$content);
 			$content = str_replace("{seacms:topicpic}",$topicPic,$content);
+			$content = str_replace("{seacms:topicspic}",$topicsPic,$content);
+			$content = str_replace("{seacms:topicgpic}",$topicgPic,$content);			
+			$content = str_replace("{seacms:topiccontent}",$topicContent,$content);
+			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);
 	}
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$mystr = $content;
 	if($TotalResult == 0){
 		$content=$mystr;
 		$content=$mainClassObj->ParsePageList($content,$topicId,1,$pCount,$TotalResult,"topicpage",$currrent_topic_id);
+		$content=$mainClassObj->parseNewsPageList($content,$topicId,1,$TotalResult,"topicnewspage",$currrent_topic_id);
 		$content=$mainClassObj->parseIf($content);
 		$topiclink=sea_ROOT.str_replace($GLOBALS['cfg_cmspath'],"",getTopicLink($topicEnname,1));
 		$content=str_replace("<head>",'<head><script>var seatype="topic"; var seaid='.$currentTopicId.';var seapage=1;</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$content);
@@ -1320,6 +1393,7 @@ function makeTopicById($topicId)
 		for($i=1;$i<=$pCount;$i++){
 			$content =$mystr;
 			$content=$mainClassObj->ParsePageList($content,$topicId,$i,$pCount,$TotalResult,"topicpage",$currrent_topic_id);
+			$content=$mainClassObj->parseNewsPageList($content,$topicId,1,$TotalResult,"topicnewspage",$currrent_topic_id);
 			$content=$mainClassObj->parseIf($content);
 			$topiclink=sea_ROOT.str_replace($GLOBALS['cfg_cmspath'],"",getTopicLink($topicEnname,$i));
 			$content=str_replace("<head>",'<head><script>var seatype="topic"; var seaid='.$currentTopicId.';var seapage='.$i.';</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$content);
@@ -1457,7 +1531,7 @@ function echoChannelSuspend($typeIdIndex,$action3,$page=1,$typeId='')
 function echoPartSuspend($typeIdIndex,$action3)
 {
 	global $cfg_stoptime;
-	echo "<br>暂停".$cfg_stoptime."秒后继续生成<script language=\"javascript\">setTimeout(\"makeNextChannel();\",".$cfg_stoptime."000);function makeNextChannel(){location.href='?action=allpart&index=".$typeIdIndex."&action3=".$action3."';}</script>";
+	echo "<br>暂停".$cfg_stoptime."秒后继续生成<script language=\"javascript\">setTimeout(\"makeNextChannel();\",".$cfg_stoptime."000);function makeNextChannel(){location.href='?action=allpart&index=".$typeIdIndex."&action3=".$action3."&page=".$page."&channel=".$typeId."&ids=".$ids."&password=".$cfg_cookie_encode."';}</script>";
 }
 
 function echoContentSuspend($typeIdIndex,$page,$pcount,$channel,$action2,$action3,$makeNoncreate)

@@ -101,8 +101,8 @@ function echoContent($vId)
 	$content=str_replace("{news:nolinkkeywords}",$row['n_keyword'],$content);
 	if (strpos($content,"{news:keyword}")>0)
 	$content=str_replace("{news:keyword}",getnewsKeywordsList($row['n_keyword'],"&nbsp;&nbsp;"),$content);
-	$n_pic=$row['n_pic'];
 	
+	$n_pic=$row['n_pic'];
 	if(!empty($n_pic)){
 		if(strpos(' '.$n_pic,'://')>0){
 			$content=str_replace("{news:pic}",$n_pic,$content);
@@ -112,6 +112,29 @@ function echoContent($vId)
 	}else{
 		$content=str_replace("{news:pic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
 	}
+	
+	$n_spic=$row['n_spic'];
+	if(!empty($n_spic)){
+		if(strpos(' '.$n_spic,'://')>0){
+			$content=str_replace("{news:spic}",$n_spic,$content);
+		}else{
+			$content=str_replace("{news:spic}",'/'.$GLOBALS['cfg_cmspath'].ltrim($n_spic,'/'),$content);
+		}
+	}else{
+		$content=str_replace("{news:spic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
+	}
+	
+	$n_gpic=$row['n_gpic'];
+	if(!empty($n_gpic)){
+		if(strpos(' '.$n_gpic,'://')>0){
+			$content=str_replace("{news:gpic}",$n_gpic,$content);
+		}else{
+			$content=str_replace("{news:gpic}",'/'.$GLOBALS['cfg_cmspath'].ltrim($n_gpic,'/'),$content);
+		}
+	}else{
+		$content=str_replace("{news:gpic}",'/'.$GLOBALS['cfg_cmspath'].'pic/nopic.gif',$content);
+	}
+	
 	$content=str_replace("{news:author}",$row['n_author'],$content);
 	$content=str_replace("{news:from}",$row['n_from'],$content);
 	$content=str_replace("{news:addtime}",MyDate('Y-m-d H:i',$row['n_addtime']),$content);

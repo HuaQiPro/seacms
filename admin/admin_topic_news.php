@@ -7,6 +7,80 @@ if(empty($action))
 {
 	$action = '';
 }
+	$sql="select * from sea_topic where id=$tid"; //获取之前的影片id'数据
+	$dsql->SetQuery($sql);
+	$dsql->Execute('al') ;
+	while($row=$dsql->GetObject('al'))
+	{
+	$info1=$row->news;
+	}
+	$zall=$info1;
+
+	if($info1 !== "")
+	{$info1="$info1"."ttttt";}
+	else
+	{$info1="";}
+if($action=="topicadd")
+{
+	if(empty($nid))
+	{
+	header("Location: admin_topic_news.php?tid=$tid"); 
+	exit;	
+	}
+	$zinfo="$info1$nid";
+	$usql = "update sea_topic set news='$zinfo' where id='$tid'";
+	if(!$dsql->ExecuteNoneQuery($usql))
+	{echo "'alert('插入数据失败')";}
+	header("Location: admin_topic_news.php?tid=$tid"); 
+	exit;
+}
+elseif($action=="topicdel")
+{
+	$delnid1="$nid".'ttttt';
+	$del1=str_replace($delnid1,"",$zall);
+	$delnid2='ttttt'."$nid";
+	$del2=str_replace($delnid2,"",$del1);
+	$del=str_replace($nid,"",$del2);
+	$sql = "update sea_topic set news='$del' where id='$tid'";
+	if(!$dsql->ExecuteNoneQuery($sql))
+	{echo "'alert('插入数据失败')";}
+	header("Location: admin_topic_news.php?tid=$tid"); 
+	exit;
+}
+
+
+if($action=="topicaddall")
+{	
+    $allnid=$_POST[e_id];
+	if(empty($allnid))
+	{
+	header("Location: admin_topic_news.php?tid=$tid"); 
+	exit;	
+	}
+	
+	for($i=0;$i<count($allnid);$i++)
+	{
+	$allstr1.='ttttt'."$allnid[$i]";
+	}
+	$allstr=substr($allstr1,5);
+	
+	$all="$info1$allstr";
+	$usql = "update sea_topic set news='$all' where id='$tid'";
+	if(!$dsql->ExecuteNoneQuery($usql))
+	{echo "'alert('插入数据失败')";}
+	header("Location: admin_topic_news.php?tid=$tid"); 
+	exit;	
+}
+
+
+elseif($action=="topicdelall")
+{
+	$dallsql = "update sea_topic set news='0' where id='$tid'";
+	if(!$dsql->ExecuteNoneQuery($dallsql))
+	{echo "'alert('失败')";}
+	header("Location: admin_topic_news.php?tid=$tid"); 
+	exit;
+}
 
 if($action=="add")
 {
@@ -65,12 +139,10 @@ elseif($action=="save")
 		$n_keyword = substr($n_keyword, 0, strlen($n_keyword)-1);
 	}
 	$n_pic = cn_substrR($v_pic,255);
-	$n_spic = cn_substrR($v_spic,255);
-	$n_gpic = cn_substrR($v_gpic,255);
 	switch (trim($acttype)) 
 	{
 		case "add":
-			$insertSql = "insert into sea_news(tid,n_title,n_letter,n_hit,n_money,n_rank,n_author,n_color,n_pic,n_spic,n_gpic,n_addtime,n_note,n_from,n_entitle,n_keyword,n_outline,n_content,n_commend) values ('$tid','$n_title','$n_letter','$n_hit','$n_money','$n_rank','$n_author','$n_color','$n_pic','$n_spic','$n_gpic','$n_addtime','$n_note','$n_from','$n_entitle','$n_keyword','$n_outline','$n_content','$n_commend')";
+			$insertSql = "insert into sea_news(tid,n_title,n_letter,n_hit,n_money,n_rank,n_author,n_color,n_pic,n_addtime,n_note,n_from,n_entitle,n_keyword,n_outline,n_content,n_commend) values ('$tid','$n_title','$n_letter','$n_hit','$n_money','$n_rank','$n_author','$n_color','$n_pic','$n_addtime','$n_note','$n_from','$n_entitle','$n_keyword','$n_outline','$n_content','$n_commend')";
 			if($dsql->ExecuteNoneQuery($insertSql))
 			{
 				$n_id = $dsql->GetLastID();
@@ -87,7 +159,7 @@ elseif($action=="save")
 		break;
 		case "edit":
 			$n_id = isset($v_id) && is_numeric($v_id) ? $v_id : 0;
-			$updateSql = "n_content = '$n_content',n_outline = '$n_outline',tid = '$tid',n_title = '$n_title',n_letter = '$n_letter',n_hit = '$n_hit',n_money = '$n_money',n_rank = '$n_rank',n_author = '$n_author',n_color = '$n_color',n_pic = '$n_pic',n_spic = '$n_spic',n_gpic = '$n_gpic',n_note = '$n_note',n_keyword = '$n_keyword',n_from='$n_from',n_entitle='$n_entitle'";
+			$updateSql = "n_content = '$n_content',n_outline = '$n_outline',tid = '$tid',n_title = '$n_title',n_letter = '$n_letter',n_hit = '$n_hit',n_money = '$n_money',n_rank = '$n_rank',n_author = '$n_author',n_color = '$n_color',n_pic = '$n_pic',n_note = '$n_note',n_keyword = '$n_keyword',n_from='$n_from',n_entitle='$n_entitle'";
 			if(!empty($isupdatetime)) $updateSql .= ",n_addtime='$n_addtime'";
 			$updateSql = "update sea_news set ".$updateSql." where n_id=".$n_id;
 //			echo $updateSql;die();
@@ -210,7 +282,7 @@ elseif($action=="restore")
 }
 else
 {
-	include(sea_ADMIN.'/templets/admin_news.htm');
+	include(sea_ADMIN.'/templets/admin_topic_news.htm');
 	exit();
 }
 

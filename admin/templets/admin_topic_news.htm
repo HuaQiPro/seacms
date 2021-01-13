@@ -6,7 +6,7 @@
 <meta http-equiv="expires" content="0" />
 <meta http-equiv="pragma" content="no-cache" />
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
-<title>影片管理</title>
+<title>专题新闻管理</title>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <style type="text/css">
@@ -15,8 +15,10 @@ select {font-size:12px;}
 </head>
 <body>
 <!--当前导航-->
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;数据&nbsp;&raquo;&nbsp;新闻管理 ';</script>
+<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;数据&nbsp;&raquo;&nbsp;专题新闻管理 ';</script>
 <?php
+$tid=addslashes($_GET[tid]);
+$nid=addslashes($_GET[vid]);
 $numPerPage=20;
 if(empty($order)) $order="n_addtime";
 $orderStr= " order by d.$order desc";
@@ -44,14 +46,49 @@ if($limitstart<0) $limitstart=0;
 $sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid where d.n_recycled=0 ".$whereorder." limit $limitstart,$numPerPage";
 if ($n_recycled=="ok") $sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid  where 1=1 ".$whereorder." limit $limitstart,$numPerPage";
 //echo $sqlStr;die();
+ $sql="select * from sea_topic where id=$tid";
+	$dsql->SetQuery($sql);
+	$dsql->Execute('al') ;
+	while($row=$dsql->GetObject('al'))
+	{
+	$ts=$row->news;
+    $intopic=explode("ttttt",$ts);
+	}
 ?>
+<table width="100%" border="0" cellpadding="0" cellspacing="0"  class="tb_style">
+    <tr>
+    <td width="100%" colspan="8" class="td_title">&nbsp;专题已含新闻列表：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#CC6600">【点击后面 x 将新闻从专题中移出】</font></td>
+    </tr>
+</table>
+
+<div style="background-color:#CCFFFF; margin:auto;width:99%;padding-top:5px; padding-bottom:5px;">
+
+<?php
+	echo "<a href=?action=topicdelall&tid=$tid><font color=red>【X全部清除X】</font></a><br>";
+if($ts !=="")
+{
+	$t=str_replace('ttttt',',',$ts);
+    $sql="select * from sea_news where n_id IN ($t)";
+	$dsql->SetQuery($sql);
+	$dsql->Execute('al') ;
+	while($row=$dsql->GetObject('al'))
+	{
+	echo "<a href=?action=topicdel&nid=$row->n_id&tid=$tid>$row->n_title X</a>&nbsp;&nbsp;&nbsp;";
+	}
+}
+else
+{echo "该专题暂无数据";}
+?>
+</div>
 <div class="r_main">
 <div class="r_content">
 	<div class="r_content_1"><span class="td_border" style="text-align:center"><?php echo $n_id;?></span>
 <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <form action="?" method="post" >
-<tr class="thead"><th colspan="15">新闻管理&nbsp;&nbsp;<input  name="keyword" type="text" id="keyword" size="20">
+<tr class="thead"><th colspan="15">
+ 全站待选新闻列表：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#CC6600">【点击 插入数据 即增加新闻到专题】</font>
+<input  name="keyword" type="text" id="keyword" size="20">
 <select name="type" id="type"  ><option value="">请选择文章分类</option>
 <?php makeTypeOption(0,"&nbsp;|&nbsp;",1)?>
 </select>
@@ -84,7 +121,8 @@ if($TotalResult==0){
 	<td bgcolor="#FFFFFF" class="td_btop3">时间<a href="?order=n_addtime&type=<?php echo $type;?>&page=<?php echo $page;?>&n_commend=<?php echo $n_commend;?>"><img src="img/minus.gif" title="按时间排序" /></a></td>
     <?php if($cfg_runmode2=='0'){?><td bgcolor="#FFFFFF" class="td_btop3">生成</td><?php }?>
 	<td align="center" bgcolor="#FFFFFF" class="td_btop3">操作</td>
-  </tr><form method="post" name="videolistform">
+  </tr>
+  <form method="post" name="newslistform" action="?action=topicaddall&tid=<?php echo $tid ?>">
 <?php
 
 $dsql->SetQuery($sqlStr);
@@ -92,31 +130,51 @@ $dsql->Execute('video_list');
 while($row=$dsql->GetObject('video_list'))
 {
 $n_id=$row->n_id;
-$tid=$row->tid;
-$contentUrl=getArticleLink($tid,$n_id,'');
+$contentUrl=getArticleLink($row->tid,$n_id,'');
 ?>
   <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
-	<td height="30" class="td_border" style="text-align:left"><input type="checkbox" value="<?php echo $n_id;?>" name="e_id[]" class="checkbox" /><?php echo $n_id; ?></td>
+	<td height="30" class="td_border" style="text-align:center">
+			<?php
+			if(in_array($n_id,$intopic))
+			{ 
+			echo "X";
+			}
+			else
+			{
+			echo "<input type=checkbox value=$n_id name=e_id[] class=checkbox />";
+			}
+			?>
+            
+			<?php echo $n_id;?></td>
 	<td class="td_border"><a href="<?php echo $contentUrl;?>" target="_blank"><?php echo $row->n_title;?></a></td>
 	<td class="td_border"><?php echo $row->n_hit;?></td>
 	<td class="td_border"><a href="?type=<?php echo $row->tid;?>&order=<?php echo $order;?>"><?php if($row->tname){echo $row->tname;}else{echo "<font color=red >数据分类错误</font>";}?></a></td>
 	<td id="star<?php echo $n_id;?>" class="td_border"><script>starView(<?php echo $row->n_commend;?>,<?php echo $n_id;?>,1)</script></td>
 	<td class="td_border"><span title="<?php echo MyDate('Y-m-d H:i:s',$row->n_addtime);?>"><?php echo isCurrentDay($row->n_addtime);?></span></td>
     <?php if($cfg_runmode2=='0'){?><td class="td_border"><?php isNewsMake($n_id,$contentUrl);?></td><?php }?>
-	<td class="td_border" align="center"><a href="?action=edit&id=<?php echo $n_id;?>">编辑</a> <a href="?action=del&id=<?php echo $n_id;?>" onClick="return confirm('确定要删除吗')">删除</a> <a href="?action=<?php echo $n_recycled=='ok'?'restore':'hide' ?>&id=<?php echo $n_id;?>"><?php echo $n_recycled=='ok'?'还原':'隐藏' ?></a></td>
+	<td class="td_border" align="center">
+			<?php
+			if(in_array($n_id,$intopic))
+			{
+			echo "已存在";
+			}
+			else
+			{
+			echo "<a href=?action=topicadd&nid=$n_id&tid=$tid>插入数据</a>";
+			}
+			?>
+			</td>
   </tr>
 <?php }?>
 
-<tr><td height="30" colspan="11" class="td_border">&nbsp;全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /><input type="submit" value="<?php if($n_recycled=='ok'){?>数据还原<?php }else{ ?>批量删除 <?php } ?>" onclick="<?php if($n_recycled=='ok'){?>if(confirm('确定要还原吗')){videolistform.action='?action=restoreall';}else{return false}<?php }else{ ?>if(confirm('确定要删除吗')){videolistform.action='?action=delall';}else{return false}<?php } ?>" class="rb1"  /> 
-<input type="submit" value="<?php if($n_recycled=='ok'){?>永久删除<?php }else{ ?>批量生成<?php } ?>" class="rb1" onclick="<?php if($n_recycled=='ok'){?>if(confirm('确定要永久删除吗')){videolistform.action='?action=delall';}else{return false}<?php }else{ ?>videolistform.action='admin_makehtml.php?action=selectednews'<?php } ?>" />
-<select name="movetype" id="movetype"  ><option value="">请选择目标分类</option>
-<?php makeTypeOption(0,"&nbsp;|&nbsp;",1)?>
-</select>
-<input type="submit" value="批量移动" class="rb1" onclick="if($('movetype').value==''){alert('请选择目标分类');return false;};if(confirm('确定要批量移动数据吗')){videolistform.action='?action=psettype'}else{return false;}"/>
-<?php if($n_recycled!='ok'){?><input type="submit" style="width:90px" value="删除分类数据" class="rb1" onclick="if($('movetype').value==''){alert('请选择目标分类');return false;};if(confirm('谨慎操作，数据不可恢复\n确定要删除此分类的所有数据吗')){videolistform.action='?action=deltypedata'}else{return false;}"/><?php }?>
- <input type="submit" style="width:90px" value="同步新闻图片" class="rb1" onclick="if(confirm('同步图片需要消耗大量服务器资源，请在空闲时间执行。确认同步吗？')){videolistform.action='admin_datarelate.php?action=downnewspic&downtype=all';}else{return false;}"/>
-</td>
-</tr>
+<tr>
+            <td height="30" colspan="11" class="td_border">&nbsp;全选
+              <input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" />
+              反选
+              <input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" />
+              <input type="submit" style="width:120px" value="批量插入数据" class="rb1" />
+			</td>
+          </tr>
 </form>
 <tr><td height="30" colspan="11" class="td_border">
 <?php if($n_recycled=="ok"){ ?>
