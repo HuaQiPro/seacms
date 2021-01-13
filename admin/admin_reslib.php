@@ -46,7 +46,7 @@ if($action=="list")
 	@session_write_close();
 	top();
 	if (empty($pg)||$pg<=0)$pg=1;
-	if($rid==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-list-true-cid-{$t}-h-{$h}-p-{$pg}-wd-".gbutf8($wd);
 	}
@@ -311,7 +311,7 @@ elseif($action=="select")
 		exit();
 	}
 	$a_ids = implode(',',$ids);
-	if($rid==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-vodids-".$a_ids;
 	}
@@ -324,7 +324,7 @@ elseif($action=="select")
 elseif($action=="day")
 {
 	$page = $pg;
-	if($rid==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid--h-24-p-{$page}";
 	}
@@ -337,7 +337,7 @@ elseif($action=="day")
 }elseif($action=="week")
 {
 	$page = $pg;
-	if($rid==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid--h-168-p-{$page}";
 	}
@@ -352,7 +352,7 @@ elseif($action=="day")
 elseif($action=="type")
 {
 	$page = $pg;
-	if($rid==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid-{$t}-h--p-{$page}";
 	}
@@ -365,7 +365,7 @@ elseif($action=="type")
 elseif($action=="all")
 {
 	$page = $pg;
-	if($rid==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid-{$t}-h--p-{$page}";
 	}

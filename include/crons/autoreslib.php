@@ -21,7 +21,7 @@ autocache_clear(sea_ROOT.'/data/cache');
 
 function gatherDay($var_url1){
 	global $rid1;
-	if($rid1==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$var_url1."-cid--h-24";
 	}
@@ -37,7 +37,7 @@ function autoIntoDatabase($url,$page=1)
 	@session_write_close();
 	global $dsql,$col,$isref,$rid1;
 	$weburl=$url."&pg=".$page;
-	if($rid1==32)
+	if($rid=='seazmt3zz2cmszmt')
 	{
 		$weburl=$url."-p-{$page}";
 	}
