@@ -27,7 +27,7 @@ die($h);
 function ReadData($id,$page)
 {
 	global $type,$pCount,$rlist;
-	$ret = array("","",$page,0,10,$type,$id);
+	$ret = array("","",$page,0,20,$type,$id);
 	if($id>0)
 	{
 		$ret[0] = Readmlist($id,$page,$ret[4]);
