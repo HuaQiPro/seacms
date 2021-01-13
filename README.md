@@ -24,11 +24,11 @@
 
 【第一步】进入后台 - 工具 - SQL高级助手，执行如下SQL语句：
 
-ALTER TABLE `sea_buy` ADD `vpaypoints` INT(10) NOT NULL DEFAULT '0' AFTER `vfrom`;
+>ALTER TABLE `sea_buy` ADD `vpaypoints` INT(10) NOT NULL DEFAULT '0' AFTER `vfrom`;
 
-DROP TABLE IF EXISTS `sea_hyzbuy`;
+>DROP TABLE IF EXISTS `sea_hyzbuy`;
 
-CREATE TABLE `sea_hyzbuy` (
+>CREATE TABLE `sea_hyzbuy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uname` varchar(20) NOT NULL,
   `gid` int(6) NOT NULL,
