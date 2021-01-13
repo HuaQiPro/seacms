@@ -1,6 +1,9 @@
 > 如果不想折腾推荐使用v11.3,喜欢尝鲜更新到最新版。
+
 > 为啥呢？因为海洋更新太频繁了,更新会有疲惫感~
+
 [最新版 https://github.com/ciweiin/seacms_down](https://github.com/ciweiin/seacms_down)
+
 # 更新内容
 
 新增：采集时标题替换
