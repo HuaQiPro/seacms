@@ -62,8 +62,10 @@
 	var vid=a[3];
 	var vfrom=a[4];
 	var vpart=a[5];
+	var vpart2=parseInt(a[5])+1;
 	var did=hex_md5(videoUrl);
 	var headtime=Number(getCookie(did) || 0);
+	
 	
 //获取剧集数据
     function getvideo(url){  	
@@ -73,7 +75,7 @@
 				jsonp: 'cb',                 
 				success:function(data){					
 					//剧集及当前集数
-				     xyplay=data.s;				     
+				     xyplay=data.s;						 
 				     if(xyplay.part>0){xyplay.part--;}
 				},				
     		})
@@ -81,7 +83,7 @@
     }
 	//获取剧集数据
 	if("undefined" !== typeof nextpage && nextpage!=""){getvideo(nextpage);}
-    
+ 
 </script>
 
 <script type="text/javascript">
@@ -175,6 +177,14 @@
 
 
 	 //播放下集
+function IsInArray(arr,value){
+    for(var i = 0; i < arr.length; i++){
+        if(value === arr[i]){
+            return true;
+        }
+    }
+    return false;
+}
             function video_next() {
                 if ("undefined" !== typeof xyplay && "undefined" !== typeof xyplay.video)
                     if (Number(xyplay.part) + 1>= xyplay.video.length) {
@@ -182,7 +192,7 @@
 	
                         return false;
                     }
-                xyplay.part++;    
+                xyplay.part++; 		
                 myplay(xyplay.video[xyplay.part]);
                
             }
@@ -203,7 +213,11 @@
 	
 	 //调用播放
             function myplay(url) { 
-            	
+var vippart=parseInt(xyplay.part)+1;
+var houz=xyplay['houz'];
+var viparr2=xyplay.vipp;
+var viparr=Object.values(viparr2);
+if(IsInArray(viparr,vippart)){top.location.href="/video/?"+vid+"-"+vfrom+"-"+vpart2+houz;}	           	
                 videoUrl=url; did=hex_md5(videoUrl);
                 headtime= Number(getCookie(did));
                 dp.switchVideo({url: videoUrl});
