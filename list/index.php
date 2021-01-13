@@ -74,12 +74,14 @@ function echoChannel($typeId)
 			$content = parseChannelPart($channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
+			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
 			$content = parseChannelPart($channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
+			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 	}
 	$content = str_replace("{channelpage:page}",$page,$content);
 	$content=$mainClassObj->ParsePageList($content,$typeIds,$page,$pCount,$TotalResult,"channel",$currentTypeId);

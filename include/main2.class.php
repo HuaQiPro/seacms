@@ -562,13 +562,14 @@ class MainClass_Template {
 					break;
 				case "son" :
 					$curUpId = GetTopid ( $currentTypeId );
+					$curUpIdnews = GetTopid ( $currentTypeId,1 );
 					if ($curUpId != "")
 						$curUpId = $curUpId;
 					else
 						$curUpId = - 444;
 					if ($vby == 'news') {
-						if ($curUpId != 0) {
-							$rsArray = getMenuArray ( $curUpId, "upid", 1 );
+						if ($curUpIdnews != 0) {
+							$rsArray = getMenuArray ( $curUpIdnews, "upid", 1 );
 						} else {
 							$rsArray = getMenuArray ( $currentTypeId, "upid", 1 );
 						}
@@ -1074,6 +1075,14 @@ class MainClass_Template {
 								} else {
 									$loopstrVlistNew = str_replace ( $matchfieldvalue, '/' . $GLOBALS ['cfg_cmspath'] . 'pic/nopic.gif', $loopstrVlistNew );
 								}
+								break;
+							case "keyword" :
+								$v_actor = $row->n_keyword;
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$actorlen = empty ( $fieldAttr ) ? "" : intval ( $fieldAttrarr [1] );
+								$v_actor = ! empty ( $actorlen ) && strlen ( $v_actor ) > $actorlen ? trimmed_title ( $v_actor, $actorlen ) : $v_actor;
+								$v_actor = getnewsKeywordsList ( $v_actor, "&nbsp;" );
+								$loopstrVlistNew = str_replace ( $matchfieldvalue, $v_actor, $loopstrVlistNew );
 								break;
 							case "author" :
 								$v_actor = $row->n_author;
@@ -2477,11 +2486,19 @@ class MainClass_Template {
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_note, $loopstrChannelNew );
 								break;
 							case "author" :
-								$v_actor = $row->n_author;
+							    $v_des = Html2Text ( $row->n_author );
+								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
+								$deslen = empty ( $fieldAttr ) ? "" : intval ( $fieldAttrarr [1] );
+								$v_des = preg_replace ( '/\{news\:video(.*?)\}/is', '', $v_des );
+								$v_des = ! empty ( $deslen ) && strlen ( $v_des ) > $deslen ? trimmed_title ( $v_des, $deslen ) : $v_des;
+								$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_des, $loopstrChannelNew );
+								break;
+							case "keyword" :
+								$v_actor = $row->n_keyword;
 								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
 								$actorlen = empty ( $fieldAttr ) ? "" : intval ( $fieldAttrarr [1] );
 								$v_actor = ! empty ( $actorlen ) && strlen ( $v_actor ) > $actorlen ? trimmed_title ( $v_actor, $actorlen ) : $v_actor;
-								$v_actor = getKeywordsList ( $v_actor, "&nbsp;" );
+								$v_actor = getnewsKeywordsList ( $v_actor, "&nbsp;" );
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_actor, $loopstrChannelNew );
 								break;
 							case "content" :

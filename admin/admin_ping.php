@@ -45,52 +45,199 @@ if($action=="set")
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
 <?php  require_once("../data/admin/ping.php"); ?>
-登记域名：<input  name="weburl" value="<?php  echo $weburl;?>">
- * 百度站长平台里登记的域名，必须保持完全一致，如www.seacms.net、demo.seacms.net 
-</td>
-</tr>
-
-<tr>
-<td width="80%" align="left" height="30" class="td_border">
-准入密钥：<input name="token" value="<?php  echo $token;?>">
- * 百度站长平台里提供的准入秘钥，在百度站长平台-链接提交-修改准入密钥处查看
-</td>
-</tr>
-
-<tr>
-<td width="10%" align="left" height="30" class="td_border">
+网站域名：<input  name="weburl" value="<?php  echo $weburl;?>">&nbsp;&nbsp;&nbsp;&nbsp;
+准入密钥：<input name="token" value="<?php  echo $token;?>">&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="submit" value="确 认" class="btn" >
 </td>
 </tr>
 <tr>
 <td width="90%" align="left" height="30" class="td_border">
-* 在视频添加或编辑页面选中推送项即可主动推送到百度搜索。
+<a href="?action=v_all"><input type=button value="批量推送新视频" οnclick="window.location.href('?action=v_all')"></a> &nbsp;&nbsp;&nbsp;&nbsp;
+<a href="?action=n_all"><input type=button value="批量推送新文章" οnclick="window.location.href('?action=n_all')"></a> 
 </td>
 </tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 为防止滥用推送导致网站被百度降权，本功能不支持批量推送。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 请先到百度站长平台http://zhanzhang.baidu.com注册，然后严格按照要求填写域名和密钥。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 如果修改无效，请检查/data/admin/ping.php文件权限是否可写。
-</td>
-</tr>
-</tbody></table>	
-	
 
+</tbody></table>	
 </form>
+<?php
+if($action==""){viewFoot();}
+?>
+
+<?php
+//文章推送
+if($action=="n_all"){
+require_once("../include/common.php");
+require_once("../include/main.class.php");
+require_once("../data/config.cache.inc.php");
+//设置每次推送的条数
+$tnum = 2;
+$remain = $_REQUEST['remain'];
+$remain = isset($remain) ? intval($remain) : $tnum;
+/*百度推送系统更新，不再限制推送条数，但remain参数保留，始终为1,为了防止官方把remain参数再次用上，这边也把remain保留，但不影响推送功能 
+百度推送好像限制了不能重复推送，否则将禁止该网站推送功能，现在只能每个地址推送一次。如果有的网友想重复推送，请往下看。
+if($remain>30)
+    $pagesize=30;
+else
+    $pagesize=$remain;
+*/
+$pagesize=$tnum;
+$wheresql = "where n_push = 0 ";
+$trow = $dsql->GetOne("Select count(*) as dd From `sea_news` $wheresql");
+$totalnum = $trow['dd'];
+//当总页数小于每页数目的时候，替换pagesize
+if($totalnum<$pagesize)
+    $pagesize = $totalnum;
+if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
+
+if($totalnum==0 || $page>$totalpage || $remain==0){
+    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[文章]恭喜，已推送所有文章!<br /><br />";
+	viewFoot();
+    exit();
+    }
+
+$dsql->SetQuery("Select * From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
+$dsql->Execute('news_list');
+$plink ="";
+$urls  = array();
+$ids  = array();
+$result ="{}";
+while($row=$dsql->GetObject('news_list'))
+{
+    $n_id = $row->n_id;
+    /*-----------------------------------------------------------------------------------------------------------*/
+    $plink = $cfg_basehost.getArticleLink($row->tid,$n_id,''); //来源页面网址
+	//die($plink);
+    array_push($urls ,$plink);
+    array_push($ids ,$n_id);
+    @ob_flush();
+    @flush();
+}
+
+$api = 'http://data.zz.baidu.com/urls?site='.$weburl.'&token='.$token;
+$ch = curl_init();
+$options =  array(
+        CURLOPT_URL => $api,
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => implode("\n", $urls),
+        CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+    );
+curl_setopt_array($ch, $options);
+$result = curl_exec($ch);
+$result_json = json_decode($result, true);
+ 
+if(isset($result_json["remain"]))
+{
+    //对ids数组循环，提示推送成功id，更新对应id的n_push=1
+    foreach ($ids as $nid){
+      $query = "Update `sea_news` set n_push=1 where n_id='$nid'";
+      $dsql->ExecuteNoneQuery($query);
+      echo '[文章]已成功推送:<font style="color:blue;">'.$nid.'</font>';
+      echo '<br />';
+    }
+    $remaincount = $result_json["remain"];
+    echo "<br>[文章]暂停3秒后继续推送<script language=\"javascript\">setTimeout(\"baiduPush();\",3000);function baiduPush(){location.href='?action=n_all&remain=".$remaincount."';}</script><br /><br /></div>";viewFoot();
+}
+else
+{
+    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[文章]今天百度推送次数已达上限！请明天再推送!<br /><br />";
+    viewFoot();
+    exit();
+}
+
+}
+?>
+
+
+
+<?php
+//视频推送
+if($action=="v_all"){
+require_once("../include/common.php");
+require_once("../include/main.class.php");
+require_once("../data/config.cache.inc.php");
+//设置每次推送的条数
+$tnum = 2;
+$remain = $_REQUEST['remain'];
+$remain = isset($remain) ? intval($remain) : $tnum;
+/*百度推送系统更新，不再限制推送条数，但remain参数保留，始终为1,为了防止官方把remain参数再次用上，这边也把remain保留，但不影响推送功能 
+百度推送好像限制了不能重复推送，否则将禁止该网站推送功能，现在只能每个地址推送一次。如果有的网友想重复推送，请往下看。
+if($remain>30)
+    $pagesize=30;
+else
+    $pagesize=$remain;
+*/
+$pagesize=$tnum;
+$wheresql = "where v_push = 0 ";
+$trow = $dsql->GetOne("Select count(*) as dd From `sea_data` $wheresql");
+$totalnum = $trow['dd'];
+//当总页数小于每页数目的时候，替换pagesize
+if($totalnum<$pagesize)
+    $pagesize = $totalnum;
+if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
+
+if($totalnum==0 || $page>$totalpage || $remain==0){
+    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[视频]恭喜，已推送所有视频!<br /><br />";
+	viewFoot();
+    exit();
+    }
+
+$dsql->SetQuery("Select * From `sea_data` $wheresql order by v_id desc limit 0,$pagesize");
+$dsql->Execute('video_list');
+$plink ="";
+$urls  = array();
+$ids  = array();
+$result ="{}";
+while($row=$dsql->GetObject('video_list'))
+{
+    $v_id = $row->v_id;
+    /*-----------------------------------------------------------------------------------------------------------*/
+    $plink = $cfg_basehost.getContentLink($row->tid,$v_id,"",date('Y-n',$row->v_addtime),$row->v_enname); //来源页面网址
+	//die($plink);
+    array_push($urls ,$plink);
+    array_push($ids ,$v_id);
+    @ob_flush();
+    @flush();
+}
+
+$api = 'http://data.zz.baidu.com/urls?site='.$weburl.'&token='.$token;
+$ch = curl_init();
+$options =  array(
+        CURLOPT_URL => $api,
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => implode("\n", $urls),
+        CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+    );
+curl_setopt_array($ch, $options);
+$result = curl_exec($ch);
+$result_json = json_decode($result, true);
+ 
+if(isset($result_json["remain"]))
+{
+    //对ids数组循环，提示推送成功id，更新对应id的v_push=1
+    foreach ($ids as $vid){
+      $query = "Update `sea_data` set v_push=1 where v_id='$vid'";
+      $dsql->ExecuteNoneQuery($query);
+      echo '[视频]已成功推送:<font style="color:blue;">'.$vid.'</font>';
+      echo '<br />';
+    }
+    $remaincount = $result_json["remain"];
+    echo "<br>[视频]暂停3秒后继续推送<script language=\"javascript\">setTimeout(\"baiduPush();\",3000);function baiduPush(){location.href='?action=v_all&remain=".$remaincount."';}</script><br /><br /></div>";viewFoot();
+}
+else
+{
+    echo "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;[视频]今天百度推送次数已达上限！请明天再推送!<br /><br />";
+	viewFoot();
+    exit();
+}
+
+}
+?>
+
 </div>
 	</div>
 </div>
-<?php 
-viewFoot();
-?>
+
 </body>
 </html>

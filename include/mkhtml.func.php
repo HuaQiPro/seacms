@@ -313,7 +313,7 @@ function makeArticleById($vId)
 	$content=str_replace("{news:link}",$contentLink,$content);
 	$content=str_replace("{news:url}",$GLOBALS['cfg_basehost'].$contentLink,$content);
 	$content=str_replace("{news:upid}",getUpId($vType,1),$content);
-	if (strpos($content,"{news:keywords}")>0) $content=str_replace("{news:keywords}",getKeywordsList($row['n_keyword'],"&nbsp;"),$content);
+	if (strpos($content,"{news:keyword}")>0) $content=str_replace("{news:keyword}",getnewsKeywordsList($row['n_keyword'],"&nbsp;"),$content);
 	$n_pic=$row['n_pic'];
 	
 	if(!empty($n_pic)){
@@ -821,12 +821,14 @@ function makeChannelById($typeId)
 			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
+			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
 			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
+			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 	}
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$content = str_replace("{channelpage:order-hit-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=hit&tid=".$typeId,$content);
@@ -927,15 +929,19 @@ function makeNewsChannelById($typeId)
 		}else{
 			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
+			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
 			$content = str_replace("{newspagelist:description}",getNewsTypeDescription($currentTypeId),$content);
+			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
 			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
+			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
 			$content = str_replace("{newspagelist:description}",getNewsTypeDescription($currentTypeId),$content);
+			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
 	}
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$content=str_replace("<head>",'<head><script>var seatype="newslist"; var seaid='.$currentTypeId.';var seapage=1;</script><script src="/'.$GLOBALS['cfg_cmspath'].'js/seajump.js"></script>',$content);
@@ -999,11 +1005,13 @@ function makeLengthChannelById($typeId,$startpage,$endpage)
 		}else{
 			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
+			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
 			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
+			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 	}
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$content = str_replace("{channelpage:order-hit-link}",$cfg_basehost."/search.php?page=1&searchtype=5&order=hit&tid=".$typeId,$content);
@@ -1073,11 +1081,15 @@ function makeLengthPartById($typeId,$startpage,$endpage)
 		}else{
 			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
+			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
+			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
 			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
+			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
+			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
 	}
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$tempStr = $content;

@@ -99,8 +99,8 @@ function echoContent($vId)
 	$content=str_replace("{news:scorenumer}",$row['n_scorenum'],$content);
 	$content=str_replace("{news:treadnum}",$row['n_tread'],$content);
 	$content=str_replace("{news:nolinkkeywords}",$row['n_keyword'],$content);
-	if (strpos($content,"{news:keywords}")>0)
-	$content=str_replace("{news:keywords}",getKeywordsList($row['n_keyword'],"&nbsp;&nbsp;"),$content);
+	if (strpos($content,"{news:keyword}")>0)
+	$content=str_replace("{news:keyword}",getnewsKeywordsList($row['n_keyword'],"&nbsp;&nbsp;"),$content);
 	$n_pic=$row['n_pic'];
 	
 	if(!empty($n_pic)){

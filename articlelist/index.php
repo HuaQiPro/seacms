@@ -69,6 +69,8 @@ function echoChannel($typeId)
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
 			$content = str_replace("{newspagelist:description}",getNewsTypeDescription($currentTypeId),$content);
+			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
+			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
@@ -76,6 +78,8 @@ function echoChannel($typeId)
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
 			$content = str_replace("{newspagelist:description}",getNewsTypeDescription($currentTypeId),$content);
+			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
+			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 	}
 	$content=$mainClassObj->parseNewsPageList($content,$typeIds,$page,$pCount,'newspage',$currentTypeId);
 	$content=$mainClassObj->parseIf($content);

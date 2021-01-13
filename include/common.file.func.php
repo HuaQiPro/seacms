@@ -1387,6 +1387,17 @@ function getKeywordsList($key,$span){
 	return $keyWordsStr;
 }
 
+function getnewsKeywordsList($key,$span){
+	if($key=='')return $key;
+	$keyWordsStr="";
+	$keystr=str_replace("，",",",$key);
+	if (strpos($keystr,",")>0){$keyWordsArray=explode(",",$keystr);}else{$keyWordsArray=explode(" ",$keystr);}
+	for($kli=0;$kli<count($keyWordsArray);$kli++){
+		$keyWordsStr.="<a href='/".$GLOBALS['cfg_cmspath']."so.php?searchword=".urlencode($keyWordsArray[$kli])."'>".$keyWordsArray[$kli]."</a>".$span;
+	}
+	return $keyWordsStr;
+}
+
 function getJqList($key,$span){
 	if($key=='')return $key;
 	$keyWordsStr="";
