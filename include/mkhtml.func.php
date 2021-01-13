@@ -663,6 +663,8 @@ function makePlayByData($vType,$vId,$playArr,$str2,$content,$sdate,$enname,$stri
 				$tmp1 = str_replace("{playpage:ename}",$partName[3],$tmp1);
 				$tmp1 = str_replace("{playpage:part}",$partName[1],$tmp1);
 				$tmp1 = str_replace("{playpage:dz}",$partName[2],$tmp1);
+				$body= "<script>document.getElementById(\"".$i.$n."\").classList.add(\"playon\");</script>\n\r</body>";
+				$tmp1 = str_replace("</body>",$body,$tmp1);
 				if($cfg_playaddr_enc=='escape'){
 					$tmp1 = str_replace("{playpage:playurlinfo}","<script>var vid=\"".$vId."\";var vfrom=\"".$i."\";var vpart=\"".$n."\";var now=unescape(\"".escape($partName[2])."\");var pn=\"".$partName[3]."\";var next=unescape(\"".escape($partNameN[2])."\");var prePage=\"".$preplaylink."\";var nextPage=\"".$nextplaylink."\";</script>",$tmp1);
 				}elseif($cfg_playaddr_enc=='base64'){

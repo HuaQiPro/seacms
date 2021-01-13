@@ -5,6 +5,7 @@
 		{seacms:load public/include.html}
 		{seacms:load public/style.html}
 		<script src="/{seacms:sitepath}js/play.js"></script>
+		<style>.playon a{color:red;}</style>
 	</head>
 	<body class="active">
 		<div class="myui-topbg clearfix"></div>
@@ -44,7 +45,7 @@
 										<div class="tab-content mb10">
 											{playpage:playlist}
 											<div id="player[playlist:i]" class="tab-pane fade in{if:{playpage:from}==[playlist:from]} active{end if} clearfix">
-												<ul class="myui-content__list playlist clearfix player-{playpage:ename}" id="playlist">
+												<ul class="myui-content__list playlist clearfix" id="playlist">
 													[playlist:link target=_self]
 												</ul>
 											</div>
@@ -92,7 +93,6 @@
 			$("#playlist li").addClass("col-md-2 col-sm-5 col-xs-4");
 			{end if}
 			$("#playlist a").addClass("btn btn-min btn-gray");
-			$(".player-{playpage:ename} a:contains('{playpage:part}')").removeClass("btn-gray").addClass("btn-warm active").closest("li").addClass("active");
 		</script>
 		<script type="text/javascript">
 			MyTheme.Other.Roll('.tips','-30px');

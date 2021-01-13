@@ -1187,7 +1187,7 @@ function getPlayerParas()
 
 function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyle='li'){
 	global $cfg_isalertwin;
-	//$paras=getPlayerParas();
+	$paras=getPlayerParas();
 	if(empty($url)) return '';
 	if($starget!=""){
 		$target=" target=\"".$starget."\"";
@@ -1201,11 +1201,11 @@ function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyl
 		if(!empty($urlArray[$i])){
 			$singleUrlArray=explode("$",$urlArray[$i]);
 			if (count($singleUrlArray)<2) $singleUrlArray=Array("","","");
-			$style="";
+			if($paras[0]==$ifrom && $i==$paras[1]) $style=" class=\"playon\" "; else $style="";
 			if ($cfg_isalertwin){
 				$urlStr.="<".$listyle."><a title='".$singleUrlArray[0]."' href=\"javascript:openWin('".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."',".($GLOBALS['cfg_alertwinw']).",".($GLOBALS['cfg_alertwinh']).",250,100,1)\"".$style.">".$singleUrlArray[0]."</a></".$listyle.">";
 			}else{
-				$urlStr.="<".$listyle."><a title='".$singleUrlArray[0]."' href='".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."'".$style.$target.">".$singleUrlArray[0]."</a></".$listyle.">";
+				$urlStr.="<".$listyle.$style." id=\"".$ifrom.$i."\"><a title=\"".$singleUrlArray[0]."\" href=\"".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."\"".$target.">".$singleUrlArray[0]."</a></".$listyle.">";
 			}
 		}
 	}
