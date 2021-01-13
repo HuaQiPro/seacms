@@ -49,7 +49,7 @@ $aid=$row->id;
 }
 ?>  
 </table>
-<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/union.js"></script>
+<?php echo $union; ?>
 <div style="height:30px; clear:both;"> </div>
 <?php 
 viewFoot();exit();	
