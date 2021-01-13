@@ -117,7 +117,7 @@ if($mod=='repsw'){
 	    </div>
 	</div>
 	<div class="tabbar visible-xs">
-		<a href="/" class="item">返回首页</a>
+		<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -259,7 +259,7 @@ if($mod=='repsw3'){
 	    </div>
 	</div>
 	<div class="tabbar visible-xs">
-<a href="/" class="item">返回首页</a>	
+<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>	
 	</div>
 	<div class="container">
 		<div class="row">
@@ -430,6 +430,7 @@ elseif($action=='hyz')
 		$vipendtime=$ntime+$vipendtime1;
 		$sql="UPDATE sea_member SET points=points-$hyzjf,gid=$gid,vipendtime=$vipendtime where username='$uname'";
 		$dsql->executeNoneQuery($sql);
+		$dsql->ExecuteNoneQuery("insert into sea_hyzbuy values('','$uname','$gid','$hyzjf','$mon','".time()."')");
 		showMsg("恭喜！购买会员组成功！","member.php");exit;
 	}
 	
@@ -457,7 +458,7 @@ elseif($action=='cc')
 	if($ccgid==2){$ccvipendtime='无限期';}else{$ccvipendtime=date('Y-m-d H:i:s',$ccvipendtime);}
 	$cclog=$cc2['logincount'];
 	$ccnickname=$cc2['nickname'];
-	$msgbody=$cc2['msgbody'];
+	$msgbody=nl2br($cc2['msgbody']);
 	$msgstate=$cc2['msgstate'];
 	
 	if($cfg_spoints==0){
@@ -478,7 +479,7 @@ require_once("data/admin/notify.php");
 if(empty($notify1) OR $notify1 ==""){$notify1css='display:none';} 
 if(empty($notify2) OR $notify2 ==""){$notify2css='display:none';} 
 if(empty($notify3) OR $notify3 ==""){$notify3css='display:none';}
-if(empty($msgbody) OR $msgbody =="" OR $msgstate=='y'){$notify4css='display:none';}  
+if(empty($msgbody) OR $msgbody =="" OR $msgstate=='y'){$notify4css='display:none';$msgbody='';}  
 	echo <<<EOT
 	        
 <body>
@@ -532,7 +533,7 @@ if(empty($msgbody) OR $msgbody =="" OR $msgstate=='y'){$notify4css='display:none
 </div>
 <div class="alert alert-success alert-dismissible" role="alert" style="margin:3px -1px;{$notify4css}">
 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="icon iconfont icon-icon_special"></i></span></button>
-{$msgbody}&nbsp;&nbsp;<a href="?action=delmsg"><i class="icon iconfont icon-delete" style="color:#888;"><font style="font-size:12px;">不再显示</font></i></a>
+{$msgbody}<a style="float:right;" href="?action=delmsg"><i class="icon iconfont icon-delete" style="color:#888;"><font style="font-size:12px;">删除</font></i></a>
 </div>   	
 		    <div class="hy-member hy-layout clearfix" style="margin-top:5px;">
 		    	<div class="hy-switch-tabs">
@@ -568,7 +569,7 @@ EOT;
 							}
 								if($cfg_kami==""){$kamistyle='style="display:none;"';}
 								echo
-			                     "<li><span class=\"text-muted\">当前积分：</span>{$ccjifen} {$cfg_pointsname}</li>".
+			                     "<li><span class=\"text-muted\">{$cfg_pointsname}数量：</span>{$ccjifen} {$cfg_pointsname}</li>".
 			                     "<li><span class=\"text-muted\">推广链接：</span>{$_SERVER['HTTP_HOST']}/i.php?uid={$_SESSION['sea_user_id']}</li>".
 			                    "<form action=\"?action=cz\" method=\"post\"><li class=\"cckkey\"><span class=\"text-muted\">充值积分：</span><input type=text name=cckkey class=\"form-control\" id=cckkey placeholder=\"输入充值卡卡号\" > <input type=submit name=cckb id=cckb value='{$cfg_pointsname}充值' class=\"btn btn-primary\">&nbsp;&nbsp;<a target=\"_blank\" class=\"btn btn-danger\" ".$kamistyle." href=\"".$cfg_kami."\">购买充值卡</a></li></form></div>";
 			echo <<<EOT
@@ -603,7 +604,7 @@ EOT;
 	    </div>
 	</div>
 	<div class="tabbar visible-xs">
-		<a href="/" class="item">返回首页</a>			
+		<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>			
 	</div>
 	<div class="container">
 		<div class="row">
@@ -748,7 +749,7 @@ EOT;
 		</div>
 	</div>
 	<div class="tabbar visible-xs">
-		<a href="/" class="item">返回首页</a>
+		<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -760,26 +761,6 @@ EOT;
 	</div>	
 </body>
 EOT;
-?>
-<script src="js/common.js" type="text/javascript"></script>
-<script>
-function submitForm()
-{
-	$('favform').submit()
-}
-function showpic(event,imgsrc){	
-	var left = event.clientX+document.documentElement.scrollLeft+20;
-	var top = event.clientY+document.documentElement.scrollTop+20;
-	$("preview").style.display="";
-	$("preview").style.left=left+"px";
-	$("preview").style.top=top+"px";
-	$("pic_a1").setAttribute('src',imgsrc);
-}
-function hiddenpic(){
-	$("preview").style.display="none";
-}
-</script>
-<?php 
 }
 elseif($action=='buy')
 {
@@ -832,6 +813,11 @@ elseif($action=='buy')
 						<li><a href="?action=favorite"title="我的收藏">我的收藏</a></li>							
 						<li class="active"><a href="?action=buy" title="购买记录">购买记录</a></li>	
 						<li><a href="/" title="首页">首页</a></li>	
+					</ul>
+					<ul  style="float:right; margin-top:10px;">						
+						<li style="float:right;color:#FFF;"><a class="btn btn-primary btn-xs" href="?action=buy3" title="充值记录">充值记录</a></li>
+						<li style="float:right;margin-right:10px;"><a class="btn btn-success btn-xs" href="?action=buy2" title="会员购买">会员购买</a></li>
+						<li style="float:right;margin-right:10px;"><a class="btn btn-danger btn-xs"  href="?action=buy" title="视频购买">视频购买</a></li>
 					</ul>
 				</div>			
 				<div class="tab-content">
@@ -907,7 +893,7 @@ EOT;
 		</div>
 	</div>
 	<div class="tabbar visible-xs">
-		<a href="/" class="item">返回首页</a>
+		<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -919,29 +905,259 @@ EOT;
 	</div>	
 </body>
 EOT;
-?>
-<script src="js/common.js" type="text/javascript"></script>
-<script>
-function submitForm()
+}
+elseif($action=='buy2')
 {
-	$('favform').submit()
+	$uname=$_SESSION['sea_user_name'];
+	$gid=$_SESSION['sea_user_group'];
+	$page = $_GET["page"];
+	$pcount = 20;
+	$row=$dsql->getOne("select count(id) as dd from sea_hyzbuy where uname='$uname'");
+	$rcount=$row['dd'];
+	$page_count = ceil($rcount/$pcount); 
+	if(empty($_GET['page'])||$_GET['page']<0){ 
+	$page=1; 
+	}else { 
+	$page=$_GET['page']; 
+	}
+	$select_limit = $pcount; 
+	$select_from = ($page - 1) * $pcount.','; 
+	$pre_page = ($page == 1)? 1 : $page - 1; 
+	$next_page= ($page == $page_count)? $page_count : $page + 1 ; 
+	$dsql->setQuery("select * from sea_hyzbuy where uname='$uname' ORDER BY paytime DESC limit ".($page-1)*$pcount.",$pcount");
+	$dsql->Execute('buylist');
+	echo <<<EOT
+	<body>
+		<div class="hy-head-menu">
+		<div class="container">
+		    <div class="row">
+			  	<div class="item">
+				    <div class="logo hidden-xs">
+						<a class="hidden-sm hidden-xs" href="index.php"><img src="pic/member/logo.png" /></a>
+			  			<a class="visible-sm visible-xs" href="index.php"><img src="pic/member/logo_min.png" /></a>											  
+					</div>						
+					<div class="search hidden-xs"> 
+				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
+							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input type="submit" id="searchbutton" value="" class="hide">
+							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
+						</form>
+				    </div>			   
+													 
+			  	</div>							
+		    </div>
+		</div>
+	</div>
+	<div class="container">
+	    <div class="row">
+	    	
+	    	<div class="hy-member hy-layout clearfix">
+	    		<div class="hy-switch-tabs">
+					<ul class="nav nav-tabs">
+						<a class="text-muted pull-right hidden-xs" href="exit.php"><i class="icon iconfont icon-setting"></i> 退出账户</a>
+						<li><a href="?action=cc" title="基本资料">基本资料</a></li>							
+						<li><a href="?action=favorite"title="我的收藏">我的收藏</a></li>							
+						<li class="active"><a href="?action=buy" title="购买记录">购买记录</a></li>	
+						<li><a href="/" title="首页">首页</a></li>	
+					</ul>
+					<ul  style="float:right; margin-top:10px;">						
+						<li style="float:right;color:#FFF;"><a class="btn btn-primary btn-xs" href="?action=buy3" title="充值记录">充值记录</a></li>
+						<li style="float:right;margin-right:10px;"><a class="btn btn-success btn-xs" href="?action=buy2" title="会员购买">会员购买</a></li>
+						<li style="float:right;margin-right:10px;"><a class="btn btn-danger btn-xs"  href="?action=buy" title="视频购买">视频购买</a></li>
+					</ul>
+				</div>			
+				<div class="tab-content">
+					<div class="item tab-pane fade in active">
+						<table class="table">
+						<thead>
+		                 <tr>
+
+                        <th class="text-muted">购买时间</th>
+						<th class="text-muted">购买时长</th>
+						<th class="text-muted">消耗{$cfg_pointsname}</th>
+						<th class="text-muted">会员组</th>
+                    </tr>
+                    </thead>
+EOT;
+	while($row=$dsql->getArray('buylist'))
+{
+	$rs=$dsql->getOne("select gname from sea_member_group where gid=".$row['gid']);
+	$gname=$rs['gname'];
+	echo <<<EOT
+                    <tr>
+                        <td>
+EOT;
+                            echo date('Y-m-d',$row['paytime']);
+							echo <<<EOT
+                        </td>
+                        <td>
+						{$row['mon']}个月
+                        </td>
+						<td>
+						{$row['paypoints']}
+                        </td>
+                        <td>
+						{$gname}
+                        </td>
+
+
+                    </tr>
+EOT;
+					}
+					echo <<<EOT
+                </table>
+	                     <div class="hy-page clearfix">
+							<ul class="cleafix">
+								<li><a href="?action=buy2&page=1">首页</a> </li>
+								<li><a href="?action=buy2&page={$pre_page}">上一页</a></li>														
+								<li><span class="num">$page/$page_count</span></li>
+								<li><a href="?action=buy2&page={$next_page}">下一页</a></li>
+								<li><a href="?action=buy2&page={$page_count}">尾页</a></li>							
+							</ul>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tabbar visible-xs">
+		<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="hy-footer clearfix">
+				
+				<p class="text-muted">Copyright ©{$year} {$_SERVER['HTTP_HOST']}</p>
+			</div>
+		</div>
+	</div>	
+</body>
+EOT;
 }
-function showpic(event,imgsrc){	
-	var left = event.clientX+document.documentElement.scrollLeft+20;
-	var top = event.clientY+document.documentElement.scrollTop+20;
-	$("preview").style.display="";
-	$("preview").style.left=left+"px";
-	$("preview").style.top=top+"px";
-	$("pic_a1").setAttribute('src',imgsrc);
-}
-function hiddenpic(){
-	$("preview").style.display="none";
-}
-</script>
-<?php 
+elseif($action=='buy3')
+{
+	$uname=$_SESSION['sea_user_name'];
+	$gid=$_SESSION['sea_user_group'];
+	$page = $_GET["page"];
+	$pcount = 20;
+	$row=$dsql->getOne("select count(id) as dd from sea_cck where status=1 and uname='$uname'");
+	$rcount=$row['dd'];
+	$page_count = ceil($rcount/$pcount); 
+	if(empty($_GET['page'])||$_GET['page']<0){ 
+	$page=1; 
+	}else { 
+	$page=$_GET['page']; 
+	}
+	$select_limit = $pcount; 
+	$select_from = ($page - 1) * $pcount.','; 
+	$pre_page = ($page == 1)? 1 : $page - 1; 
+	$next_page= ($page == $page_count)? $page_count : $page + 1 ; 
+	$dsql->setQuery("select * from sea_cck where status=1 and  uname='$uname' ORDER BY usetime DESC limit ".($page-1)*$pcount.",$pcount");
+	$dsql->Execute('buylist');
+	echo <<<EOT
+	<body>
+		<div class="hy-head-menu">
+		<div class="container">
+		    <div class="row">
+			  	<div class="item">
+				    <div class="logo hidden-xs">
+						<a class="hidden-sm hidden-xs" href="index.php"><img src="pic/member/logo.png" /></a>
+			  			<a class="visible-sm visible-xs" href="index.php"><img src="pic/member/logo_min.png" /></a>											  
+					</div>						
+					<div class="search hidden-xs"> 
+				        <form name="formsearch" id="formsearch" action='search.php' method="post" autocomplete="off">																			
+							<input class="form-control" placeholder="输入影片关键词..." name="searchword" type="text" id="keyword" required="">
+							<input type="submit" id="searchbutton" value="" class="hide">
+							<a href="javascript:" class="btns" title="搜索" onClick="$('#formsearch').submit();"><i class="icon iconfont icon-search"></i></a>
+						</form>
+				    </div>			   
+													 
+			  	</div>							
+		    </div>
+		</div>
+	</div>
+	<div class="container">
+	    <div class="row">
+	    	
+	    	<div class="hy-member hy-layout clearfix">
+	    		<div class="hy-switch-tabs">
+					<ul class="nav nav-tabs">
+						<a class="text-muted pull-right hidden-xs" href="exit.php"><i class="icon iconfont icon-setting"></i> 退出账户</a>
+						<li><a href="?action=cc" title="基本资料">基本资料</a></li>							
+						<li><a href="?action=favorite"title="我的收藏">我的收藏</a></li>							
+						<li class="active"><a href="?action=buy" title="购买记录">购买记录</a></li>	
+						<li><a href="/" title="首页">首页</a></li>	
+					</ul>
+					<ul  style="float:right; margin-top:10px;">						
+						<li style="float:right;color:#FFF;"><a class="btn btn-primary btn-xs" href="?action=buy3" title="充值记录">充值记录</a></li>
+						<li style="float:right;margin-right:10px;"><a class="btn btn-success btn-xs" href="?action=buy2" title="会员购买">会员购买</a></li>
+						<li style="float:right;margin-right:10px;"><a class="btn btn-danger btn-xs"  href="?action=buy" title="视频购买">视频购买</a></li>
+					</ul>
+				</div>			
+				<div class="tab-content">
+					<div class="item tab-pane fade in active">
+						<table class="table">
+						<thead>
+		                 <tr>
+
+                        <th class="text-muted">充值时间</th>
+						<th class="text-muted">{$cfg_pointsname}数量</th>
+						<th class="text-muted hidden-xs">充值卡号</th>
+                    </tr>
+                    </thead>
+EOT;
+	while($row=$dsql->getArray('buylist'))
+{
+
+	echo <<<EOT
+                    <tr>
+                        <td>
+EOT;
+                            echo date('Y-m-d',strtotime($row['usetime']));
+
+							echo <<<EOT
+                        </td>
+                        <td>
+						{$row['climit']}
+                        </td>
+                        <td class="hidden-xs">
+						{$row['ckey']}
+                        </td>
+
+
+                    </tr>
+EOT;
+					}
+					echo <<<EOT
+                </table>
+	                     <div class="hy-page clearfix">
+							<ul class="cleafix">
+								<li><a href="?action=buy3&page=1">首页</a> </li>
+								<li><a href="?action=buy3&page={$pre_page}">上一页</a></li>														
+								<li><span class="num">$page/$page_count</span></li>
+								<li><a href="?action=buy3&page={$next_page}">下一页</a></li>
+								<li><a href="?action=buy3&page={$page_count}">尾页</a></li>							
+							</ul>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tabbar visible-xs">
+		<a href="/" class="item"><i class=" iconfont icon-fdvideo" style="font-size:20px;"></i> 返回首页</a>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="hy-footer clearfix">
+				
+				<p class="text-muted">Copyright ©{$year} {$_SERVER['HTTP_HOST']}</p>
+			</div>
+		</div>
+	</div>	
+</body>
+EOT;
 }
 else
-{
-	
-}
+{ }
 ?> 

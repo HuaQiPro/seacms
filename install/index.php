@@ -1,7 +1,7 @@
 <?php 
 @set_time_limit(0);
 error_reporting(0);
-$verMsg = ' V6.x UTF8';
+$verMsg = ' V12.x UTF8';
 $s_lang = 'utf-8';
 $dfDbname = 'seacms';
 $errmsg = '';
@@ -61,7 +61,7 @@ else if($step==2)
 {
 	 $phpv = phpversion();
 	 $sp_os = PHP_OS;
-	 $sp_gd = gdversion();
+	 //$sp_gd = gdversion();
 	 $sp_server = $_SERVER['SERVER_SOFTWARE'];
 	 $sp_host = (empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_HOST'] : $_SERVER['REMOTE_ADDR']);
 	 $sp_name = $_SERVER['SERVER_NAME'];
@@ -71,7 +71,7 @@ else if($step==2)
    $sp_fsockopen = (function_exists('fsockopen')?'<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
    $sp_iconv = (function_exists('iconv')?'<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
    $sp_safe_mode = (ini_get('safe_mode') ? '<font color=red>[×]On</font>' : '<font color=green>[√]Off</font>');
-   $sp_gd = ($sp_gd>0 ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
+   $sp_gd = (function_exists('imagecreate') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
    $sp_curl = (function_exists('curl_init') ? '<font color=green>[√]On</font>' : '<font color=#B8860B>[×]Off</font>');
    $sp_mysql = (function_exists('mysqli_connect') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>');
 
@@ -84,8 +84,7 @@ else if($step==2)
    		$sp_mysqli_err = false;
    }
 
-   $sp_testdirs = array(
-        
+   $sp_testdirs = array(       
         '/',
         '/data',
         '/data/admin',
@@ -99,9 +98,7 @@ else if($step==2)
 		'/admin/ebak/bdata',
 		'/admin/ebak/zip',
 		'/js',
-		'/js/player',
-		'/js/ads'
-        
+		'/js/player',      
    );
 	 include('./templates/step-2.html');
 	 exit();
@@ -152,7 +149,7 @@ else if($step==4)
   fclose($fp);
   
 
-  $conn = mysqli_connect($dbhost,$dbuser,$dbpwd) or die("<script>alert('数据库服务器或登录密码无效，\\n\\n无法连接数据库，请重新设定！');history.go(-1);</script>");
+  $conn = mysqli_connect($dbhost,$dbuser,$dbpwd,'',$dbport) or die("<script>alert('数据库服务器或登录密码无效，\\n\\n无法连接数据库，请重新设定！');history.go(-1);</script>");
 
   mysqli_query($conn,"CREATE DATABASE IF NOT EXISTS ".$dbname.";");
 	
@@ -177,6 +174,7 @@ else if($step==4)
   //common.inc.php
   $configStr1 = str_replace("~dbhost~",$dbhost,$configStr1);
 	$configStr1 = str_replace("~dbname~",$dbname,$configStr1);
+	$configStr1 = str_replace("~dbport~",$dbport,$configStr1);
 	$configStr1 = str_replace("~dbuser~",$dbuser,$configStr1);
 	$configStr1 = str_replace("~dbpwd~",$dbpwd,$configStr1);
 	$configStr1 = str_replace("~dbprefix~",$dbprefix,$configStr1);
@@ -193,11 +191,12 @@ else if($step==4)
 	$cookie_encode=md5(time());
 	if($cmspath=='') $indexUrl = '/';
 	else $indexUrl = $cmspath;
-
+	$cachemark='E'.$dbname.MyDate('His',time());
 	$configStr2 = str_replace("~baseurl~",$baseurl,$configStr2);
 	$configStr2 = str_replace("~basepath~",$cmspath,$configStr2);
 	$configStr2 = str_replace("~indexurl~",$indexUrl,$configStr2);
 	$configStr2 = str_replace("~webname~",$webname,$configStr2);
+	$configStr2 = str_replace("~cachemark~",$cachemark,$configStr2);
 	$configStr2 = str_replace("~cookie_encode~",$cookie_encode,$configStr2);
 
 	$fp = fopen(sea_ROOT.'/data/config.cache.inc.php','w');
@@ -287,7 +286,7 @@ else if($step==4)
     $pattern = 'abcdefgh1234567890jklmnopqrstuvwxyz';  
     for($i=0;$i<$length;$i++)   
     {   
-        $key .= $pattern{mt_rand(0,35)}; 
+        $key .= $pattern[mt_rand(0,35)]; 
     }   
     return $key;   
 	}
@@ -309,7 +308,7 @@ else if($step==10)
 	header("Pragma:no-cache\r\n");
   header("Cache-Control:no-cache\r\n");
   header("Expires:0\r\n");
-	$conn = @mysqli_connect($dbhost,$dbuser,$dbpwd);
+	$conn = @mysqli_connect($dbhost,$dbuser,$dbpwd,'',$port);
 	if($conn)
 	{
 	  $rs = my_select_db($conn,$dbname);

@@ -81,6 +81,12 @@ class Collect
 					  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
 				  }
 		
+		// 影片关键词替换
+		global $cfg_cjreplace;		
+		$r0 = explode('|',$cfg_cjreplace);
+		$r = array();
+		foreach($r0 as $data){$r[]=explode('=',$data);}
+		foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
 		
 		if(is_numeric($localId))
 		{		
@@ -300,6 +306,12 @@ class Collect
 				  {
 					  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
 				  }
+				// 影片关键词替换
+				global $cfg_cjreplace;		
+				$r0 = explode('|',$cfg_cjreplace);
+				$r = array();
+				foreach($r0 as $data){$r[]=explode('=',$data);}
+				foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
 				  
 			      $sql = "update `sea_co_url` set succ='1' where uid=".$row['uid'];
 				  $dsql->ExecuteNoneQuery($sql);

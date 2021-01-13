@@ -8,12 +8,12 @@
 				</a>					
 			</div>
 			<ul class="myui-header__menu nav-menu hidden-sm hidden-xs">
-				<li class=" {if:{seacms:currenttypeid}=-444}active{end if}"><a href="/">首页</a></li>
+				<li class=" {if:{seacms:currenttypeid}=-444}active{end if}"><a href="{seacms:indexlink}">首页</a></li>
 				{seacms:menulist type=top}
 				<li class="{if:[menulist:typeid]={seacms:currenttypeid}}active{elseif:[menulist:typeid]={playpage:upid}}active{end if}"><a href="[menulist:link]">[menulist:typename]</a></li>
 				{/seacms:menulist}
-				<li><a href="/topic">专题</a></li>
-				<li><a href="/news">资讯</a></li>
+				<li><a href="{seacms:topiclink}">专题</a></li>
+				<li><a href="{seacms:newslink}">资讯</a></li>
 			</ul>
 			<ul class="myui-header__user">	
 				<li class="dropdown-hover">
@@ -40,8 +40,8 @@
 						</div>
 					</div>
 				</li>
-				<li><a href="/gbook.php" title="留言反馈"><i class="fa fa-commenting"></i></a></li>
-				<li><a href="/member.php" title="会员中心"><i class="fa fa-user"></i></a></li>
+				<li><a href="{seacms:gbook}" title="留言反馈"><i class="fa fa-commenting"></i></a></li>
+				<li><a href="{seacms:siteurl}/member.php" title="会员中心"><i class="fa fa-user"></i></a></li>
 				
 			</ul>
 		</div>
@@ -64,15 +64,15 @@
 						<i class="fa fa-reorder"></i>
 						<div class="dropdown-box bottom fadeInDown clearfix">
 							<ul class="item nav-list clearfix">
-								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:{seacms:currenttypeid}=-444} btn-warm{else} btn-default{end if}" href="/">首页</a></li>
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:{seacms:currenttypeid}=-444} btn-warm{else} btn-default{end if}" href="{seacms:indexlink}">首页</a></li>
 {seacms:menulist type=top}{seacms:smallmenulist type=[menulist:typeid]}
 								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:[smallmenulist:typeid]={seacms:currenttypeid}} btn-warm{elseif:[smallmenulist:typeid]={playpage:upid}} btn-warm{else} btn-default{end if}" href="[smallmenulist:link]">[smallmenulist:typename]</a></li>
 								{/seacms:smallmenulist}{/seacms:menulist}
 {seacms:menulist type=3,4,41}
 								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:[menulist:typeid]={seacms:currenttypeid}} btn-warm{elseif:[menulist:typeid]={playpage:upid}} btn-warm{else} btn-default{end if}" href="[menulist:link]">[menulist:typename]</a></li>
 {/seacms:menulist}
-								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="/topic">专题</a></li>
-								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="/news">资讯</a></li>
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:gbook}">专题</a></li>
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:newslink}">资讯</a></li>
 								
 								
 							</ul>

@@ -68,11 +68,11 @@ if($action=="pay")
 		$turl= "//".$turl;
 		if(!is_array($row3))
 		{
-			$dsql->ExecuteNoneQuery("insert into sea_buy values('','$uid','$vid','$from2','".time()."')");
 			$rowpay = $dsql->GetOne("Select * From sea_data where v_id=$vid");
 			$vmoneypay=$rowpay['v_money'];
 			$sqlpay="Update sea_member set points = points-$vmoneypay where id=$uid";
 			$dsql->ExecuteNoneQuery("$sqlpay");
+			$dsql->ExecuteNoneQuery("insert into sea_buy values('','$uid','$vid','$from2','$vmoneypay','".time()."')");
 			echo "<script>alert('购买成功');top.location.href='".$turl."';</script>";
 			exit;
 		}
@@ -357,7 +357,7 @@ $str=implode('$$$',$arr1); //最终地址
     }
 	//视频收费
 	elseif($vipstop=="yes"){ 
-		$viptips="<a style='text-align: center;display: block;color: #fff;background-color: #009f95;width: 200px;height: 33px;margin: auto;margin-top: 100px;line-height: 33px;border-radius: 4px;font-weight: bold;' href=//".$_SERVER['HTTP_HOST']."/video/?".$vId."-".$id."-".$from.getfileSuffix()."&action=pay&from2=".$from.">此视频收费<font style='color:#c11a1a;text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de;'>".$vmoney."</font>".$cfg_pointsname."&nbsp;&nbsp;点击购买</a>";
+		$viptips="<div class='x-showtips-txt'  style='position:absolute;top:50%;left:50%;width: 100%;transform:translate(-50%,-50%);text-align:center;background: #1a1b1b;padding: 20px;'><div class='x-tips-title' style='font-size:16px;font-weight:700;color:#fff';>抱歉，本片需要购买观看完整版</div><div class='x-tips-subTitle'   style='font-size: 12px;color: #ccc;margin-top: 4px;max-height: 17px';>开通VIP购买此片，可享受会员权限</div><div class='x-showtips-btn'   style='width: 100%;float: left;padding: 5px';><div class='x-btn x-btn-try'  style='border: 1px solid #ebba73;border-radius: 22.5px;box-sizing: border-box;width: 150pxposition: relative;margin-top: 14px;display: inline-block;padding: 0 12px; margin-right: 12px;color: #c8a764;background-image: linear-gradient(270deg,#1b1b1b 0,#000 99%)';><div class='x-btn-text' ><a style='display: inline-block;text-align: center;font-size: 13px;color: #ebba73;height: 32px;line-height: 36px; width: 100%;max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;text-decoration:none'; href=//".$_SERVER['HTTP_HOST']."/video/?".$vId."-".$id."-".$from.getfileSuffix()."&action=pay&from2=".$from.">非会员".$vmoney."".$cfg_pointsname."购买</a></div></div><div class='x-btn x-btn-buy' style='border: 1px solid #ebba73;border-radius: 22.5px;box-sizing: border-box;width: 150px;position: relative;margin-top: 14px;display: inline-block;padding: 0 12px;background-image: linear-gradient(132deg,#e1b271 0,#fce5aa 100%)';><div class='x-btn-text x-btn-buy-text'><a  style='display: inline-block;text-align: center;font-size: 13px;color: #ebba73;height: 32px;line-height: 36px;width: 100%;max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 13px;font-size: 13px;font-weight: 700;color: #5b3301;text-decoration:none'; href='/member.php'>开通会员</a></div></div></div></div>";
 	
       	$content = str_replace("{playpage:player}",$viptips,$content);					 
     }

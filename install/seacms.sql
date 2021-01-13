@@ -115,6 +115,7 @@ CREATE TABLE `sea_co_data` (
   `v_des` text,
   `v_playdata` text,
   `v_downdata` text,
+  `v_jq` text,
   PRIMARY KEY  (`v_id`),
   KEY `tid` (`v_rank`,`tid`,`v_commend`,`v_hit`),
   KEY `v_addtime` (`v_addtime`,`v_digg`,`v_tread`,`v_inbase`)
@@ -216,13 +217,14 @@ DROP TABLE IF EXISTS `sea_data`;
 CREATE TABLE `sea_data` (
   `v_id` mediumint(8) unsigned NOT NULL auto_increment,
   `tid` smallint(8) unsigned NOT NULL default '0',
-  `v_name` char(60) NOT NULL default '',
+  `v_name` char(255) NOT NULL default '',
   `v_state` int(10) unsigned NOT NULL default '0',
   `v_pic` char(255) NOT NULL default '',
   `v_spic` char(255) NOT NULL default '',
   `v_gpic` char(255) NOT NULL default '',
   `v_hit` mediumint(8) unsigned NOT NULL default '0',
   `v_money` smallint(6) NOT NULL default '0',
+  `v_vip` varchar(255) NOT NULL default '',
   `v_rank` smallint(6) NOT NULL default '0',
   `v_digg` smallint(6) NOT NULL default '0',
   `v_tread` smallint(6) NOT NULL default '0',
@@ -265,6 +267,8 @@ CREATE TABLE `sea_data` (
   `v_ver` VARCHAR( 20 ) NULL ,
   `v_psd` VARCHAR( 30 ) NULL ,
   `v_longtxt` text ,
+  `v_push` INT(1) NOT NULL DEFAULT '0',
+  `v_try` INT(5) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`v_id`),
   KEY `idx_tid` (`tid`,`v_recycled`,`v_addtime`),
   KEY `idx_addtime` (`v_addtime`),
@@ -351,6 +355,8 @@ CREATE TABLE `sea_news` (
   `tid` smallint(8) unsigned NOT NULL default '0',
   `n_title` char(255) NOT NULL default '',
   `n_pic` char(255) NOT NULL default '',
+  `n_spic` char(255) NOT NULL default '',
+  `n_gpic` char(255) NOT NULL default '',
   `n_hit` mediumint(8) unsigned NOT NULL default '0',
   `n_money` smallint(6) NOT NULL default '0',
   `n_rank` smallint(6) NOT NULL default '0',
@@ -371,6 +377,7 @@ CREATE TABLE `sea_news` (
   `n_score` bigint(10) default '0',
   `n_scorenum` int(10) default '0',
   `n_content` mediumtext,
+  `n_push` INT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`n_id`),
   KEY `tid` (`n_rank`,`tid`,`n_commend`,`n_hit`),
   KEY `v_addtime` (`n_addtime`,`n_digg`,`n_tread`,`n_isunion`)
@@ -438,10 +445,14 @@ CREATE TABLE `sea_topic` (
   `enname` char(60) NOT NULL default '',
   `sort` int(11) NOT NULL default '0',
   `template` char(50) NOT NULL default '',
-  `pic` char(80) NOT NULL default '',
+  `pic` char(255) NOT NULL default '',
+  `spic` char(255) NOT NULL default '',
+  `gpic` char(255) NOT NULL default '',
   `des` text,
   `vod` text NOT NULL,
+  `news` text NOT NULL,
   `keyword` TEXT NULL,
+  `content` TEXT NULL,
   `addtime` INT(10) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `sort` (`sort`)
@@ -515,6 +526,8 @@ CREATE TABLE IF NOT EXISTS `sea_buy` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL DEFAULT '0',
   `vid` int(11) NOT NULL DEFAULT '0',
+  `vfrom` int(11) NOT NULL DEFAULT '0',
+  `vpaypoints` int(10) NOT NULL DEFAULT '0',
   `kptime` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -547,4 +560,13 @@ CREATE TABLE IF NOT EXISTS `sea_zyk` (
   `zinfo` varchar(255) NOT NULL default '暂无',
   PRIMARY KEY (`zid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+DROP TABLE IF EXISTS `sea_hyzbuy`;
+CREATE TABLE IF NOT EXISTS `sea_hyzbuy` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uname` varchar(20) NOT NULL,
+  `gid` int(6) NOT NULL,
+  `paypoints` int(10) NOT NULL,
+  `mon` int(6) NOT NULL,
+  `paytime` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

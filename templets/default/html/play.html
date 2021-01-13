@@ -5,7 +5,16 @@
 		{seacms:load public/include.html}
 		{seacms:load public/style.html}
 		<script src="/{seacms:sitepath}js/play.js"></script>
-		<style>.playon a{color:red;} .playvip a{background:#282828  url(../images/img/vip.png) no-repeat;}</style>
+		<style>
+		 .playon a{color:red;} .playvip a{background:#282828  url(images/img/vip.png) no-repeat;}
+		</style>
+		<script>
+		function hiddenps(){
+			 $(".col-md-wide-75").css("width","100%");
+			 $(".col-md-wide-25").css("display","none");
+			 $(".is-btn").css("display","none");
+		}
+		</script>
 	</head>
 	<body class="active">
 		<div class="myui-topbg clearfix"></div>
@@ -16,7 +25,7 @@
 					<div class="myui-player__item clearfix" style="background-color: #1f1f1f;">
 						<div class="col-md-wide-75 clearfix padding-0 relative" id="player-left">
 							{seacms:load vod/player.html}
-							<a class="is-btn hidden-sm hidden-xs" id="player-sidebar-is" href="javascript:;"><i class="fa fa-angle-right"></i></a> 
+							<a class="is-btn hidden-sm hidden-xs"  href="#" onclick="hiddenps();"><i class="fa fa-angle-right"></i></a> 
 						</div>
 						<div class="col-md-wide-25 padding-0" id="player-sidebar" style="max-height:555px;overflow-y:auto;">
 							<div class="myui-panel active clearfix">

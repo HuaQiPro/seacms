@@ -3,32 +3,6 @@
 <title>安装向导 - 海洋CMS</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <link href="images/style.css"rel="stylesheet" type="text/css"  />
-<script src="images/jquery.js" type="text/javascript"></script>
-<script language="javascript" type="text/javascript">
-<!--
-	function $o(tid){
-		return document.getElementById(tid);
-	}
-	function DoInstall()
-	{
-		//$o('postloader').style.display = 'block';
-		document.form1.submit();
-	}
-	function integuc()
-	{
-		$o('ucurl').style.display = '';
-		$o('ucip').style.display = '';
-		$o('ucpwd').style.display = '';
-	}
-	function nointeguc()
-	{
-		$o('ucurl').style.display = 'none';
-		$o('ucip').style.display = 'none';
-		$o('ucpwd').style.display = 'none';
-		
-	}
--->
-</script>
 </head>
 
 <body scroll="no">
@@ -61,25 +35,29 @@
 		</tr>
 
 			<tr>
-				<td width="120">数据库地址：</td>
-				<td><input class="inp" name="dbhost" id="dbhost" type="text" value="127.0.0.1" tips="通常为localhost或127.0.0.1" /></td>
+				<td width="90">数据库地址：</td>
+				<td><input class="inp" name="dbhost" id="dbhost" type="text" value="127.0.0.1" /><font style="color:#918b8b">数据库地址通常为localhost或127.0.0.1</font></td>
 			</tr>
 			<tr>
-				<td width="120">数据库名称：</td>
+				<td width="90">数据库端口：</td>
+				<td><input class="inp" name="dbport" id="dbhost" type="text" value="3306" /><font style="color:#918b8b">数据库端口通常为3306</font></td>
+			</tr>
+			<tr>
+				<td width="90">数据库名称：</td>
 				<td>
-					<input class="inp" name="dbname" id="dbname" type="text" value="<?php echo $dfDbname; ?>" tips="数据库名，如数据库已存在，将会被清空" />
+					<input class="inp" name="dbname" id="dbname" type="text" value="<?php echo $dfDbname; ?>" /><font style="color:#918b8b">数据库名如存在将会被清空</font>
 					</td>
 			</tr>
 			<tr>
-				<td width="120">数据库用户：</td>
-				<td><input class="inp" name="dbuser" id="dbuser" type="text" value="root" tips="数据库用户，强烈建议使用非root用户" /></td>
+				<td width="90">数据库用户：</td>
+				<td><input class="inp" name="dbuser" id="dbuser" type="text" value="root"  /><font style="color:#918b8b">数据库用户不建议用root用户</font></td>
 			</tr>
 			<tr>
-				<td width="120">数据库密码：</td>
+				<td width="90">数据库密码：</td>
 				<td>
-				  <div style='float:left;margin-right:3px;'><input class="inp" name="dbpwd" id="dbpwd" type="text"  tips="数据库用户的连接密码" /><input class="inp" name="dbprefix" type="hidden" value="sea_" /></div>
+				  <div style='float:left;margin-right:3px;'><input class="inp" name="dbpwd" id="dbpwd" type="text"  /><input class="inp" name="dbprefix" type="hidden" value="sea_" /></div>
 				  <div style='float:left' id='dbpwdsta'></div>
-				</td>
+				<font style="color:#918b8b">数据库用户的连接密码</font></td>
 			</tr>
 			
 				
@@ -87,7 +65,7 @@
 						
 			
 			<tr>
-				<td width="120">数据库编码：</td>
+				<td width="90">数据库编码：</td>
 				<td>
 						<input  type="radio" name="dblang" id="dblang_utf8" value="utf8" checked="checked" /><label for="dblang_utf8">UTF8</label>
 						<!--<input class="inp" type="radio" name="dblang" id="dblang_latin1" value="latin1" /><label for="dblang_latin1">LATIN1</label>
@@ -102,14 +80,14 @@
 		</tr>
 
 			<tr>
-				<td width="120">用户名：</td>
+				<td width="90">用户名：</td>
 				<td>
-					<input id="adm_user" class="inp" name="adminuser" type="text" value="admin" tips="网站管理员用户名，只能输入使用英文和数字" />
+					<input id="adm_user" class="inp" name="adminuser" type="text" value="admin"  /><font style="color:#918b8b">管理员，请使用英文和数字</font>
 				</td>
 			</tr>
 			<tr>
-				<td width="120">密　码：</td>
-				<td><input id="adm_pass" class="inp" name="adminpwd" type="text" value="admin" tips="后台管理员密码" /></td>
+				<td width="90">密　码：</td>
+				<td><input id="adm_pass" class="inp" name="adminpwd" type="text" value="admin"  /><font style="color:#918b8b">后台管理员密码</font></td>
 			</tr>
 		</table>
 
@@ -120,18 +98,18 @@
 		</tr>
 
 			<tr>
-				<td  width="120">网站名称：</td>
+				<td  width="90">网站名称：</td>
 				<td>
-					<input class="inp" name="webname" type="text"  value="影视大全" tips="请填写您的网站名称"/>
-				</td>
+					<input class="inp" name="webname" type="text"  value="影视大全" />
+				<font style="color:#918b8b">请填写您的网站名称</font></td>
 			</tr>
 			<tr>
-				<td  width="120"> 网站网址：</td>
-				<td><input class="inp" name="baseurl" type="text" value="<?php echo $baseurl; ?>"  tips="网站地址，如：http://www.seacms.net"/></td>
+				<td  width="90"> 网站网址：</td>
+				<td><input class="inp" name="baseurl" type="text" value="<?php echo $baseurl; ?>"  /><font style="color:#918b8b">网站地址，如：http://www.seacms.net</font></td>
 			</tr>
 			<tr>
-				<td  width="120">安装目录：</td>
-				<td><input class="inp" name="cmspath" type="text"  value="<?php echo $basepath; ?>" tips="在根目录安装时不必理会,不建议安装在二级目录"/></td>
+				<td  width="90">安装目录：</td>
+				<td><input class="inp" name="cmspath" type="text"  value="<?php echo $basepath; ?>" /><font style="color:#918b8b">根目录不用填写,不建议安装在二级目录</font></td>
 			</tr>
 		</table>
 
@@ -144,7 +122,7 @@
 	</div>
 </div>
 </form>
-<script src="./images/install.js" type="text/javascript"></script>
+
 <div style="display:none;">
 <script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/install.js"></script>
 </div>	

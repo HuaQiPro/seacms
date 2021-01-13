@@ -94,8 +94,10 @@ $menu=array (
 		2=>"<a target='I2' href='admin_memberslist.php'>用户列表</a>",
 		3=>"<a target='I2' href='admin_members_group.php'>用户组管理</a>",
 		4=>"<a target='I2' href='admin_pay.php'>充值卡管理</a>",
-		5=>"<a target='I2' href='admin_paylog.php'>充值记录</a>",
-		6=>"<a target='I2' href='admin_notify.php'>会员消息通知</a>",
+		5=>"<a target='I2' href='admin_paylog.php'>用户充值记录</a>",
+		6=>"<a target='I2' href='admin_vpaylog.php'>视频购买记录</a>",
+		7=>"<a target='I2' href='admin_hyzlog.php'>会员购买记录</a>",
+		8=>"<a target='I2' href='admin_notify.php'>会员消息通知</a>",
 	),
 	'tool'=>array (
 		'link'=>"admin_datarelate.php?action=repeat",

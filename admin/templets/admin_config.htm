@@ -479,9 +479,14 @@ $(function() {
           请根据服务器配置性能合理设置，太快可能造成服务器资源耗尽导致中断</td>
       </tr>
 	  <tr>
-        <td>采集过滤关键词:</td>
+        <td>影片名过滤:</td>
         <td ><input type="text" name="edit___cfg_cjjump" size="35" value="<?php echo $cfg_cjjump;?>"> &nbsp;
           影片名包含关键词则跳过采集，多个关键词用 | 分割</td>
+      </tr>
+	  <tr>
+        <td>影片名替换:</td>
+        <td ><input type="text" name="edit___cfg_cjreplace" size="35" value="<?php echo $cfg_cjreplace;?>"> &nbsp;
+          影片名替换，使用=和|符号分割，不填写则替换为无，例如：英文=英语|高清=|a=A</td>
       </tr>
 	  </table>
 </div>

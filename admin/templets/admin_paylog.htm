@@ -25,9 +25,18 @@ form{float:left;}
         $cckyes = 0;
     }
 	
+	if($ckey !=""){
+		$sqlyesu="SELECT SUM( climit ) AS cckyes FROM sea_cck where status=1 and uname='$ckey'";
+		$rowyesu = $dsql->GetOne($sqlyesu);
+		if($rowyesu['cckyes']>0){
+			$cckyesu = $rowyesu['cckyes'];
+		}else{
+			$cckyesu = 0;
+		}
+	}
 	
 	$w="";
-    $numPerPage=1;
+    $numPerPage=20;
     $page = isset($page) ? intval($page) : 1;
     if($page==0) $page=1;
     
@@ -36,7 +45,7 @@ form{float:left;}
 	{$w.=" and climit=$climit";}
 	else
 	{$w.='';}
-	if (!empty($ckey)) {$w.=" and uname like '%$ckey%'";}
+	if (!empty($ckey)) {$w.=" and uname = '$ckey'";}
 
 	
 	//计算有多少条数据
@@ -61,6 +70,7 @@ form{float:left;}
       <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="15" class="td_title">&nbsp;充值记录&nbsp;&nbsp;【充值总额<font color=red><?php echo $cckyes ?></font>】
+		  <?php if($cckyesu>0){echo '【用户<font color=red>'.$ckey.'</font>充值总额<font color=red>'.$cckyesu.'</font>】';} ?>
             </td>
         </tr>
         <tr>
@@ -68,7 +78,7 @@ form{float:left;}
             <td height="40" align="left" colspan="10">
              
 			 <form action="" method="post" >
-              &nbsp;&nbsp;&nbsp;按面值：
+              面值：
 			  <select id='climit' name='climit' style="width:80px" onChange="self.location.href='?cstatus=<?php echo $cstatus ?>&climit='+this.options[this.selectedIndex].value">
 			    <option value=''>选择面值</option>
 				<option value='all'>全部</option>
@@ -82,7 +92,7 @@ form{float:left;}
 				</select>
           </form> 
 		   <form action="?action=search" method="post" >
-              &nbsp;&nbsp;&nbsp;按用户：<input  name="ckey" type="text" id="ckey" size="12">
+              &nbsp;&nbsp;&nbsp;用户：<input  name="ckey" type="text" id="ckey" size="12">
 			  <input type="submit" name="selectBtn" value="搜 索" class="btn"  />
 		   </form>
          </td>
@@ -92,10 +102,10 @@ if($TotalResult==0){
     echo "<tr><td colspan='10'><br>&nbsp;<font color=red>无充值信息</font><br><br></td></tr>";}
 ?>
         <tr bgcolor="#f5fafe" >
-          <td width="5%" style="text-align:center" height="30"  bgcolor="#FFFFFF" class="td_btop3" >&nbsp;ID</td>
-          <td width="20" bgcolor="#FFFFFF" class="td_btop3">用户</td>
+          <td width="20"  height="30" bgcolor="#FFFFFF" class="td_btop3">用户</td>
           <td width="20" bgcolor="#FFFFFF" class="td_btop3">面值</td>
-          <td width="100" bgcolor="#FFFFFF" class="td_btop3">充值时间</td>
+          <td width="60" bgcolor="#FFFFFF" class="td_btop3">充值时间</td>
+		  <td width="100" bgcolor="#FFFFFF" class="td_btop3">充值卡号</td>
         </tr>
         <form method="post" name="videolistform">
           <?php
@@ -110,10 +120,10 @@ $copy.=$row->ckey."\n"
 
 
           <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
-            <td height="30" class="td_border" style="text-align:center"><?php echo $id;?></td>
-            <td class="td_border"><?php echo $row->uname;?></td>
+            <td class="td_border" height="30"><?php echo $row->uname;?></td>
 			<td class="td_border"><?php echo $row->climit;?></td>			
             <td class="td_border"><?php echo $row->usetime;?></td>
+			<td class="td_border"><?php echo $row->ckey;?></td>
 
           </tr>
           <?php }?>
