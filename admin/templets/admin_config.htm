@@ -597,6 +597,15 @@ $(function() {
         <td width="103"  align="left" class="td_border">积分个性名称:</td>
         <td ><input type="text" name="edit___cfg_pointsname" size="10"  value="<?php echo $cfg_pointsname;?>"/> 消费积分个性名称，如金币、影豆、点数等</td>
       </tr>
+	  <tr>
+        <td width="103"  align="left" class="td_border">会员购买折扣:</td>
+        <td >
+		单月：<input type="text" name="edit___cfg_vipoff_1" size="4"  value="<?php echo $cfg_vipoff_1;?>"/>
+		&nbsp;三月：<input type="text" name="edit___cfg_vipoff_3" size="4"  value="<?php echo $cfg_vipoff_3;?>"/> 
+		&nbsp;半年：<input type="text" name="edit___cfg_vipoff_6" size="4"  value="<?php echo $cfg_vipoff_6;?>"/> 
+		&nbsp;一年：<input type="text" name="edit___cfg_vipoff_12" size="4"  value="<?php echo $cfg_vipoff_12;?>"/> 		
+		&nbsp;&nbsp;用户购买会员折扣，0.7/1.5（7折/1.5倍），空/0/1均为无折扣</td>
+      </tr>
       <tr>
         <td>留言和报错开关:</td>
         <td>开启:

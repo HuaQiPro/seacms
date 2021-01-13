@@ -80,46 +80,37 @@ form{float:left;}
     <div class="r_content_1">
       <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="15" class="td_title">&nbsp;充值卡管理&nbsp;&nbsp;【当前总金额<font color=red><?php echo $cckt ?></font>积分&nbsp;已充值<font color=red><?php echo $cckyes ?></font>积分&nbsp;未使用<font color=red><?php echo $cckno ?></font>积分】
+          <td colspan="15" class="td_title">&nbsp;充值卡管理&nbsp;&nbsp;【当前总金额<font color=red><?php echo $cckt ?></font>&nbsp;已充值<font color=red><?php echo $cckyes ?></font>&nbsp;未使用<font color=red><?php echo $cckno ?></font>】
             </td>
         </tr>
         <tr>
           
             <td height="40" align="left" colspan="10">
 			<form action="?action=add" method="post" >
-              &nbsp;生成充值卡：数量&nbsp;<input  name="num" type="text" id="num" size="5" value="10">
-              张&nbsp;
-              <select name="limit" id="limit">
-                <option value="1">1 积分</option>
-				<option value="5">5 积分</option>
-				<option value="10">10 积分</option>
-				<option value="50">50 积分</option>
-				<option value="100">100 积分</option>
-				<option value="500">500 积分</option>
-				<option value="1000">1000 积分</option>
-              </select>
+              &nbsp;生成充值卡：数量：<input  name="num" type="text" id="num" size="5" value="10">
+			  &nbsp;面值：<input  name="limit" type="text" id="limit" size="5" value="100">
 			  <input type="submit" name="selectBtn" value="生 成" class="btn"  />
 			  </form>
              
 			 <form action="" method="post" >
-              &nbsp;&nbsp;&nbsp;检索：
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;检索：
 			  <select id='climit' name='climit' style="width:80px" onChange="self.location.href='?cstatus=<?php echo $cstatus ?>&climit='+this.options[this.selectedIndex].value">
-			    <option value=''>选择金额</option>
-				<option value='all'>全部金额</option>
-                <option value="1">1 积分</option>
-				<option value="5">5 积分</option>
-				<option value="10">10 积分</option>
-				<option value="50">50 积分</option>
-				<option value="100">100 积分</option>
-				<option value="500">500 积分</option>
-				<option value="1000">1000 积分</option>
+			    <option value=''>选择面值</option>
+				<option value='all'>全部</option>
+				<?php
+					$sqlclimit="select DISTINCT climit from sea_cck group by climit ORDER BY climit ASC ";
+					$dsql->SetQuery($sqlclimit);
+					$dsql->Execute('alimit');
+					while($rowalimit=$dsql->GetObject('alimit'))
+					{echo '<option value="'.$rowalimit->climit.'">'.$rowalimit->climit.'</option>';}
+				?>
 				</select>
 				&nbsp;
 				<select id='cstatus' name='cstatus' style="width:80px" onChange="self.location.href='?climit=<?php echo $climit ?>&cstatus='+this.options[this.selectedIndex].value">
 			    <option value=''>选择状态</option>
-				<option value='all'>全部状态</option>
+				<option value='all'>全部</option>
                 <option value="1">已充值</option>
-				<option value="0">未使用</option>
+				<option value="0">未充值</option>
 				</select>
           </form> 
 		   <form action="?action=search" method="post" >

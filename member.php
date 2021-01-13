@@ -21,20 +21,8 @@
 <script type="text/javascript" src="pic/member/layer.js"></script>
 <style>
 .sc{padding:6px 6px 6px 6px;text-align: center;}
-.sc input{margin-top:3px;margin-button:3px;width:120px;}
+.sc input{margin-top:5px;margin-button:5px;width:120px;}
 </style>
-<script>
-//全屏弹出层
-    var show=function (id,points,pname) {
-        var index = layer.open({
-            type: 1,
-			anim: 'up',
-			style: 'position:fixed; bottom:0px; left:0; width: 100%; padding:10px 0; border:none;',
-            title:"选择时长",
-			content: '<div class="sc"><input type="submit" class="btn btn-info btn-sm" value="单月&nbsp;&nbsp;'+points*1+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=1"><br><input type="submit" class="btn btn-info btn-sm" value="三月&nbsp;&nbsp;'+points*3+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=3"><br><input type="submit" class="btn btn-info btn-sm" value="半年&nbsp;&nbsp;'+points*6+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=6"><br><input type="submit" class="btn btn-info btn-sm" value="一年&nbsp;&nbsp;'+points*12+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=12"></div>'
-        }); 
-    }
-</script>
 </head>
 <?php 
 session_start();
@@ -46,6 +34,24 @@ if($cfg_user==0)
 	exit();
 }
 
+if($cfg_vipoff_1==0 OR $cfg_vipoff_1=="" OR empty($cfg_vipoff_1)){$cfg_vipoff_1=1;}
+if($cfg_vipoff_3==0 OR $cfg_vipoff_3=="" OR empty($cfg_vipoff_3)){$cfg_vipoff_3=1;}
+if($cfg_vipoff_6==0 OR $cfg_vipoff_6=="" OR empty($cfg_vipoff_6)){$cfg_vipoff_6=1;}
+if($cfg_vipoff_12==0 OR $cfg_vipoff_12=="" OR empty($cfg_vipoff_12)){$cfg_vipoff_12=1;}
+?>
+<script>
+//全屏弹出层
+    var show=function (id,points,pname) {
+        var index = layer.open({
+            type: 1,
+			anim: 'up',
+			style: 'position:fixed; bottom:0px; left:0; width: 100%; padding:10px 0; border:none;',
+            title:"选择时长",
+			content: '<div class="sc"><input type="submit" class="btn btn-info btn-lg" value="单月&nbsp;&nbsp;'+points*1*<?php echo $cfg_vipoff_1;?>+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=1"><br><input type="submit" class="btn btn-success btn-lg" value="三月&nbsp;&nbsp;'+points*3*<?php echo $cfg_vipoff_3;?>+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=3"><br><input type="submit" class="btn btn-primary btn-lg" value="半年&nbsp;&nbsp;'+points*6*<?php echo $cfg_vipoff_6;?>+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=6"><br><input type="submit" class="btn btn-danger btn-lg" value="一年&nbsp;&nbsp;'+points*12*<?php echo $cfg_vipoff_12;?>+''+pname+'" onclick=self.location="?action=hyz&gid='+id+'&mon=12"></div>'
+        }); 
+    }
+</script>
+<?php
 $action = isset($action) ? trim($action) : 'cc';
 $page = isset($page) ? intval($page) : 1;
 $uid=$_SESSION['sea_user_id'];
@@ -404,7 +410,14 @@ elseif($action=='hyz')
     }else{
 		$userjf=$rowhyz2['points']; //会员剩余积分
     }
-	
+	//计算折扣
+	if($mon==1){$cfg_vipoff=$cfg_vipoff_1;}
+	elseif($mon==3){$cfg_vipoff=$cfg_vipoff_3;}
+	elseif($mon==6){$cfg_vipoff=$cfg_vipoff_6;}
+	elseif($mon==12){$cfg_vipoff=$cfg_vipoff_12;}
+	else{$cfg_vipoff=$cfg_vipoff_1;}
+	$hyzjf=$hyzjf*$cfg_vipoff;
+	//echo '<br><br><br>===';echo $hyzjf;echo '===<br><br><br>';die;
 	if($userjf<$hyzjf)
 	{
 		showMsg("积分不足","-1");exit; //判断积分是否足够购买
