@@ -548,33 +548,7 @@ function CheckSql($db_string,$querytype='select')
 	$log_file = sea_INC.'/../data/'.md5($cfg_cookie_encode).'_safe.txt';
 	$userIP = GetIP();
 	$getUrl = GetCurUrl();	
-	$db_string = str_ireplace('--', "", $db_string);
-	$db_string = str_ireplace('/*', "", $db_string);
-	$db_string = str_ireplace('*/', "", $db_string);
-	$db_string = str_ireplace('*!', "", $db_string);
-	$db_string = str_ireplace('//', "", $db_string);
-	$db_string = str_ireplace('\\', "", $db_string);
-	$db_string = str_ireplace('hex', "he", $db_string);	
-	$db_string = str_ireplace('updatexml', "updatexm", $db_string);
-	$db_string = str_ireplace('extractvalue', "extractvalu", $db_string);
-	$db_string = str_ireplace('benchmark', "benchmar", $db_string);
-	$db_string = str_ireplace('sleep', "slee", $db_string);
-	$db_string = str_ireplace('load_file', "load-file", $db_string);
-	$db_string = str_ireplace('outfile', "out-file", $db_string);
-	$db_string = str_ireplace('ascii', "asci", $db_string);	
-	$db_string = str_ireplace('char(', "cha", $db_string);	
-	$db_string = str_ireplace('substr', "subst", $db_string);
-	$db_string = str_ireplace('substring', "substrin", $db_string);
-	$db_string = str_ireplace('script', "scrip", $db_string);
-	$db_string = str_ireplace('frame', "fram", $db_string);
-	$db_string = str_ireplace('information_schema', "information-schema", $db_string);
-	$db_string = str_ireplace('exp', "ex", $db_string);
-	$db_string = str_ireplace('GeometryCollection', "GeometryCollectio", $db_string);
-	$db_string = str_ireplace('polygon', "polygo", $db_string);
-	$db_string = str_ireplace('multipoint', "multipoin", $db_string);
-	$db_string = str_ireplace('multilinestring', "multilinestrin", $db_string);
-	$db_string = str_ireplace('linestring', "linestrin", $db_string);
-	$db_string = str_ireplace('multipolygon', "multipolygo", $db_string);	
+
 
 	//如果是普通查询语句，直接过滤一些特殊语法
 	if($querytype=='select')

@@ -750,7 +750,8 @@ function FillUrl($refurl,$surl)
 		}
 		$okurl = m_eregi_replace('/{1,}','/',$okurl);
 
-		if( strtolower(substr($refurl,0,8))=='https://' ){$httpx='https://';}else{$httpx='http://';}
+		if(strtolower(substr($refurl,0,8))=='https://' ){$httpx='https://';}else{$httpx='http://';}
+		if(strtolower(substr($surl,0,7))=='http://' ){$httpx='http://';}
 		return $httpx.$okurl;
 }
 

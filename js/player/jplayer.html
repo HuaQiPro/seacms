@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="jplayer/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jplayer/jquery.min.js"></script>
+<script type="text/javascript" src="jplayer/jquery.jplayer.min.js"></script>
+
+<SCRIPT LANGUAGE="JavaScript1.2">
+adTime=parent.adsTime; 
+chanceAd=1;
+var ns=(document.layers);
+var ie=(document.all);
+var w3=(document.getElementById  &&  !ie);
+adCount=0;
+function initAd(){
+        if(!ns  &&  !ie  &&  !w3) return;
+        if(ie)             adDiv=eval('document.all.sponsorAdDiv.style');
+        else if(ns)        adDiv=eval('document.layers["sponsorAdDiv"]');
+        else if(w3)        adDiv=eval('document.getElementById("sponsorAdDiv").style');
+        randAd=Math.ceil(Math.random()*chanceAd);
+        if (ie||w3)
+        adDiv.visibility="visible";
+        else
+        adDiv.visibility ="show";
+        if(randAd==1) showAd();
+		document.getElementById("zzzif").src=parent.adsPage; 
+		document.getElementById("zzzif").height=parent.playerh;
+		document.getElementById("zzzif").width=parent.playerw; 		
+}
+function showAd(){
+if(adCount<adTime*10){adCount+=1;
+        if (ie){documentWidth  =document.body.offsetWidth/2+document.body.scrollLeft-20;
+        documentHeight =document.body.offsetHeight/2+document.body.scrollTop-20;}
+        else if (ns){documentWidth=window.innerWidth/2+window.pageXOffset-20;
+        documentHeight=window.innerHeight/2+window.pageYOffset-20;}
+        else if (w3){documentWidth=self.innerWidth/2+window.pageXOffset-20;
+        documentHeight=self.innerHeight/2+window.pageYOffset-20;}
+        adDiv.left=documentWidth-200;adDiv.top =documentHeight-200;
+        setTimeout("showAd()",100);}else closeAd();
+}
+function closeAd(){
+if (ie||w3)
+adDiv.display="none";
+else
+adDiv.visibility ="hide";
+}
+onload=initAd;
+</script>
+</head>
+<body style="margin:0px;padding:0px;">
+<div id="sponsorAdDiv" style="visibility:hidden; z-index:999; height:105%; width:100%;">
+<iframe id="zzzif" name="zzzif" src="" scrolling="no" frameborder="0"></iframe>
+</div>
+
+<div id="player"></div>
+   
+
+<script>
+var playerh=parent.playerh;
+var jpurl=parent.now;
+var xurl=parent.nextPage;
+var surl=parent.prePage;
+var urlname=parent.vpart; 
+
+
+
+    var playhtml='<div class="oldPlayer"><div id="cscms_jplayer"class="jp-jplayer"></div><div id="jp_container_1"class="jp-audio"><div class="jp-type-single"><div class="jp-interface clearfix"><div class="playerMain-01"><div class="jp-time-holder"><div class="jp-current-time">00:00</div>/<div class="jp-duration">00:00</div></div></div><div class="playerMain-02"><div class="jp-progress"><div class="jp-seek-bar"><div class="jp-play-bar"></div></div></div></div><div class="playerMain-03"><div class="fl"><ul class="jp-controls"><li><a href="'+surl+'"target="_top" class="jp-previous" tabindex="1">上一首</a></li><li><a href="javascript:{};"class="jp-play"tabindex="1">播放</a></li><li><a style="display:none;"href="javascript:{};"class="jp-pause"tabindex="1">暂停</a></li><li><a href="'+xurl+'"target="_top" class="jp-next"tabindex="1">下一首</a></li></ul></div>';
+    playhtml+='<div class="fr"><ul class="ku-volume"><li><a href="javascript:{};"class="jp-mute"tabindex="1"title="静音">静音</a></li><li><a href="javascript:{};"class="jp-unmute"style="display:none;"tabindex="1"title="取消静音">取消静音</a></li><li class="volume-bar-wrap"><div class="jp-volume-bar"><div class="jp-volume-bar-value"></div></div></li><li><a href="javascript:{};"class="jp-volume-max"tabindex="1"title="最大音量">最大音量</a></li></ul></div></div></div><div class="jp-no-solution"><span>播放出现故障,您需要更新！</span>对不起，您需要更新您的浏览器到最新版本或更新您的flash播放器版本！<br/><a href="http://get.adobe.com/flashplayer/"target="_blank">点击下载Flash plugin>></a></div></div></div></div></div>';
+    document.getElementById('player').innerHTML = playhtml;
+    $("#cscms_jplayer").jPlayer({
+        supplied: "mp3,m4a",
+        swfPath: "jplayer/jplayer.swf",
+        wmode: "window",
+        ready:function (event){ getjp_play(); },
+        ended: function () { getjp_next(); }
+    });
+
+
+
+
+function getjp_next() {
+        if( xurl != "") {
+              top.location =  xurl;
+        }else{
+              getjp_play();
+        }
+}
+function getjp_play() {
+	if(jpurl.indexOf(".mp3")>0){		
+		$("#cscms_jplayer").jPlayer("setMedia", {mp3:jpurl}).jPlayer("play");
+	}else{
+		$("#cscms_jplayer").jPlayer("setMedia", {m4a:jpurl}).jPlayer("play");
+	}
+}
+
+</script>  
+</body>
+</html>

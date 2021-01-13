@@ -1,0 +1,49 @@
+.oldPlayer{width:99%;margin:0 auto;padding:0 10px;height:96px;background:#f3f3f3 url(player.png) 0 0 repeat-x;}
+.oldPlayer ol,.oldPlayer ul,.oldPlayer li{list-style:none;}
+.oldPlayer .playerMain-01{font-size:12px;padding:5px 0;overflow:hidden;zoom:1;height:18px;}
+.oldPlayer .playerMain-01 p{width:200px;float:left;line-height:18px;height:18px;overflow:hidden;}
+.oldPlayer .playerMain-01 p span{font-weight:800;}
+.oldPlayer .playerMain-01 .jp-time-holder{float:right;margin-right:10px;line-height:18px;height:18px;width:70px;overflow:hidden;zoom:1;color:#999;text-align:right;}
+.jp-current-time,.jp-duration{font-size:11px;display:inline;}
+.jp-progress{overflow:hidden;background:url(player.png) 0 -105px repeat-x;}
+.jp-audio div.jp-progress{height:8px;width:98%;}
+.jp-video div.jp-progress{top:0px;left:0px;width:100%;height:10px;}
+.jp-seek-bar{width:100%;height:100%;cursor:pointer;background:url(player.png) 0 -96px repeat-x;}
+.jp-play-bar{width:0px;height:100%;background:url(player.png) 0 -114px repeat-x;}
+.jp-play,a.jp-pause{width:34px;height:34px;margin:0 2px;}
+.jp-play{background:url(player.png) -150px -125px no-repeat;}
+.jp-play:hover{background:url(player.png) -150px -125px no-repeat;}
+.jp-pause{background:url(player.png) -187px -125px;display:none;}
+.jp-pause:hover{background:url(player.png) -187px -125px no-repeat;}
+a.jp-previous,a.jp-next{width:24px;height:24px;margin-top:6px;}
+.jp-previous{background:url(player.png) 0 -130px no-repeat;}
+.jp-previous:hover{background:url(player.png) -124px -130px no-repeat;}
+.jp-next{background:url(player.png) -99px -130px no-repeat;}
+.jp-next:hover{background:url(player.png) -223px -130px no-repeat;}
+.pl-header{height:133px;background:#f1f1f1 url(player.png) 0 -42px repeat-x;}
+.jp-interface{position:relative;width:100%;}
+.jp-interface .jp-controls{overflow:hidden;width:90px;height:34px;}
+.jp-interface .jp-controls li{display:inline;float:left;}
+.jp-interface .jp-controls a{display:block;overflow:hidden;text-indent:-9999px;}
+.ku-volume{overflow:hidden;width:78px;height:8px;margin-top:5px;margin-right:10px;}
+.ku-volume li{display:inline;float:left;}
+.ku-volume a{display:block;overflow:hidden;text-indent:-9999px;}
+.jp-mute,.jp-unmute,.jp-volume-max{width:9px;height:8px;}
+.jp-mute{background:url(player.png) -248px -122px no-repeat;}
+.jp-mute:hover{background:url(player.png) -248px -131px no-repeat;}
+.jp-unmute{background:url(player.png) -257px -122px no-repeat;display:none;}
+.jp-unmute:hover{background:url(player.png) -257px -131px no-repeat;}
+.jp-volume-max{background:url(player.png) -266px -122px no-repeat;}
+.jp-volume-max:hover{background:url(player.png) -266px -131px no-repeat;}
+.volume-bar-wrap{margin:2px 5px 0 0;}
+.jp-volume-bar{overflow:hidden;background:url(player.png) 0 -96px repeat-x;width:50px;height:4px;cursor:pointer;}
+.jp-volume-bar-value{background:url(player.png) 0 -114px repeat-x;width:0px;height:4px;cursor:pointer;}
+.playerMain-03{padding:5px 0;}
+.playerMain-03 .fl{float:left;width:90px;}
+.playerMain-03 .fr { float:right; margin:8px 0 0 ;}
+.playerMain-03 .ringDown{display:block;text-align:right;font-size:12px;margin:7px 15px 0 0; display:inline; float:right;}
+.playerMain-03 .ringDown a,.playerMain-03 .fr .ringDown a:hover{color:#36c;text-decoration:underline;}
+.jp-no-solution{display:none;position:absolute;width:98%;margin-left:-200px;left:50%;top:0;padding:8px;background-color:#fff;border:2px solid #82bf43;color:#666;}
+.jp-no-solution span{font-size:1em;display:block;text-align:center;font-weight:bold;}
+.jp-no-solution a{font-size:14px;}
+
