@@ -54,7 +54,7 @@ if($action=="pay")
 		if(empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
 		$row7=$dsql->GetOne("Select v_money from sea_data where v_id='$vid'");
 		$vmoney=intval($row7['v_money']);
-		if($vmoney=="" OR empty($vmoney)){showmsg('参数丢失，请返回！', -1); exit();}
+		if($vmoney=="" OR empty($vmoney)){$vmoney=0;}
 		$row6=$dsql->GetOne("Select * from sea_member where id='$uid'");
 		if($row6['points']<$vmoney)
 		{
@@ -100,6 +100,7 @@ function echoPlay($vId)
 	
 	$vtag=$row['v_name'];
 	$vmoney=$row['v_money'];
+	if($vmoney=="" OR empty($vmoney)){$vmoney=0;}
 	$vtry=$row['v_try'];
 	$vExtraType = $row['v_extratype'];
 	$uid=$_SESSION['sea_user_id'];
@@ -142,9 +143,9 @@ function echoPlay($vId)
 		}
 
 		
-        if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
+        //if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
 		//if(in_array($from,$viparr) AND empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
-		if(in_array($from,$viparr) AND $vmoney>0 AND $vtry==0)
+		if(in_array($from,$viparr) AND $vtry==0 AND !getUserAuth($vType, "play"))
 		{
 			$row2=$dsql->GetOne("Select * from sea_buy where vid='$vId' and vfrom=$from and uid='$uid'");
 			if(!is_array($row2))

@@ -139,7 +139,7 @@ font-weight:bold;color:#008EBD;border-bottom:1px solid #c6dbe7;width:99%;backgro
 .pages{clear:both;margin:10px 0}
 	.pages em, .pages a, .pages strong{text-decoration:none;margin-left:3px;padding:2px 5px;background: #e0e0e0;border-radius:2px;}
 	.pages span{text-decoration: none;margin-left: 3px;padding: 2px 5px;border-radius: 2px;background: #b0d2e2;}
-	.pages a:hover{text-decoration:none;border:1px solid #09C;background:#09C;color:#FFF;border-radius:2px;}
+	.pages a:hover{text-decoration:none;background:#09C;color:#FFF;border-radius:2px;}
 	.pages strong{border:none;font-weight:700}
 	.cuspages{margin:3px 0;line-height:200%}
 	.cuspages .pages{display:inline;clear:none;margin-right:10px}

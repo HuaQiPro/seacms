@@ -13,9 +13,7 @@ $vid=intval($_GET['vid']);
 $vfrom=$_GET['vfrom'];
 $vpart=$_GET['vpart']+1;
 
-
 $sug=array('q'=>"",'p'=>false,s=>array(''));
-
 
 if($wd=='' && $url=='')
 { 
@@ -112,10 +110,12 @@ class SetQuerybyseacms
         }
 	  $houz=getfileSuffix();
 	  
-	$row2=$dsql->GetOne("SELECT v_vip,v_try,v_money FROM sea_data where v_id=".$vid);
+	$row2=$dsql->GetOne("SELECT tid,v_vip,v_try,v_money FROM sea_data where v_id=".$vid);
 	$vip=$row2['v_vip'];
 	$try=$row2['v_try'];
+	$vType=$row2['tid'];
 	$jifen=$row2['v_money'];
+	if($jifen=="" OR empty($jifen)){$jifen=0;}
 	if($starget!=""){
 		$target=" target=\"".$starget."\"";
 	}else{
@@ -123,6 +123,9 @@ class SetQuerybyseacms
 	}
 	$urlArray2=$pratArray;
 	$urlCount=count($urlArray2);
+	
+	//检测授权
+	if(getUserAuth($vType, "play")){$isauth='y';}else{$isauth='n';}
 	
 	if(strpos($vip,'s')!==false)
 	{
@@ -167,7 +170,7 @@ $uid = intval($uid);
 	  if(empty($viparr)){$viparr=array(-1,-2);}
 	  if(empty($vipdelarr)){$vipdelarr=array(-1);}
 	  $viparr2=array_diff($viparr,$vipdelarr);
-      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray,'houz'=>$houz,'vipp'=>$viparr2,'try'=>$try,'jifen'=>$jifen,'jifenname'=>$cfg_pointsname);
+      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray,'houz'=>$houz,'vipp'=>$viparr2,'try'=>$try,'jifen'=>$jifen,'jifenname'=>$cfg_pointsname,'isauth'=>$isauth);
 
 
      return '';

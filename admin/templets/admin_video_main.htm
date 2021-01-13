@@ -10,11 +10,9 @@
 
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
 <title>影片管理</title>
-<script src="js/jquery.js"></script>
-<script src="js/layer.js"></script>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script type="text/javascript"> 
 // 图片预览
 function showpic(event,imgsrc){	
 	var left = event.clientX+document.documentElement.scrollLeft+20;
@@ -28,22 +26,6 @@ function showpic(event,imgsrc){
 function hiddenpic(){
 	$("preview").style.display="none";
 }
-
-
-//全屏弹出层
-    var show=function (id) {
-        var index = layer.open({
-            type: 2,          //默认弹出层类型
-			shade: 0,
-			isOutAnim: false,
-            title:"视频编辑",  //弹出层角标名称
-            content: "?action=edit&id="+id,  //弹出层页面地址
-            area: ['800px', '500px'],    //弹出层大小
-            maxmin: true   //弹出层是否全屏
-        });
-        layer.full(index);  
-    }
-window.onload=parent.layer.closeAll(); //疯狂模式，关闭所有层
 </script>
 <style type="text/css">
 select {
@@ -275,7 +257,7 @@ $fromstr=getFromStr($row->v_playdata)." ".getFromStr($row->v_playdata1);
             <?php if($cfg_runmode=='0'){?>
             <td class="td_border"><?php isVideoMake($v_id,$contentUrl);?></td>
             <?php }?>
-            <td class="td_border" align="center"><a href="javascript:;" onclick="javascript:show('<?php echo $v_id;?>');">编辑</a> <a href="?action=del&id=<?php echo $v_id;?>" onClick="return confirm('确定要删除吗')">删除</a> <a href="?action=<?php echo $v_recycled=='ok'?'restore':'hide' ?>&id=<?php echo $v_id;?>"><?php echo $v_recycled=='ok'?'还原':'隐藏' ?></a> <a href="?action=<?php echo $row->v_isunion=='0'?'lock':'unlock' ?>&id=<?php echo $v_id;?>" title='采集时自动跳过锁定的视频' alt='采集时自动跳过锁定的视频'><?php echo $row->v_isunion=='0'?'锁定':'解锁' ?></a></td>
+            <td class="td_border" align="center"><a href="?action=edit&id=<?php echo $v_id;?>">编辑</a> <a href="?action=del&id=<?php echo $v_id;?>" onClick="return confirm('确定要删除吗')">删除</a> <a href="?action=<?php echo $v_recycled=='ok'?'restore':'hide' ?>&id=<?php echo $v_id;?>"><?php echo $v_recycled=='ok'?'还原':'隐藏' ?></a> <a href="?action=<?php echo $row->v_isunion=='0'?'lock':'unlock' ?>&id=<?php echo $v_id;?>" title='采集时自动跳过锁定的视频' alt='采集时自动跳过锁定的视频'><?php echo $row->v_isunion=='0'?'锁定':'解锁' ?></a></td>
           </tr>
           <?php }?>
           <tr>

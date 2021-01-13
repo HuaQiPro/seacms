@@ -4,196 +4,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="robots" content="noindex,nofollow" />
 <TITLE>站点配置-系统-seacms后台管理</TITLE>
-<script src="js/jquery.js"></script>
+
+
+
 <link href="img/style.css" rel="stylesheet" type="text/css" />
-<script src="../js/common.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
-<style>
-ul,li {
-	list-style:none
-}
-.tabClick {
-	background:#f3f3f3;
-	overflow:hidden
-}
-.tabClick li {
-	height:30px;
-	line-height:30px;
-	width:115px;
-	float:left;
-	text-align:center
-}
-.tabClick li.active {
-	transition:0.1s;
-	font-weight:bold;
-	background: #dceffe;
-}
-.tabCon {
-	overflow:hidden
-}
-.tabBox {
-	position:relative
-}
-.tabList {
-
-
-}
-
-</style>
+<script src="js/jquery.js"></script>
 <script>
-window.onload = function() {
-    var windowWidth = document.body.clientWidth; //window 宽度;
-    var wrap = document.getElementById('wrap');
-    var tabClick = wrap.querySelectorAll('.tabClick')[0];
-    var tabLi = tabClick.getElementsByTagName('li');
-
-    var tabBox = wrap.querySelectorAll('.tabBox')[0];
-    var tabList = tabBox.querySelectorAll('.tabList');
-
-    var lineBorder = wrap.querySelectorAll('.lineBorder')[0];
-    var lineDiv = lineBorder.querySelectorAll('.lineDiv')[0];
-
-    var tar = 0;
-    var endX = 0;
-    var dist = 0;
-
-    tabBox.style.overflow = 'hidden';
-    tabBox.style.position = 'relative';
-    tabBox.style.width = windowWidth * tabList.length + "px";
-
-    for (var i = 0; i < tabLi.length; i++) {
-        tabList[i].style.width = windowWidth + "px";
-        tabList[i].style.display = 'table-cell';
-    }
-
-    for (var i = 0; i < tabLi.length; i++) {
-        tabLi[i].start = i;
-        tabLi[i].onclick = function() {
-            var star = this.start;
-            for (var i = 0; i < tabLi.length; i++) {
-                tabLi[i].className = '';
-            };
-            tabLi[star].className = 'active';
-            init.lineAnme(lineDiv, windowWidth / tabLi.length * star)
-            init.translate(tabBox, windowWidth, star);
-            endX = -star * windowWidth;
-        }
-    }
-
-    function OnTab(star) {
-        if (star < 0) {
-            star = 0;
-        } else if (star >= tabLi.length) {
-            star = tabLi.length - 1
-        }
-        for (var i = 0; i < tabLi.length; i++) {
-            tabLi[i].className = '';
-        };
-
-        tabLi[star].className = 'active';
-        init.translate(tabBox, windowWidth, star);
-        endX = -star * windowWidth;
-    };
-
-    tabBox.addEventListener('touchstart', chstart, false);
-    tabBox.addEventListener('touchmove', chmove, false);
-    tabBox.addEventListener('touchend', chend, false);
-    //按下
-    function chstart(ev) {
-        ev.preventDefault;
-        var touch = ev.touches[0];
-        tar = touch.pageX;
-        tabBox.style.webkitTransition = 'all 0s ease-in-out';
-        tabBox.style.transition = 'all 0s ease-in-out';
-    };
-    //滑动
-    function chmove(ev) {
-        var stars = wrap.querySelector('.active').start;
-        ev.preventDefault;
-        var touch = ev.touches[0];
-        var distance = touch.pageX - tar;
-        dist = distance;
-        init.touchs(tabBox, windowWidth, tar, distance, endX);
-        init.lineAnme(lineDiv, -dist / tabLi.length - endX / 4);
-    };
-    //离开
-    function chend(ev) {
-        var str = tabBox.style.transform;
-        var strs = JSON.stringify(str.split(",", 1));
-        endX = Number(strs.substr(14, strs.length - 18));
-
-        if (endX > 0) {
-            init.back(tabBox, windowWidth, tar, 0, 0, 0.3);
-            endX = 0
-        } else if (endX < -windowWidth * tabList.length + windowWidth) {
-            endX = -windowWidth * tabList.length + windowWidth
-            init.back(tabBox, windowWidth, tar, 0, endX, 0.3);
-        } else if (dist < -windowWidth / 3) {
-            OnTab(tabClick.querySelector('.active').start + 1);
-            init.back(tabBox, windowWidth, tar, 0, endX, 0.3);
-        } else if (dist > windowWidth / 3) {
-            OnTab(tabClick.querySelector('.active').start - 1);
-        } else {
-            OnTab(tabClick.querySelector('.active').start);
-        }
-        var stars = wrap.querySelector('.active').start;
-        init.lineAnme(lineDiv, stars * windowWidth / 4);
-
-    };
-};
-
-var init = {
-    translate: function(obj, windowWidth, star) {
-        obj.style.webkitTransform = 'translate3d(' + -star * windowWidth + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + -star * windowWidth + ',0,0)px';
-        obj.style.webkitTransition = 'all 0.3s ease-in-out';
-        obj.style.transition = 'all 0.3s ease-in-out';
-    },
-    touchs: function(obj, windowWidth, tar, distance, endX) {
-        obj.style.webkitTransform = 'translate3d(' + (distance + endX) + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + (distance + endX) + ',0,0)px';
-    },
-    lineAnme: function(obj, stance) {
-        obj.style.webkitTransform = 'translate3d(' + stance + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + stance + 'px,0,0)';
-        obj.style.webkitTransition = 'all 0.1s ease-in-out';
-        obj.style.transition = 'all 0.1s ease-in-out';
-    },
-    back: function(obj, windowWidth, tar, distance, endX, time) {
-        obj.style.webkitTransform = 'translate3d(' + (distance + endX) + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + (distance + endX) + ',0,0)px';
-        obj.style.webkitTransition = 'all ' + time + 's ease-in-out';
-        obj.style.transition = 'all ' + time + 's ease-in-out';
-    },
-}
+(function($){$.fn.rTabs=function(options){var defaultVal={btnClass:'.j-tab-nav',conClass:'.j-tab-con',bind:'hover',animation:'0',speed:300,delay:200,auto:false,autoSpeed:3000};var obj=$.extend(defaultVal,options),evt=obj.bind,btn=$(this).find(obj.btnClass),con=$(this).find(obj.conClass),anim=obj.animation,conWidth=con.width(),conHeight=con.height(),len=con.children().length,sw=len*conWidth,sh=len*conHeight,i=0,len,t,timer;return this.each(function(){function judgeAnim(){var w=i*conWidth,h=i*conHeight;btn.children().removeClass('current').eq(i).addClass('current');switch(anim){case '0':con.children().hide().eq(i).show();break;case 'left':con.css({position:'absolute',width:sw}).children().css({float:'left',display:'block'}).end().stop().animate({left:-w},obj.speed);break;case 'up':con.css({position:'absolute',height:sh}).children().css({display:'block'}).end().stop().animate({top:-h},obj.speed);break;case 'fadein':con.children().hide().eq(i).fadeIn();break;}}
+if(evt=="hover"){btn.children().hover(function(){var j=$(this).index();function s(){i=j;judgeAnim();}
+timer=setTimeout(s,obj.delay);},function(){clearTimeout(timer);})}else{btn.children().bind(evt,function(){i=$(this).index();judgeAnim();})}
+function startRun(){t=setInterval(function(){i++;if(i>=len){switch(anim){case 'left':con.stop().css({left:conWidth});break;case 'up':con.stop().css({top:conHeight});}
+i=0;}
+judgeAnim();},obj.autoSpeed)}
+if(obj.auto){$(this).hover(function(){clearInterval(t);},function(){startRun();})
+startRun();}})}})(jQuery);
 </script>
+<script type="text/javascript">
+$(function() {
+
+	$("#tab").rTabs({
+		bind: 'click',
+	});
+})
+</script>
+<style>
+.tab{position:relative;width:100%;height:100%;background: #FBFEFF;}
+.tab-nav{height:28px;background:#f5f5f5}
+.tab-nav a{display:block;float:left;width:100px;height:28px;line-height:28px;text-align:center;text-decoration:none;color:#000}
+.tab-nav a.current{background:#b1d3f1;color:#000;}
+.tab-con{position:relative;width:100%;height:100%;}
+.tab-con-item{display:none;width:100%;height:100%;}
+</style>
 </head>
 <body>
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;设置&nbsp;&raquo;&nbsp;站点配置 ';</script>
-<div class="container" id="cpcontainer"> 
-<div class="wrap" id="wrap">
-    <ul class="tabClick">
-        <li class="active">网站基本设置</li>
-        <li>网站资料设置</li>
-        <li>采集工具设置</li>
-        <li>模板路径设置</li>
-		<li>会员插件设置</li>
-        <li>性能效率设置</li>
-        <li>网站其它设置</li>
-    </ul>
-    <div class="lineBorder">
-        <div class="lineDiv">
-            
-        </div>
+
+<div class="tab" id="tab">
+<div class="tab-nav j-tab-nav">
+<a href="javascript:;" class="current">网站基本设置</a>
+<a href="javascript:;">网站资料设置</a>
+<a href="javascript:;">采集工具设置</a>
+<a href="javascript:;">模板路径设置</a>
+<a href="javascript:;">会员插件设置</a>
+<a href="javascript:;">性能效率设置</a>
+<a href="javascript:;">网站其它设置</a>
     </div>
-    <div class="tabCon">
-        <div class="tabBox">
+    <div class="content2">
+
   <form method="post" action="?dopost=save">
   <input type="hidden" name="isalertwin_old" value="0"/>
   <!--当前导航-->
-<div class="tabList">
-    
+<div class="tab-con">
+<div class="j-tab-con">
+ <div class="tab-con-item" style="display:block;">  
     <table class="tb">
 
       <tr class="thead">
@@ -233,7 +99,7 @@ var init = {
                   &nbsp;&nbsp;md5加密id:开启
                   <input type="radio" name="edit___cfg_createid" value="md5" <?php if ($cfg_createid=='md5') echo "checked";?> class="radio">
                   关闭
-                  <input type="radio" name="edit___cfg_createid" value="0"<?php if ($cfg_createid=="0") echo "checked";?> class="radio"></td>
+                  <input type="radio" name="edit___cfg_createid" value="0" <?php if ($cfg_createid=="0") echo "checked";?> class="radio"></td>
               </tr>
               <tr>
                 <td height="25">文件的后缀名:
@@ -451,7 +317,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">
+<div class="tab-con-item"><table class="tb">
 <tr class="thead">
         <td colspan="2"><strong>网站资料设置<a name="rule" id="rule"></a></strong></td>
       </tr>
@@ -493,7 +359,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">
+<div class="tab-con-item"><table class="tb">
 <tr class="thead">
         <td colspan="2"><strong>采集工具设置<a name="rule" id="rule"></a></strong></td>
       </tr>
@@ -623,7 +489,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	 
+<div class="tab-con-item"><table class="tb">	 
       <tr class="thead">
         <td colspan="2"><strong>模板路径设置</strong></td>
       </tr>
@@ -704,7 +570,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	  
+<div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
         <td colspan="2"><strong>会员插件设置<a name="chajian" id="chajian"></a></strong></td>
       </tr>
@@ -800,7 +666,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	  
+<div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
         <td colspan="2"><strong>性能效率设置</strong></td>
       </tr>
@@ -878,7 +744,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	  
+<div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
         <td colspan="2"><strong>网站其它设置</strong></td>
       </tr>
@@ -1004,12 +870,9 @@ var init = {
         <td><textarea cols="90" rows="3" name="edit___cfg_powerby"><?php echo $cfg_powerby;?></textarea></td>
       </tr></table>
 </div>
-
-
-</div>
     </div>	  
 	  
-	  
+</div>	  
 	  
   <table class="tb">	  
       <tr>
@@ -1021,7 +884,8 @@ var init = {
 viewFoot();
 ?>
 
+
 </div>
-</div>
+
 </body>
 </html>
