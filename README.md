@@ -58,6 +58,7 @@
 
 #升级方法
 【第一步】后台 - 工具 - SQL高级助手，执行：
+
 ALTER TABLE `sea_topic` CHANGE `pic` `pic` CHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
 ALTER TABLE `sea_topic` ADD `spic` CHAR(255) NOT NULL DEFAULT '' AFTER `pic`;
 ALTER TABLE `sea_topic` ADD `gpic` CHAR(255) NOT NULL DEFAULT '' AFTER `spic`;
