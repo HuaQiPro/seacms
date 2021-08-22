@@ -318,7 +318,7 @@ function markscore1(vd,d,t,s,l,ac){
 		document.write('<img id="'+i+'" src="'+src[i<=y ? 0 : 1]+'" title="'+alt[parseInt(i/l*(alt.length-1))]+'" style="cursor:pointer">');
 	}
 	document.write('</span>');
-	document.write('&nbsp;<strong style="font-size:14px;color:red" id="MARK_B2"></strong>(<span style="color:blue" id="MARK_B3"></span>)</span>');
+	document.write('&nbsp;<strong style="font-size:14px;color:red" id="MARK_B2"></strong>(<span id="MARK_B3"></span>)</span>');
 	var dc=document.getElementById(id),im=dc.getElementsByTagName('img');
 	for(var i=0;i<im.length;i++){
 		im[i].onclick=function (){

@@ -568,7 +568,7 @@ function getItemLink($str,$value,$schwhere)
 			{
 				$Link="/".$GLOBALS['cfg_cmspath']."search.php?".preg_replace("/\&?state\=[^\&]*/i","",$schwhere);
 			}
-			elseif($value=='w')
+			elseif($value=='完结')
 			{
 			$Link="/".$GLOBALS['cfg_cmspath']."search.php?".preg_replace("/\&?state\=[^\&]*/i","",$schwhere)."&state=w";
 			}

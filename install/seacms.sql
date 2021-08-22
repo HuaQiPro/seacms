@@ -507,6 +507,7 @@ CREATE TABLE `sea_member` (
   `repswcode` VARCHAR(35) NOT NULL, 
   `msgbody` TEXT NULL, 
   `msgstate` VARCHAR(2) NOT NULL,
+  `pic` VARCHAR(255) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -560,6 +561,7 @@ CREATE TABLE IF NOT EXISTS `sea_zyk` (
   `zinfo` varchar(255) NOT NULL default '暂无',
   PRIMARY KEY (`zid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `sea_hyzbuy`;
 CREATE TABLE IF NOT EXISTS `sea_hyzbuy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -570,3 +572,39 @@ CREATE TABLE IF NOT EXISTS `sea_hyzbuy` (
   `paytime` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sea_danmaku_report`;
+CREATE TABLE IF NOT EXISTS `sea_danmaku_report` (
+  `cid` int(12) NOT NULL COMMENT '弹幕ID',
+  `id` varchar(128) NOT NULL COMMENT '弹幕池id',
+  `text` varchar(128) NOT NULL COMMENT '举报内容',
+  `type` varchar(128) NOT NULL COMMENT '举报类型',
+  `time` varchar(10) NOT NULL COMMENT '举报时间',
+  `ip` varchar(16) NOT NULL COMMENT '发送弹幕的IP地址',
+  PRIMARY KEY (`text`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sea_danmaku_ip`;
+CREATE TABLE IF NOT EXISTS `sea_danmaku_ip` (
+  `ip` varchar(16) NOT NULL COMMENT '发送弹幕的IP地址',
+  `c` int(5) NOT NULL DEFAULT '1' COMMENT '规定时间内的发送次数',
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`ip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `sea_danmaku_list`;
+CREATE TABLE IF NOT EXISTS `sea_danmaku_list` (
+  `id` varchar(128) NOT NULL COMMENT '弹幕池id',
+  `cid` int(12) NOT NULL AUTO_INCREMENT COMMENT '弹幕id',
+  `type` varchar(128) NOT NULL COMMENT '弹幕类型',
+  `text` varchar(128) NOT NULL COMMENT '弹幕内容',
+  `color` varchar(128) NOT NULL COMMENT '弹幕颜色',
+  `size` varchar(128) NOT NULL COMMENT '弹幕大小',
+  `videotime` float(24,3) NOT NULL COMMENT '时间点',
+  `ip` varchar(16) NOT NULL COMMENT '用户ip',
+  `time` int(10) NOT NULL COMMENT '发送时间',
+  `user` varchar(20) NOT NULL COMMENT '用户名',
+  PRIMARY KEY (`cid`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

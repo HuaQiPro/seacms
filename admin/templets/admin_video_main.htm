@@ -245,7 +245,7 @@ $fromstr=getFromStr($row->v_playdata)." ".getFromStr($row->v_playdata1);
              <?php $vstate = $row->v_state; if($vstate==0){echo "<img src=\"img/icon_01.gif\"  title='设置连载状态' style=\"cursor:pointer\" onclick=\"setVideoState($v_id)\"/>";}else{echo "<sup style='color:#ff0000;font-weight:bold;cursor:pointer;' onclick=\"setVideoState($v_id)\" title='修改连载状态'>($vstate)</sup>";}?>
               </span></td>
             <td class="td_border"><?php if(strpos($row->v_pic,'uploads/')===0)echo "本地";elseif(strpos($row->v_pic,$app_ftpurl)!==false)echo "FTP服务器";elseif(strpos($row->v_pic,'#err')!==false)echo "下载图片时发生错误";elseif(empty($row->v_pic)
-            )echo "空";else echo "资源站"; ?></td>
+            )echo "空";else echo "远程地址"; ?></td>
             <td class="td_border"><?php echo $row->v_hit;?></td>
             <td class="td_border"><div style="width:150px; height:30px; line-height:30px; display:block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" title="<?php if(empty($fromstr)) echo "无数据来源"; else echo $fromstr;?>" alt="<?php if(empty($fromstr)) echo "无数据来源"; else echo $fromstr;?>"><?php if(empty($fromstr)) echo "无数据来源"; else echo $fromstr;?></div></td>
             <td class="td_border"><div style="width:150px; height:30px; line-height:30px; display:block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" title="<?php if($row->tname){echo $row->tname." ".$row->v_jq;}else{echo "数据分类错误";}?>" alt="<?php if($row->tname){echo $row->tname." ".$row->v_jq;}else{echo "数据分类错误";}?>">

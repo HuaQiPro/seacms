@@ -23,7 +23,8 @@ $orderStr= " order by d.$order desc";
 $page = isset($page) ? intval($page) : 1;
 if($page==0) $page=1;
 $whereStr="  ";
-if ($action=="nullpic") $whereStr.=" and d.v_pic=''";
+if ($action=="nullpic") $whereStr.=" and d.n_pic=''";
+if ($action=="errpic") $whereStr.=" and d.n_pic like '%err'";
 if ($n_recycled=="ok") $whereStr.=" and d.n_recycled=1";
 if ($n_commend=="ok") $whereStr.=" and d.n_commend>0";
 if (!empty($type)) $whereStr.=" and d.tid in (".getTypeId($type).")";
@@ -41,7 +42,7 @@ $TotalPage = ceil($TotalResult/$numPerPage);
 if ($page>$TotalPage) $page=$TotalPage;
 $limitstart = ($page-1) * $numPerPage;
 if($limitstart<0) $limitstart=0;
-$sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid where d.n_recycled=0 ".$whereorder." limit $limitstart,$numPerPage";
+$sqlStr="select d.n_id,d.n_title,d.n_pic,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid where d.n_recycled=0 ".$whereorder." limit $limitstart,$numPerPage";
 if ($n_recycled=="ok") $sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid  where 1=1 ".$whereorder." limit $limitstart,$numPerPage";
 //echo $sqlStr;die();
 ?>
@@ -78,6 +79,7 @@ if($TotalResult==0){
   <tr bgcolor="#f5fafe">
 	<td height="30" align="center" bgcolor="#FFFFFF" class="td_btop3">&nbsp;ID<a href="?order=n_id&type=<?php echo $type;?>&page=<?php echo $page;?>&n_commend=<?php echo $n_commend;?>"><img src="img/minus.gif" title="按ID排序" /></a></td>
 	<td bgcolor="#FFFFFF" class="td_btop3">标题</td>
+	<td width="10%" bgcolor="#FFFFFF" class="td_btop3">图片位置</td>
 	<td bgcolor="#FFFFFF" class="td_btop3">人气<a href="?order=n_hit&type=<?php echo $type;?>&page=<?php echo $page;?>&n_commend=<?php echo $n_commend;?>"><img src="img/minus.gif" title="按人气排序" /></a></td>
 	<td bgcolor="#FFFFFF" class="td_btop3">数据类别</td>
 	<td bgcolor="#FFFFFF" class="td_btop3">推荐星级<a href="?order=n_commend&type=<?php echo $type;?>&page=<?php echo $page;?>&n_commend=<?php echo $n_commend;?>"><img src="img/minus.gif" title="按推荐星级排序" /></a></td>
@@ -98,6 +100,7 @@ $contentUrl=getArticleLink($tid,$n_id,'');
   <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
 	<td height="30" class="td_border" style="text-align:left"><input type="checkbox" value="<?php echo $n_id;?>" name="e_id[]" class="checkbox" /><?php echo $n_id; ?></td>
 	<td class="td_border"><a href="<?php echo $contentUrl;?>" target="_blank"><?php echo $row->n_title;?></a></td>
+	<td class="td_border"><?php if(strpos($row->n_pic,'uploads/')===0)echo "本地";elseif(strpos($row->n_pic,$app_ftpurl)!==false)echo "FTP服务器";elseif(strpos($row->n_pic,'#err')!==false)echo "下载图片时发生错误";elseif(empty($row->n_pic))echo "空";else echo "远程地址"; ?></td>
 	<td class="td_border"><?php echo $row->n_hit;?></td>
 	<td class="td_border"><a href="?type=<?php echo $row->tid;?>&order=<?php echo $order;?>"><?php if($row->tname){echo $row->tname;}else{echo "<font color=red >数据分类错误</font>";}?></a></td>
 	<td id="star<?php echo $n_id;?>" class="td_border"><script>starView(<?php echo $row->n_commend;?>,<?php echo $n_id;?>,1)</script></td>

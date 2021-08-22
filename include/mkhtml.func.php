@@ -1736,7 +1736,7 @@ function makeBaidun()
 		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getDataCount("all");
+		$allcount=getNewsDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -1774,7 +1774,7 @@ function makeGoogle()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成google地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成视频谷歌SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1827,14 +1827,14 @@ function makeGooglen()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成google地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成新闻谷歌SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getDataCount("all");
+		$allcount=getNewsDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -2059,7 +2059,7 @@ function makeBaiduxn()
 		$allmakenum = empty($allmakenum) ? 10000 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getDataCount("all");
+		$allcount=getNewsDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){

@@ -12,7 +12,9 @@
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;会员&nbsp;&raquo;&nbsp;全部会员列表 ';</script>
 <?php
-	$csqlStr="select count(*) as dd from sea_member";
+	$whereStr=" ";
+    if ($ver !="" or !empty($ver)) {$whereStr=" where gid=$ver";}
+	$csqlStr="select count(*) as dd from sea_member " .$whereStr;
     $row = $dsql->GetOne($csqlStr);
     if(is_array($row)){
         $TotalResult = $row['dd'];
@@ -44,7 +46,7 @@ if($page==0) $page=1;
     $limitstart = ($page-1) * $numPerPage;
     if($limitstart<0) $limitstart=0;
 	
-$sql="select * from sea_member ORDER BY  id DESC limit $limitstart,$numPerPage";
+$sql="select * from sea_member ".$whereStr." ORDER BY  id DESC limit $limitstart,$numPerPage";
 	$dsql->SetQuery($sql);
 	$dsql->Execute('al');
 	while($row=$dsql->GetObject('al'))
@@ -81,10 +83,11 @@ $sql="select * from sea_member ORDER BY  id DESC limit $limitstart,$numPerPage";
 <tr bgcolor="#FFF" style="background-color:#FFF;">
           <td height="30" colspan="11" class="td_border" >
             <div class="cuspages">
+			<?php $jumpurl='&ver='.$ver;?>
               <div class="pages"> &nbsp;页次：<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1<?php echo $jumpurl ?>">首页</a> <a href="?page=<?php echo ($page-1);?><?php echo $jumpurl ?>">上一页</a> <?php echo makePageNumber($page, 10, $TotalPage, "videolist");?> <a href="?page=<?php echo ($page+1);?><?php echo $jumpurl ?>">下一页</a> <a href="?page=<?php echo $TotalPage;?><?php echo $jumpurl ?>">尾页</a>&nbsp;&nbsp;跳转
                 <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
                 &nbsp;&nbsp;
-                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&v_recycled=<?php echo $v_recycled ?>&v_isunion=<?php echo $v_isunion ?>&order=<?php echo $order;?>&type=<?php echo $type;?>&keyword=<?php echo $keyword;?>&v_state=<?php echo $v_state;?>&v_commend=<?php echo $v_commend;?>&repeat=<?php echo $repeat;?>&topic=<?php echo $topic;?>&playfrom=<?php echo $playfrom;?>&downfrom=<?php echo $downfrom;?>&empty=<?php echo $empty;?>&rlen=<?php echo $rlen;?>&jqtype=<?php echo $jqtype;  ?>&area=<?php echo $area;  ?>&year=<?php echo $year;  ?>&yuyan=<?php echo $yuyan;  ?>&letter=<?php echo $letter;  ?>&commend=<?php echo $commend;  ?>&ver=<?php echo $ver;  ?>';"/>
+                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&ver=<?php echo $ver;?>';"/>
               </div>
             </div>
  </td>

@@ -47,7 +47,8 @@ if(trim($m_pwd)<>trim($m_pwd2) || trim($m_pwd)=='')
 $username = $m_user;
 $username = RemoveXSS(stripslashes($username));
 $username = addslashes(cn_substr($username,200));
-
+$email = RemoveXSS(stripslashes($email));
+$email = addslashes(cn_substr($email,200));
 
 $row1=$dsql->GetOne("select username  from sea_member where username='$username'");
 if($row1['username']==$username)
@@ -55,19 +56,25 @@ if($row1['username']==$username)
 		ShowMsg('用户已存在','-1');	
 		exit();	
 }
+$row2=$dsql->GetOne("select email  from sea_member where email='$email'");
+if($row2['email']==$email)
+{
+		ShowMsg('邮箱已存在','-1');	
+		exit();	
+}
+
 
 	$pwd = substr(md5($m_pwd),5,20);
 	$ip = GetIP();
 	$randtime=uniqid();
 	$acode=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$randtime); //构造唯一码	
-	$email = RemoveXSS(stripslashes($email));
-	$email = addslashes(cn_substr($email,200));
+	
 	
 	$regpoints=intval($cfg_regpoints);
 	if($regpoints=="" OR empty($regpoints)){$regpoints=0;} 
 	if($username) {
-		$dsql->ExecuteNoneQuery("INSERT INTO `sea_member`(id,username,password,email,regtime,regip,state,gid,points,logincount,stime,vipendtime,acode,repswcode,msgstate)
-                  VALUES ('','$username','$pwd','$email','$dtime','$ip','1','2','$regpoints','1','1533686888','$dtime','$acode','y','y')");
+		$dsql->ExecuteNoneQuery("INSERT INTO `sea_member`(id,username,password,email,regtime,regip,state,gid,points,logincount,stime,vipendtime,acode,repswcode,msgstate,pic)
+                  VALUES ('','$username','$pwd','$email','$dtime','$ip','1','2','$regpoints','1','1533686888','$dtime','$acode','y','y','uploads/user/a.png')");
 
 		require_once('data/admin/smtp.php');
 		if($smtpreg=='on')

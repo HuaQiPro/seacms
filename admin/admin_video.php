@@ -84,7 +84,7 @@ elseif($action=="save")
 	$v_letter = strtoupper(substr($v_enname,0,1));
 	$v_extratype = $_POST[v_type_extra];
 	$v_extrajqtype = $_POST[v_jqtype_extra];
-	$v_longtxt = htmlspecialchars($_POST[v_longtxt]);
+	$v_longtxt = $_POST[v_longtxt];
 	$v_psd = $_POST[v_psd];
 	$v_try = $_POST[v_try];
 	$v_vip = $_POST[v_vip];

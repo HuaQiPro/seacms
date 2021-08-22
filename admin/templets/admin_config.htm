@@ -31,9 +31,11 @@ $(function() {
 </script>
 <style>
 .tab{position:relative;width:100%;height:100%;background: #FBFEFF;}
-.tab-nav{height:28px;background:#f5f5f5}
-.tab-nav a{display:block;float:left;width:100px;height:28px;line-height:28px;text-align:center;text-decoration:none;color:#000}
-.tab-nav a.current{background:#b1d3f1;color:#000;}
+.tab-nav{background: #e6f2fb;
+    display: table;
+    width: 99%;}
+.tab-nav a{display:block;float:left;padding:8px 15px;font-size:12px;text-align:center;text-decoration:none;color:#337ab7;}
+.tab-nav a.current{background:#7b9cb8;color:#fff;}
 .tab-con{position:relative;width:100%;height:100%;}
 .tab-con-item{display:none;width:100%;height:100%;}
 </style>
@@ -44,11 +46,11 @@ $(function() {
 
 <div class="tab" id="tab">
 <div class="tab-nav j-tab-nav">
-<a href="javascript:;" class="current">网站基本设置</a>
+<a href="javascript:;" class="current">模式路径设置</a>
 <a href="javascript:;">网站资料设置</a>
 <a href="javascript:;">采集工具设置</a>
 <a href="javascript:;">模板路径设置</a>
-<a href="javascript:;">会员插件设置</a>
+<a href="javascript:;">会员交互设置</a>
 <a href="javascript:;">性能效率设置</a>
 <a href="javascript:;">网站其它设置</a>
     </div>
@@ -63,7 +65,7 @@ $(function() {
     <table class="tb">
 
       <tr class="thead">
-        <td colspan="2"><strong>网站基本设置</strong></td>
+        <td colspan="2"><strong>模式路径设置</strong></td>
       </tr>
       <tr>
         <td width="10%">网站模式:</td>
@@ -388,7 +390,7 @@ $(function() {
 		  <label>
 		  &nbsp;&nbsp;
 		  <label>
-            <input type="checkbox" name="edit___cfg_gatherset[]" value="8" id="gatherset1" <?php if(strpos($cfg_gatherset,'8')!==false)echo 'checked'?> />主演识别</label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="8" id="gatherset1" <?php if(strpos($cfg_gatherset,'8')!==false)echo 'checked'?> />演员识别</label>
 			&nbsp;&nbsp;        
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="3" id="gatherset3" <?php if(strpos($cfg_gatherset,'3')!==false)echo 'checked'?>/>
@@ -551,14 +553,14 @@ $(function() {
 【模式4】跳转式:移动端强制跳转到新的网址首页，必须正确填写上面的移动端网址。
       </tr>
       <tr>
-        <td>模板文件所在文件夹:</td>
+        <td>模板文件文件夹:</td>
         <td><input type="text" name="edit___cfg_df_html" size="15" value="<?php echo $cfg_df_html;?>">
           防止模板被盗</td>
       </tr>
-      <tr>
-        <td>图片文件夹:</td>
-        <td ><input type="text" name="edit___cfg_upload_dir" size="15" value="<?php echo $cfg_upload_dir;?>"/>
-          位于根目录下</td>
+      <tr style="display:none;">
+        <td> </td>
+        <td ><input type="text" name="edit___cfg_upload_dir" size="15" readonly value="<?php echo $cfg_upload_dir;?>"/>
+           </td>
       </tr>
       <tr>
         <td>JS广告文件夹:</td>
@@ -577,7 +579,7 @@ $(function() {
 	  
 <div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
-        <td colspan="2"><strong>会员插件设置<a name="chajian" id="chajian"></a></strong></td>
+        <td colspan="2"><strong>会员交互设置<a name="chajian" id="chajian"></a></strong></td>
       </tr>
       <tr>
         <td>会员系统开关:</td>
@@ -585,6 +587,13 @@ $(function() {
           <input type="radio" name="edit___cfg_user" value="1" <?php if ($cfg_user=='1') echo "checked";?> class="radio" />
           &nbsp;&nbsp;关闭:
           <input type="radio" name="edit___cfg_user" value="0" <?php if ($cfg_user=='0') echo "checked";?> class="radio" />&nbsp;&nbsp;如不需要会员功能请选择关闭，加快系统运行速度
+      </tr>
+	   <tr>
+        <td>是否允许上传头像:</td>
+        <td class="td_border">开启:
+          <input type="radio" name="edit___cfg_upic" value="1" <?php if ($cfg_upic=='1') echo "checked";?> class="radio" />
+          &nbsp;&nbsp;关闭:
+          <input type="radio" name="edit___cfg_upic" value="0" <?php if ($cfg_upic !='1') echo "checked";?> class="radio" />&nbsp;&nbsp;是否允许会员上传头像
       </tr>
 	  <tr>
         <td width="103"  align="left" class="td_border">注册赠送积分:</td>
@@ -653,28 +662,18 @@ $(function() {
           &nbsp;&nbsp;关闭:
           <input type="radio" name="edit___cfg_feedback_ck"  value="0" <?php if ($cfg_feedback_ck=='0') echo "checked";?> class="radio"/>&nbsp;&nbsp;设置访客使用留言/报错/评论功能时是否需要验证码</td>
       </tr>
-      <tr>
-        <td >来源排序:</td>
-        <td >开启:
-          <input type="radio" name="edit___cfg_isfromsort" value="1" <?php if ($cfg_isfromsort=='1') echo "checked";?> class="radio" >
-          &nbsp;&nbsp;关闭:
-          <input type="radio" name="edit___cfg_isfromsort" value="0" <?php if ($cfg_isfromsort=='0') echo "checked";?> class="radio" >
-          &nbsp;&nbsp;如开启、将对播放来源按设置进行排序；如关闭、将节省部分性能</td>
+      
+	  <tr>
+        <td width="103"  align="left" class="td_border">留言列表显示条数:</td>
+        <td ><input type="text" name="edit___cfg_gb_size" size="5"  value="<?php echo $cfg_gb_size;?>"/>&nbsp;&nbsp;每页显示留言数量，默认20条</td>
       </tr>
 	  <tr>
-        <td width="103"  align="left" class="td_border">搜索功能选项:</td>
-        <td class="td_border">禁止:
-          <input type="radio" name="edit___cfg_search_type"  value="0" <?php if ($cfg_search_type=='0') echo "checked";?> class="radio"/>
-          &nbsp;&nbsp;快速:
-		  <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
-          &nbsp;&nbsp;复杂:
-          <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>&nbsp;&nbsp;设置为复杂搜索影片名/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速仅搜索影片名/新闻标题</td>
+        <td width="103"  align="left" class="td_border">评论列表显示条数:</td>
+        <td ><input type="text" name="edit___cfg_pl_size" size="5"  value="<?php echo $cfg_pl_size;?>"/>&nbsp;&nbsp;每页显示评论数量，默认20条</td>
       </tr>
-      <tr>
-        <td >搜索间隔时间:</td>
-        <td class="td_border"><input type="text" name="edit___cfg_search_time" id="edit___cfg_search_time" value="<?php echo $cfg_search_time;?>" size="3" />
-          秒</td>
-      </tr></table>
+	  
+	  
+	  </table>
 </div>
 	  
 	  
@@ -752,7 +751,47 @@ $(function() {
 	$iplist = @fread($fp,filesize($iplisttxt));
 	@fclose($fp);echo $iplist;?>
 </textarea></td>
-      </tr></table>
+      </tr>
+	  
+	  <tr>
+        <td >来源排序:</td>
+        <td >开启:
+          <input type="radio" name="edit___cfg_isfromsort" value="1" <?php if ($cfg_isfromsort=='1') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;关闭:
+          <input type="radio" name="edit___cfg_isfromsort" value="0" <?php if ($cfg_isfromsort=='0') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;如开启、将对播放来源按设置进行排序；如关闭、将节省部分性能</td>
+      </tr>
+	  <tr>
+        <td width="103"  align="left" class="td_border">搜索功能选项:</td>
+        <td class="td_border">关闭:
+          <input type="radio" name="edit___cfg_search_type"  value="0" <?php if ($cfg_search_type=='0') echo "checked";?> class="radio"/>
+          &nbsp;&nbsp;快速:
+		  <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>
+          &nbsp;&nbsp;复杂:
+          <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
+		  &nbsp;&nbsp;验证码:
+		  <input type="radio" name="edit___cfg_search_type"  value="2" <?php if ($cfg_search_type=='2') echo "checked";?> class="radio"/>
+		  &nbsp;&nbsp;设置为复杂搜索影片名/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速仅搜索影片名/新闻标题</td>
+      </tr>
+      <tr>
+        <td >验证有效时间:</td>
+        <td class="td_border"><input type="text" name="edit___cfg_check_time" id="edit___cfg_check_time" value="<?php echo $cfg_check_time;?>" size="3" />
+          秒&nbsp;&nbsp;搜索验证的有效时间，搜索模式为验证码时生效，默认300秒</td>
+      </tr>
+	  <tr>
+        <td >搜索间隔时间:</td>
+        <td class="td_border"><input type="text" name="edit___cfg_search_time" id="edit___cfg_search_time" value="<?php echo $cfg_search_time;?>" size="3" />
+          秒</td>
+      </tr>
+	  <tr>
+        <td >禁止数据交互:</td>
+        <td class="td_border">
+		开启:<input type="radio" name="edit___cfg_isallphp" value="1" <?php if ($cfg_isallphp=='1') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;
+        关闭:<input type="radio" name="edit___cfg_isallphp" value="0" <?php if ($cfg_isallphp !='1') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;开启将禁用影片和新闻的评分/顶踩/浏览量/收藏等交互功能，配合关闭搜索/留言/报错/评论/用户等，可实现极低负载运行</td>
+      </tr>
+	  </table>
 </div>
 	  
 	  
@@ -765,7 +804,7 @@ $(function() {
       <tr>
         <td>过滤留言:</td>
         <td><input type="text" name="edit___cfg_notallowstr" size="80" value="<?php echo $cfg_notallowstr;?>">
-          请以'|'分离</td>
+          请以'|'分离，此内容同时也是禁止搜索关键词</td>
       </tr>
       <tr>
         <td>禁止留言:</td>

@@ -166,7 +166,7 @@
 			</td>
 			<tr><td  height="30" class="td_border">&nbsp;备用说明：</td>
 			<td height="30" class="td_border">
-			<input size="100" name="v_longtxt" value="<?php echo $vrow['v_longtxt']?>"  />&nbsp;（不限字数文本内容，备用）
+			<input size="100" name="v_longtxt" value="<?php echo htmlspecialchars($vrow['v_longtxt'])?>"  />&nbsp;（不限字数,支持HTML）
 			</td>
             </tr>
 

@@ -3,8 +3,8 @@
 		<div class="row">				
 			<div class="myui-header__logo">			    	
 				<a class="logo" href="/">
-					<img class="img-responsive hidden-xs" src="images/img/logo.png" />
-					<img class="img-responsive visible-xs" src="images/img/logo_min.png" />
+					<img class="img-responsive hidden-xs" src="images/img/logo.png" style="max-width: 120px;margin-top: 12px;"/>
+					<img class="img-responsive visible-xs" src="images/img/logo_min.png" style="max-width: 120px;margin-top:7px;"/>
 				</a>					
 			</div>
 			<ul class="myui-header__menu nav-menu hidden-sm hidden-xs">
@@ -15,10 +15,10 @@
 				<li><a href="{seacms:topiclink}">专题</a></li>
 				<li><a href="{seacms:newslink}">资讯</a></li>
 			</ul>
-			<ul class="myui-header__user">	
+			<ul class="myui-header__user" style="margin-right:6px;">	
 				<li class="dropdown-hover">
 					<a href="javascript:;" title="播放记录"> <i class="fa fa-clock-o"></i></a>
-					<div class="dropdown-box fadeInDown">
+					<div class="dropdown-box fadeInDown" style="right: 0;margin-left: 0; margin-right: -78px;padding-top: 10px;">
 						<div class="item clearfix">
 							<p class="text-muted">
 								播放记录
@@ -71,7 +71,7 @@
 {seacms:menulist type=3,4,41}
 								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block{if:[menulist:typeid]={seacms:currenttypeid}} btn-warm{elseif:[menulist:typeid]={playpage:upid}} btn-warm{else} btn-default{end if}" href="[menulist:link]">[menulist:typename]</a></li>
 {/seacms:menulist}
-								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:gbook}">专题</a></li>
+								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:topiclink}">专题</a></li>
 								<li class="col-lg-5 col-md-5 col-sm-5 col-xs-3"><a class="btn btn-sm btn-block btn-default" href="{seacms:newslink}">资讯</a></li>
 								
 								
@@ -94,13 +94,14 @@
 					
 					<li class="search-box dropdown-hover" href="javascript:;">
 						<form id="search" name="search" method="get" action="/search.php" onSubmit="return qrsearch();">
-							<input type="text" id="wd" name="searchword" class="search_wd form-control" value="" placeholder="输入影片关键词..."
-							 autocomplete="off"/>
+						
+<input type="text" id="NOwd" name="searchword" class="search_wd form-control" value="" placeholder="输入关键词..." autocomplete="off"/>
+<!---当 id=wd 时：开启搜索联想。id=其它名称时关闭搜索联想--->	
 							<button class="submit search_submit" id="searchbutton"><i class="fa fa-search"></i></button>
 						</form>
 						
-						<div id="word" class="autocomplete-suggestions active hidden-xs" style="display: none;">
-							<ul class="wordlist" style="max-height: 410px; overflow: auto;"></ul>
+						<div id="word" class="autocomplete-suggestions active" style="display: none;">
+							<ul class="wordlist" style="max-width: 250px; max-height:400px; overflow: hidden;"> </ul>
 						</div>
 						
 						

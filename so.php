@@ -1,5 +1,6 @@
 <?php 
 error_reporting(0);
+session_start();
 function lib_replace_end_tag($str)  
 {  
 if (empty($str)) return false;  
@@ -70,6 +71,11 @@ if($cfg_search_type =='0')
 	ShowMsg("搜索系统关闭！","index.php","0",$cfg_search_time*1000);
 	exit();
 }
+if($cfg_search_type =='2')
+{
+	include_once("include/scheck.php");
+	$cfg_search_type ='-1';
+}
 
 $page = (isset($page) && is_numeric($page)) ? $page : 1;
 $searchtype=$cfg_search_type;
@@ -80,7 +86,7 @@ $searchword = RemoveXSS($searchword);
 $searchword = trim($searchword);
 if($cfg_notallowstr !='' && m_eregi($cfg_notallowstr,$searchword))
 {
-	ShowMsg("你的搜索关键字中存在非法内容，被系统禁止！","-1","0",$cfg_search_time*1000);
+	ShowMsg("搜索关键字存在禁止内容","-1","0",$cfg_search_time*1000);
 	exit();
 }
 if($searchword=='')
@@ -98,7 +104,7 @@ function check_str($str,$key){
  return false;
 }
 
-$key = array('{','}','(',')','=',',',';','"','<','>','script','iframe','@','&','%','$','#','*');
+$key = array('{','}','(',')','=',',',';','"','<','>','<script','<iframe','@','&','%','$','#','*');
 if(check_str($searchword,$key)){ShowMsg('请勿输入危险字符！','index.php','0',$cfg_search_time*1000);exit;}
 
 echoSearchPage();

@@ -556,7 +556,7 @@ if($action=="list")
   <table class="tb">
     <thead>
       <tr class="thead">
-        <th colspan="4">&nbsp;<a href="?">采集平台</a>&nbsp;&raquo;&nbsp;</th>
+        <th colspan="4">&nbsp;<a href="?">采集平台</a></th>
       </tr>
       <tr>
         <th colspan="4"> <ul class="ul">
@@ -1024,7 +1024,7 @@ function top()
 <script src="js/common.js"></script>
 <script src="js/main.js"></script>
 <style type="text/css">
-	input{height:12px;}
+	input{height:15px;}
 	.tb2 td{padding:2px 5px 2px 5px;height:25px}
 	.tb2 .thc{text-align:center;line-height:30px; background-color: #F5F7F8;font-size:18px;font-weight:bold;color:#000}
 	.tb2 .thr{text-align:center;height:20px}

@@ -5,14 +5,18 @@
 	<title>留言求片-{seacms:sitename}</title>
 	<meta name="keywords" content="留言求片-{seacms:sitename}">
 	<meta name="description" content="留言求片-{seacms:sitename}">
-	{seacms:load public/include.html}
-	{seacms:load public/style.html}
+	{seacms:load include.html}
+	<style>
+	.sea_main_8{padding: 4px 6px;}
+	.sea_top-line {padding-bottom:8px;}
+	.sea_pannel {margin: 12px 2px;}
+	</style>
 </head>
 <body>
 	{seacms:top}
     <div class="container min">
         <div class="row">
-			<div class="myui-panel clearfix">
+			<div class="myui-panel myui-panel-bg clearfix" style="padding:20 25 20 20px;">
 				{gbook:viewLeaveWord}
 			</div>				
 		</div>

@@ -37,9 +37,7 @@ if(param.style)document.write('<link href="images/css/'+ style +'.css" rel="styl
 <div id="post-pl">
 	  <span id="yzm-submit"> 
       <div class="captcha">
-        <span id="iscaptcha"><input style="text-transform:uppercase;" type="text" name="gcaptcha" id="gcaptcha" placeholder="验证码" onfocus="getcaptcha();" onkeydown="if(event.keyCode == 13) {submitform();}" />
-        &nbsp;
-        <div id="getcode"><a href="#cmt" onclick="return getcaptcha();"><span id="codeimg"></span></a></div> 
+        <span id="iscaptcha"><input style="text-transform:uppercase;" type="text" name="gcaptcha" id="gcaptcha" placeholder="验证码" onfocus="getcaptcha();" onkeydown="if(event.keyCode == 13) {submitform();}" />&nbsp;<div id="getcode"><a href="#cmt" onclick="return getcaptcha();"><span id="codeimg"></span></a></div> 
 		</span>
 		<input type="button" name="submit1" id="submit1" value=" 发表评论 " onclick="submitform();"/>   
 		</div>

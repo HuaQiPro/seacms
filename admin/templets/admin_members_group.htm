@@ -168,8 +168,8 @@ else
       <tr>
         <td height="30" class="td_border" align="left"><?php if($gid!=1&&$gid!=2){?><input type="checkbox" value="<?php echo $gid;?>" name="g_id[]" class="checkbox"/><?php }?></TD>
         <td height="30" class="td_border" align="left"><?php echo $row->gname;?></TD>
-        <td height="30" class="td_border" align="left"><?php echo $rs['dd'];?></TD>
-        <td height="30" class="td_border" align="left"><?php echo $row->g_upgrade;?>&nbsp;</TD>
+        <td height="30" class="td_border" align="left"><?php if($gid==1){echo '游客';} else {echo $rs['dd'].'&nbsp;<a href="admin_memberslist.php?ver='.$gid.'">[成员]</a>';}?> </TD>
+        <td height="30" class="td_border" align="left"><?php if($gid==1){echo '游客';} else {echo $row->g_upgrade;}?></TD>
         <td height="30" class="td_border" align="left"><a href="?action=edit&id=<?php echo $gid;?>">编辑</a> <a href="?action=del&id=<?php echo $gid;?>" style="<?php if($gid==1||$gid==2) echo "display:none"?>">删除</a></TD>
       </tr>
 <?php

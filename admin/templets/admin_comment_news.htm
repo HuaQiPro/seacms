@@ -133,7 +133,10 @@ $v_name=$row->v_name;
 <?php }?>	
     <tr>
     <td colspan="5"><div class="cuspages"><div class="pages">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onClick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onClick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onClick="if(confirm('确定要删除吗')){newslistform.action='?action=delallreporterror';}else{return false}" class="rb1"  />
-    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=reporterror">首页</a> <a href="?page=<?php echo ($page-1);?>&action=reporterror">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=reporterror">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=reporterror">尾页</a></div></div>
+    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&action=reporterror">首页</a> <a href="?page=<?php echo ($page-1);?>&action=reporterror">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=reporterror">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=reporterror">尾页</a>&nbsp;&nbsp;跳转
+                <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
+                &nbsp;&nbsp;
+                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&action=reporterror';"/></div></div>
     </td></tr>
 <?php }?>
 </form>
@@ -199,7 +202,10 @@ $v_name=$row->n_title;
     
 	<input type="submit" value="全部删除" onClick="if(confirm('确定要删除全部吗')){newslistform.action='?action=deltotalcomment'}" class="rb1"/>
 	<input type="submit" value="审核评论" onClick="if(confirm('确定要审核评论吗')){newslistform.action='?action=checkcomment'}" class="rb1"/>
-    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=comment">首页</a> <a href="?page=<?php echo ($page-1);?>&action=comment">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=comment">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=comment">尾页</a></div></div>
+    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&action=comment">首页</a> <a href="?page=<?php echo ($page-1);?>&action=comment">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=comment">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=comment">尾页</a>&nbsp;&nbsp;跳转
+                <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
+                &nbsp;&nbsp;
+                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&action=comment';"/></div></div>
     </td></tr>
 <?php }?>
 </form>

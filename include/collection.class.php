@@ -75,19 +75,21 @@ class Collect
 		
 		// 影片关键词过滤 跳过采集
 		global $cfg_cjjump;
-		$jumparr = explode('|',$cfg_cjjump);
-		foreach ($jumparr as $value)
-				  {
-					  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
-				  }
-		
+		if($cfg_cjjump !=""){
+			$jumparr = explode('|',$cfg_cjjump);
+			foreach ($jumparr as $value)
+					  {
+						  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
+					  }
+		}
 		// 影片关键词替换
-		global $cfg_cjreplace;		
-		$r0 = explode('|',$cfg_cjreplace);
-		$r = array();
-		foreach($r0 as $data){$r[]=explode('=',$data);}
-		foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
-		
+		global $cfg_cjreplace;
+		if($cfg_cjreplace !=""){		
+			$r0 = explode('|',$cfg_cjreplace);
+			$r = array();
+			foreach($r0 as $data){$r[]=explode('=',$data);}
+			foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
+		}
 		if(is_numeric($localId))
 		{		
 			$v_data['v_ismake'] = 0;
@@ -301,18 +303,21 @@ class Collect
 				  
 				  // 影片关键词过滤 跳过采集
 				  global $cfg_cjjump;
-				  $jumparr = explode('|',$cfg_cjjump);
-				  foreach ($jumparr as $value)
-				  {
-					  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
+				  if($cfg_cjjump !=""){
+					  $jumparr = explode('|',$cfg_cjjump);
+					  foreach ($jumparr as $value)
+					  {
+						  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
+					  }
 				  }
 				// 影片关键词替换
-				global $cfg_cjreplace;		
-				$r0 = explode('|',$cfg_cjreplace);
-				$r = array();
-				foreach($r0 as $data){$r[]=explode('=',$data);}
-				foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
-				  
+				global $cfg_cjreplace;
+				if($cfg_cjreplace !=""){				
+					$r0 = explode('|',$cfg_cjreplace);
+					$r = array();
+					foreach($r0 as $data){$r[]=explode('=',$data);}
+					foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
+				} 
 			      $sql = "update `sea_co_url` set succ='1' where uid=".$row['uid'];
 				  $dsql->ExecuteNoneQuery($sql);
 				  
@@ -423,15 +428,13 @@ class Collect
 						$rs1['v_playdata']='';$rs1['v_downdata']='';
 						return $autocol_str.$this->_insert_database($v_data);//语言 新增数据
 					}
-					$v_data['v_director']=str_replace(array(' ',',','/'),'',$v_data['v_director']);
-					$rs1['v_director']=str_replace(array(' ',',','/'),'',$rs1['v_director']);
+
 					if($v_data['v_director'] != $rs1['v_director'] && (strpos($cfg_gatherset,'7')!==false))
 					{
 						$rs1['v_playdata']='';$rs1['v_downdata']='';
 						return $autocol_str.$this->_insert_database($v_data);//导演 新增数据
 					}
-					$v_data['v_actor']=str_replace(array(' ',',','/'),'',$v_data['v_actor']);
-					$rs1['v_actor']=str_replace(array(' ',',','/'),'',$rs1['v_actor']);
+
 					if($v_data['v_actor'] != $rs1['v_actor'] && (strpos($cfg_gatherset,'8')!==false))
 					{
 						$rs1['v_playdata']='';$rs1['v_downdata']='';
@@ -480,15 +483,12 @@ class Collect
 					$rs['v_playdata']='';$rs['v_downdata']='';
 					return $autocol_str.$this->_insert_database($v_data);//语言 新增数据
 				}
-				$v_data['v_director']=str_replace(array(' ',',','/'),'',$v_data['v_director']);
-				$rs['v_director']=str_replace(array(' ',',','/'),'',$rs['v_director']);
+
 				if($v_data['v_director'] != $rs['v_director'] && (strpos($cfg_gatherset,'7')!==false))
 				{
 					$rs['v_playdata']='';$rs['v_downdata']='';
 					return $autocol_str.$this->_insert_database($v_data);//导演 新增数据
 				}
-				$v_data['v_actor']=str_replace(array(' ',',','/'),'',$v_data['v_actor']);
-				$rs['v_actor']=str_replace(array(' ',',','/'),'',$rs['v_actor']);
 				if($v_data['v_actor'] != $rs['v_actor'] && (strpos($cfg_gatherset,'8')!==false))
 				{
 					$rs['v_playdata']='';$rs['v_downdata']='';

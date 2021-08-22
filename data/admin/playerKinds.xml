@@ -3,6 +3,7 @@
 <player open="1" sort="0" postfix="jiexi" flag="解析播放" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="jplayer" flag="音频播放" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="yunpan" flag="网盘下载" des=""><intro>网盘下载链接，如有密码用 , 隔开</intro></player>
+<player open="1" sort="0" postfix="dm" flag="弹幕播放" des=""><intro>无需安装任何插件，支持弹幕交互</intro></player>
 <player open="1" sort="0" postfix="dp" flag="Dplayer" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="ck" flag="CKplayer" des=""><intro>无需安装任何插件，即可快速播放</intro></player>
 <player open="1" sort="0" postfix="url" flag="网页跳转" des=""><intro>跳转到第三方视频网站，站外播放</intro></player>

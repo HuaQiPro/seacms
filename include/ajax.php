@@ -94,7 +94,8 @@ return $array;
 
 
 require_once('common.php');
- 
+global $cfg_isallphp;
+if($cfg_isallphp=='1'){exit();};
 AjaxHead();
 $action = isset($action) ? trim($action) : '';
 $id = (isset($id) && is_numeric($id)) ? $id : 0;
