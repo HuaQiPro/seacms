@@ -76,6 +76,14 @@
       <tr class="thead">
         <td colspan="5" class="td_title">编辑用户：<?php echo $row['username'] ?></td>
       </tr>
+	   <tr>
+        <td class="td_border" width="11%" height="30">&nbsp;注册时间：</td>
+        <td class="td_border"><input disabled="disabled" id="nickname" type="text" value="<?php echo  date("Y-m-d h:i:s",$row['regtime']); ?>" size="20" name="nickname" /> </td>
+      </tr>
+	   <tr>
+        <td class="td_border" width="11%" height="30">&nbsp;注册IP：</td>
+        <td class="td_border"><input disabled="disabled" id="nickname" type="text" value="<?php echo $row['regip'] ?>" size="20" name="nickname" /> </td>
+      </tr>
       <tr>
         <td class="td_border" width="11%" height="30">&nbsp;用户组：</td>
         <td class="td_border"><select name="gid">

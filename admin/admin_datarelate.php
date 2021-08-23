@@ -36,9 +36,9 @@ if($action=="downpic")
 		$picUrl = $image->downPicHandle($picUrl,$v_name);
 		$picUrl=str_replace('../','',$picUrl);
 		$query = "Update `sea_data` set v_pic='$picUrl' where v_id='$v_id'";
-		echo '已下载<font color=red>';
-		echo $v_name;
-		echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
+		//echo '已下载<font color=red>';
+		//echo $v_name;
+		//echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
 		$dsql->ExecuteNoneQuery($query);
 		if($photo_markdown==1){
 			$errno = $image->watermark($picUrl,2);
@@ -87,8 +87,10 @@ if($action=="downpic")
 		//print_r($picuelarr);
 foreach($picuelarr as $key){
     //echo $key."</br>";
-
-		$picUrl = $image->downPicHandle($key,$v_id);
+		
+		$drow = $dsql->GetOne("Select v_name as dd From `sea_data` where v_id=$v_id");
+		$d_name = $drow['dd'];
+		$picUrl = $image->downPicHandle($key,$d_name);
 		if($app_ftp==0){$picUrl='/'.$picUrl;}
 		$nr=str_replace($key,$picUrl,$nr);
 		}
@@ -131,7 +133,9 @@ foreach($picuelarr as $key){
 foreach($picuelarr as $key){
     //echo $key."</br>";
 
-		$picUrl = $image->downPicHandle($key,$v_id);
+		$drow = $dsql->GetOne("Select v_name as dd From `sea_data` where v_id=$v_id");
+		$d_name = $drow['dd'];
+		$picUrl = $image->downPicHandle($key,$d_name);
 		if($app_ftp==0){$picUrl='/'.$picUrl;}
 		$nr=str_replace($key,$picUrl,$nr);
 		}
@@ -161,21 +165,21 @@ elseif($action=="downpicnrN"){
 		exit();
 	}
 	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select n_id,n_content From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
+	$dsql->SetQuery("Select n_id,n_title,n_content From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
 	$dsql->Execute('getpic');
 	while($row=$dsql->GetObject('getpic'))
 	{
 		$nr=$row->n_content;
 		$nr=stripslashes($nr);
 		$n_id=$row->n_id;
-		//$n_title=$row->n_title;
+		$n_title=$row->n_title;
 		//echo $nr;
 		$picuelarr=getpichzh($nr);
 		//print_r($picuelarr);
 foreach($picuelarr as $key){
     //echo $key."</br>";
 
-		$picUrl = $image->downPicHandle($key,$n_id);
+		$picUrl = $image->downPicHandle($key,$n_title);
 		if($app_ftp==0){$picUrl='/'.$picUrl;}
 		$nr=str_replace($key,$picUrl,$nr);
 		}
@@ -204,21 +208,21 @@ foreach($picuelarr as $key){
 		exit();
 	}
 	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select n_id,n_content From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
+	$dsql->SetQuery("Select n_id,n_title,n_content From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
 	$dsql->Execute('getpic');
 	while($row=$dsql->GetObject('getpic'))
 	{
 		$nr=$row->n_content;
 		$nr=stripslashes($nr);
 		$n_id=$row->n_id;
-		//$n_title=$row->n_title;
+		$n_title=$row->n_title;
 		//echo $nr;
 		$picuelarr=getpichzh($nr);
 		//print_r($picuelarr);
 foreach($picuelarr as $key){
     //echo $key."</br>";
 
-		$picUrl = $image->downPicHandle($key,$n_id);
+		$picUrl = $image->downPicHandle($key,$n_title);
 		if($app_ftp==0){$picUrl='/'.$picUrl;}
 		$nr=str_replace($key,$picUrl,$nr);
 		}
@@ -1010,13 +1014,13 @@ elseif($action=="downnewspic")
 		$picUrl=$row->n_pic;
 		$n_id=$row->n_id;
 		$n_name=$row->n_title;
-		$picUrl = $image->downPicHandle($picUrl,$n_title);
+		$picUrl = $image->downPicHandle($picUrl,$n_name);
 		$picUrl=str_replace('../','',$picUrl);
 		$query = "Update `sea_news` set n_pic='$picUrl' where n_id='$n_id'";
 		$dsql->ExecuteNoneQuery($query);
-		echo '已下载<font color=red>';
-		echo $n_name;
-		echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
+		//echo '已下载<font color=red>';
+		//echo $n_name;
+		//echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
 		if($photo_markdown==1){
 			$errno = $image->watermark($picUrl,2);
 			if($errno===true)

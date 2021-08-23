@@ -37,6 +37,7 @@
 <tr height="30" ><td class="td_border">&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="td_border">UID</td><td class="td_border">用户名</td><td class="td_border">邮箱</td><td class="td_border">注册时间</td><td class="td_border">注册IP</td><td class="td_border">用户组</td><td class="td_border">用户积分</td><td class="td_border">会员状态</td><td class="td_border">操作</td></tr>
 
 <?php
+include_once('../data/admin/smtp.php');
 $numPerPage=20;
 $page = isset($page) ? intval($page) : 1;
 if($page==0) $page=1;
@@ -59,10 +60,10 @@ $sql="select * from sea_member ".$whereStr." ORDER BY  id DESC limit $limitstart
 	   <td class="td_border" height="30" ><input class="checkbox" type="checkbox" value="<?php echo $row->id;?>" name="uidarray[]"></td>
             <td class="td_border" height="30" ><?php echo $row->id;?></td>
             <td class="td_border" height="30" ><?php echo $row->username;?></td>
-            <td class="td_border" height="30" ><?php echo $row->email;?></td>
-            <td class="td_border" height="30" ><?php echo date('Y-m-d H:i:s',$row->regtime);?></td>
+            <td class="td_border" height="30" ><?php echo $row->email; if($row->acode=="y" AND $smtpreg == "on"){echo ' [已激活]';}elseif($row->acode !="y" AND $smtpreg == "on"){echo ' [未激活]';}else{echo '';}?></td>
+            <td class="td_border" height="30" ><?php echo date('Y-m-d',$row->regtime);?></td>
             <td class="td_border" height="30" ><?php echo $row->regip;?></td>
-            <td class="td_border" height="30" ><?php echo $rs['gname'];?></td>
+            <td class="td_border" height="30" ><?php echo $rs['gname'];?> [<?php echo date('Y-m-d',$row->vipendtime);?>]</td>
             <td class="td_border" height="30" ><?php echo $row->points;?></td>
             <td class="td_border" height="30" ><?php echo ($row->state?'正常':'禁止');?></td>
             <td class="td_border" height="30" ><a href="admin_members.php?ac=edit&id=<?php echo $row->id;?>">编辑</a>&nbsp;<a href="sendmail.php?smtprmail=<?php echo $row->email; ?>&username=<?php echo $row->username; ?>">发邮件</a>&nbsp;<a href="sendmsg.php?username=<?php echo $row->username; ?>">发消息</a>&nbsp;<a href="admin_members.php?ac=del2&id=<?php echo $row->id;?>" onclick="if(confirm('确定删除？操作不可恢复')){return true;}else{return false;}">删除</a></td>
