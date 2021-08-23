@@ -84,10 +84,13 @@ $searchword = FilterSearch(stripslashes($searchword));
 $searchword = addslashes(cn_substr($searchword,20));
 $searchword = RemoveXSS($searchword);
 $searchword = trim($searchword);
-if($cfg_notallowstr !='' && m_eregi($cfg_notallowstr,$searchword))
+if($cfg_notallowsstr !='' && $searchtype!=5)
 {
-	ShowMsg("搜索关键字存在禁止内容","-1","0",$cfg_search_time*1000);
-	exit();
+	$sstr=m_eregi_replace($cfg_notallowsstr,'s-e-a-c-m-s',$searchword);
+	$sarray=explode('s-e-a-c-m-s', $sstr);
+	$r = null;
+	array_walk($sarray, function($v) use (&$r){$r[$v] = strlen($v);});
+    $searchword = array_search(max($r), $r);
 }
 if($searchword=='')
 {

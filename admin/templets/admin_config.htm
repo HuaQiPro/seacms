@@ -802,14 +802,19 @@ $(function() {
         <td colspan="2"><strong>网站其它设置</strong></td>
       </tr>
       <tr>
-        <td>过滤留言:</td>
+        <td>过滤关键词:</td>
         <td><input type="text" name="edit___cfg_notallowstr" size="80" value="<?php echo $cfg_notallowstr;?>">
-          请以'|'分离，此内容同时也是禁止搜索关键词</td>
+          请以'|'分离，适用于留言/评论/</td>
       </tr>
       <tr>
-        <td>禁止留言:</td>
+        <td>禁止关键词:</td>
         <td><input type="text" name="edit___cfg_banwords" size="80" value="<?php echo $cfg_banwords ;?>">
-          请以'|'分离</td>
+          请以'|'分离，适用于留言/评论</td>
+      </tr>
+	  <tr>
+        <td>搜索过滤词:</td>
+        <td><input type="text" name="edit___cfg_notallowsstr" size="80" value="<?php echo $cfg_notallowsstr ;?>">
+          请以'|'分离，适用于视频及文章搜索</td>
       </tr>
       <tr>
         <td>热门关键字</td>

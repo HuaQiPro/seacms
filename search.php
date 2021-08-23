@@ -121,10 +121,13 @@ $money = addslashes(cn_substr($money,2));
 $order = RemoveXSS(stripslashes($order));
 $order = addslashes(cn_substr($order,16));
 
-if($cfg_notallowstr !='' && m_eregi($cfg_notallowstr,$searchword))
+if($cfg_notallowsstr !='' && $searchtype!=5)
 {
-	ShowMsg("搜索关键字存在禁止内容！","index.php","0",$cfg_search_time*1000);
-	exit();
+	$sstr=m_eregi_replace($cfg_notallowsstr,'s-e-a-c-m-s',$searchword);
+	$sarray=explode('s-e-a-c-m-s', $sstr);
+	$r = null;
+	array_walk($sarray, function($v) use (&$r){$r[$v] = strlen($v);});
+    $searchword = array_search(max($r), $r);
 }
 if($searchword==''&&$searchtype!=5)
 {

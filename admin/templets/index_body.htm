@@ -99,9 +99,5 @@ $npl_dsh = $dsql->GetOne("select count(*) as dd from sea_comment where m_type=1 
 	   <div class="S_list">系统：<?php echo PHP_OS; ?></div>
 	   <div class="S_list">&nbsp;&nbsp;PHP执行时间限制：<?php echo get_cfg_var("max_execution_time")."秒 " ?> </div>
 	   <div class="S_list">PHP内存使用限制：<?php echo get_cfg_var ("memory_limit")?get_cfg_var("memory_limit"):"无"; ?></div>
-
-                     
-        
             </div>
-<div  style="clear:left"></div>
-			<div class="v_info">&nbsp;<img src="img/i2.png" style="width: 12px;height:12px;vertical-align: middle;padding-right: 2px;margin-bottom: 1px;">程序版本&nbsp;|&nbsp;当前<span class="badge2"><?php echo $cfg_version; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;最新<span class="badge2"><?php echo $ver; ?></span></div>
+	<?php echo '<div  style="clear:left"></div><div class="v_info">&nbsp;<img src="img/i2.png" style="width: 12px;height:12px;vertical-align: middle;padding-right: 2px;margin-bottom: 1px;">程序版本&nbsp;|&nbsp;当前<span class="badge2">'.$cfg_version.'</span>&nbsp;&nbsp;&nbsp;&nbsp;最新<span class="badge2">'.$ver.'</span></div>';?>

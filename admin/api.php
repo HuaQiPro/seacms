@@ -43,12 +43,10 @@ Tips：
 ① 先添加对应的播放来源再采集，否则会造成视频无播放器。&nbsp;&nbsp;
 ② 分类绑定冲突在某些情况下会导致采集错误，请先清除分类绑定。
 </div>
-<table width="98%"  align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="margin-top:1px; margin-left:10px;" id="list" class="list">
-<?php echo $union; ?> 
+
 <?php 
-$sqlStr="select * from `sea_zyk` order by zid ASC";
-$dsql->SetQuery($sqlStr);
-$dsql->Execute('flink_list');
+$sqlStr="select * from `sea_zyk` order by zid ASC";$dsql->SetQuery($sqlStr);echo $union;$dsql->Execute('flink_list');
+echo '<table width="98%"  align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="margin-top:1px; margin-left:10px;" id="list" class="list">';
 while($row=$dsql->GetObject('flink_list'))
 {
 $aid=$row->id;
@@ -64,7 +62,6 @@ $aid=$row->id;
 <?php 
 }
 ?> 
-
 </table>
 
 
