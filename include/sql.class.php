@@ -479,8 +479,8 @@ class DB_MySQL
 		//}
 		$emsg = '';
 		$emsg .= "<div><h3>seacms Error Warning!</h3>\r\n";
-		$emsg .= "<div><a href='http://www.seacms.net/ 
-' target='_blank' style='color:red'>Technical Support: http://www.seacms.net/</a></div>";
+		$emsg .= "<div><a href='http://www.seacms.org/ 
+' target='_blank' style='color:red'>Technical Support: http://www.seacms.org/</a></div>";
 		$emsg .= "<div style='line-helght:160%;font-size:14px;color:green'>\r\n";
 		$emsg .= "<div style='color:blue'><br />Error page: <font color='red'>".$this->GetCurUrl()."</font></div>\r\n";
 		$emsg .= "<div>Error infos: {$msg}</div>\r\n";

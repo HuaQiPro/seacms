@@ -1,5 +1,5 @@
 访问官方网站获取帮助
-官网:www.seacms.net
+官网:www.seacms.org
 
 
 # 系统环境
@@ -30,4 +30,4 @@ Linux/Unix 平台： Apache/Nginx + PHP (5.2+) + MySQL
 
 
 访问官方网站获取帮助
-官网:www.seacms.net  
+官网:www.seacms.org  

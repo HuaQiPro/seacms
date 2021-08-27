@@ -1,6 +1,6 @@
 <?php
 /*
-	[seacms1.0] (C)2011-2012 seacms.net
+	[seacms1.0] (C)2011-2012 seacms.org
 */
 require_once(dirname(__FILE__)."/config.php");
 require_once(sea_INC."/collection.func.php");

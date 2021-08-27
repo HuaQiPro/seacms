@@ -1,6 +1,6 @@
 <?php 
 /*
-	[seacms1.0] (C)2011-2012 seacms.net 
+	[seacms1.0] (C)2011-2012 seacms.org 
 */
 if(!defined('sea_INC'))
 {

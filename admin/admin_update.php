@@ -5,7 +5,7 @@ CheckPurview('');
 @set_time_limit(0);
 
 //升级服务器
-$updateHost = 'http://update.seacms.net/utf8';
+$updateHost = 'http://update.seacms.org/utf8';
 
 //当前软件版本锁定文件
 $verLockFile = sea_ROOT.'/data/admin/ver.txt';

@@ -469,7 +469,7 @@ function viewFoot()
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\">本页面用时".
-	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.net/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
+	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.org/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
 }
 
 function viewHead($str)
