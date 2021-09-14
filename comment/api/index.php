@@ -26,8 +26,11 @@ die($h);
 
 function ReadData($id,$page)
 {
-	global $type,$pCount,$rlist;
-	$ret = array("","",$page,0,20,$type,$id);
+	global $type,$pCount,$rlist,$cfg_pl_size;
+	$vsize=20;
+	$cfg_pl_size=intval($cfg_pl_size);
+	if($cfg_pl_size !="" and $cfg_pl_size !=0){$vsize=$cfg_pl_size;}
+	$ret = array("","",$page,0,$vsize,$type,$id);
 	if($id>0)
 	{
 		$ret[0] = Readmlist($id,$page,$ret[4]);
@@ -45,10 +48,6 @@ function ReadData($id,$page)
 function Readmlist($id,$page,$size)
 {
 	global $dsql,$type,$pCount,$rlist;
-	$rlist = str_ireplace('@', "", $rlist);	
-	$rlist = str_ireplace('/*', "", $rlist);
-	$rlist = str_ireplace('*/', "", $rlist);
-	$rlist = str_ireplace('*!', "", $rlist);
 	$ml=array();
 	if($id>0)
 	{
@@ -60,8 +59,12 @@ function Readmlist($id,$page,$size)
 		$dsql->Execute('commentmlist');
 		while($row=$dsql->GetArray('commentmlist'))
 		{
+			$uname=$row['username'];
+			$picsql = "select pic from sea_member where username='$uname'";
+			$picrow = $dsql->GetOne($picsql);
+			if($picrow['pic']==""){$upic='uploads/user/a.png';}else{$upic=$picrow['pic'];}
 			$row['reply'].=ReadReplyID($id,$row['reply'],$rlist);
-			$ml[]="{\"cmid\":".$row['id'].",\"uid\":".$row['uid'].",\"tmp\":\"\",\"nick\":\"".$row['username']."\",\"face\":\"\",\"star\":\"\",\"anony\":".(empty($row['username'])?1:0).",\"from\":\"".$row['username']."\",\"time\":\"".date("Y/n/j H:i:s",$row['dtime'])."\",\"reply\":\"".$row['reply']."\",\"content\":\"".$row['msg']."\",\"agree\":".$row['agree'].",\"aginst\":".$row['anti'].",\"pic\":\"".$row['pic']."\",\"vote\":\"".$row['vote']."\",\"allow\":\"".(empty($row['anti'])?0:1)."\",\"check\":\"".$row['ischeck']."\"}";
+			$ml[]="{\"cmid\":".$row['id'].",\"uid\":".$row['uid'].",\"tmp\":\"\",\"nick\":\"".$row['username']."\",\"face\":\"\",\"star\":\"\",\"anony\":".(empty($row['username'])?1:0).",\"from\":\"".$row['username']."\",\"time\":\"".date("Y/n/j H:i:s",$row['dtime'])."\",\"reply\":\"".$row['reply']."\",\"content\":\"".$row['msg']."\",\"agree\":".$row['agree'].",\"aginst\":".$row['anti'].",\"pic\":\"".$row['pic']."\",\"vote\":\"".$row['vote']."\",\"allow\":\"".(empty($row['anti'])?0:1)."\",\"check\":\"".$row['ischeck']."\",\"upic\":\"".$upic."\"}";
 		}
 	}
 	$readmlist=join($ml,",");
@@ -72,7 +75,7 @@ function Readrlist($ids,$page,$size)
 {
 	global $dsql,$type;
 	$rl=array();
-	$sql = "SELECT id,uid,username,dtime,reply,msg,agree,anti,pic,vote,ischeck FROM sea_comment WHERE m_type=$type AND id in ($ids) AND ischeck=1 ORDER BY id DESC";
+	$sql = "SELECT id,uid,username,dtime,reply,msg,agree,anti,pic,vote,ischeck FROM sea_comment WHERE m_type=$type AND id in ($ids) AND ischeck=1 ORDER BY id DESC limit 10";
 	$dsql->setQuery($sql);
 	$dsql->Execute('commentrlist');
 	while($row=$dsql->GetArray('commentrlist'))
@@ -86,12 +89,9 @@ function Readrlist($ids,$page,$size)
 function ReadReplyID($gid,$cmid,&$rlist)
 {
 	global $dsql;
-	$rlist = str_ireplace('@', "", $rlist);	
-	$rlist = str_ireplace('/*', "", $rlist);
-	$rlist = str_ireplace('*/', "", $rlist);
-	$rlist = str_ireplace('*!', "", $rlist);
 	if($cmid>0)
 	{
+		
 		if(!in_array($cmid,$rlist))$rlist[]=$cmid;
 		$row = $dsql->GetOne("SELECT reply FROM sea_comment WHERE id=$cmid limit 0,1");
 		if(is_array($row))

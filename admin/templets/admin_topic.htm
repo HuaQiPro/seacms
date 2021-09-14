@@ -29,18 +29,6 @@ function onUploadBack(fn){
 }
 
 //全屏弹出层
-var show=function (id) {
-        var index = layer.open({
-            type: 2,          //默认弹出层类型
-			shade: 0,
-			isOutAnim: false,
-            title:"专题编辑",  //弹出层角标名称
-            content: "?action=ztedit&id="+id,  //弹出层页面地址
-            area: ['800px', '500px'],    //弹出层大小
-            maxmin: true   //弹出层是否全屏
-        });
-        layer.full(index);  
-    }
 var showv=function (id) {
         var index = layer.open({
             type: 2,          //默认弹出层类型
@@ -48,10 +36,10 @@ var showv=function (id) {
 			isOutAnim: false,
             title:"专题视频",  //弹出层角标名称
             content: "admin_topic_vod.php?tid="+id,  //弹出层页面地址
-            area: ['800px', '500px'],    //弹出层大小
+            area: ['95%', '600px'],    //弹出层大小
             maxmin: true   //弹出层是否全屏
         });
-        layer.full(index);  
+        
     }
 var shown=function (id) {
         var index = layer.open({
@@ -60,10 +48,10 @@ var shown=function (id) {
 			isOutAnim: false,
             title:"专题新闻",  //弹出层角标名称
             content: "admin_topic_news.php?tid="+id,  //弹出层页面地址
-            area: ['800px', '500px'],    //弹出层大小
+            area: ['95%', '600px'],    //弹出层大小
             maxmin: true   //弹出层是否全屏
         });
-        layer.full(index);  
+          
     }
 window.onload=parent.layer.closeAll(); //疯狂模式，关闭所有层
 </script>
@@ -174,7 +162,7 @@ $sql="select * from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
       
       
       <TD bgcolor="#FFFFFF"  class="td_border"><input name="sort<?php echo $row->id;?>" type="text" value="<?php echo $row->sort;?>" size="5" /></TD>
-      <TD bgcolor="#FFFFFF"  class="td_border"><a href="javascript:;" onclick="javascript:show('<?php echo $row->id;?>');">编辑</a>&nbsp;&nbsp;&nbsp;<a  href="?action=last&id=<?php echo $row->id;?>">上移</a>&nbsp;&nbsp;&nbsp;<a  href="?action=next&id=<?php echo $row->id;?>">下移</a>&nbsp;&nbsp;&nbsp;<a  onclick="if(confirm('确定要删除吗')){return true;}else{return false;}" href="?action=del&id=<?php echo $row->id;?>">删除</a></TD>
+      <TD bgcolor="#FFFFFF"  class="td_border"><a  href="?action=ztedit&id=<?php echo $row->id;?>">编辑</a>&nbsp;&nbsp;&nbsp;<a  href="?action=last&id=<?php echo $row->id;?>">上移</a>&nbsp;&nbsp;&nbsp;<a  href="?action=next&id=<?php echo $row->id;?>">下移</a>&nbsp;&nbsp;&nbsp;<a  onclick="if(confirm('确定要删除吗')){return true;}else{return false;}" href="?action=del&id=<?php echo $row->id;?>">删除</a></TD>
     </TR>
 <?php }?>
 							

@@ -24,7 +24,7 @@ if($action=="editcomsave")
 	}
 	$query = "update `sea_comment` set username='$username',msg='$msg',ischeck=1 where id=$id";
 	$dsql->ExecuteNoneQuery($query);
-	ShowMsg("成功回复一则评论！",$v_back);
+	ShowMsg("成功回复一则评论！","-1");
 	exit();
 }
 if($action=="editgbooksave")
@@ -42,14 +42,14 @@ if($action=="editgbooksave")
 	}
 	$query = "update `sea_guestbook` set uname='$uname',msg='$msg',ischeck=1 where id=$id";
 	$dsql->ExecuteNoneQuery($query);
-	ShowMsg("成功回复一则留言！",$v_back);
+	ShowMsg("成功回复一则留言！","-1");
 	exit();
 }
 elseif($action=="delcomment")
 {
 	delcommentcache($id);
 	$dsql->ExecuteNoneQuery("delete from sea_comment where id=".$id);
-	ShowMsg("成功删除一则评论！","admin_comment.php");
+	ShowMsg("成功删除一则评论！","-1");
 	exit();
 }
 elseif($action=="delallcomment")
@@ -62,14 +62,14 @@ elseif($action=="delallcomment")
 	$ids = implode(',',$e_id);
 	delcommentcache($ids);
 	$dsql->ExecuteNoneQuery("delete from sea_comment where id in(".$ids.")");
-	ShowMsg("成功删除所选评论！","admin_comment.php");
+	ShowMsg("成功删除所选评论！","-1");
 	exit();
 }
 elseif($action=="deltotalcomment")
 {
 	@cache_clear(sea_ROOT.'/data/cache/review/0');
 	$dsql->ExecuteNoneQuery("delete from sea_comment");
-	ShowMsg("成功删除所有评论！","admin_comment.php");
+	ShowMsg("成功删除所有评论！","-1");
 	exit();
 }
 elseif($action=="checkcomment")
@@ -81,7 +81,7 @@ elseif($action=="checkcomment")
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("update sea_comment set ischeck=1 where id in(".$ids.")");
-	ShowMsg("成功审核所选评论！","admin_comment.php");
+	ShowMsg("成功审核所选评论！","-1");
 	exit();
 }
 elseif($action=="gbook" || $action=="viewgbook" || $action=="editgbook")
@@ -92,7 +92,7 @@ elseif($action=="gbook" || $action=="viewgbook" || $action=="editgbook")
 elseif($action=="delgbook")
 {
 	$dsql->ExecuteNoneQuery("delete from sea_guestbook where id=".$id);
-	ShowMsg("成功删除一则留言！","admin_comment.php?action=gbook");
+	ShowMsg("成功删除一则留言！","-1");
 	exit();
 }
 elseif($action=="delallgbook")
@@ -104,7 +104,7 @@ elseif($action=="delallgbook")
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("delete from sea_guestbook where id in(".$ids.")");
-	ShowMsg("成功删除所选留言！","admin_comment.php?action=gbook");
+	ShowMsg("成功删除所选留言！","-1");
 	exit();
 }
 elseif($action=="delallreporterror")
@@ -116,19 +116,19 @@ elseif($action=="delallreporterror")
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("delete from sea_erradd where id in(".$ids.")");
-	ShowMsg("成功删除所选留言！","admin_comment.php?action=reporterror");
+	ShowMsg("成功删除所选留言！","-1");
 	exit();
 }
 elseif($action=="deltotalgbook")
 {
 	$dsql->ExecuteNoneQuery("delete from sea_guestbook");
-	ShowMsg("成功删除所有留言！","admin_comment.php?action=gbook");
+	ShowMsg("成功删除所有留言！","-1");
 	exit();
 }
 elseif($action=="deltotalreporterror")
 {
 	$dsql->ExecuteNoneQuery("delete from sea_erradd");
-	ShowMsg("成功删除所有报错！","admin_comment.php?action=reporterror");
+	ShowMsg("成功删除所有报错！","-1");
 	exit();
 }
 elseif($action=="checkgbook")
@@ -140,7 +140,7 @@ elseif($action=="checkgbook")
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("update sea_guestbook set ischeck=1 where id in(".$ids.")");
-	ShowMsg("成功审核所选留言！","admin_comment.php?action=gbook");
+	ShowMsg("成功审核所选留言！","-1");
 	exit();
 }
 elseif($action=="checkallreporterror")
@@ -152,19 +152,19 @@ elseif($action=="checkallreporterror")
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("update sea_erradd set ischeck=1 where id in(".$ids.")");
-	ShowMsg("成功标记所有报错！","admin_comment.php?action=reporterror");
+	ShowMsg("成功标记所有报错！","-1");
 	exit();
 }
 elseif($action=="delreporterror")
 {
 	$dsql->ExecuteNoneQuery("delete from sea_erradd where id=".$id);
-	ShowMsg("成功删除一条报错信息！","admin_comment.php?action=reporterror");
+	ShowMsg("成功删除一条报错信息！","-1");
 	exit();
 }
 elseif($action=="checkreporterror")
 {
 	$dsql->ExecuteNoneQuery("UPDATE sea_erradd SET ischeck =1 WHERE id =".$id);
-	ShowMsg("成功处理完成一条报错信息！","admin_comment.php?action=reporterror");
+	ShowMsg("成功处理完成一条报错信息！","-1");
 	exit();
 }
 elseif($action=="delallreporterror")
@@ -176,7 +176,7 @@ elseif($action=="delallreporterror")
 	}
 	$ids = implode(',',$e_id);
 	$dsql->ExecuteNoneQuery("delete from sea_erradd where id in(".$ids.")");
-	ShowMsg("成功删除所选信息！","admin_comment.php?action=reporterror");
+	ShowMsg("成功删除所选信息！","-1");
 	exit();
 }
 

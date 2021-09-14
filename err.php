@@ -67,7 +67,7 @@ if($author=='' || $errtxt=='') {
 	$query = "INSERT INTO `sea_erradd`(vid,author,ip,errtxt,sendtime,ischeck)
                   VALUES ('$id','$author','$ip','$errtxt','$time',0); ";
 	$dsql->ExecuteNoneQuery($query);
-	ShowMsg("谢谢您对本网站的支持，我们会尽快处理您的报错！","index.php");
+	echo '谢谢您对本网站的支持，我们会尽快处理您的报错！';
 	exit();
 }
 ?>
@@ -91,7 +91,7 @@ if($author=='' || $errtxt=='') {
 		<input type="hidden" id="vid" name="vid"  value="<?php  echo $id2 ?>">
             <div class="err">
 			<h2>失效影片，我们会在第一时间内修正</h2>
-               <p style="padding-bottom:5px;">昵称:<input type="text" id="author" name="author"  value="匿名"  size="15"><font color="#FF0000">*必填</font></p>
+               <p style="padding-bottom:5px;">昵称:<input type="text" readonly id="author" name="author"  value="<?php if($_SESSION['sea_user_name'] !=""){echo $_SESSION['sea_user_name'];}else{echo '匿名';} ?>"  size="15"><font color="#FF0000">*必填</font></p>
 			
                 <p>详情:<textarea id="errtxt"  name="errtxt" style="width:270px;height:88px" rows=5 cols=30><?php  echo $errtxt2 ?></textarea>
                 <font color="#FF0000">*必填</font></p>

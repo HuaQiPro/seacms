@@ -18,10 +18,10 @@
 $t = time();
 ?>
 <!--当前导航-->
-<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;内容统计';</script>
+<script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;全站数据统计';</script>
 <div class="r_main">
 <div class="r_content">
-<div class="S_info" >&nbsp;内容统计</div>	
+<div class="S_info" >&nbsp;全站数据统计</div>	
 <?php
 $row=$dsql->GetOne("select count(*) as dd from sea_data where TO_DAYS(from_unixtime(v_addtime)) = TO_DAYS(NOW()) AND v_recycled != 1");$n1=$row['dd'];
 $row=$dsql->GetOne("select count(*) as dd from sea_data where YEARWEEK(DATE_FORMAT(from_unixtime(v_addtime),'%Y-%m-%d')) = YEARWEEK(NOW()) AND v_recycled != 1");$n2=$row['dd'];
@@ -221,6 +221,15 @@ if($n5=="" OR empty($n5)){$n5=0;}
 <li>未充<font color='#ff0000'><?php echo $n5; ?></font></li>
 </ul></div>
 <?php
+$row=$dsql->GetOne("select count(*) as dd from sea_danmaku_list");$n1=$row['dd'];
+$row=$dsql->GetOne("select count(*) as dd from sea_danmaku_report");$n2=$row['dd'];
+?>
+<div class="v_info mtop" ><ul><li>【弹幕数据】</li>
+<li>弹幕<font color='#ff0000'><?php echo $n1; ?></font></li>
+<li>举报<font color='#ff0000'><?php echo $n2; ?></font></li>
+
+</ul></div>
+<?php
 $row=$dsql->GetOne("select count(*) as dd from sea_myad");$n1=$row['dd'];
 $row=$dsql->GetOne("select count(*) as dd from sea_zyk");$n2=$row['dd'];
 $row=$dsql->GetOne("select count(*) as dd from sea_flink");$n3=$row['dd'];
@@ -231,7 +240,6 @@ $row=$dsql->GetOne("select count(*) as dd from sea_flink");$n3=$row['dd'];
 <li>友链<font color='#ff0000'><?php echo $n3; ?></font></li>
 
 </ul></div>
-
 
 	</div>
 </div>

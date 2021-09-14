@@ -45,6 +45,11 @@ $ps = explode('/',$picUrl);}
 		if (strpos($picUrl,".ykimg.com/")>0){
 			$fileext=".gif";
 		}
+
+if (strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))===false){   //2021-7-31  hzh
+    $fileext=$this->kzm($pic);
+}
+
 		$picpath = '../'.$cfg_upload_dir.'/allimg/'.MyDate("ymd",time())."/";
 		$picfile = $filename.$fileext;
 		$filePath = $picpath.$picfile;
@@ -83,6 +88,31 @@ $ps = explode('/',$picUrl);}
 		}
 	}
 	
+ function kzm($img_url){   //2021-7-31  hzh
+  $mimes=array(
+  'image/bmp'=>'.bmp',
+  'image/gif'=>'.gif',
+  'image/jpeg'=>'.jpg',
+  'image/png'=>'.png',
+  'image/x-icon'=>'.ico'
+ );
+ // 获取响应头
+ if(($headers=get_headers($img_url, 1))!==false)
+ {
+  // 获取响应的类型
+  $type=$headers['Content-Type'];
+  // 如果符合我们要的类型
+  if(isset($mimes[$type]))
+  {
+   $kz=$mimes[$type];
+  }
+  return $kz;
+ }
+ }	
+	
+	
+	
+	
 	function _downPic($picUrl,$filePath,$vname='')
 	{
 		$spanstr = "<br/>";
@@ -96,7 +126,8 @@ $ps = explode('/',$picUrl);}
 		$filename=urldecode($ps[count($ps)-1]);
 		if ($fileext!="" && strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))>0){
 			if(!(strpos($picUrl,".ykimg.com/")>0)){
-				if(empty($filename) || strpos($filename,".")==0){
+			//	if(empty($filename) || strpos($filename,".")==0){   
+				if(empty($filename) || strpos('hzh'.$filePath,".")==0){   //2021-7-31  hzh
 					return "数据<font color=red>".$vname."</font>的图片路径错误2,请检查图片地址是否有效 ".$spanstr;
 				}
 			}

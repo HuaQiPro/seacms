@@ -1,0 +1,20 @@
+# 伪静态规则
+
+
+** IIS和Apache的伪静态规则后台直接自动生成
+
+
+** Nginx伪静态规则如下，路径名称请对照修改：
+
+location / {
+	rewrite ^/frim/index(.+?)\.html$ /list/index.php?$1 last;
+	rewrite ^/movie/index(.+?)\.html$ /detail/index.php?$1 last;
+	rewrite ^/play/([0-9]+)-([0-9]+)-([0-9]+)\.html$ /video/index.php?$1-$2-$3 last;
+	rewrite ^/topic/index(.+?)\.html$ /topic/index.php?$1 last;
+	rewrite ^/topic/index\.html$ /topic/index.php?$1 last;
+	rewrite ^/topiclist/(.+?).html$ /topiclist/index.php?$1 last;
+	rewrite ^/index\.html$ index.php permanent;
+	rewrite ^/news/index\.html$ /news/index.php?$1 last;
+	rewrite ^/html/part/index(.+?)\.html$ /articlelist/index.php?$1 last;
+	rewrite ^/html/article/index(.+?)\.html$ /article/index.php?$1 last;
+}

@@ -33,7 +33,7 @@ elseif($action=="delall")
 {
 	if(empty($e_id))
 	{
-		ShowMsg("请选择需要删除的影片","-1");
+		ShowMsg("请选择需要删除的数据","-1");
 		exit();
 	}
 	$ids = implode(',',$e_id);

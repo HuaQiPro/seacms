@@ -1,5 +1,6 @@
 <?php 
 error_reporting(0);
+session_start();
 function lib_replace_end_tag($str)  
 {  
 if (empty($str)) return false;  
@@ -66,6 +67,17 @@ if($GLOBALS['cfg_mskin']==4 AND $GLOBALS['isMobile']==1){header("location:$cfg_m
 //前置跳转end
 require_once(sea_INC."/main.class.php");
 
+if($cfg_search_type =='0')
+{
+	ShowMsg("搜索系统关闭！","index.php","0",$cfg_search_time*1000);
+	exit();
+}
+if($cfg_search_type =='2')
+{
+	include_once("include/scheck.php");
+	$cfg_search_type ='-1';
+}
+
 $schwhere = '';
 foreach($_GET as $k=>$v)
 {
@@ -109,10 +121,13 @@ $money = addslashes(cn_substr($money,2));
 $order = RemoveXSS(stripslashes($order));
 $order = addslashes(cn_substr($order,16));
 
-if($cfg_notallowstr !='' && m_eregi($cfg_notallowstr,$searchword))
+if($cfg_notallowsstr !='' && $searchtype!=5)
 {
-	ShowMsg("你的搜索关键字中存在非法内容，被系统禁止！","index.php","0",$cfg_search_time*1000);
-	exit();
+	$sstr=m_eregi_replace($cfg_notallowsstr,'s-e-a-c-m-s',$searchword);
+	$sarray=explode('s-e-a-c-m-s', $sstr);
+	$r = null;
+	array_walk($sarray, function($v) use (&$r){$r[$v] = strlen($v);});
+    $searchword = array_search(max($r), $r);
 }
 if($searchword==''&&$searchtype!=5)
 {
@@ -141,7 +156,7 @@ function check_str($str,$key){
  return false;
 }
 
-$key = array('{','}','(',')','=',',',';','"','<','>','script','iframe','@','&','%','$','#','*',':','_','.','if','/','\\');
+$key = array('{','}','(',')','=',',',';','"','<','>','<script','<iframe','@','&','%','$','#','*',':','_','.','if(','/','\\');
 $page=intval($page);
 $tid=intval($tid);
 if(check_str($searchword,$key)){ShowMsg('请勿输入危险字符！','index.php','0',$cfg_search_time*1000);exit;}

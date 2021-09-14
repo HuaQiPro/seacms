@@ -4,200 +4,68 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="robots" content="noindex,nofollow" />
 <TITLE>站点配置-系统-seacms后台管理</TITLE>
-<script src="js/jquery.js"></script>
+
+
+
 <link href="img/style.css" rel="stylesheet" type="text/css" />
-<script src="../js/common.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
-<style>
-ul,li {
-	list-style:none
-}
-.tabClick {
-	background:#f3f3f3;
-	overflow:hidden
-}
-.tabClick li {
-	height:30px;
-	line-height:30px;
-	width:115px;
-	float:left;
-	text-align:center
-}
-.tabClick li.active {
-	transition:0.1s;
-	font-weight:bold;
-	background: #dceffe;
-}
-.tabCon {
-	overflow:hidden
-}
-.tabBox {
-	position:relative
-}
-.tabList {
-
-
-}
-
-</style>
+<script src="js/jquery.js"></script>
 <script>
-window.onload = function() {
-    var windowWidth = document.body.clientWidth; //window 宽度;
-    var wrap = document.getElementById('wrap');
-    var tabClick = wrap.querySelectorAll('.tabClick')[0];
-    var tabLi = tabClick.getElementsByTagName('li');
-
-    var tabBox = wrap.querySelectorAll('.tabBox')[0];
-    var tabList = tabBox.querySelectorAll('.tabList');
-
-    var lineBorder = wrap.querySelectorAll('.lineBorder')[0];
-    var lineDiv = lineBorder.querySelectorAll('.lineDiv')[0];
-
-    var tar = 0;
-    var endX = 0;
-    var dist = 0;
-
-    tabBox.style.overflow = 'hidden';
-    tabBox.style.position = 'relative';
-    tabBox.style.width = windowWidth * tabList.length + "px";
-
-    for (var i = 0; i < tabLi.length; i++) {
-        tabList[i].style.width = windowWidth + "px";
-        tabList[i].style.display = 'table-cell';
-    }
-
-    for (var i = 0; i < tabLi.length; i++) {
-        tabLi[i].start = i;
-        tabLi[i].onclick = function() {
-            var star = this.start;
-            for (var i = 0; i < tabLi.length; i++) {
-                tabLi[i].className = '';
-            };
-            tabLi[star].className = 'active';
-            init.lineAnme(lineDiv, windowWidth / tabLi.length * star)
-            init.translate(tabBox, windowWidth, star);
-            endX = -star * windowWidth;
-        }
-    }
-
-    function OnTab(star) {
-        if (star < 0) {
-            star = 0;
-        } else if (star >= tabLi.length) {
-            star = tabLi.length - 1
-        }
-        for (var i = 0; i < tabLi.length; i++) {
-            tabLi[i].className = '';
-        };
-
-        tabLi[star].className = 'active';
-        init.translate(tabBox, windowWidth, star);
-        endX = -star * windowWidth;
-    };
-
-    tabBox.addEventListener('touchstart', chstart, false);
-    tabBox.addEventListener('touchmove', chmove, false);
-    tabBox.addEventListener('touchend', chend, false);
-    //按下
-    function chstart(ev) {
-        ev.preventDefault;
-        var touch = ev.touches[0];
-        tar = touch.pageX;
-        tabBox.style.webkitTransition = 'all 0s ease-in-out';
-        tabBox.style.transition = 'all 0s ease-in-out';
-    };
-    //滑动
-    function chmove(ev) {
-        var stars = wrap.querySelector('.active').start;
-        ev.preventDefault;
-        var touch = ev.touches[0];
-        var distance = touch.pageX - tar;
-        dist = distance;
-        init.touchs(tabBox, windowWidth, tar, distance, endX);
-        init.lineAnme(lineDiv, -dist / tabLi.length - endX / 4);
-    };
-    //离开
-    function chend(ev) {
-        var str = tabBox.style.transform;
-        var strs = JSON.stringify(str.split(",", 1));
-        endX = Number(strs.substr(14, strs.length - 18));
-
-        if (endX > 0) {
-            init.back(tabBox, windowWidth, tar, 0, 0, 0.3);
-            endX = 0
-        } else if (endX < -windowWidth * tabList.length + windowWidth) {
-            endX = -windowWidth * tabList.length + windowWidth
-            init.back(tabBox, windowWidth, tar, 0, endX, 0.3);
-        } else if (dist < -windowWidth / 3) {
-            OnTab(tabClick.querySelector('.active').start + 1);
-            init.back(tabBox, windowWidth, tar, 0, endX, 0.3);
-        } else if (dist > windowWidth / 3) {
-            OnTab(tabClick.querySelector('.active').start - 1);
-        } else {
-            OnTab(tabClick.querySelector('.active').start);
-        }
-        var stars = wrap.querySelector('.active').start;
-        init.lineAnme(lineDiv, stars * windowWidth / 4);
-
-    };
-};
-
-var init = {
-    translate: function(obj, windowWidth, star) {
-        obj.style.webkitTransform = 'translate3d(' + -star * windowWidth + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + -star * windowWidth + ',0,0)px';
-        obj.style.webkitTransition = 'all 0.3s ease-in-out';
-        obj.style.transition = 'all 0.3s ease-in-out';
-    },
-    touchs: function(obj, windowWidth, tar, distance, endX) {
-        obj.style.webkitTransform = 'translate3d(' + (distance + endX) + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + (distance + endX) + ',0,0)px';
-    },
-    lineAnme: function(obj, stance) {
-        obj.style.webkitTransform = 'translate3d(' + stance + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + stance + 'px,0,0)';
-        obj.style.webkitTransition = 'all 0.1s ease-in-out';
-        obj.style.transition = 'all 0.1s ease-in-out';
-    },
-    back: function(obj, windowWidth, tar, distance, endX, time) {
-        obj.style.webkitTransform = 'translate3d(' + (distance + endX) + 'px,0,0)';
-        obj.style.transform = 'translate3d(' + (distance + endX) + ',0,0)px';
-        obj.style.webkitTransition = 'all ' + time + 's ease-in-out';
-        obj.style.transition = 'all ' + time + 's ease-in-out';
-    },
-}
+(function($){$.fn.rTabs=function(options){var defaultVal={btnClass:'.j-tab-nav',conClass:'.j-tab-con',bind:'hover',animation:'0',speed:300,delay:200,auto:false,autoSpeed:3000};var obj=$.extend(defaultVal,options),evt=obj.bind,btn=$(this).find(obj.btnClass),con=$(this).find(obj.conClass),anim=obj.animation,conWidth=con.width(),conHeight=con.height(),len=con.children().length,sw=len*conWidth,sh=len*conHeight,i=0,len,t,timer;return this.each(function(){function judgeAnim(){var w=i*conWidth,h=i*conHeight;btn.children().removeClass('current').eq(i).addClass('current');switch(anim){case '0':con.children().hide().eq(i).show();break;case 'left':con.css({position:'absolute',width:sw}).children().css({float:'left',display:'block'}).end().stop().animate({left:-w},obj.speed);break;case 'up':con.css({position:'absolute',height:sh}).children().css({display:'block'}).end().stop().animate({top:-h},obj.speed);break;case 'fadein':con.children().hide().eq(i).fadeIn();break;}}
+if(evt=="hover"){btn.children().hover(function(){var j=$(this).index();function s(){i=j;judgeAnim();}
+timer=setTimeout(s,obj.delay);},function(){clearTimeout(timer);})}else{btn.children().bind(evt,function(){i=$(this).index();judgeAnim();})}
+function startRun(){t=setInterval(function(){i++;if(i>=len){switch(anim){case 'left':con.stop().css({left:conWidth});break;case 'up':con.stop().css({top:conHeight});}
+i=0;}
+judgeAnim();},obj.autoSpeed)}
+if(obj.auto){$(this).hover(function(){clearInterval(t);},function(){startRun();})
+startRun();}})}})(jQuery);
 </script>
+<script type="text/javascript">
+$(function() {
+
+	$("#tab").rTabs({
+		bind: 'click',
+	});
+})
+</script>
+<style>
+.tab{position:relative;width:100%;height:100%;background: #FBFEFF;}
+.tab-nav{background: #e6f2fb;
+    display: table;
+    width: 99%;}
+.tab-nav a{display:block;float:left;padding:8px 15px;font-size:12px;text-align:center;text-decoration:none;color:#337ab7;}
+.tab-nav a.current{background:#7b9cb8;color:#fff;}
+.tab-con{position:relative;width:100%;height:100%;}
+.tab-con-item{display:none;width:100%;height:100%;}
+</style>
 </head>
 <body>
 <!--当前导航-->
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;设置&nbsp;&raquo;&nbsp;站点配置 ';</script>
-<div class="container" id="cpcontainer"> 
-<div class="wrap" id="wrap">
-    <ul class="tabClick">
-        <li class="active">网站基本设置</li>
-        <li>网站资料设置</li>
-        <li>采集工具设置</li>
-        <li>模板路径设置</li>
-		<li>会员插件设置</li>
-        <li>性能效率设置</li>
-        <li>网站其它设置</li>
-    </ul>
-    <div class="lineBorder">
-        <div class="lineDiv">
-            
-        </div>
+
+<div class="tab" id="tab">
+<div class="tab-nav j-tab-nav">
+<a href="javascript:;" class="current">模式路径设置</a>
+<a href="javascript:;">网站资料设置</a>
+<a href="javascript:;">采集工具设置</a>
+<a href="javascript:;">模板路径设置</a>
+<a href="javascript:;">会员交互设置</a>
+<a href="javascript:;">性能效率设置</a>
+<a href="javascript:;">网站其它设置</a>
     </div>
-    <div class="tabCon">
-        <div class="tabBox">
+    <div class="content2">
+
   <form method="post" action="?dopost=save">
   <input type="hidden" name="isalertwin_old" value="0"/>
   <!--当前导航-->
-<div class="tabList">
-    
+<div class="tab-con">
+<div class="j-tab-con">
+ <div class="tab-con-item" style="display:block;">  
     <table class="tb">
 
       <tr class="thead">
-        <td colspan="2"><strong>网站基本设置</strong></td>
+        <td colspan="2"><strong>模式路径设置</strong></td>
       </tr>
       <tr>
         <td width="10%">网站模式:</td>
@@ -233,7 +101,7 @@ var init = {
                   &nbsp;&nbsp;md5加密id:开启
                   <input type="radio" name="edit___cfg_createid" value="md5" <?php if ($cfg_createid=='md5') echo "checked";?> class="radio">
                   关闭
-                  <input type="radio" name="edit___cfg_createid" value="0"<?php if ($cfg_createid=="0") echo "checked";?> class="radio"></td>
+                  <input type="radio" name="edit___cfg_createid" value="0" <?php if ($cfg_createid=="0") echo "checked";?> class="radio"></td>
               </tr>
               <tr>
                 <td height="25">文件的后缀名:
@@ -451,7 +319,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">
+<div class="tab-con-item"><table class="tb">
 <tr class="thead">
         <td colspan="2"><strong>网站资料设置<a name="rule" id="rule"></a></strong></td>
       </tr>
@@ -464,7 +332,7 @@ var init = {
       <tr>
         <td>网站地址:</td>
         <td ><input type="text" name="edit___cfg_basehost" size="30" value="<?php echo $cfg_basehost;?>">
-          如填写:http://www.seacms.com,注意地址最后不要加'/'</td>
+          例如:http://www.seacms.com,注意地址最后不要加'/'</td>
       </tr>
       <tr>
         <td>网站路径:</td>
@@ -474,12 +342,17 @@ var init = {
 	  <tr>
         <td>二维码图片:</td>
         <td ><input type="text" name="edit___cfg_ewm" size="30" value="<?php echo $cfg_ewm;?>">
-          如填写:http://www.seacms.com/ewm.jpg</td>
+          例如:http://www.seacms.com/ewm.jpg</td>
+      </tr>
+	  <tr>
+        <td>卡密销售网址:</td>
+        <td ><input type="text" name="edit___cfg_kami" size="30" value="<?php echo $cfg_kami;?>">
+          例如:http://www.seacms.com/</td>
       </tr>
       <tr>
         <td>cookie加密码:</td>
         <td ><input type="text" name="edit___cfg_cookie_encode" size="30" value="<?php echo $cfg_cookie_encode;?>">
-          保存cookie时候加密所用，可加强网站的安全性</td>
+          可加强网站的安全性</td>
       </tr>
       
 	  </table>
@@ -488,7 +361,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">
+<div class="tab-con-item"><table class="tb">
 <tr class="thead">
         <td colspan="2"><strong>采集工具设置<a name="rule" id="rule"></a></strong></td>
       </tr>
@@ -517,7 +390,7 @@ var init = {
 		  <label>
 		  &nbsp;&nbsp;
 		  <label>
-            <input type="checkbox" name="edit___cfg_gatherset[]" value="8" id="gatherset1" <?php if(strpos($cfg_gatherset,'8')!==false)echo 'checked'?> />主演识别</label>
+            <input type="checkbox" name="edit___cfg_gatherset[]" value="8" id="gatherset1" <?php if(strpos($cfg_gatherset,'8')!==false)echo 'checked'?> />演员识别</label>
 			&nbsp;&nbsp;        
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="3" id="gatherset3" <?php if(strpos($cfg_gatherset,'3')!==false)echo 'checked'?>/>
@@ -608,9 +481,14 @@ var init = {
           请根据服务器配置性能合理设置，太快可能造成服务器资源耗尽导致中断</td>
       </tr>
 	  <tr>
-        <td>采集过滤关键词:</td>
+        <td>影片名过滤:</td>
         <td ><input type="text" name="edit___cfg_cjjump" size="35" value="<?php echo $cfg_cjjump;?>"> &nbsp;
           影片名包含关键词则跳过采集，多个关键词用 | 分割</td>
+      </tr>
+	  <tr>
+        <td>影片名替换:</td>
+        <td ><input type="text" name="edit___cfg_cjreplace" size="35" value="<?php echo $cfg_cjreplace;?>"> &nbsp;
+          影片名替换，使用=和|符号分割，不填写则替换为无，例如：英文=英语|高清=|a=A</td>
       </tr>
 	  </table>
 </div>
@@ -618,7 +496,7 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	 
+<div class="tab-con-item"><table class="tb">	 
       <tr class="thead">
         <td colspan="2"><strong>模板路径设置</strong></td>
       </tr>
@@ -675,14 +553,14 @@ var init = {
 【模式4】跳转式:移动端强制跳转到新的网址首页，必须正确填写上面的移动端网址。
       </tr>
       <tr>
-        <td>模板文件所在文件夹:</td>
+        <td>模板文件文件夹:</td>
         <td><input type="text" name="edit___cfg_df_html" size="15" value="<?php echo $cfg_df_html;?>">
           防止模板被盗</td>
       </tr>
-      <tr>
-        <td>图片文件夹:</td>
-        <td ><input type="text" name="edit___cfg_upload_dir" size="15" value="<?php echo $cfg_upload_dir;?>"/>
-          位于根目录下</td>
+      <tr style="display:none;">
+        <td> </td>
+        <td ><input type="text" name="edit___cfg_upload_dir" size="15" readonly value="<?php echo $cfg_upload_dir;?>"/>
+           </td>
       </tr>
       <tr>
         <td>JS广告文件夹:</td>
@@ -699,9 +577,9 @@ var init = {
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	  
+<div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
-        <td colspan="2"><strong>会员插件设置<a name="chajian" id="chajian"></a></strong></td>
+        <td colspan="2"><strong>会员交互设置<a name="chajian" id="chajian"></a></strong></td>
       </tr>
       <tr>
         <td>会员系统开关:</td>
@@ -709,6 +587,13 @@ var init = {
           <input type="radio" name="edit___cfg_user" value="1" <?php if ($cfg_user=='1') echo "checked";?> class="radio" />
           &nbsp;&nbsp;关闭:
           <input type="radio" name="edit___cfg_user" value="0" <?php if ($cfg_user=='0') echo "checked";?> class="radio" />&nbsp;&nbsp;如不需要会员功能请选择关闭，加快系统运行速度
+      </tr>
+	   <tr>
+        <td>是否允许上传头像:</td>
+        <td class="td_border">开启:
+          <input type="radio" name="edit___cfg_upic" value="1" <?php if ($cfg_upic=='1') echo "checked";?> class="radio" />
+          &nbsp;&nbsp;关闭:
+          <input type="radio" name="edit___cfg_upic" value="0" <?php if ($cfg_upic !='1') echo "checked";?> class="radio" />&nbsp;&nbsp;是否允许会员上传头像
       </tr>
 	  <tr>
         <td width="103"  align="left" class="td_border">注册赠送积分:</td>
@@ -725,6 +610,15 @@ var init = {
 	  <tr>
         <td width="103"  align="left" class="td_border">积分个性名称:</td>
         <td ><input type="text" name="edit___cfg_pointsname" size="10"  value="<?php echo $cfg_pointsname;?>"/> 消费积分个性名称，如金币、影豆、点数等</td>
+      </tr>
+	  <tr>
+        <td width="103"  align="left" class="td_border">会员购买折扣:</td>
+        <td >
+		单月：<input type="text" name="edit___cfg_vipoff_1" size="4"  value="<?php echo $cfg_vipoff_1;?>"/>
+		&nbsp;三月：<input type="text" name="edit___cfg_vipoff_3" size="4"  value="<?php echo $cfg_vipoff_3;?>"/> 
+		&nbsp;半年：<input type="text" name="edit___cfg_vipoff_6" size="4"  value="<?php echo $cfg_vipoff_6;?>"/> 
+		&nbsp;一年：<input type="text" name="edit___cfg_vipoff_12" size="4"  value="<?php echo $cfg_vipoff_12;?>"/> 		
+		&nbsp;&nbsp;用户购买会员折扣，0.7/1.5（7折/1.5倍），空/0/1均为无折扣</td>
       </tr>
       <tr>
         <td>留言和报错开关:</td>
@@ -768,32 +662,24 @@ var init = {
           &nbsp;&nbsp;关闭:
           <input type="radio" name="edit___cfg_feedback_ck"  value="0" <?php if ($cfg_feedback_ck=='0') echo "checked";?> class="radio"/>&nbsp;&nbsp;设置访客使用留言/报错/评论功能时是否需要验证码</td>
       </tr>
-      <tr>
-        <td >来源排序:</td>
-        <td >开启:
-          <input type="radio" name="edit___cfg_isfromsort" value="1" <?php if ($cfg_isfromsort=='1') echo "checked";?> class="radio" >
-          &nbsp;&nbsp;关闭:
-          <input type="radio" name="edit___cfg_isfromsort" value="0" <?php if ($cfg_isfromsort=='0') echo "checked";?> class="radio" >
-          &nbsp;&nbsp;如开启、将对播放来源按设置进行排序；如关闭、将节省部分性能</td>
+      
+	  <tr>
+        <td width="103"  align="left" class="td_border">留言列表显示条数:</td>
+        <td ><input type="text" name="edit___cfg_gb_size" size="5"  value="<?php echo $cfg_gb_size;?>"/>&nbsp;&nbsp;每页显示留言数量，默认20条</td>
       </tr>
 	  <tr>
-        <td width="103"  align="left" class="td_border">搜索效率选项:</td>
-        <td class="td_border">复杂:
-          <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
-          &nbsp;&nbsp;快速:
-          <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>&nbsp;&nbsp;复杂：搜索影片名称/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速：仅搜索影片名称/新闻标题，搜索速度快</td>
+        <td width="103"  align="left" class="td_border">评论列表显示条数:</td>
+        <td ><input type="text" name="edit___cfg_pl_size" size="5"  value="<?php echo $cfg_pl_size;?>"/>&nbsp;&nbsp;每页显示评论数量，默认20条</td>
       </tr>
-      <tr>
-        <td >搜索间隔时间:</td>
-        <td class="td_border"><input type="text" name="edit___cfg_search_time" id="edit___cfg_search_time" value="<?php echo $cfg_search_time;?>" size="3" />
-          秒</td>
-      </tr></table>
+	  
+	  
+	  </table>
 </div>
 	  
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	  
+<div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
         <td colspan="2"><strong>性能效率设置</strong></td>
       </tr>
@@ -805,21 +691,31 @@ var init = {
                 <input type="text" name="edit___cfg_cachetime"  size="5" value="<?php echo $cfg_cachetime;?>">
                 分钟
                 &nbsp;&nbsp;&nbsp; 缓存标识:
-                <input name="edit___cfg_cachemark" type="text" id="edit___cfg_cachemark" value="<?php echo "E".MyDate('YmdHis',time());?>" size="13" />
+                <input name="edit___cfg_cachemark" type="text" id="edit___cfg_cachemark" value="<?php echo $cfg_cachemark;?>" size="13" />
                 &nbsp;&nbsp;</span>
               &nbsp;&nbsp;关闭:
                 <input type="radio" name="edit___cfg_iscache" onclick="selectCache(this.value)" value="0" <?php if ($cfg_iscache=='0') echo "checked";?> class="radio">
           </td>
       </tr>
-	  
-	   <tr>
+	   
+	  <tr>
         <td>缓存类型:</td>
         <td class="td_border">文件缓存:
                 <input type="radio" name="edit___cfg_cachetype"  value="file" <?php if ($cfg_cachetype=='file') echo "checked";?> class="radio">
               &nbsp;&nbsp;&nbsp;&nbsp;Redis缓存:
                 <input type="radio" name="edit___cfg_cachetype"  value="redis" <?php if ($cfg_cachetype=='redis') echo "checked";?> class="radio">
-          &nbsp;Redis需主机支持（可修改include/common.redis.func.php和admin?/admin_ajax.php自定义Redis配置）
 		  </td>
+      </tr>
+	  
+	   <tr>
+        <td>Redis缓存配置:</td>
+        <td class="td_border">
+             主机：<input name="edit___cfg_redishost" type="text" id="edit___cfg_redishost" value="<?php echo $cfg_redishost;?>" size="15" />
+			 &nbsp;&nbsp;
+			 端口：<input name="edit___cfg_redisport" type="text" id="edit___cfg_redisport" value="<?php echo $cfg_redisport;?>" size="5" />
+			 &nbsp;&nbsp;
+			 密码：<input name="edit___cfg_redispsw"  type="text" id="edit___cfg_redispsw" value="<?php echo $cfg_redispsw;?>" size="15" />
+		  &nbsp;为空表示不需要密码</td>
       </tr>
 	  
       <tr id="sqlcache">
@@ -855,25 +751,70 @@ var init = {
 	$iplist = @fread($fp,filesize($iplisttxt));
 	@fclose($fp);echo $iplist;?>
 </textarea></td>
-      </tr></table>
+      </tr>
+	  
+	  <tr>
+        <td >来源排序:</td>
+        <td >开启:
+          <input type="radio" name="edit___cfg_isfromsort" value="1" <?php if ($cfg_isfromsort=='1') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;关闭:
+          <input type="radio" name="edit___cfg_isfromsort" value="0" <?php if ($cfg_isfromsort=='0') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;如开启、将对播放来源按设置进行排序；如关闭、将节省部分性能</td>
+      </tr>
+	  <tr>
+        <td width="103"  align="left" class="td_border">搜索功能选项:</td>
+        <td class="td_border">关闭:
+          <input type="radio" name="edit___cfg_search_type"  value="0" <?php if ($cfg_search_type=='0') echo "checked";?> class="radio"/>
+          &nbsp;&nbsp;快速:
+		  <input type="radio" name="edit___cfg_search_type"  value="1" <?php if ($cfg_search_type=='1') echo "checked";?> class="radio"/>
+          &nbsp;&nbsp;复杂:
+          <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
+		  &nbsp;&nbsp;验证码:
+		  <input type="radio" name="edit___cfg_search_type"  value="2" <?php if ($cfg_search_type=='2') echo "checked";?> class="radio"/>
+		  &nbsp;&nbsp;设置为复杂搜索影片名/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速仅搜索影片名/新闻标题</td>
+      </tr>
+      <tr>
+        <td >验证有效时间:</td>
+        <td class="td_border"><input type="text" name="edit___cfg_check_time" id="edit___cfg_check_time" value="<?php echo $cfg_check_time;?>" size="3" />
+          秒&nbsp;&nbsp;搜索验证的有效时间，搜索模式为验证码时生效，默认300秒</td>
+      </tr>
+	  <tr>
+        <td >搜索间隔时间:</td>
+        <td class="td_border"><input type="text" name="edit___cfg_search_time" id="edit___cfg_search_time" value="<?php echo $cfg_search_time;?>" size="3" />
+          秒</td>
+      </tr>
+	  <tr>
+        <td >禁止数据交互:</td>
+        <td class="td_border">
+		开启:<input type="radio" name="edit___cfg_isallphp" value="1" <?php if ($cfg_isallphp=='1') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;
+        关闭:<input type="radio" name="edit___cfg_isallphp" value="0" <?php if ($cfg_isallphp !='1') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;开启将禁用影片和新闻的评分/顶踩/浏览量/收藏等交互功能，配合关闭搜索/留言/报错/评论/用户等，可实现极低负载运行</td>
+      </tr>
+	  </table>
 </div>
 	  
 	  
 	  
 	  
-<div class="tabList"><table class="tb">	  
+<div class="tab-con-item"><table class="tb">	  
       <tr class="thead">
         <td colspan="2"><strong>网站其它设置</strong></td>
       </tr>
       <tr>
-        <td>过滤留言:</td>
+        <td>过滤关键词:</td>
         <td><input type="text" name="edit___cfg_notallowstr" size="80" value="<?php echo $cfg_notallowstr;?>">
-          请以'|'分离</td>
+          请以'|'分离，适用于留言/评论/</td>
       </tr>
       <tr>
-        <td>禁止留言:</td>
+        <td>禁止关键词:</td>
         <td><input type="text" name="edit___cfg_banwords" size="80" value="<?php echo $cfg_banwords ;?>">
-          请以'|'分离</td>
+          请以'|'分离，适用于留言/评论</td>
+      </tr>
+	  <tr>
+        <td>搜索过滤词:</td>
+        <td><input type="text" name="edit___cfg_notallowsstr" size="80" value="<?php echo $cfg_notallowsstr ;?>">
+          请以'|'分离，适用于视频及文章搜索</td>
       </tr>
       <tr>
         <td>热门关键字</td>
@@ -987,12 +928,9 @@ var init = {
         <td><textarea cols="90" rows="3" name="edit___cfg_powerby"><?php echo $cfg_powerby;?></textarea></td>
       </tr></table>
 </div>
-
-
-</div>
     </div>	  
 	  
-	  
+</div>	  
 	  
   <table class="tb">	  
       <tr>
@@ -1004,7 +942,8 @@ var init = {
 viewFoot();
 ?>
 
+
 </div>
-</div>
+
 </body>
 </html>

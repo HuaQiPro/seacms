@@ -9,23 +9,13 @@
 <style>
 .submit_btn{background: #00b7ee;}
 </style>
-<script src="js/jquery.js"></script>
-<script src="js/styleswitch.js"></script>
-<script src="js/Particleground.js"></script>
-<script>
-$(document).ready(function() {
-  $('body').particleground({
-    dotColor: 'rgba(95,184,120,0.5)',
-    lineColor: 'rgba(95,184,120,0.5)'
-  });
-});
-</script>
+
 <style type="text/css">
   html,body{height: 100%;position: relative;background-color:#5fb878!important;background-image: linear-gradient(to right bottom, #0066CC , #5fb878)!important;}
   .admin_login{box-shadow:0 0 15px #555555;}
 </style>
 </head>
-<body onload="javascript:document.formsearch.userid.focus();" id="canvas">
+<body onload="javascript:document.formsearch.userid.focus();">
   <div class="admin_login">
     <form method="post" action="login.php" name="formsearch" id="formsearch">
 	 <input type="hidden" name="gotopage" value="<?php if(!empty($gotopage)) echo $gotopage;?>" />
@@ -62,7 +52,7 @@ else
 ?>
     </div>
     <div class="admin_info">
-        <p style="color: #555">© seacms.com</p>
+        <p style="color: #555">© SEACMS.COM</p>
     </div>
     </form>   
   </div>

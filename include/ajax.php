@@ -94,7 +94,8 @@ return $array;
 
 
 require_once('common.php');
- 
+global $cfg_isallphp;
+if($cfg_isallphp=='1'){exit();};
 AjaxHead();
 $action = isset($action) ? trim($action) : '';
 $id = (isset($id) && is_numeric($id)) ? $id : 0;
@@ -350,7 +351,7 @@ function member()
 	global $cfg_phpurl;
 	if(!empty($_SESSION['sea_user_id'])) {
 		
-		$member = "您好<font color='red'>".$_SESSION['sea_user_name']." </font>[<a href='".$cfg_phpurl."exit.php'>退出</a>] [<a href='".$cfg_phpurl."member.php' target='_blank'>会员中心</a>]";
+		$member = "您好<font id='user_name'>".$_SESSION['sea_user_name']." </font>[<a href='".$cfg_phpurl."exit.php'>退出</a>] [<a href='".$cfg_phpurl."member.php' target='_blank'>会员中心</a>]";
 	} else {
 		$member = "<a href='".$cfg_phpurl."login.php'>登录</a> <a href='".$cfg_phpurl."reg.php'>注册</a>";
 	}

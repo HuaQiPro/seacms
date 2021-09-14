@@ -46,14 +46,14 @@ if($cfg_feedbackstart=='0'){
 .sea_main_9{text-transform: uppercase;width: 60px;height:30px;text-align: center;border-radius: 4px;background-color: #F5F5F5;border: 1px solid #ddd;align:middle;}
 .sea_main_11{align:middle;cursor:pointer;color: #fff;width: 80px;cursor:pointer;background-color: #3383bc;background: linear-gradient(to right,#247ebe 0,#6bb8ee 100%);height: 28px;border:0; border-radius:4px;}
 .sea_listul{display:block;margin-top:10px;}
-.sea_pannel{width: 99%;overflow:hidden;list-style:none;border-bottom:1px solid #efefef;overflow:hidden}
-.sea_pannel-box{padding:10px;}
-.sea_face{float: left;border-radius: 50%; width:30px; height:30px;}
+.sea_pannel{width:100%;overflow:hidden;list-style:none;border-bottom:1px solid #efefef;overflow:hidden;margin:20px 2px;}
+.sea_pannel-box{padding:0px;}
+.sea_face{float: left;border-radius:50%; width:40px; height:40px;}
 .sea_text-name{margin-left: 5px;font-size: 14px;font-weight: bold;line-height:30px;}
 .sea_text-muted{margin-left: 5px;font-size: 12px; color:#BBB;}
 .sea_text-red{float: right;color: #3295d1;}
-.sea_top-line{padding-left:15px;padding-top:3px;line-height:25px;}
-.sea_top-line span{background-color: #986565;padding: 5px;line-height: 30px;border-radius: 4px;color:#fff;}
+.sea_top-line{padding-left:45px;padding-top:3px;line-height:25px;}
+.sea_top-line span{color:#ab1010;}
 </style>
 <?php
 if($cfg_feedbackcheck=='1') $needCheck = 0;
@@ -243,15 +243,17 @@ function viewLeaveWord2(){
 	  "</div>".
 	  
 	  "<div class=\"sea_postsub\">".
-		 	"<input name=\"validate\" type=\"text\" placeholder=\"验证码\" class=\"sea_main_9\" id=\"vdcode\" style=\"text-transform:uppercase\"  tabindex=\"3\"/> <img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"cursor:pointer\" onClick=\"this.src=this.src+'?get=' + new Date()\"/><input type=\"submit\"  value=\"提交留言\" class=\"sea_main_11\"/> </div>".
+		 	"<input name=\"validate\" type=\"text\" placeholder=\"验证码\" class=\"sea_main_9\" id=\"vdcode\" style=\"text-transform:uppercase;\" onClick=\"document.getElementById('vdimgck').style.display='inline';\" tabindex=\"3\"/>&nbsp;<img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"cursor:pointer;display:none;\" onClick=\"this.src=this.src+'?get=' + new Date()\"/><input type=\"submit\"  value=\"提交留言\" class=\"sea_main_11\"/> </div>".
 	"</div></div></form>".
 	"</div></div></div>".
 	"<div class=\"sea_main_12\">".leaveWordList($_GET['page'])."</div><script type=\"text/javascript\" src=\"js/base.js\"></script>";
 	return $mystr;
 }
 function leaveWordList($currentPage){
-	global $dsql;
+	global $dsql,$cfg_gb_size;
 	$vsize=20;
+	$cfg_gb_size=intval($cfg_gb_size);
+	if($cfg_gb_size !="" and $cfg_gb_size !=0){$vsize=$cfg_gb_size;}
 	if($currentPage<=1)
 	{
 		$currentPage=1;
@@ -273,16 +275,17 @@ function leaveWordList($currentPage){
 	$dsql->SetQuery($sql);
 	$dsql->Execute('leaveWordList');
 	$ii=$limitstart+1;
-	echo '<ul class="sea_listul">';
 	while($row=$dsql->GetObject('leaveWordList')){
 	
 	$i=$ii++;
 	$iii=$TotalResult-$i;
 	$iiii=$iii+1;
-	$txt.="<li class=\"sea_pannel\"><div class=\"sea_pannel-box\"><div class=\"sea_col-pd\"><div class=\"sea_topwords\"><span class=\"sea_text-name\"><img class=\"sea_face\" src=\"/comment/images/a.png\">".$row->uname."</span><span class=\"sea_text-muted\">发表于 ".MyDate('',$row->dtime)."</span><span class=\"sea_text-red\">#".$iiii."</span></div><div class=\"sea_top-line\">".showFace($row->msg)."</div></div></div></li>";
+	$picsql = "Select pic From `sea_member` where username='$row->uname'";
+	$picrow = $dsql->GetOne($picsql);
+	if($picrow['pic']==""){$pic='uploads/user/a.png';}else{$pic=$picrow['pic'];}
+	$txt.="<li class=\"sea_pannel\"><div class=\"sea_pannel-box\"><div class=\"sea_c-pd\"><div class=\"sea_topwords\"><span class=\"sea_text-name\"><img class=\"sea_face\" src=\"/".$pic."\">".$row->uname."</span><span class=\"sea_text-muted\">发表于 ".MyDate('',$row->dtime)."</span><span class=\"sea_text-red\">#".$iiii."</span></div><div class=\"sea_top-line\">".showFace($row->msg)."</div></div></div></li>";
 	//$i--;
 	}
-	echo '</ul>';
 	unset($i);
 	$txt.="<div class=\"sea_page\"><div class=\"sea_page_box\">";
 	if($currentPage==1)$txt.="<a>‹‹</a><a>‹</a>";

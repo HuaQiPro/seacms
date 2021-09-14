@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		{seacms:load seo/newspage.html}
-		{seacms:load public/include.html}
-		{seacms:load public/style.html}
+		<title>{newspagelist:typename}-{seacms:sitename}</title>
+		<meta name="keywords" content="{newspagelist:keywords}" />
+		<meta name="description" content="{newspagelist:description}" />
+		{seacms:load include.html}
 	</head>
 	<body>
 		{seacms:top}
 		<div class="container min">
 			<div class="row">
                                 {seacms:load newshead.html}
-				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+				<div class="col-xs-1">
 					<div class="myui-panel myui-panel-bg clearfix">
 						<div class="myui-panel-box clearfix">
 							<div class="myui-panel_hd">
@@ -22,7 +23,7 @@
 							</div>
 							<div class="myui-panel_bd clearfix">											
 								<ul class="myui-vodlist__media col-pd clearfix">
-									{seacms:newspagelist size=11}
+									{seacms:newspagelist size=10}
 									<li>
 										<div class="detail detail-left">
 											<h4 class="title"><a href="[newspagelist:link]" title="[newspagelist:name]">[newspagelist:name]</a></h4>		
@@ -50,12 +51,6 @@
 						<li><a class="btn btn-default" href="{newspagelist:nextlink}">下一页</a></li>
 						<li><a class="btn btn-default" href="{newspagelist:lastlink}">尾页</a></li>
 					</ul>
-				</div>
-
-				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
-					{seacms:load block/art_code.html}
-					{seacms:load block/vod_hot.html}
-					{seacms:load block/art_hot.html}
 				</div>
 
 			</div>

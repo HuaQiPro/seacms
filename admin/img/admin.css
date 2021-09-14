@@ -6,12 +6,13 @@ body, td, input, textarea, select, button{color:#555;FONT-SIZE: 12px;font-family
 body, ul, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset {margin:0;padding:0}
 ul{list-style:none}
 h1, h2, h3, h4, h5, h6{font-size:12px}
-input,select{vertical-align: middle}
-textarea, input, select{padding:2px;border:1px solid;border-color:#666 #ccc #ccc #666;background:#F9F9F9;color:#333}
-textarea:hover, textarea:focus{border-color:#09C;background:#F5F9FD}
+textarea, input, select,button{padding:2px;outline: 0;border:1px solid #ccc; border-radius:2px;vertical-align:middle;}
+textarea:hover, input:focus,button:focus{border-color:#0099CC;outline: 0;box-shadow: 0px 0px 2px 0px #09c;}
+input:hover, input:hover,button:hover{outline: 0;  border: 1px solid #09c;box-shadow: 0px 0px 2px 0px #09c;}
+select:hover, select:focus{border-color:#0099CC;outline: 0;box-shadow: 0px 0px 2px 0px #09c;}
 img{border:none;}
 em, cite, th{font-style:normal;font-weight:normal}
-table{border-collapse:collapse}
+
 th{text-align:left}
 label{cursor:pointer}
 
@@ -44,7 +45,7 @@ h5{color:#09C;padding-bottom:10px}
 #labelcontent {color:#000;background-color:#E9F6FE;border:2px inset #99CBEE;padding:1em;line-height:150%}
 
 .tb{clear:both;width:100%;border-bottom:4px solid #DEEFFA;}
-	.tb th, .tb td{padding:4px 4px;background:#fff;border-top:1px solid #DEEFFA; border-bottom:1px solid #DEEFFA;}
+	.tb th, .tb td{padding:4px 4px;background:#fff;border-bottom:1px solid #DEEFFA;}
 	.thead td,.thead th{background:transparent url(bg_repx_hc.gif) repeat-x scroll 0 -40px;padding:2px;color:#0099CC;font-weight:700;line-height:21px;height:25px;border-top:1px solid #DEEFFA;font-size:12px}
 	.tb tr:hover{color:#333}
 	.tb .editlast{background-color:#DEECF6}
@@ -129,8 +130,9 @@ table.tdk th,table.tdk td{border:none}
 
 /* pages */
 .pages{clear:both;margin:10px 0}
-	.pages em, .pages a, .pages strong{text-decoration:none;margin-left:3px;padding:2px 5px;border:1px solid #E5E5E5}
-	.pages a:hover{text-decoration:none;border:1px solid #09C;background:#09C;color:#FFF}
+	.pages em, .pages a, .pages strong{text-decoration:none;margin-left:3px;padding:2px 5px;background: #e0e0e0;border-radius:2px;}
+	.pages span{text-decoration: none;margin-left: 3px;padding: 2px 5px;border-radius: 2px;background: #b0d2e2;}
+	.pages a:hover{text-decoration:none;background:#09C;color:#FFF;border-radius:2px;}
 	.pages strong{border:none;font-weight:700}
 	.cuspages{margin:3px 0;line-height:200%}
 	.cuspages .pages{display:inline;clear:none;margin-right:10px}

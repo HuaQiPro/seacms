@@ -27,17 +27,17 @@ input:focus,textarea:focus {
 #header h2{height:30px;line-height:30px;padding:0 15px;font-weight:normal;font-size:12px;text-align:left}
 #header h2 span{color:#f00}
 /*comment*/
-#comment{padding:0 15px;overflow:hidden;margin-top: 15px;}
+#comment{padding:0 3px;overflow:hidden;margin-top: 15px;}
 #comment .row{margin-bottom:8px;border-bottom:1px solid #efefef;overflow:hidden}
-#comment .row #aface img{cursor:pointer;border-radius:50%; width:30px; height:30px;float: left;}
-#comment .row h3{height:30px;margin-bottom:3px;padding:0 5px;overflow:hidden;font-size:12px;color:#8D8D8D}
+#comment .row #aface img{cursor:pointer;border-radius:50%; width:40px; height:40px;float: left;}
+#comment .row h3{height:30px;margin-bottom:0px;padding:0 6px;overflow:hidden;font-size:12px;color:#8D8D8D}
 #comment .row h3 span{float:left;height:30px;line-height:30px}
 #comment .row h3 span.star{float:left;height:16px;padding:6px 0 0 15px}
 #comment .row h3 span.star img{float:left;margin-right:2px}
 #comment .row h3 label{float:right;height:30px;line-height:30px;font-weight:normal}
-#comment .row .con{padding:0 15px;text-align:left;overflow:hidden}
+#comment .row .con{padding:0 5px;text-align:left;overflow:hidden}
 #comment .row .con .mycon{line-height:20px}
-#comment .row .con .mycon span{background-color: #986565;padding: 5px;line-height: 30px;border-radius: 4px;color:#fff;}
+#comment .row .con .mycon span{color:#ab1010;}
 #comment .row .con .mycon span.flower{background:url(bg.gif) 3px -142px no-repeat;padding-left:20px;color:#1349f9;cursor:pointer}
 .reply{border:1px solid #D1D5DB;background:#FFFEF5;padding:3px;margin-bottom:8px;font-size:12px;border-radius: 4px;}
 .reply h4{height:25px;line-height:25px;margin-bottom:8px;padding:0 5px;overflow:hidden;font-size:12px;text-align:left;color:#8D8D8D}
@@ -73,7 +73,7 @@ input:focus,textarea:focus {
 #talk #face img{cursor:pointer;margin-right:3px;}
 #talk #cancel{padding:5px;display:none;border-bottom:0;background-color: #d9ebf7;border-radius: 4px;font-size: 12px;}
 #talk .tc{border-bottom:0;border-radius:4px;}
-#talk .tc textarea{width:99%;height:60px;border:0;background-color:#F5F5F5;font-size:14px; line-height:22px;font-family:Microsoft YaHei;border: 1px solid #ddd;border-radius:4px;margin-top:2px; margin-bottom:6px;}
+#talk .tc textarea{width:99%;height:40px;border:0;background-color:#F5F5F5;font-size:14px; line-height:22px;font-family:Microsoft YaHei;border: 1px solid #ddd;border-radius:4px;margin-top:2px; margin-bottom:6px;}
 #talk .captcha{border-bottom:0}
 #talk .captcha #getcode{border:0;display:none}
 #talk .btn{margin-top:5px;}

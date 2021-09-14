@@ -293,12 +293,13 @@ function GetIP()
 
 function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 {
+	global $cfg_basehost;
 	if(empty($GLOBALS['cfg_phpurl']))
 	{
 		$GLOBALS['cfg_phpurl'] = '..';
 	}
 	$htmlhead  = "<html>\r\n<head>\r\n<title>提示信息</title>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no\">\r\n";
-	$htmlhead .= "<base target='_self'/>\r\n<style>body{background:#f9fafd;color:#818181}a {text-decoration: none}.mac_msg_jump{width:90%;max-width:420px;min-height:60px;margin:5% auto 0;border: 1px solid #293846;border-radius: 4px;height: 200px;box-shadow: 0px 1px 2px rgba(0,0,0,0.1);border: 1px solid #0099CC;}.mac_msg_jump .title{margin-bottom:11px}.mac_msg_jump .text{margin-top: 50px;font-size:14px;color:#555;font-weight: normal;}.msg_jump_tit{height: 32px;padding: 0px;line-height: 32px;font-size: 14px;color: #DFE4ED;text-align: left;background: #0099CC;}</style></head>\r\n<body leftmargin='0' topmargin='0'>\r\n<center>\r\n<script>\r\n";
+	$htmlhead .= "<base target='_self'/>\r\n<style>body{background:#f9fafd;color:#818181}a {text-decoration: none}.mac_msg_jump{width:90%;max-width:420px;margin:5% auto 0;border: 1px solid #293846;border-radius: 4px;box-shadow: 0px 1px 2px rgba(0,0,0,0.1);border: 1px solid #0099CC;background-color: #F2F9FD;}.mac_msg_jump .title{margin-bottom:11px}.mac_msg_jump .text{margin-top: 20px;font-size:14px;color:#555;font-weight: normal;}.msg_jump_tit{height: 32px;padding: 0px;line-height: 32px;font-size: 14px;color: #DFE4ED;text-align: left;background: #0099CC;}</style></head>\r\n<body leftmargin='0' topmargin='0'>\r\n<center>\r\n<script>\r\n";
 	$htmlfoot  = "</script>\r\n$extraJs</center>\r\n</body>\r\n</html>\r\n";
 
 	if($limittime==0)
@@ -314,7 +315,7 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
 	{
 		if($limittime==0)
 		{
-			$litime = 5000;
+			$litime = 1000;
 		}
 		$gourl = "javascript:history.go(-1);";
 	}
@@ -330,16 +331,16 @@ function ShowMsg($msg,$gourl,$onlymsg=0,$limittime=0,$extraJs='')
         if(pgo==0){ location='$gourl'; pgo=1; }
       }\r\n";
 		$rmsg = $func;
-		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'><div class='msg_jump_tit'><img style='padding-left: 5px;padding-right: 2px;height: 14px;margin-bottom: 2px;vertical-align: middle;'; src='".$GLOBALS ['cfg_cmspath']."/pic/i1.png'>系统提示</div>";
+		$rmsg .= "document.write(\"<br /><div class='mac_msg_jump'>";
 	    $rmsg .= "<div class='text'>\");\r\n";
 
-		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 8px;'; src='".$GLOBALS ['cfg_cmspath']."/pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
+		$rmsg .= "document.write(\"<img style='height: 28px;margin-bottom: 15px;'; src='{$cfg_basehost}/pic/i2.png'><br>".str_replace("\"","“",$msg)."\");\r\n";
 		$rmsg .= "document.write(\"";
 		if($onlymsg==0)
 		{
 			if($gourl!="javascript:;" && $gourl!="")
 			{
-				$rmsg .= "<div style='margin-top:35px;'><a href='{$gourl}'><font style='color:#0099CC;font-size:12px;'>[点击这里手动跳转]</font></a></div>";
+				$rmsg .= "<div style='margin-top:20px;'><a href='{$gourl}'><font style='color:#0099CC;font-size:12px;'>[点击这里手动跳转]</font></a></div>";
 			}
 			$rmsg .= "<br/></div></div>\");\r\n";
 			if($gourl!="javascript:;" && $gourl!='')
@@ -1215,6 +1216,11 @@ function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyl
 		{
 			$viparr=array_flip(array_slice($urlArray,0,$urlCount,true));		
 		}
+	elseif(strpos($vip,'f')!==false)
+	{
+		$vips=str_ireplace('f', "", $vip);
+		$viparr=array_flip(array_slice($urlArray,$vips,NULL,true));
+	}
 	else
 	{
 		$viparr2=explode(',',$vip);
@@ -1231,12 +1237,14 @@ function getPlayUrlList($ifrom,$url,$typeid,$vId,$starget,$sdate,$enname,$listyl
 		if(!empty($urlArray[$i])){
 			$singleUrlArray=explode("$",$urlArray[$i]);
 			if (count($singleUrlArray)<2) $singleUrlArray=Array("","","");
-			if($paras[0]==$ifrom && $i==$paras[1]) $style=" class=\"playon\" "; else $style="";
-			if(in_array($i,$viparr)){$vipstyle=' class = "playvip" ';} else {$vipstyle="";}
+			$style=' class="';
+			if(in_array($i,$viparr)){$style.="playvip";} else {$style.="";}
+			if($paras[0]==$ifrom && $i==$paras[1]) $style.=" playon\""; else $style.="\"";			
+			if($style==' class=""' OR $style==' class=" "'){$style='';}
 			if ($cfg_isalertwin){
 				$urlStr.="<".$listyle."><a title='".$singleUrlArray[0]."' href=\"javascript:openWin('".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."',".($GLOBALS['cfg_alertwinw']).",".($GLOBALS['cfg_alertwinh']).",250,100,1)\"".$style.">".$singleUrlArray[0]."</a></".$listyle.">";
 			}else{
-				$urlStr.="<".$listyle.$style.$vipstyle." id=\"".$ifrom.$i."\"><a title=\"".$singleUrlArray[0]."\" href=\"".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."\"".$target.">".$singleUrlArray[0]."</a></".$listyle.">";
+				$urlStr.="<".$listyle.$style." id=\"".$ifrom.$i."\"><a title=\"".$singleUrlArray[0]."\" href=\"".getPlayLink2($typeid,$vId,$sdate,$enname,$ifrom,$i)."\"".$target.">".$singleUrlArray[0]."</a></".$listyle.">";
 			}
 		}
 	}
@@ -1355,22 +1363,15 @@ function GetTruePath()
 }
 
 function escape($str){
-	preg_match_all("/[\xc2-\xdf][\x80-\xbf]+|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}|[\x01-\x7f]+/e",$str,$r);
-	//匹配utf-8字符，
-	$str = $r[0];
-	$l = count($str);
-	for($i=0; $i <$l; $i++){
-	   $value = ord($str[$i][0]);
-	   if($value < 223){
-		$str[$i] = rawurlencode(utf8_decode($str[$i]));
-		//先将utf8编码转换为ISO-8859-1编码的单字节字符，urlencode单字节字符.
-		//utf8_decode()的作用相当于iconv("UTF-8","CP1252",$v)。
-	   }
-	   else{
-		$str[$i] = "%u".strtoupper(bin2hex(iconv("UTF-8","UCS-2",$str[$i])));
-	   }
+	preg_match_all("/[\x80-\xff].|[\x01-\x7f]+/",$str,$r);
+	$ar = $r[0];
+	foreach($ar as $k=>$v) {
+		if(ord($v[0]) < 128)
+		  $ar[$k] = rawurlencode($v);
+		else
+		  $ar[$k] = "%u".bin2hex(iconv("GB2312","UCS-2",$v));
 	}
-	return join("",$str); 
+	return join("",$ar);
 }
 
 
@@ -1755,6 +1756,22 @@ function getDataCount($countType){
 		break;
 		case "day":
 		$row = $dsql->GetOne("select count(*) as dd From `sea_data` $whereStr");
+		$DataCount=$row['dd'];
+		break;
+	}
+	return $DataCount;
+}
+
+function getNewsDataCount($countType){
+	global $dsql;
+	$whereStr=" where DATE_FORMAT(FROM_UNIXTIME(n_addtime),'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')";
+	switch ($countType) {
+		case "all":
+		$row = $dsql->GetOne("select count(*) as dd From `sea_news`");
+		$DataCount=$row['dd'];
+		break;
+		case "day":
+		$row = $dsql->GetOne("select count(*) as dd From `sea_news` $whereStr");
 		$DataCount=$row['dd'];
 		break;
 	}
@@ -3314,11 +3331,26 @@ function ResetFromSort($sData)
 	return $ResetFromSort;
 }
 
+
+
+
 function getUserAuth($id,$flag)
 {
 	@session_start();
 	$usergroup=$_SESSION["sea_user_group"];
 	if (empty($usergroup)) { $usergroup=1; } else { $usergroup=intval($usergroup);}
+	
+	if($usergroup>2){
+	$ccuid=intval($_SESSION['sea_user_id']);
+	global $dsql;
+	$cc2=$dsql->GetOne("select vipendtime from sea_member where id=$ccuid");
+	$ccvipendtime=$cc2['vipendtime'];
+		if($ccvipendtime<time()){
+			$_SESSION['sea_user_group'] = 2;
+			$dsql->ExecuteNoneQuery("update `sea_member` set gid=2 where id=$ccuid");
+		}
+	}
+	
 	$result=false;
 	if ($flag== "list"){
 		$flag = "1";

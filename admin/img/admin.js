@@ -23,7 +23,7 @@ function getMenu(key)
 	if(key=='gathersoft')
 		return "采集";
 	if(key=='webhelper')
-		return "括展";
+		return "扩展";
 	if(key=='system')
 		return "系统";
 	if(key=='user')

@@ -18,9 +18,9 @@ if($action=="add")
 	}
 	$name = str_replace('\'', ' ', $name);
 	if(empty($template)) $template='topic.html';
-	if(empty($pic)) $pic='zt.jpg';
-	if(empty($spic)) $spic='zt.jpg';
-	if(empty($gpic)) $gpic='zt.jpg';
+	if(empty($pic)) $pic='uploads/zt/zt.jpg';
+	if(empty($spic)) $spic='uploads/zt/zt.jpg';
+	if(empty($gpic)) $gpic='uploads/zt/zt.jpg';
 	if(empty($vod)) $vod='0';
 	if(empty($news)) $news='0';
 	if(empty($enname)) $enname=Pinyin(stripslashes($name));;

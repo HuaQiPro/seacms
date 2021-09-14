@@ -408,7 +408,7 @@ function makeArticleById($vId)
 
 function makeContentById($vId)
 {
-	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj;
+	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_cmspath;
 	$playn = 0;
 	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
@@ -610,8 +610,11 @@ $str=implode('$$$',$arr1); //最终地址
 				$content = $mainClassObj->paresPreVideo($content,$vId,$typeFlag,$vType);
 				$content = $mainClassObj->paresNextVideo($content,$vId,$typeFlag,$vType);
 				
+				$playerurl='/'.$cfg_cmspath.'/js/player/';
+				$playerurl=str_replace('//','/',$playerurl);
+				
 				$content = str_replace("{playpage:textlink}",$typeText."&nbsp;&raquo;&nbsp;<a href='".$contentLink2."'>".$row['v_name']."</a>",$content);
-				$content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
+				$content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '{$playerurl}'+ pn + '.html';</script>",$content);
 				//$content=$mainClassObj->parseIf($content);
 				$playArr = playData2Ary($row['v_playdata']);
 				makePlayByData($vType,$vId,$playArr,$str2,$content,date('Y-n',$row['v_addtime']),$row['v_enname'],$stringecho);
@@ -1681,7 +1684,7 @@ function makeBaidu()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成baidu地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidu&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成视频SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidu&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1726,14 +1729,14 @@ function makeBaidun()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成baidu地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidun&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成新闻SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidun&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getDataCount("all");
+		$allcount=getNewsDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -1746,7 +1749,7 @@ function makeBaidun()
 			while($row=$dsql->GetObject('makeBaidu'))
 			{
 				$baiduStr .= "<url>\n
-							  <loc><![CDATA[".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."]]></loc>\n
+							  <loc><![CDATA[".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."]]></loc>\n
 							  <lastmod><![CDATA[".MyDate('Y-m-d',$row->n_addtime)."]]></lastmod>\n
 							  <changefreq>always</changefreq>\n
 							  <priority>1.0</priority>\n	
@@ -1771,7 +1774,7 @@ function makeGoogle()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成google地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成视频谷歌SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1824,14 +1827,14 @@ function makeGooglen()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成google地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成新闻谷歌SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getDataCount("all");
+		$allcount=getNewsDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -1852,7 +1855,7 @@ function makeGooglen()
 				$vDes = empty($row->n_content) ? "" : $row->n_content;
 				$vName = empty($row->n_title) ? "" : $row->n_title;
 				$googleStr .= "<url>\n
-										  <loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</loc>\n
+										  <loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."</loc>\n
 										  <lastmod>".MyDate('Y-m-d',$row->n_addtime)."</lastmod>\n
 										  <changefreq>daily</changefreq>\n
 										  <priority>1.0</priority>\n
@@ -1878,7 +1881,7 @@ function makeRss()
 	require_once(sea_INC.'/charset.func.php');
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成RSS地图 视频</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rss&flag=1&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成视频RSS</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rss&flag=1&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$sql="select d.v_id,d.v_name,d.v_pic,d.v_actor,d.v_addtime,d.v_enname,d.tid,c.body as v_des from sea_data d left join sea_content c on c.v_id=d.v_id order by d.v_addtime desc limit 0,$makenum";
@@ -1920,7 +1923,7 @@ function makeRssn()
 	require_once(sea_INC.'/charset.func.php');
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成RSS地图 新闻</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rssn&flag=1&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成新闻RSS</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rssn&flag=1&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$sql="select * from sea_news order by n_addtime desc limit 0,$makenum";
@@ -1944,7 +1947,7 @@ function makeRssn()
 			$vName = empty($row->n_title) ? "" : $row->n_title;
 			$rssStr .= "<item>\n
 							<title><![CDATA[".$vName."]]></title>\n
-							<link>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</link>\n
+							<link>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."</link>\n
 							<author><![CDATA[".$row->v_actor."]]></author>\n
 							<pubDate>".MyDate('Y-m-d H:i:s',$row->n_addtime)."</pubDate>\n
 							<description><![CDATA[".msubstr(html2text($vDes),0,300,'utf-8',false)."]]></description>\n	
@@ -1962,7 +1965,7 @@ function makeBaidux()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成百度站内搜索数据 视频</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidux&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成视频百度站内搜索</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidux&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$sqlt="select tid,tname from sea_type";
 		$dsql->SetQuery($sqlt);
@@ -2041,7 +2044,7 @@ function makeBaiduxn()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成百度站内搜索数据 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baiduxn&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成新闻百度站内搜索</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baiduxn&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$sqlt="select tid,tname from sea_type";
 		$dsql->SetQuery($sqlt);
@@ -2056,7 +2059,7 @@ function makeBaiduxn()
 		$allmakenum = empty($allmakenum) ? 10000 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getDataCount("all");
+		$allcount=getNewsDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -2072,8 +2075,9 @@ if(strpos($row->n_pic,"http")=== false)
 {$n_pic=$GLOBALS['cfg_basehost']."/".$row->n_pic;}
 else
 {$n_pic=$row->n_pic;}
+
 $baiduxStr .= "<url>
-<loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</loc>
+<loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."</loc>
 <lastmod>".date('Y-m-d',$row->n_addtime)."T".date('H:i:s',$row->n_addtime)."</lastmod>
 <changefreq>always</changefreq>
 <priority>1.0</priority>
