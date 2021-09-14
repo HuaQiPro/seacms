@@ -64,13 +64,13 @@ elseif($action=="save")
 	$v_addtime = time();
 	$v_money = empty($v_money) ? 0 : intval($v_money);
 	$v_rank = empty($v_rank) ? 0 : intval($v_rank);
-	$v_name = htmlspecialchars(cn_substrR($v_name,60));
+	$v_name = htmlspecialchars(cn_substrR($v_name,250));
 	$v_name = str_replace(array('\\','()','\''),'/',$v_name);
 	$v_actor = htmlspecialchars(cn_substrR($v_actor,200));
 	$v_actor = str_replace('%', ' ', $v_actor);
 	if($v_actor=="" OR empty($v_actor)){$v_actor="内详";}
 	$v_publishyear = empty($v_publishyear) ? date(Y) : intval($v_publishyear);
-	$v_publisharea = cn_substrR($v_publisharea,10);
+	$v_publisharea = cn_substrR($v_publisharea,20);
 	$v_note = cn_substrR($v_note,30);
 	$v_tags = cn_substrR(strtolower($v_tags),255);
 	$v_tags = str_replace('%', ' ', $v_tags);

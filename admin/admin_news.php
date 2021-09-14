@@ -51,7 +51,7 @@ elseif($action=="save")
 	$n_author = cn_substrR($n_author,200);
 	$n_note = cn_substrR($n_note,30);
 	$n_outline = cn_substrR($n_outline,200);
-	$n_keyword = cn_substrR(strtolower(addslashes($n_keyword)),30);
+	$n_keyword = cn_substrR(strtolower(addslashes($n_keyword)),80);
 	$n_keyword = str_replace('，', ',', $n_keyword);
 	$n_keyword = str_replace(',,', ',', $n_keyword);
 	$n_from = cn_substrR($n_from,10);
