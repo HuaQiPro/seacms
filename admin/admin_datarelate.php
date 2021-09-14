@@ -107,7 +107,7 @@ foreach($picuelarr as $key){
 	@session_write_close();
 	$isDownOk=false;
 	//修复内容页图片下载 
-   $wheresql="where instr(body,'#err')=0  and instr(body,'www.seacms.org/d/file')<>0 and  instr(body,'http')<>0 and instr(body,'img')<>0".($app_ftp==0?"":" and instr(body,'$app_ftpurl')<>0");
+   $wheresql="where instr(body,'#err')=0  and instr(body,'www.seacms.com')<>0 and  instr(body,'http')<>0 and instr(body,'img')<>0".($app_ftp==0?"":" and instr(body,'$app_ftpurl')<>0");
 	$trow = $dsql->GetOne("Select count(*) as dd From `sea_content` $wheresql");
 	$totalnum = $trow['dd'];
 	$page = isset($page) ? intval($page) : 1;
@@ -196,7 +196,7 @@ foreach($picuelarr as $key){
 	@session_write_close();
 	$isDownOk=false;
 	//修复内容页图片下载 
-   $wheresql="where instr(n_content,'#err')=0  and instr(n_content,'www.seacms.org/d/file')<>0 and  instr(n_content,'http')<>0 and instr(n_content,'img')<>0".($app_ftp==0?"":" and instr(n_content,'$app_ftpurl')<>0");
+   $wheresql="where instr(n_content,'#err')=0  and instr(n_content,'www.seacms.com')<>0 and  instr(n_content,'http')<>0 and instr(n_content,'img')<>0".($app_ftp==0?"":" and instr(n_content,'$app_ftpurl')<>0");
 	$trow = $dsql->GetOne("Select count(*) as dd From `sea_news` $wheresql");
 	$totalnum = $trow['dd'];
 	$page = isset($page) ? intval($page) : 1;

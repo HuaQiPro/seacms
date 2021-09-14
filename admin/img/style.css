@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6{ font-size:12px; }
 li{height:30px; line-height:30px;}
 .select{font-size:12px;}
 label{cursor:pointer} 
-textarea, input, select,button{padding:2px;outline: 0;border:1px solid #ccc; border-radius:2px;vertical-align:middle;}
+textarea, input, select,button{padding:2px;outline: 0;border:1px solid #ccc; border-radius:2px;vertical-align:middle;margin-top: 1px;}
 input[type="radio"]{margin-top:-1px;}
 textarea:hover, input:focus,button:focus{border-color:#0099CC;outline: 0;box-shadow: 0px 0px 2px 0px #09c;}
 input:hover, input:hover,button:hover{outline: 0;  border: 1px solid #09c;box-shadow: 0px 0px 2px 0px #09c;}

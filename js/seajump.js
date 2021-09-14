@@ -1,6 +1,6 @@
 var mskin='0';
-var host='http://www.ceshi.cn';
-var mhost='http://m.seacms.org';
+var host='http://t.ganga.cc';
+var mhost='http://m.seacms.com';
 
 var SEAURL;
 

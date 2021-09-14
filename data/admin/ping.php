@@ -1,1 +1,1 @@
-<?php  $weburl = "www.seacms.org"; $token = "123456789";  ?>
+<?php  $weburl = "www.seacms.com"; $token = "123456789";  ?>

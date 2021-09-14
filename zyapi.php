@@ -1,6 +1,6 @@
 <?php 
 /******************************
-海洋CMS版权所有 www.seacms.org
+海洋CMS版权所有 www.seacms.com
 功能：资源发布zyAPI模块
 版本：1.0
 开发：海洋

@@ -160,7 +160,7 @@ button:hover{outline: 0;  border: 1px solid #09c;box-shadow: 0px 0px 2px 0px #09
 						<div class="layui-input-inline long">
 							<input type="text" name="yzm[logo]" value="<?php echo $yzm['logo'] ?>" size="30" class="layui-input upload-input" placeholder="图片地址">
 						</div>
-						<div class="layui-form-mid layui-word-aux">例如：http://www.seacms.org/logo.png</div>
+						<div class="layui-form-mid layui-word-aux">例如：http://www.seacms.com/logo.png</div>
 					</div>
 					<div class="layui-form-item" style="display:none;">
 						<label class="layui-form-label"></label>
@@ -377,7 +377,7 @@ button:hover{outline: 0;  border: 1px solid #09c;box-shadow: 0px 0px 2px 0px #09
     </div>
 </script>
 
-<div class="bottom"><table width="100%" cellspacing="5"><tr><td align="center"><font style="color:#666;">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align="center"><a target="_blank" href="//www.seacms.org/"><font style="font-size:10px;color: #3F628C;line-height: 28px;">POWER BY SEACMS</font></a></td></tr></table></div>
+<div class="bottom"><table width="100%" cellspacing="5"><tr><td align="center"><font style="color:#666;">本页面用时0.0123秒,共执行3次数据查询</font></td></tr><tr><td align="center"><a target="_blank" href="//www.seacms.com/"><font style="font-size:10px;color: #3F628C;line-height: 28px;">POWER BY SEACMS</font></a></td></tr></table></div>
 </body>
 
 </html>

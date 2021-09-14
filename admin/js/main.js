@@ -38,7 +38,7 @@ function openCollectWin(width, height,str,url){
 	var msgDiv=document.getElementById("msg")
 	var bgDiv=document.getElementById("bg")
 	var iWidth = document.documentElement.scrollWidth
-	var str="<div style='width:400px;'><div class='divboxtitle'><span onclick=\"closeWin();\" ><img src='../pic/btn_close.gif'/></span>seacms温馨提示</div><div  class='divboxbody'>"+str+"<br><input type='button' value='继续采集' id='openwin' class='btn'/>&nbsp;&nbsp;<input id='closewin' type='button' value='取   消' name='button' class='btn'  />&nbsp;&nbsp;<input id='clearColHis' type='button' value='取消记录' name='button' class='btn'  /></div><div class='divboxbottom'>Power By seacms</div></div>"
+	var str="<div style='width:400px;'><div class='divboxtitle'><span onclick=\"closeWin();\" ><img src='../pic/btn_close.gif'/></span>提示</div><div  class='divboxbody'>"+str+"<br><input type='button' value='继续采集' id='openwin' class='btn'/>&nbsp;&nbsp;<input id='closewin' type='button' value='取   消' name='button' class='btn'  />&nbsp;&nbsp;<input id='clearColHis' type='button' value='取消记录' name='button' class='btn'  /></div><div class='divboxbottom'></div></div>"
 	msgDiv.style.cssText += "FONT-SIZE: 12px;top:100px;left:"+(iWidth-width)/2+"px;text-align:center;";
 	set(msgDiv,str)
 	document.getElementById("closewin").onclick = function(){

@@ -117,7 +117,21 @@ $smtprbody = '<strong>Email 地址验证 账户激活</strong><br><br>尊敬的�
 			
 			}
 		else
-		{ShowMsg('恭喜您，注册成功！','login.php',0,3000);}
+		{
+			$row=$dsql->GetOne("select id from sea_member where username='$username'");
+			$uid=$row['id'];
+			$_SESSION['sea_user_id'] = $uid;
+			$_SESSION['sea_user_name'] = $username;
+			$lifeTime = 2592000; 
+			setcookie(session_name(), session_id(), time() + $lifeTime, "/");
+			$_SESSION['sea_user_group'] = 2;
+			$front='front';
+			$hashstr=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$front);//构造session安全码
+			$_SESSION['hashstr']=$hashstr;
+			$dsql->ExecuteNoneQuery("UPDATE `sea_member` set logincount=logincount+1 where id='$uid'");
+			ShowMsg("注册成功，正在转向会员中心！","member.php",0,3000);exit;
+			
+			}
 		exit;
 	}
 }

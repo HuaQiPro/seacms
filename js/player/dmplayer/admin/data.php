@@ -1,5 +1,6 @@
 <?php
  $yzm =  array (
+  'danmuon' => 'on',
   'ads' => 
   array (
     'set' => 

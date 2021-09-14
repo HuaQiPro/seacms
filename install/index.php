@@ -271,7 +271,7 @@ else if($step==4)
 	$adminquery = "INSERT INTO `{$dbprefix}admin` (name,password,logincount,loginip,logintime,groupid,state) VALUES ('$adminuser', '".substr(md5($adminpwd),5,20)."', 0, '127.0.0.1', '".time()."', 1, 1);";
 	mysqli_query($conn,$adminquery);
 	
-	$flinkquery = "INSERT INTO `{$dbprefix}flink` (`id`, `sortrank`, `url`, `webname`, `msg`, `email`, `logo`, `dtime`, `ischeck`) VALUES (NULL, '0', 'http://www.seacms.org', '海洋cms', '', '', '', '1432312055', '1');";
+	$flinkquery = "INSERT INTO `{$dbprefix}flink` (`id`, `sortrank`, `url`, `webname`, `msg`, `email`, `logo`, `dtime`, `ischeck`) VALUES (NULL, '0', 'http://www.seacms.com', '海洋CMS', '', '', '', '1432312055', '1');";
 	mysqli_query($conn,$flinkquery);
 
   mysqli_close($conn);

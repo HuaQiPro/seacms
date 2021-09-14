@@ -560,7 +560,7 @@ function bottom()
 	$endtime = explode(' ', microtime()); 
 	$timeuse=round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])/1000,6);
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"2\"><tr><td align=\"center\">本页面用时".
-	$timeuse."秒,共执行2次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.org/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
+	$timeuse."秒,共执行2次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.com/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
 
 
 ?></div>
