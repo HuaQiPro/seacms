@@ -335,11 +335,14 @@ $str=implode('$$$',$arr1); //最终地址
     
 	//版权屏蔽
     if($HideVideo_off && in_array($vId,$HideVideo_data)){
-		$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();}
+		//$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();
+		$content = str_replace("{playpage:player}",$HideVideo_info,$content);
+		}
     
 	//视频屏蔽
 	elseif($HideName_off &&  $HideName_data[0]!="" && preg_match("{".implode("|",$HideName_data) . "}i", $row['v_name'])) {
-	 	$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
+	 	//$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
+		$content = str_replace("{playpage:player}",$HideName_info,$content);
 	 		 	
 	//限制分类必须使用移动设备
     }elseif($HideType_off  &&  $GLOBALS['isMobile']==false &&  $HideType_data[0]!=""  &&  in_array($row['tid'],$HideType_data)){      	
