@@ -1,5 +1,5 @@
 <?php 
-// search jsonp server v1.2  form seacms by  nohacks.cn
+session_start();
 
 require_once("include/common.php");
 require_once(sea_INC."/main.class.php");
@@ -107,8 +107,57 @@ class SetQuerybyseacms
       	   $urlArray[$key]=$Array[1];
       	 
         }
+	  $houz=getfileSuffix();
+	  
+	$row2=$dsql->GetOne("SELECT v_vip FROM sea_data where v_id=".$vid);
+	$vip=$row2['v_vip'];
+	if($starget!=""){
+		$target=" target=\"".$starget."\"";
+	}else{
+		$target=" target=\"_blank\"";
+	}
+	$urlArray2=$pratArray;
+	$urlCount=count($urlArray2);
+	
+	if(strpos($vip,'s')!==false)
+	{
+		$vips=str_ireplace('s', "", $vip);
+		$viparr=array_flip(array_slice($urlArray2,0,$vips,true));
+	}
+	elseif(strpos($vip,'e')!==false)
+	{
+		$vipe=str_ireplace('e', "", $vip);
+		$vipes=$urlCount - $vipe;
+		$viparr=array_flip(array_slice($urlArray2,$vipes,$vipe,true));		
+	}
+	elseif(strpos($vip,'a')!==false)
+	{
+			$viparr=array_flip(array_slice($urlArray2,0,$urlCount,true));		
+	}
+	else
+	{
+		$viparr2=explode(',',$vip);
+		foreach ($viparr2 as $value) 
+		{
+		  $viparr[]=$value-1;
+		}
+	}
+	
+$uid=0;
+$uid=$_SESSION['sea_user_id'];
+$uid = intval($uid);
 
-      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray);
+	$dsql->SetQuery("SELECT vfrom FROM sea_buy where vid='$vid' and uid='$uid'");
+	$dsql->Execute('vipdel');
+	while($rowvipdel=$dsql->GetObject('vipdel'))
+            {
+                   $vipdelarr[] = $rowvipdel->vfrom;
+            }
+	  
+	  if(empty($viparr)){$viparr=array(-1,-2);}
+	  if(empty($vipdelarr)){$vipdelarr=array(-1);}
+	  $viparr2=array_diff($viparr,$vipdelarr);
+      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray,'houz'=>$houz,'vipp'=>$viparr2);
 
 
      return '';
