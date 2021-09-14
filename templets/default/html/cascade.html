@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>影视库 - {seacms:sitename}</title>
-		<meta name="keywords" content="{seacms:sitenotice}">
-		<meta name="description" content="{seacms:des}">
-		{seacms:load include.html}
+		{seacms:load seo/index.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
 	</head>
 	<body>
 		{seacms:top}
@@ -26,9 +25,9 @@
 									<li>
 										<a class="text-muted btn">类型</a>
 									</li>
-									{seacms:typeitemlist type=all}
-									<li><a class="btn {if:{searchpage:typename} = [typeitemlist:value]}btn-warm{end if}" href="[typeitemlist:link]"> [typeitemlist:value]</a></li>
-									{/seacms:typeitemlist}
+									{seacms:smallmenulist type=son}
+									<li><a class="btn {if:{searchpage:type}= [smallmenulist:typeid]}btn-warm{end if}" href="[smallmenulist:link]"> [smallmenulist:typename]</a></li>
+									{/seacms:smallmenulist}
 								</ul>
 								<ul class="myui-screen__list nav-slide clearfix" data-align="left">
 									<li>

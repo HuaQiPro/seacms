@@ -4,25 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
 <title>留言管理</title>
-<script src="js/jquery.js"></script>
-<script src="js/layer.js"></script>
 <link href="img/style.css" rel="stylesheet" type="text/css" />
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
-<script>
-//全屏弹出层
-var showLYx=function (id) {
-        var index = layer.open({
-            type: 2,          //默认弹出层类型
-			shade: 0,
-			isOutAnim: false,
-            title:"留言详情",  //弹出层角标名称
-            content: "admin_comment.php?action=viewgbook&id="+id,  //弹出层页面地址
-            area: ['400px', '300px'],    //弹出层大小
-            maxmin: true   //弹出层是否全屏
-        });
-    }
-</script>
 </head>
 <body>
 <!--当前导航-->
@@ -35,10 +19,11 @@ var showLYx=function (id) {
 if($action=='viewgbook'){
 $row=$dsql->GetOne("select msg from sea_guestbook where id='$id'");
 ?>
-
+<tr class="thead"><th colspan="2">留言详情查看</th></tr>
 <tr><td class="td_border">
 <?php echo showFace($row['msg']);?>
 </td></tr>
+<tr><td class="td_border"><input type="button" value="返    回" onClick="self.location.href='<?php echo $Pirurl;?>'" class="rb1" /></td></tr>
 <?php 
 }elseif($action=='editgbook'){
 $row=$dsql->GetOne("select * from sea_guestbook where id='$id'");
@@ -115,7 +100,7 @@ while($row=$dsql->GetObject('gbook_list'))
 ?>		
 <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
 <td height="30" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  class="checkbox" /><?php echo $row->id.".".IsCheck($row->ischeck);?> </td>
-<td class="td_border"><?php echo showFace(encodeHtml(cn_substr($row->msg,40)));?>  <a href="javascript:;" onclick="javascript:showLYx('<?php echo $row->id;?>');">查看详情</a></td>
+<td class="td_border"><?php echo showFace(encodeHtml(cn_substr($row->msg,40)));?>  <a href="?action=viewgbook&id=<?php echo $row->id;?>">查看详情</a></td>
 <td class="td_border"><?php echo $row->ip;?></td>
 <td class="td_border"><?php echo isCurrentDay($row->dtime);?></td>
 <td class="td_border"><?php echo $row->uname;?></td>
@@ -127,10 +112,7 @@ while($row=$dsql->GetObject('gbook_list'))
     
 	<input type="submit" value="全部删除" onClick="if(confirm('确定要删除全部吗')){newslistform.action='?action=deltotalgbook'}" class="rb1"/>
 	<input type="submit" value="审核留言" onClick="if(confirm('确定要审核留言吗')){newslistform.action='?action=checkgbook'}" class="rb1"/>
-    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&action=gbook">首页</a> <a href="?page=<?php echo ($page-1);?>&action=gbook">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=gbook">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=gbook">尾页</a>&nbsp;&nbsp;跳转
-                <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
-                &nbsp;&nbsp;
-                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&action=gbook';"/></div></div>
+    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=gbook">首页</a> <a href="?page=<?php echo ($page-1);?>&action=gbook">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=gbook">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=gbook">尾页</a></div></div>
     </td></tr>
 <?php }?>
 </form>

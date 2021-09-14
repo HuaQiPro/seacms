@@ -19,8 +19,8 @@ function makeIndex($by='video')
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=$mainClassObj->parseIf($content);
@@ -63,8 +63,8 @@ function makeAllmovie($by='video')
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=$mainClassObj->parseIf($content);
@@ -106,8 +106,8 @@ function makeVideoJs($by='video')
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseIf($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
@@ -408,7 +408,7 @@ function makeArticleById($vId)
 
 function makeContentById($vId)
 {
-	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_cmspath;
+	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj;
 	$playn = 0;
 	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
@@ -610,11 +610,8 @@ $str=implode('$$$',$arr1); //最终地址
 				$content = $mainClassObj->paresPreVideo($content,$vId,$typeFlag,$vType);
 				$content = $mainClassObj->paresNextVideo($content,$vId,$typeFlag,$vType);
 				
-				$playerurl='/'.$cfg_cmspath.'/js/player/';
-				$playerurl=str_replace('//','/',$playerurl);
-				
 				$content = str_replace("{playpage:textlink}",$typeText."&nbsp;&raquo;&nbsp;<a href='".$contentLink2."'>".$row['v_name']."</a>",$content);
-				$content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '{$playerurl}'+ pn + '.html';</script>",$content);
+				$content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
 				//$content=$mainClassObj->parseIf($content);
 				$playArr = playData2Ary($row['v_playdata']);
 				makePlayByData($vType,$vId,$playArr,$str2,$content,date('Y-n',$row['v_addtime']),$row['v_enname'],$stringecho);
@@ -850,14 +847,14 @@ function makeChannelById($typeId)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:typeid}",$currentTypeId,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
@@ -964,7 +961,7 @@ function makeNewsChannelById($typeId)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
@@ -973,7 +970,7 @@ function makeNewsChannelById($typeId)
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:keywords}",getNewsTypeKeywords($currentTypeId),$content);
@@ -1059,13 +1056,13 @@ function makeLengthChannelById($typeId,$startpage,$endpage)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("channel",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{channelpage:typename}",$typename,$content);
 			$content = str_replace("{channelpage:upid}",getUpId($typeId),$content);
 	}
@@ -1135,14 +1132,14 @@ function makeLengthPartById($typeId,$startpage,$endpage)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId,'');
+			$content = parseCachePart("newspage",$channelTemplatePath,$currentTypeId);
 			$content = str_replace("{newspagelist:typename}",$typename,$content);
 			$content = str_replace("{newspagelist:typeid}",$currentTypeId,$content);
 			$content = str_replace("{newspagelist:upid}",getUpId($typeId,1),$content);
@@ -1254,9 +1251,9 @@ function makeTopicIndex($page=1)
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"");
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,'','','');
-	$content=$mainClassObj->parseTopicList($content,'','','');
-	$content=$mainClassObj->parseNewsList($content,'','','');
+	$content=$mainClassObj->parseVideoList($content);
+	$content=$mainClassObj->parseTopicList($content);
+	$content=$mainClassObj->parseNewsList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$tempStr = $content;
@@ -1357,7 +1354,7 @@ function makeTopicById($topicId)
 		if(chkFileCache($cacheName)){
 			$content = getFileCache($cacheName);
 		}else{
-			$content = parseCachePart("topic",$topicTemplatePath,'','');
+			$content = parseCachePart("topic",$topicTemplatePath);
 			$content = str_replace("{seacms:topicname}",$topicName,$content);
 			$content = str_replace("{seacms:topicdes}",$topicDes,$content);
 			$content = str_replace("{seacms:topickeyword}",$topicKeyword,$content);
@@ -1366,11 +1363,12 @@ function makeTopicById($topicId)
 			$content = str_replace("{seacms:topicspic}",$topicsPic,$content);
 			$content = str_replace("{seacms:topicgpic}",$topicgPic,$content);			
 			$content = str_replace("{seacms:topiccontent}",$topicContent,$content);
-			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);			
+			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);
+			
 			setFileCache($cacheName,$content);
 		}
 	}else{
-			$content = parseCachePart("topic",$topicTemplatePath,'','');
+			$content = parseCachePart("topic",$topicTemplatePath);
 			$content = str_replace("{seacms:topicname}",$topicName,$content);
 			$content = str_replace("{seacms:topicdes}",$topicDes,$content);
 			$content = str_replace("{seacms:topickeyword}",$topicKeyword,$content);
@@ -1381,7 +1379,6 @@ function makeTopicById($topicId)
 			$content = str_replace("{seacms:topiccontent}",$topicContent,$content);
 			$content = str_replace("{seacms:topicaddtime}",MyDate('Y-m-d H:i',$topicAddtime),$content);
 	}
-	
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$mystr = $content;
 	if($TotalResult == 0){
@@ -1425,8 +1422,8 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{channelpage:typetext}",getTypeText($currentTypeId),$content);
 			$content = str_replace("{channelpage:keywords}",getTypeKeywords($currentTypeId),$content);
@@ -1443,8 +1440,8 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 			$content=$mainClassObj->parseTopicList($content);
 			$content = str_replace("{newspagelist:typetext}",getTypeText($currentTypeId,1),$content);
 		break;
@@ -1459,7 +1456,7 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
 			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 			$content=$mainClassObj->parseTopicList($content);
 		break;
@@ -1474,22 +1471,22 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
 			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 			$content=$mainClassObj->parseTopicList($content);
 		break;
 		case "topic":
 			$content=loadFile(sea_ROOT.$templatePath);
 			$content=$mainClassObj->parseTopAndFoot($content);
-			$content = str_replace("{seacms:currenttypeid}",-444,$content);
+			$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
 			$content=$mainClassObj->parseSelf($content);
 			$content=$mainClassObj->parseHistory($content);
 			$content=$mainClassObj->parseGlobal($content);
 			$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
-			$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+			$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 			$content=$mainClassObj->parseTopicList($content);
 			$content=$mainClassObj->parseLinkList($content);
 		break;
@@ -1505,7 +1502,7 @@ function parseCachePart($pageType,$templatePath,$currentTypeId="-444",$vtag)
 			$content=$mainClassObj->parseAreaList($content);
 			$content=$mainClassObj->parseNewsAreaList($content);
 			$content=$mainClassObj->parseVideoList($content,$currentTypeId,$topic,$vtag);
-			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
+			$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 			$content=$mainClassObj->parseTopicList($content);
 			$content=$mainClassObj->parseLinkList($content);
 	}
@@ -1655,8 +1652,8 @@ function makeCustomInfo($templatename)
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
 	$content=$mainClassObj->parseNewsAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content=replaceCurrentTypeId($content,-444);
@@ -1684,7 +1681,7 @@ function makeBaidu()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成视频SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidu&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成baidu地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidu&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1729,14 +1726,14 @@ function makeBaidun()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成新闻SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidun&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成baidu地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidun&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getNewsDataCount("all");
+		$allcount=getDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -1749,7 +1746,7 @@ function makeBaidun()
 			while($row=$dsql->GetObject('makeBaidu'))
 			{
 				$baiduStr .= "<url>\n
-							  <loc><![CDATA[".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."]]></loc>\n
+							  <loc><![CDATA[".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."]]></loc>\n
 							  <lastmod><![CDATA[".MyDate('Y-m-d',$row->n_addtime)."]]></lastmod>\n
 							  <changefreq>always</changefreq>\n
 							  <priority>1.0</priority>\n	
@@ -1774,7 +1771,7 @@ function makeGoogle()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成视频谷歌SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成google地图 视频</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=google&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
@@ -1827,14 +1824,14 @@ function makeGooglen()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成新闻谷歌SiteMap</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成google地图 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='500'>每页数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=googlen&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$stringEcho = '';
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$allmakenum = empty($allmakenum) ? 500 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getNewsDataCount("all");
+		$allcount=getDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -1855,7 +1852,7 @@ function makeGooglen()
 				$vDes = empty($row->n_content) ? "" : $row->n_content;
 				$vName = empty($row->n_title) ? "" : $row->n_title;
 				$googleStr .= "<url>\n
-										  <loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."</loc>\n
+										  <loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</loc>\n
 										  <lastmod>".MyDate('Y-m-d',$row->n_addtime)."</lastmod>\n
 										  <changefreq>daily</changefreq>\n
 										  <priority>1.0</priority>\n
@@ -1881,7 +1878,7 @@ function makeRss()
 	require_once(sea_INC.'/charset.func.php');
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成视频RSS</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rss&flag=1&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成RSS地图 视频</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rss&flag=1&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$sql="select d.v_id,d.v_name,d.v_pic,d.v_actor,d.v_addtime,d.v_enname,d.tid,c.body as v_des from sea_data d left join sea_content c on c.v_id=d.v_id order by d.v_addtime desc limit 0,$makenum";
@@ -1923,7 +1920,7 @@ function makeRssn()
 	require_once(sea_INC.'/charset.func.php');
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成新闻RSS</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rssn&flag=1&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成RSS地图 新闻</b>： 输出数量<input type='text' id='makenum' value='100'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=rssn&flag=1&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$makenum = empty($makenum) ? 100 : intval($makenum);
 		$sql="select * from sea_news order by n_addtime desc limit 0,$makenum";
@@ -1947,7 +1944,7 @@ function makeRssn()
 			$vName = empty($row->n_title) ? "" : $row->n_title;
 			$rssStr .= "<item>\n
 							<title><![CDATA[".$vName."]]></title>\n
-							<link>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."</link>\n
+							<link>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</link>\n
 							<author><![CDATA[".$row->v_actor."]]></author>\n
 							<pubDate>".MyDate('Y-m-d H:i:s',$row->n_addtime)."</pubDate>\n
 							<description><![CDATA[".msubstr(html2text($vDes),0,300,'utf-8',false)."]]></description>\n	
@@ -1965,7 +1962,7 @@ function makeBaidux()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成视频百度站内搜索</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidux&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成百度站内搜索数据 视频</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baidux&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$sqlt="select tid,tname from sea_type";
 		$dsql->SetQuery($sqlt);
@@ -2044,7 +2041,7 @@ function makeBaiduxn()
 {
 	global $dsql,$flag,$makenum,$allmakenum;
 	if ($flag!=1){
-		return "<br><div align=center><b>生成新闻百度站内搜索</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baiduxn&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
+		return "<br><div align=center><b>生成百度站内搜索数据 新闻</b>： 总输出数量<input type='text' id='allmakenum' value='10000'>每页数量<input type='text' id='makenum' value='2000'> <input type='button' class='rb1' value='开始生成' onclick=\"javascript:location.href='?action=baiduxn&flag=1&allmakenum='+$('allmakenum').value+'&makenum='+$('makenum').value\" /></div>";
 	}else{
 		$sqlt="select tid,tname from sea_type";
 		$dsql->SetQuery($sqlt);
@@ -2059,7 +2056,7 @@ function makeBaiduxn()
 		$allmakenum = empty($allmakenum) ? 10000 : intval($allmakenum);
 		$pagesize = $makenum;
 		$pCount = ceil($allmakenum/$pagesize);
-		$allcount=getNewsDataCount("all");
+		$allcount=getDataCount("all");
 		$allpage=ceil($allcount/$pagesize);
 		if ($pCount>$allpage) $pCount=$allpage;
 		for($i=1;$i<=$pCount;$i++){
@@ -2075,9 +2072,8 @@ if(strpos($row->n_pic,"http")=== false)
 {$n_pic=$GLOBALS['cfg_basehost']."/".$row->n_pic;}
 else
 {$n_pic=$row->n_pic;}
-
 $baiduxStr .= "<url>
-<loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id,'')."</loc>
+<loc>".$GLOBALS['cfg_basehost'].getArticleLink($row->tid,$row->n_id)."</loc>
 <lastmod>".date('Y-m-d',$row->n_addtime)."T".date('H:i:s',$row->n_addtime)."</lastmod>
 <changefreq>always</changefreq>
 <priority>1.0</priority>

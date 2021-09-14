@@ -90,7 +90,7 @@ while($row=$dsql->GetObject('video_list'))
 }
 ?>
   <tr>
-   <td height=27 colspan="4" align="center"><a href="?action=list&id=<?php echo $id;?>&page=1">首页</a>&nbsp;<a href="?action=list&id=<?php echo $id;?>&page=<?php echo $page-1;?>">上一页</a>&nbsp;<a href="?action=list&id=<?php echo $id;?>&page=<?php echo $page+1;?>">下一页</a>&nbsp;<a href="?action=list&id=<?php echo $id;?>&page=<?php echo $TotalPage;?>">尾页</a>&nbsp;每页<?php echo $numPerPage;?>个记录，共<?php echo $TotalResult;?>个记录。</td>
+   <td height=27 colspan="4" align="center"><a href="?action=list&id=<?php echo $id;?>&page=1">首页</a>&nbsp;<a href="?action=list&id=<?php echo $id;?>&page=<?php echo $page-1;?>">上一页</a>&nbsp;<a href="?action=list&id=<?php echo $id;?>&page=<?php echo $page+1;?>">下一页</a>&nbsp;<a href="?action=list&id=<?php echo $id;?>&page=<?php echo $TotalPage;?>">尾页</a>&nbsp;每页<b><?php echo $numPerPage;?></b>个记录，现在是:<b><span class="tx"><?php echo $page;?></span>/<?php echo $TotalPage;?></b>页，共<b><span id='recordcount'><?php echo $TotalResult;?></span></b>个记录。</td>
   </tr>
 	</tbody>
 </table>
@@ -99,7 +99,14 @@ while($row=$dsql->GetObject('video_list'))
 </div>
 </div>
 
-<?php viewFoot();?>
+<div class="bottom">
+<table width="100%" cellspacing="5">
+<tr>
+ <td align="center"><?php echo $cfg_powerby?></td>
+</tr>
+</table>
+
+</div>
 
 </body>
 </html>

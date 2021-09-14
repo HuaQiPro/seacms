@@ -5,9 +5,9 @@ $PLUS=array (
     'off' => '',
     'data' => 
     array (
-      0 => '',
+      0 => '0',
     ),
-    'info' => '<center><font style="font-size:16px; color:#ccc;"><br><br>提示：该影片已下架！</font></center>',
+    'info' => '应版权方要求此视频已下架，请支持正版！ -  {seacms:sitename}',
   ),
   'JmpVideo' => 
   array (
@@ -26,17 +26,17 @@ $PLUS=array (
     'off' => '',
     'data' => 
     array (
-      0 => '',
+      0 => '屏蔽词',
     ),
-    'info' => '<center><font style="font-size:16px; color:#ccc;"><br><br>提示：该影片已下架！</font></center>',
+    'info' => '因政策原因，该影片已经被系统屏蔽！-  {seacms:sitename}',
   ),
   'HideType' => 
   array (
     'off' => '',
     'data' => 
     array (
-      0 => '',
+      0 => '0',
     ),
-    'info' => '<center><font style="font-size:16px; color:#ccc;"><br><br>提示：当前视频必须使用手机播放！</font></center>',
+    'info' => '当前分类视频必须使用手机播放！-  {seacms:sitename}',
   ),
 );

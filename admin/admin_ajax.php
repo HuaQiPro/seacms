@@ -104,8 +104,7 @@ elseif($action=="updatecache")
 	require_once(sea_ROOT.'/data/config.cache.inc.php');
 	if($cfg_cachetype=='redis'){
 	$redis = new Redis();
-	$redis->connect($cfg_redishost,$cfg_redisport);
-	if($cfg_redispsw !=""){$redis->auth($cfg_redispsw);}
+	$redis->connect('127.0.0.1', 6379);
 	$redis->flushall();
 	}
 	echo "ok";
@@ -114,13 +113,6 @@ elseif($action=="clearColHis")
 {
 	delFile(sea_ROOT.'/data/cache/collect_xml.php');
 	echo "ok";
-}
-elseif($action=="locks")
-{
-	$row=$dsql->GetOne("select password as dd from sea_admin where name='$uname'");
-	$spwd=$row['dd'];
-	$upwd = substr(md5($upwd),5,20);
-	if($spwd==$upwd){echo "ok";}else{echo "err";}
 }
 else
 {

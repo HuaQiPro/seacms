@@ -46,7 +46,7 @@ if($action=="list")
 	@session_write_close();
 	top();
 	if (empty($pg)||$pg<=0)$pg=1;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid==32)
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-list-true-cid-{$t}-h-{$h}-p-{$pg}-wd-".gbutf8($wd);
 	}
@@ -70,7 +70,7 @@ if($action=="list")
   <table class="tb">
     <thead>
       <tr class="thead">
-        <th colspan="4">&nbsp;<a href="?">采集平台</a></th>
+        <th colspan="4">&nbsp;<a href="?">采集平台</a>&nbsp;&raquo;&nbsp;【采集前需绑定分类，浏览器兼容模式下可能无法进行绑定操作】</th>
       </tr>
       <tr>
         <th colspan="4"> <ul class="ul">
@@ -130,7 +130,8 @@ if($action=="list")
           <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($pg+1) ?>&amp;url=<?php  echo $var_url?>">下一页</a>
           <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg=<?php  echo ($pagecount) ?>&amp;url=<?php  echo $var_url?>">尾页</a>&nbsp;&nbsp;
           跳转
-            <input type="text" id="skip" value="" onKeyUp="this.value=this.value.replace(/[^\d]+/,'')" style="width:26px;height:14px;"/>
+            <input type="text" id="skip" value="" onKeyUp="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
+            &nbsp;&nbsp;
             <input type="button" value="确定" class="btn" onClick="location.href='?ac=list&amp;rid=<?php  echo $rid;?>&amp;url=<?php  echo $var_url?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg='+$('skip').value;"/>
           </div>
         </div>
@@ -151,12 +152,12 @@ if($action=="list")
           &nbsp;
           <a onClick="ajaxFunction('?ac=day&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>&t=<?php  echo $t;?>&h=24&backurl='+encodeURIComponent('admin_reslib.php?ac=list&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>'))" href="#" >
           <input type="button" class="btn" style="width:65px" value="采集当天"/></a>
-          <?php  if($t>=1){echo '&nbsp;';}?>
+          &nbsp;
           <a onClick="ajaxFunction('?ac=type&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>&t=<?php  echo $t;?>&backurl='+encodeURIComponent('admin_reslib.php?ac=list&amp;url=<?php  echo $var_url?>&rid=<?php  echo $rid;?>'))" href="#" ><input type="button" class="btn" style="width:85px;<?php  if($t<1){ ?>display:none;<?php  }else{?><?php  }?>" value="采集当前分类"/></a>
           &nbsp;
-          <input type="button" class="btn" style="width:45px" onClick="location.reload()" value="刷新"/>
+          <input type="button" class="btn" style="width:65px" onClick="location.reload()" value="刷新网页"/>
           &nbsp;&nbsp;查询：
-          <input type="text" name="wd" value="" style="width:70px" />
+          <input type="text" name="wd" value="" style="width:100px" />
           &nbsp;
           <input type="submit" class="btn" name="submit" value="搜 索" />
           &nbsp;
@@ -186,7 +187,9 @@ if($action=="list")
       <th>来源</th>
       <th width="135">时间</th>
     </tr>
-
+    <tr>
+      <td></thead></td>
+    </tr>
     <tbody>
     </tbody>
 <form action="?" method="post" name="choose" id="choose">
@@ -212,7 +215,7 @@ if($action=="list")
 			$ch = '';	
 		}
 		?>
-        <tr>
+        	<tr>
 		<td nowrap="nowrap"><input type="checkbox" class="checkbox" name="ids[]" value="<?php  echo $video->id; ?>" id="<?php  echo $video->id; ?>" <?php  echo $ch; ?>/><label for="<?php  echo $video->id; ?>"><?php  echo $video->name; ?><font color="#FF0000"><?php  echo $video->note; ?></font></label></td>
 		<td nowrap="nowrap"><a href="?ac=list&t=<?php  echo $video->tid; ?>&url=<?php  echo $var_url;?>&rid=<?php  echo $rid;?>"><?php  echo $video->type; ?></a></td>
 		<td nowrap="nowrap"><?php  echo $video->dt; ?></td>
@@ -248,7 +251,8 @@ if($action=="list")
           <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;url=<?php  echo $var_url?>&amp;pg=<?php  echo ($pg+1) ?>">下一页</a>
           <a href="?ac=list&amp;rid=<?php  echo $rid;?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;url=<?php  echo $var_url?>&amp;pg=<?php  echo ($pagecount) ?>">尾页</a>&nbsp;&nbsp;
           跳转
-            <input type="text" id="skip2" value="" onKeyUp="this.value=this.value.replace(/[^\d]+/,'')" style="width:26px;height:14px;"/>
+            <input type="text" id="skip2" value="" onKeyUp="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
+            &nbsp;&nbsp;
             <input type="button" value="确定" class="btn" onClick="location.href='?ac=list&amp;rid=<?php  echo $rid;?>&amp;url=<?php  echo $var_url?>&amp;t=<?php  echo $t ?>&amp;h=<?php  echo $h ?>&amp;wd=<?php  echo $wd ?>&amp;pg='+$('skip2').value;"/>
           </div>
         </div></td>
@@ -307,7 +311,7 @@ elseif($action=="select")
 		exit();
 	}
 	$a_ids = implode(',',$ids);
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid==32)
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-vodids-".$a_ids;
 	}
@@ -320,7 +324,7 @@ elseif($action=="select")
 elseif($action=="day")
 {
 	$page = $pg;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid==32)
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid--h-24-p-{$page}";
 	}
@@ -333,7 +337,7 @@ elseif($action=="day")
 }elseif($action=="week")
 {
 	$page = $pg;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid==32)
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid--h-168-p-{$page}";
 	}
@@ -348,7 +352,7 @@ elseif($action=="day")
 elseif($action=="type")
 {
 	$page = $pg;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid==32)
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid-{$t}-h--p-{$page}";
 	}
@@ -361,7 +365,7 @@ elseif($action=="type")
 elseif($action=="all")
 {
 	$page = $pg;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid==32)
 	{
 		$weburl=$var_url."?s=plus-api-xml-cms-max-cid-{$t}-h--p-{$page}";
 	}
@@ -530,7 +534,7 @@ function top()
 <script src="js/common.js"></script>
 <script src="js/main.js"></script>
 <style type="text/css">
-	input{height:16px;}
+	input{height:12px;}
 	.tb2 td{padding:2px 5px 2px 5px;height:25px}
 	.tb2 .thc{text-align:center;line-height:30px; background-color: #F5F7F8;font-size:18px;font-weight:bold;color:#000}
 	.tb2 .thr{text-align:center;height:20px}
@@ -553,16 +557,7 @@ function bottom()
 ?>
 </div>
 <div align=center><?php 
-
-	global $dsql,$starttime;
-	echo "<div align=center>";
-	$starttime = explode(' ', $starttime);
-	$endtime = explode(' ', microtime()); 
-	$timeuse=round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])/1000,6);
-	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"2\"><tr><td align=\"center\">本页面用时".
-	$timeuse."秒,共执行2次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.com/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
-
-
+viewFoot();
 ?></div>
 </body>
 </html> 

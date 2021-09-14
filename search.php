@@ -1,6 +1,5 @@
 <?php 
 error_reporting(0);
-session_start();
 function lib_replace_end_tag($str)  
 {  
 if (empty($str)) return false;  
@@ -67,17 +66,6 @@ if($GLOBALS['cfg_mskin']==4 AND $GLOBALS['isMobile']==1){header("location:$cfg_m
 //前置跳转end
 require_once(sea_INC."/main.class.php");
 
-if($cfg_search_type =='0')
-{
-	ShowMsg("搜索系统关闭！","index.php","0",$cfg_search_time*1000);
-	exit();
-}
-if($cfg_search_type =='2')
-{
-	include_once("include/scheck.php");
-	$cfg_search_type ='-1';
-}
-
 $schwhere = '';
 foreach($_GET as $k=>$v)
 {
@@ -121,13 +109,10 @@ $money = addslashes(cn_substr($money,2));
 $order = RemoveXSS(stripslashes($order));
 $order = addslashes(cn_substr($order,16));
 
-if($cfg_notallowsstr !='' && $searchtype!=5)
+if($cfg_notallowstr !='' && m_eregi($cfg_notallowstr,$searchword))
 {
-	$sstr=m_eregi_replace($cfg_notallowsstr,'s-e-a-c-m-s',$searchword);
-	$sarray=explode('s-e-a-c-m-s', $sstr);
-	$r = null;
-	array_walk($sarray, function($v) use (&$r){$r[$v] = strlen($v);});
-    $searchword = array_search(max($r), $r);
+	ShowMsg("你的搜索关键字中存在非法内容，被系统禁止！","index.php","0",$cfg_search_time*1000);
+	exit();
 }
 if($searchword==''&&$searchtype!=5)
 {
@@ -156,7 +141,7 @@ function check_str($str,$key){
  return false;
 }
 
-$key = array('{','}','(',')','=',',',';','"','<','>','<script','<iframe','@','&','%','$','#','*',':','_','.','if(','/','\\');
+$key = array('{','}','(',')','=',',',';','"','<','>','script','iframe','@','&','%','$','#','*',':','_','.','if','/','\\');
 $page=intval($page);
 $tid=intval($tid);
 if(check_str($searchword,$key)){ShowMsg('请勿输入危险字符！','index.php','0',$cfg_search_time*1000);exit;}
@@ -305,18 +290,18 @@ if(check_str($page,$key)){ShowMsg('请勿输入危险字符！','index.php','0',
 		$content = str_replace("{searchpage:money}",$money2,$content);
 		$content = str_replace("{searchpage:ver}",$ver,$content);
 		$content=$mainClassObj->parsePageList($content,"",$page,$pCount,$TotalResult,"cascade");
-		$content=$mainClassObj->parseSearchItemList($content,"type",'');
-		$content=$mainClassObj->parseSearchItemList($content,"year",'');
-		$content=$mainClassObj->parseSearchItemList($content,"area",'');
-		$content=$mainClassObj->parseSearchItemList($content,"letter",'');
-		$content=$mainClassObj->parseSearchItemList($content,"lang",'');
+		$content=$mainClassObj->parseSearchItemList($content,"type");
+		$content=$mainClassObj->parseSearchItemList($content,"year");
+		$content=$mainClassObj->parseSearchItemList($content,"area");
+		$content=$mainClassObj->parseSearchItemList($content,"letter");
+		$content=$mainClassObj->parseSearchItemList($content,"lang");
 		$jqupid=getUpId($tid);
 		if($jqupid==0 OR $jqupid=='0'){$jqupid=$tid;}
 		if($jqupid=='' OR empty($jqupid)){$jqupid='0';}
 		$content=$mainClassObj->parseSearchItemList($content,"jq",$jqupid);
-		$content=$mainClassObj->parseSearchItemList($content,"state",'');
-		$content=$mainClassObj->parseSearchItemList($content,"ver",'');
-		$content=$mainClassObj->parseSearchItemList($content,"money",'');
+		$content=$mainClassObj->parseSearchItemList($content,"state");
+		$content=$mainClassObj->parseSearchItemList($content,"ver");
+		$content=$mainClassObj->parseSearchItemList($content,"money");
 	}else
 	{
 		$content=$mainClassObj->parsePageList($content,"",$page,$pCount,$TotalResult,"search");
@@ -339,8 +324,8 @@ function parseSearchPart($templatePath)
 	$content=$mainClassObj->parseSelf($content);
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parsenewsList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parsenewsList($content,$currentTypeId);
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;
 }

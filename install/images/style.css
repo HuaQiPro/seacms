@@ -1,16 +1,12 @@
 html,body{height:100%}
 body,div,ul,li,dl,dd,dt,p,h1,h2,h3,form{margin:0;padding:0;font-family:"Microsoft Yahei",Tahoma,Arial;font-size:14px}
 ul{list-style:none}
-textarea, input, select,button{outline: 0;border:1px solid #ccc; border-radius:2px;vertical-align:middle;}
-textarea:hover, input:focus,button:focus{border-color:#0099CC;outline: 0;box-shadow: 0px 0px 2px 0px #09c;}
-input:hover, input:hover,button:hover{outline: 0;  border: 1px solid #09c;box-shadow: 0px 0px 2px 0px #09c;}
-select:hover, select:focus{border-color:#0099CC;outline: 0;box-shadow: 0px 0px 2px 0px #09c;}
 a,a:visited{color:#1F376D;text-decoration:none}
 a:hover{color:#BD0A01}
 img{border:0}
 table{border-collapse:collapse;border-spacing:0}
 
-.inp{display:inline;float:left;width:15em;padding:3px;border-radius:2px;margin-right:8px}
+.inp{display:inline;float:left;width:15em;padding:3px;border:1px solid #8E8F8F;background:#FBFBFB;border-radius:2px;margin-right:8px}
 .inp_tips{position:absolute;z-index:999;border:1px solid #006600;background:#C9F0A0;line-height:22px;padding:0 5px;border-radius:4px}
 .tips_no,.tips_look{float:left;background:url('reg.gif') 0 1px no-repeat;text-indent:20px;line-height:18px;height:18px;margin-top:4px}
 .tips_yes{float:left;background:url('reg.gif') 0 -20px no-repeat;width:16px;height:16px;margin-top:6px}
@@ -25,7 +21,7 @@ table{border-collapse:collapse;border-spacing:0}
 
 .cont{position:absolute;top:60px;right:0;left:0;bottom:10px;min-height:300px;_height:expression(document.body.offsetHeight-60<300?300:document.body.offsetHeight-60)}
 .cont .c_top{width:100%;height:11px;background:url('box.gif') no-repeat}
-.cont .c_c{position:absolute;top:10px;right:0;bottom:11px;background:url('box.gif') -960px 0 repeat-y;width:960px;_height:expression(document.body.offsetHeight-60<300?274:document.body.offsetHeight-82)}
+.cont .c_c{position:absolute;top:11px;right:0;bottom:11px;background:url('box.gif') -960px 0 repeat-y;width:960px;_height:expression(document.body.offsetHeight-60<300?274:document.body.offsetHeight-82)}
 .cont .c_c .c_c_left{float:left;width:154px}
 .cont .c_c .c_c_left ul{margin:20px 0 0 20px}
 .cont .c_c .c_c_left ul li{line-height:44px;font-size:14px;font-weight:700}

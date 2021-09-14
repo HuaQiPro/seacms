@@ -244,7 +244,7 @@ if($action=="boardsource")
 </tr>
 
 <tr>
-<td >缓冲地址：</td>
+<td >缓冲广告页：</td>
 <td><input type="text" name="adbeforeplay" size="60" value="<?php echo $playerBeforeAdUrl;?>" /></td>
 </tr>
 
@@ -256,17 +256,16 @@ if($action=="boardsource")
 <tr>
 <td >强制播放器</td>
 <td>
-
-<input type="radio" name="forcejx" value="no" <?php if($forcejx=="no") echo 'checked';?>>关闭
-&nbsp;&nbsp;&nbsp;
-<input type="radio" name="forcejx" value="jiexi" <?php if($forcejx=="jiexi") echo 'checked';?>>解析播放
-&nbsp;&nbsp;&nbsp;
-<input type="radio" name="forcejx" value="ck" <?php if($forcejx=="ck") echo 'checked';?>>CKplayer播放
-&nbsp;&nbsp;&nbsp;
-<input type="radio" name="forcejx" value="dp" <?php if($forcejx=="dp") echo 'checked';?>>Dplayer播放<font style="color:#CC3333;">[全屏连播 进度记忆 试看]</font>
-&nbsp;&nbsp;&nbsp;
-<input type="radio" name="forcejx" value="dm" <?php if($forcejx=="dm") echo 'checked';?>>Dplayer弹幕<font style="color:#CC3333;">[连播 进度记忆 试看 弹幕]</font>
-</td>
+关闭
+<input type="radio" name="forcejx" value="no" <?php if($forcejx=="no") echo 'checked';?>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+解析播放<input type="radio" name="forcejx" value="jiexi" <?php if($forcejx=="jiexi") echo 'checked';?>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CKplayer播放<input type="radio" name="forcejx" value="ck" <?php if($forcejx=="ck") echo 'checked';?>>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Dplayer播放<font style="color:#CC3333;">[全屏连播 进度记忆]</font><input type="radio" name="forcejx" value="dp" <?php if($forcejx=="dp") echo 'checked';?>>
+&nbsp;&nbsp;
+开启后将强制使用此播放器</td>
 </tr>
 
 <tr>
@@ -300,27 +299,6 @@ if($action=="boardsource")
 <td >解析接口E：</td>
 <td>名称：<input type="text" name="jxEname" size="10" value="<?php echo $jxEname;?>" /> 地址：<input type="text" name="jxEapi" size="50" value="<?php echo $jxEapi;?>" /></td>
 </tr>
-
-<tr>
-<td >解析接口F：</td>
-<td>名称：<input type="text" name="jxFname" size="10" value="<?php echo $jxFname;?>" /> 地址：<input type="text" name="jxFapi" size="50" value="<?php echo $jxFapi;?>" /></td>
-</tr>
-
-<tr>
-<td >解析接口G：</td>
-<td>名称：<input type="text" name="jxGname" size="10" value="<?php echo $jxGname;?>" /> 地址：<input type="text" name="jxGapi" size="50" value="<?php echo $jxGapi;?>" /></td>
-</tr>
-
-<tr>
-<td >解析接口H：</td>
-<td>名称：<input type="text" name="jxHname" size="10" value="<?php echo $jxHname;?>" /> 地址：<input type="text" name="jxHapi" size="50" value="<?php echo $jxHapi;?>" /></td>
-</tr>
-
-<tr>
-<td >解析接口I：</td>
-<td>名称：<input type="text" name="jxIname" size="10" value="<?php echo $jxIname;?>" /> 地址：<input type="text" name="jxIapi" size="50" value="<?php echo $jxIapi;?>" /></td>
-</tr>
-
 
 <tr>
 <td ></td>

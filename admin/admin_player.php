@@ -27,19 +27,11 @@ if($action=="edit")
 	$player=preg_replace("/jxCname=(.*?)\";/is","jxCname=\"".$jxCname."\";",$player);
 	$player=preg_replace("/jxDname=(.*?)\";/is","jxDname=\"".$jxDname."\";",$player);
 	$player=preg_replace("/jxEname=(.*?)\";/is","jxEname=\"".$jxEname."\";",$player);
-	$player=preg_replace("/jxFname=(.*?)\";/is","jxFname=\"".$jxFname."\";",$player);
-	$player=preg_replace("/jxGname=(.*?)\";/is","jxGname=\"".$jxGname."\";",$player);
-	$player=preg_replace("/jxHname=(.*?)\";/is","jxHname=\"".$jxHname."\";",$player);
-	$player=preg_replace("/jxIname=(.*?)\";/is","jxIname=\"".$jxIname."\";",$player);
 	$player=preg_replace("/jxAapi=(.*?)\";/is","jxAapi=\"".$jxAapi."\";",$player);
 	$player=preg_replace("/jxBapi=(.*?)\";/is","jxBapi=\"".$jxBapi."\";",$player);
 	$player=preg_replace("/jxCapi=(.*?)\";/is","jxCapi=\"".$jxCapi."\";",$player);
 	$player=preg_replace("/jxDapi=(.*?)\";/is","jxDapi=\"".$jxDapi."\";",$player);
 	$player=preg_replace("/jxEapi=(.*?)\";/is","jxEapi=\"".$jxEapi."\";",$player);
-	$player=preg_replace("/jxFapi=(.*?)\";/is","jxFapi=\"".$jxFapi."\";",$player);
-	$player=preg_replace("/jxGapi=(.*?)\";/is","jxGapi=\"".$jxGapi."\";",$player);
-	$player=preg_replace("/jxHapi=(.*?)\";/is","jxHapi=\"".$jxHapi."\";",$player);
-	$player=preg_replace("/jxIapi=(.*?)\";/is","jxIapi=\"".$jxIapi."\";",$player);
 	$player=preg_replace("/forcejx=(.*?)\";/is","forcejx=\"".$forcejx."\";",$player);
 	$player=preg_replace("/unforcejx=(.*?)\";/is","unforcejx=\"".$unforcejx."\";",$player);
 	$fp = fopen($m_file,'w');
@@ -238,20 +230,12 @@ else
 	$jxCname=getrulevalue($player,"jxCname=\"","\";");
 	$jxDname=getrulevalue($player,"jxDname=\"","\";");
 	$jxEname=getrulevalue($player,"jxEname=\"","\";");
-	$jxFname=getrulevalue($player,"jxFname=\"","\";");
-	$jxGname=getrulevalue($player,"jxGname=\"","\";");
-	$jxHname=getrulevalue($player,"jxHname=\"","\";");
-	$jxIname=getrulevalue($player,"jxIname=\"","\";");
 	
 	$jxAapi=getrulevalue($player,"jxAapi=\"","\";");
 	$jxBapi=getrulevalue($player,"jxBapi=\"","\";");
 	$jxCapi=getrulevalue($player,"jxCapi=\"","\";");
 	$jxDapi=getrulevalue($player,"jxDapi=\"","\";");
 	$jxEapi=getrulevalue($player,"jxEapi=\"","\";");
-	$jxFapi=getrulevalue($player,"jxFapi=\"","\";");
-	$jxGapi=getrulevalue($player,"jxGapi=\"","\";");
-	$jxHapi=getrulevalue($player,"jxHapi=\"","\";");
-	$jxIapi=getrulevalue($player,"jxIapi=\"","\";");
 	
 	$forcejx=getrulevalue($player,"forcejx=\"","\";");
 	$unforcejx=getrulevalue($player,"unforcejx=\"","\";");

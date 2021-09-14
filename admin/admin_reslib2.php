@@ -469,7 +469,7 @@ function viewFoot()
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\">本页面用时".
-	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.com/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
+	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.net/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
 }
 
 function viewHead($str)
@@ -556,7 +556,7 @@ if($action=="list")
   <table class="tb">
     <thead>
       <tr class="thead">
-        <th colspan="4">&nbsp;<a href="?">采集平台</a></th>
+        <th colspan="4">&nbsp;<a href="?">采集平台</a>&nbsp;&raquo;&nbsp;</th>
       </tr>
       <tr>
         <th colspan="4"> <ul class="ul">
@@ -1024,7 +1024,7 @@ function top()
 <script src="js/common.js"></script>
 <script src="js/main.js"></script>
 <style type="text/css">
-	input{height:15px;}
+	input{height:12px;}
 	.tb2 td{padding:2px 5px 2px 5px;height:25px}
 	.tb2 .thc{text-align:center;line-height:30px; background-color: #F5F7F8;font-size:18px;font-weight:bold;color:#000}
 	.tb2 .thr{text-align:center;height:20px}

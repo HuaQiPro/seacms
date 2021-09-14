@@ -22,7 +22,7 @@ if($action=="downpic")
 	$pagesize=30;
 	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
 	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有外部图片已经成功下载到本地!","admin_datarelate.php?action=checkpic");
+		ShowMsg("恭喜，所有资源站图片已经成功下载到本地!","admin_datarelate.php?action=checkpic");
 		exit();
 	}
 	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
@@ -34,206 +34,13 @@ if($action=="downpic")
 		$v_id=$row->v_id;
 		$v_name=$row->v_name;
 		$picUrl = $image->downPicHandle($picUrl,$v_name);
-		$picUrl=str_replace('../','',$picUrl);
 		$query = "Update `sea_data` set v_pic='$picUrl' where v_id='$v_id'";
-		//echo '已下载<font color=red>';
-		//echo $v_name;
-		//echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
 		$dsql->ExecuteNoneQuery($query);
-		if($photo_markdown==1){
-			$errno = $image->watermark($picUrl,2);
-			if($errno===true)
-			{
-				echo "数据<font color=red>".$row->v_name."</font>的图片水印完成<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
-				$dsql->ExecNoneQuery("update sea_data set v_pic= '".$picUrl."#marked' where v_id = ".$v_id);
-			}else 
-			{
-				echo "数据<font color=red>".$row->v_name."</font>的图片水印失败,错误号$errno<br>";
-				$dsql->ExecNoneQuery("update sea_data set v_pic= '".$picUrl."#error_".$errno."_marked' where v_id = ".$v_id);
-			}
-		}
 		@ob_flush();
 	    @flush();
 
 	}	
 	echo "<br>暂停3秒后继续下载<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=downpic&downtype=".$downtype."&page=".($page+1)."&totalpage=".$totalpage."';}</script></div>";
-}elseif($action=="downpicnr"){
-	include_once(sea_DATA."/config.ftp.php");
-	@session_write_close();
-	$isDownOk=false;
-	$wheresql="where instr(body,'#err')=0 ".($app_ftp==0?"":" and instr(body,'$app_ftpurl')=0")." and  instr(body,'http')<>0 and instr(body,'img')<>0";
-	
-	$trow = $dsql->GetOne("Select count(*) as dd From `sea_content` $wheresql");
-	$totalnum = $trow['dd'];
-	$page = isset($page) ? intval($page) : 1;
-	if($page==0) $page=1;
-	$pagesize=30;
-	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
-	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有外部图片已经成功下载到本地!","admin_datarelate.php?action=checkpic");
-		exit();
-	}
-	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select v_id,body From `sea_content` $wheresql order by v_id desc limit 0,$pagesize");
-	$dsql->Execute('getpic');
-	while($row=$dsql->GetObject('getpic'))
-	{
-		$nr=$row->body;
-		$nr=stripslashes($nr);
-		$v_id=$row->v_id;
-		//$v_name=$row->v_name;
-		//echo $nr;
-		$picuelarr=getpichzh($nr);
-		//print_r($picuelarr);
-foreach($picuelarr as $key){
-    //echo $key."</br>";
-		
-		$drow = $dsql->GetOne("Select v_name as dd From `sea_data` where v_id=$v_id");
-		$d_name = $drow['dd'];
-		$picUrl = $image->downPicHandle($key,$d_name);
-		if($app_ftp==0){$picUrl='/'.$picUrl;}
-		$nr=str_replace($key,$picUrl,$nr);
-		}
-		$nr=addslashes($nr);
-		$query = "Update `sea_content` set body='$nr' where v_id='$v_id'";
-		$dsql->ExecuteNoneQuery($query);
-		@ob_flush();
-	    @flush();
-
-	}	
-	echo "<br>暂停3秒后继续下载<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=downpicnr&downtype=".$downtype."&page=".($page+1)."&totalpage=".$totalpage."';}</script></div>";
-}elseif($action=="downpicnrxf"){
-	include_once(sea_DATA."/config.ftp.php");
-	@session_write_close();
-	$isDownOk=false;
-	//修复内容页图片下载 
-   $wheresql="where instr(body,'#err')=0  and instr(body,'www.seacms.com')<>0 and  instr(body,'http')<>0 and instr(body,'img')<>0".($app_ftp==0?"":" and instr(body,'$app_ftpurl')<>0");
-	$trow = $dsql->GetOne("Select count(*) as dd From `sea_content` $wheresql");
-	$totalnum = $trow['dd'];
-	$page = isset($page) ? intval($page) : 1;
-	if($page==0) $page=1;
-	$pagesize=30;
-	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
-	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有外部图片已经成功下载到本地!","admin_datarelate.php?action=checkpic");
-		exit();
-	}
-	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select v_id,body From `sea_content` $wheresql order by v_id desc limit 0,$pagesize");
-	$dsql->Execute('getpic');
-	while($row=$dsql->GetObject('getpic'))
-	{
-		$nr=$row->body;
-		$nr=stripslashes($nr);
-		$v_id=$row->v_id;
-		//$v_name=$row->v_name;
-		//echo $nr;
-		$picuelarr=getpichzh($nr);
-		//print_r($picuelarr);
-foreach($picuelarr as $key){
-    //echo $key."</br>";
-
-		$drow = $dsql->GetOne("Select v_name as dd From `sea_data` where v_id=$v_id");
-		$d_name = $drow['dd'];
-		$picUrl = $image->downPicHandle($key,$d_name);
-		if($app_ftp==0){$picUrl='/'.$picUrl;}
-		$nr=str_replace($key,$picUrl,$nr);
-		}
-		$nr=addslashes($nr);
-		$query = "Update `sea_content` set body='$nr' where v_id='$v_id'";
-		$dsql->ExecuteNoneQuery($query);
-		@ob_flush();
-	    @flush();
-
-	}	
-	echo "<br>暂停3秒后继续下载<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=downpicnrxf&downtype=".$downtype."&page=".($page+1)."&totalpage=".$totalpage."';}</script></div>";
-}
-elseif($action=="downpicnrN"){
-	include_once(sea_DATA."/config.ftp.php");
-	@session_write_close();
-	$isDownOk=false;
-	$wheresql="where instr(n_content,'#err')=0 ".($app_ftp==0?"":" and instr(n_content,'$app_ftpurl')=0")." and  instr(n_content,'http')<>0 and instr(n_content,'img')<>0";
-	
-	$trow = $dsql->GetOne("Select count(*) as dd From `sea_news` $wheresql");
-	$totalnum = $trow['dd'];
-	$page = isset($page) ? intval($page) : 1;
-	if($page==0) $page=1;
-	$pagesize=30;
-	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
-	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有外部图片已经成功下载到本地!","admin_datarelate.php?action=checkpic");
-		exit();
-	}
-	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select n_id,n_title,n_content From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
-	$dsql->Execute('getpic');
-	while($row=$dsql->GetObject('getpic'))
-	{
-		$nr=$row->n_content;
-		$nr=stripslashes($nr);
-		$n_id=$row->n_id;
-		$n_title=$row->n_title;
-		//echo $nr;
-		$picuelarr=getpichzh($nr);
-		//print_r($picuelarr);
-foreach($picuelarr as $key){
-    //echo $key."</br>";
-
-		$picUrl = $image->downPicHandle($key,$n_title);
-		if($app_ftp==0){$picUrl='/'.$picUrl;}
-		$nr=str_replace($key,$picUrl,$nr);
-		}
-		$nr=addslashes($nr);
-		$query = "Update `sea_news` set n_content='$nr' where n_id='$n_id'";
-		$dsql->ExecuteNoneQuery($query);
-		@ob_flush();
-	    @flush();
-
-	}	
-	echo "<br>暂停3秒后继续下载<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=downpicnrN&downtype=".$downtype."&page=".($page+1)."&totalpage=".$totalpage."';}</script></div>";
-}elseif($action=="downpicnrxfN"){
-	include_once(sea_DATA."/config.ftp.php");
-	@session_write_close();
-	$isDownOk=false;
-	//修复内容页图片下载 
-   $wheresql="where instr(n_content,'#err')=0  and instr(n_content,'www.seacms.com')<>0 and  instr(n_content,'http')<>0 and instr(n_content,'img')<>0".($app_ftp==0?"":" and instr(n_content,'$app_ftpurl')<>0");
-	$trow = $dsql->GetOne("Select count(*) as dd From `sea_news` $wheresql");
-	$totalnum = $trow['dd'];
-	$page = isset($page) ? intval($page) : 1;
-	if($page==0) $page=1;
-	$pagesize=30;
-	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
-	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有外部图片已经成功下载到本地!","admin_datarelate.php?action=checkpic");
-		exit();
-	}
-	echo "<div style='font-size:13px'><font color=red>共".$totalpage."页,正在开始下载第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select n_id,n_title,n_content From `sea_news` $wheresql order by n_id desc limit 0,$pagesize");
-	$dsql->Execute('getpic');
-	while($row=$dsql->GetObject('getpic'))
-	{
-		$nr=$row->n_content;
-		$nr=stripslashes($nr);
-		$n_id=$row->n_id;
-		$n_title=$row->n_title;
-		//echo $nr;
-		$picuelarr=getpichzh($nr);
-		//print_r($picuelarr);
-foreach($picuelarr as $key){
-    //echo $key."</br>";
-
-		$picUrl = $image->downPicHandle($key,$n_title);
-		if($app_ftp==0){$picUrl='/'.$picUrl;}
-		$nr=str_replace($key,$picUrl,$nr);
-		}
-		$nr=addslashes($nr);
-		$query = "Update `sea_news` set n_content='$nr' where n_id='$n_id'";
-		$dsql->ExecuteNoneQuery($query);
-		@ob_flush();
-	    @flush();
-
-	}	
-	echo "<br>暂停3秒后继续下载<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=downpicnrxfN&downtype=".$downtype."&page=".($page+1)."&totalpage=".$totalpage."';}</script></div>";
 }
 elseif($action=="uplpictoftp")
 {
@@ -248,7 +55,7 @@ elseif($action=="uplpictoftp")
 	$pagesize=30;
 	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
 	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有本地视频图片已经成功上传至FTP!","admin_datarelate.php?action=checkpic");
+		ShowMsg("恭喜，所有本地图片已经成功上传至FTP!","admin_datarelate.php?action=checkpic");
 		exit();
 	}
 	echo "<font color=red>共".$totalpage."页,正在开始上传第".$page."页数据的的图片</font><br>";
@@ -278,49 +85,6 @@ elseif($action=="uplpictoftp")
 	}
 	echo "<br>暂停3秒后继续上传<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=uplpictoftp&page=".($page+1)."&totalpage=".$totalpage."';}</script>";
 }
-elseif($action=="uplpictoftpN")
-{
-	include_once(sea_DATA."/config.ftp.php");
-	@session_write_close();
-	$isDownOk=false;
-	$wheresql="where n_pic like 'uploads/%' ";
-	$trow = $dsql->GetOne("Select count(*) as dd From `sea_news` $wheresql");
-	$totalnum = $trow['dd'];
-	$page = isset($page) ? intval($page) : 1;
-	if($page==0) $page=1;
-	$pagesize=30;
-	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
-	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有本地新闻图片已经成功上传至FTP!","admin_datarelate.php?action=checkpic");
-		exit();
-	}
-	echo "<font color=red>共".$totalpage."页,正在开始上传第".$page."页数据的的图片</font><br>";
-	$dsql->SetQuery("Select n_id,n_title,n_pic From `sea_news` $wheresql order by n_addtime desc limit 0,$pagesize");
-	$dsql->Execute('getpic');
-	while($row=$dsql->GetObject('getpic'))
-	{
-		$picUrl=$row->n_pic;
-		$v_id=$row->n_id;
-		$v_name=$row->n_title;
-		$urlupload = uploadftp2($picUrl);
-		if($urlupload){
-			$picUrl = $app_ftpurl.$app_ftpdir.$picUrl;
-			if($app_updatepic==1)
-			{
-				echo "数据<font color=red>".$v_name."</font>的图片上传成功<a target=_blank href=".$picUrl.">预览图片</a><br />";
-				$query = "Update `sea_news` set n_pic='$picUrl' where n_id='$v_id'";
-				$dsql->ExecuteNoneQuery($query);
-			}
-			else
-			{
-				echo "数据<font color=red>".$v_name."</font>的图片上传成功,不更新图片地址<a target=_blank href=".$picUrl.">预览图片</a><br />";
-			}
-		}else{
-			echo "数据<font color=red>".$v_name."</font>的图片上传失败,图片地址不更新<br / >";
-		}
-	}
-	echo "<br>暂停3秒后继续上传<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=uplpictoftpN&page=".($page+1)."&totalpage=".$totalpage."';}</script>";
-}
 elseif($action=="watermark")
 {
 	@session_write_close();
@@ -331,7 +95,7 @@ elseif($action=="watermark")
 	$pagesize=30;
 	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
 	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有本地视频图片已经成功加好水印","admin_datarelate.php?action=checkpic");
+		ShowMsg("恭喜，所有本地图片已经成功加好水印","admin_datarelate.php?action=checkpic");
 		exit();
 	}
 	echo "<font color=red>共".$totalpage."页,正在开始对第".$page."页数据的的图片加水印</font><br>";
@@ -351,37 +115,6 @@ elseif($action=="watermark")
 		}
 	}
 	echo "<br>暂停3秒后继续<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=watermark&page=".($page+1)."&totalpage=".$totalpage."';}</script>";
-}
-elseif($action=="watermarkN")
-{
-	@session_write_close();
-	$wheresql="where n_pic like 'uploads/%' and n_pic not like '%marked' ";
-	$trow = $dsql->GetOne("Select count(*) as dd From `sea_news` $wheresql");
-	$totalnum = $trow['dd'];
-	$page = isset($page) ? intval($page) : 1;
-	$pagesize=30;
-	if(empty($totalpage)) $totalpage=ceil($totalnum/$pagesize);
-	if($totalnum==0 || $page>$totalpage){
-		ShowMsg("恭喜，所有本地新闻图片已经成功加好水印","admin_datarelate.php?action=checkpic");
-		exit();
-	}
-	echo "<font color=red>共".$totalpage."页,正在开始对第".$page."页数据的的图片加水印</font><br>";
-	$dsql->SetQuery("Select n_id,n_pic,n_title From `sea_news` $wheresql order by n_addtime desc limit 0,$pagesize");
-	$dsql->Execute('getpic');
-	while($row=$dsql->GetObject('getpic'))
-	{
-		$errno = $image->watermark($row->n_pic,2);
-		if($errno===true)
-		{
-			echo "数据<font color=red>".$row->n_title."</font>的图片水印完成<a target=_blank href='../".$row->n_pic."'>预览图片</a><br>";
-			$dsql->ExecNoneQuery("update sea_news set n_pic= '".$row->n_pic."#marked' where n_id = ".$row->n_id);
-		}else 
-		{
-			echo "数据<font color=red>".$row->n_title."</font>的图片水印失败,错误号$errno<br>";
-			$dsql->ExecNoneQuery("update sea_news set n_pic= '".$row->n_pic."#error_".$errno."_marked' where n_id = ".$row->n_id);
-		}
-	}
-	echo "<br>暂停3秒后继续<script language=\"javascript\">setTimeout(\"gatherNextPagePic();\",3000);function gatherNextPagePic(){location.href='?action=watermarkN&page=".($page+1)."&totalpage=".$totalpage."';}</script>";
 }
 elseif($action=="ftppic")
 {
@@ -485,14 +218,14 @@ elseif($action=="existpic")
 	$dsql->SetQuery($sql);
 	$dsql->Execute('existpic');
 	echoHead();
-	echo "正在更新视频图片地址。。。<br>";
+	echo "正在更新影片图片地址。。。<br>";
 	while($row = $dsql->GetArray('existpic'))
 	{
 		if($row[v_pic]!=''&&strpos($row[v_pic],'uploads/')===0){
 			$row[v_pic] = preg_replace("/#.*?marked/", '', $row[v_pic]);
 			if(!file_exists('../'.$row[v_pic])&&strpos($row['v_pic'],$app_ftpurl)===false)
 			{
-				$upSql = "update `sea_data` set v_pic='' where v_id =".$row['v_id'];
+				$upSql = "update `sea_data` set v_pic='' where v_id =".$row[v_id];
 				$dsql->ExecNoneQuery($upSql);
 				echo '成功清空&nbsp;ID:'.$row[v_id].'图片地址<br>';
 			}
@@ -503,71 +236,21 @@ elseif($action=="existpic")
 	exit();	
 }
 
-elseif($action=="existpicN")
-{
-	include(sea_DATA."/config.ftp.php");
-	$sql = "select n_id,n_pic from sea_news order by n_id ASC "; 
-	$dsql->SetQuery($sql);
-	$dsql->Execute('existpic');
-	echoHead();
-	echo "正在更新新闻图片地址。。。<br>";
-	while($row = $dsql->GetArray('existpic'))
-	{
-		if($row[n_pic]!=''&&strpos($row[n_pic],'uploads/')===0){
-			$row[n_pic] = preg_replace("/#.*?marked/", '', $row[n_pic]);
-			if(!file_exists('../'.$row[n_pic])&&strpos($row['n_pic'],$app_ftpurl)===false)
-			{
-				$upSql = "update `sea_news` set n_pic='' where n_id =".$row['n_id'];
-				$dsql->ExecNoneQuery($upSql);
-				echo '成功清空&nbsp;ID:'.$row[n_id].'图片地址<br>';
-			}
-		}
-	}
-	echo "<script>alert('恭喜已经搞定！');location.href='admin_datarelate.php?action=checkpic'</script>";
-	echoFoot();
-	exit();	
-}
 //重新标记下载失败的视频文章图片为可下载
 elseif($action=="redown")
 {
 	$query="update `sea_data` set v_pic =replace(v_pic,'#err','')";
 	$dsql->ExecuteNoneQuery($query);
-	ShowMsg("标记成功，开始同步图片","admin_datarelate.php?action=downpic&downtype=all");
-	exit();	
-}
-elseif($action=="redownN")
-{
 	$query2="update `sea_news` set n_pic =replace(n_pic,'#err','')";
 	$dsql->ExecuteNoneQuery($query2);
-	ShowMsg("标记成功，开始同步图片","admin_datarelate.php?action=downnewspic&downtype=all");
-	exit();	
-}
-elseif($action=="CAV")
-{
-	$query="TRUNCATE sea_data";
-	$dsql->ExecuteNoneQuery($query);
-	$query2="TRUNCATE sea_playdata";
-	$dsql->ExecuteNoneQuery($query2);
-	$query3="TRUNCATE sea_content";
-	$dsql->ExecuteNoneQuery($query3);
 	echoHead();
-	echo "<h3><br><br>成功清空全站视频数据！</h3>";
-	echoFoot();
-	exit();	
-}
-elseif($action=="CAN")
-{
-	$query="TRUNCATE sea_news";
-	$dsql->ExecuteNoneQuery($query);
-	echoHead();
-	echo "<h3><br><br>成功清空全站新闻数据！</h3>";
+	echo "<h3><br><br>已成功标记下载失败的视频文章图片为可下载<br><br>请在图片工具里重新点击下载视频及文章图片<br><br><br></h3>";
 	echoFoot();
 	exit();	
 }
 
-//清除多余数据图片,危险操作，禁用
+//清除多余数据图片
 elseif($action=="sumitcheck"){
-	exit('危险操作，此功能禁用！');
 	echoHead();
 	$pre = array('lit','all');
 	foreach ($pre as $p){
@@ -577,7 +260,7 @@ elseif($action=="sumitcheck"){
 		{
 			if($file['filetype']=='folder')
 			{
-				$folder2 = getFolderList($dir.'/'.$file['filename']);print_r($folder);
+				$folder2 = getFolderList($dir.'/'.$file['filename']);
 				foreach ($folder2 as $imfile)
 				{
 					$imdir = substr($dir,3).'/'.$file['filename'].'/'.$imfile['filename'];
@@ -797,7 +480,7 @@ elseif($action=="repairplaydata")
 	}
 }
 elseif($action=="dorandomset"){
-	$pagesize = 100;
+	$pagesize = 30;
 	$sql = " select v_id,v_name,v_hit from `sea_data`";
 	$dsql->SetQuery($sql);
 	$dsql->Execute('totalnum');
@@ -823,17 +506,16 @@ elseif($action=="dorandomset"){
 	echo "<div style='font-size:13px'>正在更新。。。<br>";
 	while($row = $dsql->GetArray('randomset'))
 	{
-		$hit=rand($minHit, $maxHit);
+		$hit=rand(0, $maxHit);
 		$upSql = "update `sea_data` set v_hit=".$hit." where v_id =".$row[v_id];
 		$dsql->ExecNoneQuery($upSql);
 		echo '<body>成功更新&nbsp;ID:'.$row[v_id];
 		echo '&nbsp;<font color=red>'.$row[v_name].'</font>';
 		echo '&nbsp;点击量:&nbsp;'.$hit.'<br>';
 	}
-	echo "请等待".($time)."秒更新下一页</div>";
-	$time2=$time*1000;
-	echo "<script>function urlto(){location.href='admin_datarelate.php?action=dorandomset&time=".$time."&maxHit=".$maxHit."&maxHit=".$minHit."&page=".($pageval+1)."';}
-	setInterval('urlto()',".$time2.");</script>";
+	echo "请等待".($time/1000)."秒更新下一页</div>";
+	echo "<script>function urlto(){location.href='admin_datarelate.php?action=dorandomset&time=".$time."&maxHit=".$maxHit."&page=".($pageval+1)."';}
+	setInterval('urlto()',".$time.");</script>";
 	exit();	
 }
 elseif($action=="delByDown")
@@ -884,7 +566,7 @@ elseif($action=="delByDown")
 }
 
 elseif($action=="dorandomsetscore"){
-	$pagesize = 100;
+	$pagesize = 30;
 	$sql = " select v_id,v_name,v_score from `sea_data`";
 	$dsql->SetQuery($sql);
 	$dsql->Execute('totalnum');
@@ -917,10 +599,9 @@ elseif($action=="dorandomsetscore"){
 		echo '&nbsp;<font color=red>'.$row[v_name].'</font>';
 		echo '&nbsp;评分:&nbsp;'.$score.'<br>';
 	}
-	echo "请等待".($time)."秒更新下一页</div>";
-	$time2=$time*1000;
+	echo "请等待".($time/1000)."秒更新下一页</div>";
 	echo "<script>function urlto(){location.href='admin_datarelate.php?action=dorandomsetscore&time=".$time."&minscore=".$minscore."&maxscore=".$maxscore."&page=".($pageval+1)."';}
-	setTimeout ('urlto()',".$time2.");</script>";
+	setTimeout ('urlto()',".$time.");</script>";
 	exit();	
 }
 
@@ -1014,25 +695,12 @@ elseif($action=="downnewspic")
 		$picUrl=$row->n_pic;
 		$n_id=$row->n_id;
 		$n_name=$row->n_title;
-		$picUrl = $image->downPicHandle($picUrl,$n_name);
-		$picUrl=str_replace('../','',$picUrl);
+		$picUrl = $image->downPicHandle($picUrl,$n_title);
 		$query = "Update `sea_news` set n_pic='$picUrl' where n_id='$n_id'";
 		$dsql->ExecuteNoneQuery($query);
-		//echo '已下载<font color=red>';
-		//echo $n_name;
-		//echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
-		if($photo_markdown==1){
-			$errno = $image->watermark($picUrl,2);
-			if($errno===true)
-			{
-				echo "数据<font color=red>".$n_name."</font>的图片水印完成<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
-				$dsql->ExecNoneQuery("update sea_news set n_pic= '".$picUrl."#marked' where n_id = ".$n_id);
-			}else 
-			{
-				echo "数据<font color=red>".$n_name."</font>的图片水印失败,错误号$errno<br>";
-				$dsql->ExecNoneQuery("update sea_news set n_pic= '".$picUrl."#error_".$errno."_marked' where n_id = ".$n_id);
-			}
-		}
+		echo '已下载<font color=red>';
+		echo $n_name;
+		echo '</font>的图片<br>';
 		@ob_flush();
 	    @flush();
 
@@ -1054,7 +722,7 @@ function echoFieldOptions()
 	$fieldOptionArray[9][0]="扩展分类ID" ; $fieldOptionArray[9][1]="v_extratype";
 	$fieldOptionArray[10][0]="数据推荐" ; $fieldOptionArray[10][1]="v_commend";
 	$fieldOptionArray[11][0]="数据点击量" ; $fieldOptionArray[11][1]="v_hit";
-	$fieldOptionArray[12][0]="播放地址/来源" ; $fieldOptionArray[12][1]="v_playdata";
+	$fieldOptionArray[12][0]="播放地址" ; $fieldOptionArray[12][1]="v_playdata";
 	$fieldOptionArray[13][0]="下载地址" ; $fieldOptionArray[13][1]="v_downdata";
 	$fieldOptionArray[14][0]="影片导演" ; $fieldOptionArray[14][1]="v_director";
 	$fieldOptionArray[15][0]="数据语言" ; $fieldOptionArray[15][1]="v_lang";
@@ -1081,10 +749,6 @@ function echoFieldOptions()
 	$fieldOptionArray[36][0]="备用说明" ; $fieldOptionArray[36][1]="v_longtxt";
 	$fieldOptionArray[37][0]="幻灯图片" ; $fieldOptionArray[37][1]="v_spic";
 	$fieldOptionArray[38][0]="背景图片" ; $fieldOptionArray[38][1]="v_gpic";
-	$fieldOptionArray[39][0]="视频密码" ; $fieldOptionArray[39][1]="v_psd";
-	$fieldOptionArray[40][0]="试看时长" ; $fieldOptionArray[40][1]="v_try";
-	$fieldOptionArray[41][0]="收费积分" ; $fieldOptionArray[41][1]="v_money";	
-	$fieldOptionArray[41][0]="收费分集" ; $fieldOptionArray[41][1]="v_vip";	
 	$arrayLen=count($fieldOptionArray);
 	for ($i=0;$i<$arrayLen;$i++){
 		echo "<option value=\"".$fieldOptionArray[$i][1]."\">[".$fieldOptionArray[$i][0]."]</option>";
@@ -1190,12 +854,4 @@ function gethouzhui($str)
 	
 	
 	
-}
-function getpichzh($str){
-$param = '/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/';
- //这个获取图片的全部标签
-preg_match_all($param,$str,$matches);//不带引号
-$new_arr=array_unique($matches[1]);//去除数组中重复的值
-
-    return $new_arr; 
 }

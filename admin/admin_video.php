@@ -64,13 +64,13 @@ elseif($action=="save")
 	$v_addtime = time();
 	$v_money = empty($v_money) ? 0 : intval($v_money);
 	$v_rank = empty($v_rank) ? 0 : intval($v_rank);
-	$v_name = htmlspecialchars(cn_substrR($v_name,250));
+	$v_name = htmlspecialchars(cn_substrR($v_name,60));
 	$v_name = str_replace(array('\\','()','\''),'/',$v_name);
 	$v_actor = htmlspecialchars(cn_substrR($v_actor,200));
 	$v_actor = str_replace('%', ' ', $v_actor);
 	if($v_actor=="" OR empty($v_actor)){$v_actor="内详";}
 	$v_publishyear = empty($v_publishyear) ? date(Y) : intval($v_publishyear);
-	$v_publisharea = cn_substrR($v_publisharea,20);
+	$v_publisharea = cn_substrR($v_publisharea,10);
 	$v_note = cn_substrR($v_note,30);
 	$v_tags = cn_substrR(strtolower($v_tags),255);
 	$v_tags = str_replace('%', ' ', $v_tags);
@@ -84,9 +84,8 @@ elseif($action=="save")
 	$v_letter = strtoupper(substr($v_enname,0,1));
 	$v_extratype = $_POST[v_type_extra];
 	$v_extrajqtype = $_POST[v_jqtype_extra];
-	$v_longtxt = $_POST[v_longtxt];
+	$v_longtxt = htmlspecialchars($_POST[v_longtxt]);
 	$v_psd = $_POST[v_psd];
-	$v_try = $_POST[v_try];
 	$v_vip = $_POST[v_vip];
 
 	$v_extratype=implode(",",$v_extratype); //获取扩展分类数组
@@ -122,7 +121,7 @@ elseif($action=="save")
 	switch (trim($acttype)) 
 	{
 		case "add":
-			$insertSql = "insert into sea_data(tid,v_name,v_letter,v_state,v_topic,v_hit,v_money,v_vip,v_rank,v_actor,v_color,v_publishyear,v_publisharea,v_pic,v_spic,v_gpic,v_addtime,v_note,v_tags,v_lang,v_score,v_scorenum,v_director,v_enname,v_commend,v_extratype,v_jq,v_nickname,v_reweek,v_douban,v_mtime,v_imdb,v_tvs,v_company,v_dayhit,v_weekhit,v_monthhit,v_len,v_total,v_daytime,v_weektime,v_monthtime,v_ver,v_psd,v_try,v_longtxt,v_digg,v_tread) values ('$tid','$v_name','$v_letter','$v_state','$v_topic','$v_hit','$v_money','$v_vip','$v_rank','$v_actor','$v_color','$v_publishyear','$v_publisharea','$v_pic','$v_spic','$v_gpic','$v_addtime','$v_note','$v_tags','$v_lang','$v_score','$v_scorenum','$v_director','$v_enname','$v_commend','$v_extratype','$v_jq','$v_nickname','$v_reweek','$v_douban','$v_mtime','$v_imdb','$v_tvs','$v_company','$v_dayhit','$v_weekhit','$v_monthhit','$v_len','$v_total','$v_daytime','$v_weektime','$v_monthtime','$v_ver','$v_psd','$v_try','$v_longtxt','$v_digg','$v_tread')";
+			$insertSql = "insert into sea_data(tid,v_name,v_letter,v_state,v_topic,v_hit,v_money,v_vip,v_rank,v_actor,v_color,v_publishyear,v_publisharea,v_pic,v_spic,v_gpic,v_addtime,v_note,v_tags,v_lang,v_score,v_scorenum,v_director,v_enname,v_commend,v_extratype,v_jq,v_nickname,v_reweek,v_douban,v_mtime,v_imdb,v_tvs,v_company,v_dayhit,v_weekhit,v_monthhit,v_len,v_total,v_daytime,v_weektime,v_monthtime,v_ver,v_psd,v_longtxt,v_digg,v_tread) values ('$tid','$v_name','$v_letter','$v_state','$v_topic','$v_hit','$v_money','$v_vip','$v_rank','$v_actor','$v_color','$v_publishyear','$v_publisharea','$v_pic','$v_spic','$v_gpic','$v_addtime','$v_note','$v_tags','$v_lang','$v_score','$v_scorenum','$v_director','$v_enname','$v_commend','$v_extratype','$v_jq','$v_nickname','$v_reweek','$v_douban','$v_mtime','$v_imdb','$v_tvs','$v_company','$v_dayhit','$v_weekhit','$v_monthhit','$v_len','$v_total','$v_daytime','$v_weektime','$v_monthtime','$v_ver','$v_psd','$v_longtxt','$v_digg','$v_tread')";
 			if($dsql->ExecuteNoneQuery($insertSql))
 			{
 				$v_id = $dsql->GetLastID();
@@ -172,7 +171,7 @@ elseif($action=="save")
 			$v_extratype=implode(",",$v_extratype); //获取扩展分类数组
 			$v_jq=implode(",",$v_extrajqtype); //获取扩展分类数组
 	
-			$updateSql = "tid = '$tid',v_name = '$v_name',v_letter = '$v_letter',v_state = '$v_state',v_topic = '$v_topic',v_hit = '$v_hit',v_money = '$v_money',v_vip = '$v_vip',v_rank = '$v_rank',v_actor = '$v_actor',v_color = '$v_color',v_publishyear = '$v_publishyear',v_publisharea = '$v_publisharea',v_pic = '$v_pic',v_spic = '$v_spic',v_gpic = '$v_gpic',v_note = '$v_note',v_tags = '$v_tags',v_lang='$v_lang',v_director='$v_director',v_enname='$v_enname',v_extratype='$v_extratype',v_jq='$v_jq',v_nickname='$v_nickname',v_reweek='$v_reweek',v_douban='$v_douban',v_mtime='$v_mtime',v_imdb='$v_imdb',v_tvs='$v_tvs',v_company='$v_company',v_dayhit='$v_dayhit',v_weekhit='$v_weekhit',v_monthhit='$v_monthhit',v_len='$v_len',v_total='$v_total',v_score='$v_score',v_scorenum='$v_scorenum',v_ver='$v_ver',v_psd='$v_psd',v_try='$v_try',v_longtxt='$v_longtxt',v_digg='$v_digg',v_tread='$v_tread'";
+			$updateSql = "tid = '$tid',v_name = '$v_name',v_letter = '$v_letter',v_state = '$v_state',v_topic = '$v_topic',v_hit = '$v_hit',v_money = '$v_money',v_vip = '$v_vip',v_rank = '$v_rank',v_actor = '$v_actor',v_color = '$v_color',v_publishyear = '$v_publishyear',v_publisharea = '$v_publisharea',v_pic = '$v_pic',v_spic = '$v_spic',v_gpic = '$v_gpic',v_note = '$v_note',v_tags = '$v_tags',v_lang='$v_lang',v_director='$v_director',v_enname='$v_enname',v_extratype='$v_extratype',v_jq='$v_jq',v_nickname='$v_nickname',v_reweek='$v_reweek',v_douban='$v_douban',v_mtime='$v_mtime',v_imdb='$v_imdb',v_tvs='$v_tvs',v_company='$v_company',v_dayhit='$v_dayhit',v_weekhit='$v_weekhit',v_monthhit='$v_monthhit',v_len='$v_len',v_total='$v_total',v_score='$v_score',v_scorenum='$v_scorenum',v_ver='$v_ver',v_psd='$v_psd',v_longtxt='$v_longtxt',v_digg='$v_digg',v_tread='$v_tread'";
 			if(!empty($isupdatetime)) $updateSql .= ",v_addtime='$v_addtime'";
 			$updateSql = "update sea_data set ".$updateSql." where v_id=".$v_id;
 			if(!$dsql->ExecuteNoneQuery($updateSql))

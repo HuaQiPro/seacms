@@ -390,7 +390,7 @@ function show(data){
 		tmp1 = mobj[i];
 		uname = tmp1.anony ? (tmp1.from || "匿名")+"网友" : tmp1.tmp || tmp1.nick || (tmp1.from || "匿名")+"网友";
 		ctxt = _regex(tmp1.content,"");
-		htmlstr.push("<div class=\"row\"><div id=\"aface\" ><img src=\"/"+tmp1.upic+"\"></div>");
+		htmlstr.push("<div class=\"row\">");
 		htmlstr.push("<h3><span>" + uname + "</span>");
 		if(tmp1.star)htmlstr.push("<span class=\"star\">"+star(tmp1.star)+"</span>");
 		htmlstr.push("<label>"+tmp1.time+"</label></h3>");
@@ -425,24 +425,24 @@ function show(data){
 		htmlstr.push("</div>");
 		htmlstr.push("</div>");
 		htmlstr.push("<div class=\"menu\">");
-		htmlstr.push("<a href=\"#\" onclick=\"return clk(this,"+tmp1.cmid+","+tmp1.aginst+",3);\" class=\"item3\">"+tmp1.aginst+"</a>");
-		htmlstr.push("<a href=\"#\" onclick=\"return clk(this,"+tmp1.cmid+","+tmp1.agree+",2);\" class=\"item2\">"+tmp1.agree+"</a>");
+		htmlstr.push("<a href=\"#\" onclick=\"return clk(this,"+tmp1.cmid+","+tmp1.aginst+",3);\" class=\"item3\">反对[-"+tmp1.aginst+"]</a>");
+		htmlstr.push("<a href=\"#\" onclick=\"return clk(this,"+tmp1.cmid+","+tmp1.agree+",2);\" class=\"item2\">同意[+"+tmp1.agree+"]</a>");
 		if(allowreply)htmlstr.push("<a href=\"#cmt\" onclick=\"reply("+tmp1.cmid+",'"+ctxt.substring(0,20)+"');\" class=\"item1\">回复</a>");
 		htmlstr.push("</div>");
 		htmlstr.push("</div>");
 	}
 	//page
 	if(pobj.count){
-		pagenum_s = Math.floor((parseInt(pobj.page)-1)/2)*2+1;
-		pagenum_e = pagenum_s + 2;
-		htmlstr1.push("<a href=\"#\" onclick=\"return page("+param.type+","+param.gid+",1);\">&#8249;&#8249;</a><a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+(pobj.page-1)+");\">&#8249;</a>");
+		pagenum_s = Math.floor((parseInt(pobj.page)-1)/10)*10+1;
+		pagenum_e = pagenum_s + 9;
+		if(pobj.page != 1)htmlstr1.push("<a href=\"#\" onclick=\"return page("+param.type+","+param.gid+",1);\">&#8249;&#8249; 第一页</a><a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+(pobj.page-1)+");\">&#8249; 上一页</a>");
 		//if(pagenum_s >= 11)htmlstr.push("<a href=\"#\" onclick=\"page("+param.type+","+param.gid+","+(pagenum_e-19)+");\" class=\"non\">...</a>");
 		for(var z = pagenum_s;z<=(pobj.count>pagenum_e?pagenum_e:pobj.count);z++){
 			if(z==pobj.page)htmlstr1.push("<span>"+z+"</span>");
 			else htmlstr1.push("<a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+z+");\">"+z+"</a>");
 		}
 		//if(pagenum_e<pobj.count)htmlstr.push("<a href=\"#\" onclick=\"page("+param.type+","+param.gid+","+(pagenum_e+1)+");\" class=\"non\">...</a>");
-		htmlstr1.push("<a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+(pobj.page+1)+");\"> &#8250;</a><a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+pobj.count+");\">&#8250;&#8250;</a>");
+		if(pobj.page !== pobj.count)htmlstr1.push("<a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+(pobj.page+1)+");\">下一页 &#8250;</a><a href=\"#\" onclick=\"return page("+param.type+","+param.gid+","+pobj.count+");\">最后页 &#8250;&#8250;</a>");
 		$("#pager").html(htmlstr1.join(""));
 	}
 	//write
@@ -506,7 +506,6 @@ function reply(cmid,cmcon){
 	$("#cparent").val(cmid);
 	$("#editor").show();
 	$("#cancel").show();
-	document.getElementById('talkwhat').scrollIntoView();
 	$("#cancel").html("回复："+cmcon+"&nbsp;&nbsp;<a href=\"#\" onclick=\"$('#cancel').html('');$('#cparent').val(0);$('#cancel').hide();return false;\">取消</a>");
 }
 function clk(o,i,n,t){
@@ -524,7 +523,7 @@ function getcaptcha(){
 	$("#gcaptcha").val("");
 	$('#gcaptcha').focus();
 	$("#getcode").css('display','inline');
-	$("#codeimg").html("<img src=\""+uri+"\" align=\"middle\" />");
+	$("#codeimg").html("<img src=\""+uri+"\" align=\"top\" />");
 	return false;
 }
 //submit

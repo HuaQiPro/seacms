@@ -214,7 +214,7 @@ if($action=="set")
 </td>
 </tr>
 
-<tr style="display:none;">
+<tr>
 <td width="80%" align="left" height="30" class="td_border">
 网址缩短：
 <input type="radio" name="dwz" value="y" <?php  if(dwz=="y") echo 'checked';?>>开启

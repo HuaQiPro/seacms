@@ -27,26 +27,12 @@ CheckPurview();
 if(RWCache('collect_xml'))
 echo "<script>openCollectWin(400,'auto','上次采集未完成，继续采集？','".RWCache('collect_xml')."')</script>";
 ?>
-<div class="S_info">&nbsp;资源库列表</div>
-<div style="
-    padding: 10px;
-    border: 1px solid #7ba9ca;
-    border-radius: 4px;
-    margin: 10px;
-    
-	font-weight: bold;
-    color: #a15d5d;
-	font-size: 12px;
-	background-color: #eef5f4;
-	"> 
-Tips：
-① 先添加对应的播放来源再采集，否则会造成视频无播放器。&nbsp;&nbsp;
-② 分类绑定冲突在某些情况下会导致采集错误，请先清除分类绑定。
-</div>
-
+<div class="S_info">&nbsp;资源库列表&nbsp;&nbsp;&nbsp;&nbsp;【如果分类绑定过多，某些情况下可能会导致采集错误，请先清除分类绑定】</div>
+<table width="98%"  align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="margin-top:15px; margin-left:10px;" id="list" class="list">
 <?php 
-$sqlStr="select * from `sea_zyk` order by zid ASC";$dsql->SetQuery($sqlStr);echo $union;$dsql->Execute('flink_list');
-echo '<table width="98%"  align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="margin-top:1px; margin-left:10px;" id="list" class="list">';
+$sqlStr="select * from `sea_zyk` order by zid ASC";
+$dsql->SetQuery($sqlStr);
+$dsql->Execute('flink_list');
 while($row=$dsql->GetObject('flink_list'))
 {
 $aid=$row->id;
@@ -61,9 +47,12 @@ $aid=$row->id;
   </tr>
 <?php 
 }
-?> 
+?>  
 </table>
-
-
+<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/union.js"></script>
+<div style="height:30px; clear:both;"> </div>
+<?php 
+viewFoot();exit();	
+?>
 </body>
 </html>

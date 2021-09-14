@@ -1,0 +1,44 @@
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head clearfix">
+				<h3 class="title">
+					{mytheme:look.title} 
+				</h3>
+			</div>
+		</div>
+		<div class="myui-panel_bd">
+			<ul class="myui-vodlist__bd clearfix">
+				{seacms:videolist type={mytheme:look.type} num={mytheme:look.num} order={mytheme:look.by}}
+				<li class="col-lg-{mytheme:look.col} col-md-{mytheme:look.col} col-sm-{mytheme:col.sm_wide} col-xs-{mytheme:col.xs_wide}{subif:[videolist:i] > {mytheme:look.xs}} hidden-xs{end subif}{subif:[videolist:i] > {mytheme:look.sm}} hidden-sm{end subif}">
+					<div class="myui-vodlist__box">
+						<a class="myui-vodlist__thumb wide lazyload" href="[videolist:playlink]" title="[videolist:name]" data-original="[videolist:pic]">
+							<span class="play hidden-xs"></span>
+							<span class="pic-text text-right">
+								[videolist:{mytheme:pic.text_data2}]
+							</span>
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-overflow"><a href="[videolist:playlink]" title="[videolist:name]">[videolist:name]</a></h4>
+							<p class="text text-overflow text-muted hidden-xs">
+								{mytheme:pic.sub_text2}[videolist:{mytheme:pic.sub_data2}]
+							</p>
+						</div>
+					</div>
+				</li>
+				{/seacms:videolist}
+			</ul>
+		</div>
+	</div>
+</div>
+{subif:{mytheme:detail.ad}}
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_bd">
+			<div class="col-xs-1">
+				{mytheme:detail.ad3}
+			</div>
+		</div>
+	</div>				
+</div>
+{end subif}

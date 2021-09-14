@@ -1,8 +1,3 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body style="display:none;">
 <?php 
 if(!defined('sea_INC')||!defined('sea_ROOT')||!defined('sea_DATA'))
 {
@@ -21,7 +16,7 @@ autocache_clear(sea_ROOT.'/data/cache');
 
 function gatherDay($var_url1){
 	global $rid1;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid1==32)
 	{
 		$weburl=$var_url1."-cid--h-24";
 	}
@@ -37,7 +32,7 @@ function autoIntoDatabase($url,$page=1)
 	@session_write_close();
 	global $dsql,$col,$isref,$rid1;
 	$weburl=$url."&pg=".$page;
-	if($rid=='seazmt3zz2cmszmt')
+	if($rid1==32)
 	{
 		$weburl=$url."-p-{$page}";
 	}
@@ -105,5 +100,3 @@ function autocache_clear($dir) {
   closedir($dh); 
 }
 ?>
-</body>
-</html>

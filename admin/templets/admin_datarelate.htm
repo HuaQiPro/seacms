@@ -109,7 +109,7 @@ if($action=="batch"){
             <td width="80%" align="left" class="td_border"><input class="radio" type="radio" value="1" name="edit__app_ftp"<?php if($app_ftp==1) echo ' checked';?>>
               开启
               <input class="radio" type="radio" value="0" name="edit__app_ftp"<?php if($app_ftp==0) echo ' checked';?>>
-              关闭 &nbsp;&nbsp;&nbsp;<font color="#FF0000">＊</font>将图片转移到FTP服务器</td>
+              关闭 &nbsp;<font color="#FF0000">＊</font>开启将影响上传速度,但是可以将附件转移到FTP服务器(上传图片或采集时自动保存到远程服务器) </td>
           </tr>
           <tr>
             <td height="24" align="left" class="td_border">&nbsp;FTP 服务器：</td>
@@ -159,8 +159,8 @@ if($action=="batch"){
             <td height="30" colspan="2" align="left" class="td_border"><input type="submit" name="Submit" id="Submit" value="提 交" class="rb1" />
               &nbsp;
               <input class="rb1" type="button" onclick="location.href='?action=checkpic'" value="返 回">
-              
-			  </td>
+              &nbsp;
+              <input class="rb1" type="button" onclick="location.href='?action=uplpictoftp'" value="上传本地图片到FTP"></td>
           </tr>
         </form>
       </table>

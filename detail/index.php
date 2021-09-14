@@ -50,7 +50,25 @@ function echoContent($vId)
 	$GLOBALS[tid]=$currentTypeId;
 	$typeFlag = "parse_content_" ;
 	$cacheName = $typeFlag.$vType.$GLOBALS['cfg_mskin'].$GLOBALS['isMobile'];
+	/*---------插件管理---------*/ 
+	require(dirname(__FILE__)."/../data/config.plus.inc.php"); 	
+    //提高兼容性
+	  $HideVideo_off=$PLUS["HideVideo"]['off'] ; $HideVideo_data=$PLUS["HideVideo"]['data'];  $HideVideo_info=$PLUS["HideVideo"]['info']; 
+      $HideName_off=$PLUS["HideName"]['off'] ; $HideName_data=$PLUS["HideName"]['data'];  $HideName_info=$PLUS["HideName"]['info']; 
+      $HideType_off=$PLUS["HideType"]['off'] ;  $HideType_data=$PLUS["HideType"]['data']; $HideType_info=$PLUS["HideType"]['info']; 
+	  
+    
+	//版权屏蔽
+   if($HideVideo_off && in_array($vId,$HideVideo_data)){
+		$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();}
+    
+	//视频屏蔽
+	elseif($HideName_off &&  $HideName_data[0]!="" && preg_match("{".implode("|",$HideName_data) . "}i", $row['v_name'])) {
+	 	$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
+	 		 	
 
+    }		
+/*---------插件管理---------*/
 	
 	
 	if($cfg_iscache){
@@ -192,8 +210,8 @@ function parseContentPart($templatePath,$currentTypeId,$vtag)
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;
 }

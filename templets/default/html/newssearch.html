@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>{seacms:newssearchword} - {seacms:sitename}</title>
-		<meta name="keywords" content="最新影视资讯,电影资讯,娱乐资讯" />
-		<meta name="description" content="本站提供最新电影,电视剧,综艺,动漫的资讯信息,一览无遗" />  
-		{seacms:load include.html}
+		{seacms:load seo/newssearch.html}
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
 	</head>
 	<body>
 		{seacms:top}
@@ -14,17 +13,17 @@
 					{seacms:load newshead.html}
 
 	
-				<div class="col-xs-1">
-					<div class="myui-panel myui-panel-bg clearfix">
+				<div class="col-md-wide-666 col-xs-1 myui-sidebar" style="margin-left:-16px;">
+					<div class="myui-panel myui-panel-bg clearfix" id="searchList">
 						<div class="myui-panel-box clearfix">
 							<div class="myui-panel_hd">
 								<div class="myui-panel__head active bottom-line clearfix">
 									<h3 class="title">
-										关键词<span class="text-red"> {seacms:newssearchword} </span> 的搜索结果
+										与<span class="text-red">“{seacms:newssearchword}”</span> 相关的搜索结果
 									</h3>	
 								</div>																		
 							</div>
-							<div class="myui-panel_bd clearfix" id="searchList">											
+							<div class="myui-panel_bd clearfix">											
 								<ul class="myui-vodlist__media col-pd clearfix">
 									{seacms:newssearchlist size=10}
 									<li>
@@ -54,6 +53,11 @@
 						<li><a class="btn btn-default" href="{newssearchlist:nextlink}">下一页</a></li>
 						<li><a class="btn btn-default" href="{newssearchlist:lastlink}">尾页</a></li>
 					</ul>
+				</div>
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load block/art_code.html}
+					{seacms:load block/vod_hot.html}
+					{seacms:load block/art_hot.html}
 				</div>
 				
 			</div>

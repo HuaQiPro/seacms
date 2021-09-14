@@ -47,8 +47,7 @@ if(trim($m_pwd)<>trim($m_pwd2) || trim($m_pwd)=='')
 $username = $m_user;
 $username = RemoveXSS(stripslashes($username));
 $username = addslashes(cn_substr($username,200));
-$email = RemoveXSS(stripslashes($email));
-$email = addslashes(cn_substr($email,200));
+
 
 $row1=$dsql->GetOne("select username  from sea_member where username='$username'");
 if($row1['username']==$username)
@@ -56,25 +55,19 @@ if($row1['username']==$username)
 		ShowMsg('用户已存在','-1');	
 		exit();	
 }
-$row2=$dsql->GetOne("select email  from sea_member where email='$email'");
-if($row2['email']==$email)
-{
-		ShowMsg('邮箱已存在','-1');	
-		exit();	
-}
-
 
 	$pwd = substr(md5($m_pwd),5,20);
 	$ip = GetIP();
 	$randtime=uniqid();
 	$acode=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$randtime); //构造唯一码	
-	
+	$email = RemoveXSS(stripslashes($email));
+	$email = addslashes(cn_substr($email,200));
 	
 	$regpoints=intval($cfg_regpoints);
 	if($regpoints=="" OR empty($regpoints)){$regpoints=0;} 
 	if($username) {
-		$dsql->ExecuteNoneQuery("INSERT INTO `sea_member`(id,username,password,email,regtime,regip,state,gid,points,logincount,stime,vipendtime,acode,repswcode,msgstate,pic)
-                  VALUES ('','$username','$pwd','$email','$dtime','$ip','1','2','$regpoints','1','1533686888','$dtime','$acode','y','y','uploads/user/a.png')");
+		$dsql->ExecuteNoneQuery("INSERT INTO `sea_member`(id,username,password,email,regtime,regip,state,gid,points,logincount,stime,vipendtime,acode,repswcode,msgstate)
+                  VALUES ('','$username','$pwd','$email','$dtime','$ip','1','2','$regpoints','1','1533686888','$dtime','$acode','y','y')");
 
 		require_once('data/admin/smtp.php');
 		if($smtpreg=='on')
@@ -117,21 +110,7 @@ $smtprbody = '<strong>Email 地址验证 账户激活</strong><br><br>尊敬的�
 			
 			}
 		else
-		{
-			$row=$dsql->GetOne("select id from sea_member where username='$username'");
-			$uid=$row['id'];
-			$_SESSION['sea_user_id'] = $uid;
-			$_SESSION['sea_user_name'] = $username;
-			$lifeTime = 2592000; 
-			setcookie(session_name(), session_id(), time() + $lifeTime, "/");
-			$_SESSION['sea_user_group'] = 2;
-			$front='front';
-			$hashstr=md5($cfg_dbpwd.$cfg_dbname.$cfg_dbuser.$front);//构造session安全码
-			$_SESSION['hashstr']=$hashstr;
-			$dsql->ExecuteNoneQuery("UPDATE `sea_member` set logincount=logincount+1 where id='$uid'");
-			ShowMsg("注册成功，正在转向会员中心！","member.php",0,3000);exit;
-			
-			}
+		{ShowMsg('恭喜您，注册成功！','login.php',0,3000);}
 		exit;
 	}
 }
@@ -149,8 +128,8 @@ else
 	$t=$mainClassObj->parseAreaList($t);
 	$t=$mainClassObj->parseNewsAreaList($t);
 	$t=$mainClassObj->parseMenuList($t,"");
-	$t=$mainClassObj->parseVideoList($t,-444,'','');
-	$t=$mainClassObj->parseNewsList($t,-444,'','');
+	$t=$mainClassObj->parseVideoList($t,-444);
+	$t=$mainClassObj->parseNewsList($t,-444);
 	$t=$mainClassObj->parseTopicList($t);
 	$t=replaceCurrentTypeId($t,-444);
 	$t=$mainClassObj->parseIf($t);

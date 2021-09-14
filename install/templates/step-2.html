@@ -3,13 +3,14 @@
 <title>安装向导 - 海洋CMS</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <link href="images/style.css"rel="stylesheet" type="text/css"  />
+<script src="images/jquery.js" type="text/javascript"></script>
 </head>
 
 <body scroll="no">
 <div class="b">
 	<div class="main">
 		<div class="head">
-			<div class="h_right"><a href="//www.seacms.com" target="_blank">官方网站</a><span>|</span><a href="//www.seacms.com" target="_blank">交流论坛</a></div>
+			<div class="h_right"><a href="//www.seacms.net" target="_blank">官方网站</a><span>|</span><a href="//www.seacms.net" target="_blank">交流论坛</a></div>
 			<img src="images/logo.png" />
 		</div>
 		<div class="cont">
@@ -35,44 +36,44 @@
 				<th width="400"><strong>实际状态及建议</strong></th>
 			</tr>
 			<tr>
-					<td>PHP</td>
-					<td>On</td>
-					<td><?php if($phpv<5.1){$nondirect=1;echo'<font color=red>[×]Off</font>';}else{echo'<font color=green>[√]On</font>';} ?> <small> (本程序支持PHP5.2及以上版本，当前版本为<?php echo $phpv ?>)</small></td>
+					<td>PHP 版本</td>
+					<td>5.x</td>
+					<td><?php if($phpv>5.9 OR $phpv<5.1){$nondirect=1;echo'<font color=red>[×]Off</font>';}else{echo'<font color=green>[√]On</font>';} ?> <small> (本程序仅支持PHP5.x，不支持PHP7，当前版本为<?php echo $phpv ?>)</small></td>
 			</tr>
 			<tr>
-					<td>MySQLi</td>
+					<td>MySQLi 支持</td>
 					<td >On</td>
 					<td><?php echo $sp_mysql; if($sp_mysql=='<font color=red>[×]Off</font>'){$nondirect=1;} ?> <small>(必须开启MySQLi扩展，否则无法连接数据库)</small></td>
 			</tr>
 			<tr>
 					<td>fsockopen</td>
 					<td >On </td>
-					<td><?php echo $sp_fsockopen;?> <small>(不符合要求将导致采集、远程资料本地化等功能无法应用)</small></td>
+					<td><?php echo $sp_fsockopen;if($sp_fsockopen=='<font color=red>[×]Off</font>'){$nondirect=1;} ?> <small>(不符合要求将导致采集、远程资料本地化等功能无法应用)</small></td>
 			</tr>
 			<tr>
 					<td>iconv</td>
 					<td >On </td>
-					<td><?php echo $sp_iconv; ?> <small>(不符合要求将导致部分编码问题)</small></td>
+					<td><?php echo $sp_iconv; if($sp_iconv=='<font color=red>[×]Off</font>'){$nondirect=1;} ?> <small>(不符合要求将导致部分编码问题)</small></td>
 			</tr>
 			<tr>
 					<td>allow_url_fopen</td>
 					<td >On </td>
-					<td><?php echo $sp_allow_url_fopen;?> <small>(不符合要求将导致采集、远程资料本地化等功能无法应用)</small></td>
+					<td><?php echo $sp_allow_url_fopen;if($sp_allow_url_fopen=='<font color=red>[×]Off</font>'){$nondirect=1;} ?> <small>(不符合要求将导致采集、远程资料本地化等功能无法应用)</small></td>
 			</tr>
-			<tr style="display:none;">
+			<tr>
 					<td>safe_mode</td>
 					<td >Off</td>
-					<td><?php echo $sp_safe_mode; ?> <small>(本系统不支持在<span class="STYLE2">非win主机的安全模式</span>下运行)</small></td>
+					<td><?php echo $sp_safe_mode;if($sp_safe_mode=='<font color=red>[×]On</font>'){$nondirect=1;} ?> <small>(本系统不支持在<span class="STYLE2">非win主机的安全模式</span>下运行)</small></td>
 			</tr>
 			
 			<tr>
-					<td>GD </td>
+					<td>GD 支持 </td>
 					<td >On</td>
-					<td><?php echo $sp_gd;?> <small>(不支持将导致与图片相关的大多数功能无法使用或引发警告)</small></td>
+					<td><?php echo $sp_gd;if($sp_gd=='<font color=red>[×]Off</font>'){$nondirect=1;} ?> <small>(不支持将导致与图片相关的大多数功能无法使用或引发警告)</small></td>
 			</tr>
 
 			<tr>
-					<td>Curl </td>
+					<td>Curl 支持 </td>
 					<td >On</td>
 					<td><?php echo $sp_curl;?> <small>(不支持将无法进行百度推送和图片同步等操作)</small></td>
 			</tr>
@@ -80,7 +81,7 @@
 			
 
 			<tr>
-					<td>SSL</td>
+					<td>SSL 支持</td>
 					<td >On</td>
 					<td>
 					<?php 
@@ -126,9 +127,9 @@
 	</div>
 </div>
 
-
+<script src="./images/install.js" type="text/javascript"></script>
 <div style="display:none;">
-<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.com/api/install.js"></script>
+<script language="JavaScript" type="text/javascript" charset="utf-8" src="//www.seacms.net/api/install.js"></script>
 </div>	
 </body>
 </html>

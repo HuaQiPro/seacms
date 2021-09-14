@@ -5,7 +5,6 @@ CheckPurview();
 
 	$username= $_GET['username'];
 
-$cc=$dsql->GetOne("select msgbody from sea_member where username='$username'");
 
 if($ac=="post"){
 	$username= $_POST['username'];
@@ -42,7 +41,7 @@ if($ac !="post"){ ?>
 </tr>
 <tr>
 <td width="80%" align="left" class="td_border" style="width:500px;">
-<textarea name="msgbody" style="width:600px; height:120px;"><?php echo $cc['msgbody'] ?></textarea>
+<textarea name="msgbody" style="width:600px; height:120px;"></textarea>
 </td>
 </tr>
 <tr>
@@ -53,7 +52,7 @@ if($ac !="post"){ ?>
 
 <tr>
 <td width="90%" align="left" height="30" class="td_border">
-* 只能发送一条信息给用户，以最后一条为准，之前的信息会被覆盖。支持HTML内容。
+* 支持HTML内容。
 </td>
 </tr>
 </tbody></table>	

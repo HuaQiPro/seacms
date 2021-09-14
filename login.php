@@ -52,14 +52,14 @@ if($row1['username']==$userid AND $row1['password']==$pwd)
 						$sql="SELECT acode FROM sea_member where username= '$userid'"; 
 						$row = $dsql->GetOne($sql);
 						if($row['acode']!='y'){
-							showMsg("您的账户尚未激活，请激活后登陆！","index.php",0,10000);
+							showMsg("您的账户尚未激活，请激活后登陆！","index.php",0,100000);
 							exit;
 						}
 					}
 					$_SESSION['sea_user_id'] = $row1['id'];
 					$uid=$row1['id'];
 					$_SESSION['sea_user_name'] = $row1['username'];
-					$lifeTime = 2592000; 
+					$lifeTime = 31104000; 
 					setcookie(session_name(), session_id(), time() + $lifeTime, "/");
 					if($row1['vipendtime']<time()){
 						$_SESSION['sea_user_group'] = 2;
@@ -67,7 +67,7 @@ if($row1['username']==$userid AND $row1['password']==$pwd)
 						$_SESSION['hashstr']=$hashstr;
 						$dsql->ExecuteNoneQuery("UPDATE `sea_member` set logincount=logincount+1 where id='$uid'");
 						if($row1['gid'] !=2){
-							ShowMsg("您购买的会员已到期，请注意续费!","member.php",0,5000);
+							ShowMsg("您购买的会员组已到期，请注意续费!<br>成功登录！","member.php",0,30000);
 						}else{
 							ShowMsg("成功登录，正在转向会员中心！","member.php",0,3000);
 						}
@@ -102,8 +102,8 @@ else
 	$t=$mainClassObj->parseAreaList($t);
 	$t=$mainClassObj->parseNewsAreaList($t);
 	$t=$mainClassObj->parseMenuList($t,"");
-	$t=$mainClassObj->parseVideoList($t,-444,'','');
-	$t=$mainClassObj->parseNewsList($t,-444,'','');
+	$t=$mainClassObj->parseVideoList($t,-444);
+	$t=$mainClassObj->parseNewsList($t,-444);
 	$t=$mainClassObj->parseTopicList($t);
 	$t=replaceCurrentTypeId($t,-444);
 	$t=$mainClassObj->parseIf($t);

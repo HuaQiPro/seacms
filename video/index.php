@@ -51,15 +51,6 @@ $uid=$_SESSION['sea_user_id'];
 $uid = intval($uid);
 if($action=="pay")
 {
-		if(empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
-		$row7=$dsql->GetOne("Select v_money from sea_data where v_id='$vid'");
-		$vmoney=intval($row7['v_money']);
-		if($vmoney=="" OR empty($vmoney)){$vmoney=0;}
-		$row6=$dsql->GetOne("Select * from sea_member where id='$uid'");
-		if($row6['points']<$vmoney)
-		{
-			showMsg("抱歉，".$cfg_pointsname."不足，系统将跳转至充值中心","../member.php",0,5000); exit();
-		}
 		$vid = (isset($vid) && is_numeric($vid) ? $vid : 0);
 		$from2 = (isset($from2) && is_numeric($from2) ? $from2 : 0);
 		$row3 = $dsql->GetOne("Select * From sea_buy where vid=$vid and vfrom=$from2 and uid=$uid ");
@@ -68,16 +59,16 @@ if($action=="pay")
 		$turl= "//".$turl;
 		if(!is_array($row3))
 		{
+			$dsql->ExecuteNoneQuery("insert into sea_buy values('','$uid','$vid','$from2','".time()."')");
 			$rowpay = $dsql->GetOne("Select * From sea_data where v_id=$vid");
 			$vmoneypay=$rowpay['v_money'];
 			$sqlpay="Update sea_member set points = points-$vmoneypay where id=$uid";
 			$dsql->ExecuteNoneQuery("$sqlpay");
-			$dsql->ExecuteNoneQuery("insert into sea_buy values('','$uid','$vid','$from2','$vmoneypay','".time()."')");
-			echo "<script>alert('购买成功');top.location.href='".$turl."';</script>";
+			showmsg('购买成功', $turl);
 			exit;
 		}
 		else
-		{echo "<script>alert('已购买！');top.location.href='".$turl."';</script>";exit;}
+		{showmsg('已经购买', $turl);exit;}
 	
 }
 
@@ -85,7 +76,7 @@ echoPlay($vid);
 
 function echoPlay($vId)
 {
-	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname,$payid,$cfg_cmspath;
+	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname,$payid;
 	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
@@ -100,8 +91,6 @@ function echoPlay($vId)
 	
 	$vtag=$row['v_name'];
 	$vmoney=$row['v_money'];
-	if($vmoney=="" OR empty($vmoney)){$vmoney=0;}
-	$vtry=$row['v_try'];
 	$vExtraType = $row['v_extratype'];
 	$uid=$_SESSION['sea_user_id'];
 	if (strpos(" ,".getHideTypeIDS().",",",".$vType.",")>0){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
@@ -128,11 +117,6 @@ function echoPlay($vId)
 		{
 			$viparr=array_flip(array_slice($urlArray,0,$totalLinkvip,true));		
 		}
-		elseif(strpos($vip,'f')!==false)
-		{
-			$vips=str_ireplace('f', "", $vip);
-			$viparr=array_flip(array_slice($urlArray,$vips,NULL,true));
-		}
 		else
 		{
 			$viparr2=explode(',',$vip);
@@ -143,14 +127,23 @@ function echoPlay($vId)
 		}
 
 		
-        //if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
-		//if(in_array($from,$viparr) AND empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
-		if(in_array($from,$viparr) AND $vtry==0 AND !getUserAuth($vType, "play"))
+        if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
+		if(in_array($from,$viparr) AND empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
+		if(in_array($from,$viparr) AND $_SESSION['sea_user_id'] >0 AND $vmoney>0)
 		{
 			$row2=$dsql->GetOne("Select * from sea_buy where vid='$vId' and vfrom=$from and uid='$uid'");
 			if(!is_array($row2))
 			{
-					$vipstop='yes';		
+				$row6=$dsql->GetOne("Select * from sea_member where id='$uid'");
+				if($row6['points']<$vmoney)
+				{
+					showMsg("抱歉，".$cfg_pointsname."不足，系统将跳转至充值中心","../member.php",0,5000); exit();
+				}
+				else
+				{
+					selectMsg("该视频需消耗【".$vmoney.$cfg_pointsname."】，确定或取消??","//".$_SERVER['HTTP_HOST']."/video/?".$vId."-".$id."-".$from.getfileSuffix()."&action=pay&from2=".$from,"javascript:history.go(-1)"); exit();
+					
+				}
 			}
 		}
 	}
@@ -342,44 +335,32 @@ $str=implode('$$$',$arr1); //最终地址
     
 	//版权屏蔽
     if($HideVideo_off && in_array($vId,$HideVideo_data)){
-		//$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();
-		$content = str_replace("{playpage:player}",$HideVideo_info,$content);
-		}
+		$content=$mainClassObj->parseGlobal($HideVideo_info);ShowMsg($content,"../index.php",0,2000);exit();}
     
 	//视频屏蔽
 	elseif($HideName_off &&  $HideName_data[0]!="" && preg_match("{".implode("|",$HideName_data) . "}i", $row['v_name'])) {
-	 	//$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
-		$content = str_replace("{playpage:player}",$HideName_info,$content);
+	 	$content=$mainClassObj->parseGlobal($HideName_info);ShowMsg($content,"../index.php",0,2000);exit();
 	 		 	
 	//限制分类必须使用移动设备
     }elseif($HideType_off  &&  $GLOBALS['isMobile']==false &&  $HideType_data[0]!=""  &&  in_array($row['tid'],$HideType_data)){      	
       	$content = str_replace("{playpage:player}",$HideType_info,$content);					 
-    }
-	//视频收费
-	elseif($vipstop=="yes"){ 
-		$viptips="<div class='x-showtips-txt'  style='position:absolute;top:50%;left:50%;width: 100%;transform:translate(-50%,-50%);text-align:center;background: #1a1b1b;padding: 20px;'><div class='x-tips-title' style='font-size:16px;font-weight:700;color:#fff';>抱歉，本片需要购买观看完整版</div><div class='x-tips-subTitle'   style='font-size: 12px;color: #ccc;margin-top: 4px;max-height: 17px';>开通VIP购买此片，可享受会员权限</div><div class='x-showtips-btn'   style='width: 100%;float: left;padding: 5px';><div class='x-btn x-btn-try'  style='border: 1px solid #ebba73;border-radius: 22.5px;box-sizing: border-box;width: 150pxposition: relative;margin-top: 14px;display: inline-block;padding: 0 12px; margin-right: 12px;color: #c8a764;background-image: linear-gradient(270deg,#1b1b1b 0,#000 99%)';><div class='x-btn-text' ><a style='display: inline-block;text-align: center;font-size: 13px;color: #ebba73;height: 32px;line-height: 36px; width: 100%;max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;text-decoration:none'; href=//".$_SERVER['HTTP_HOST']."/video/?".$vId."-".$id."-".$from.getfileSuffix()."&action=pay&from2=".$from.">非会员".$vmoney."".$cfg_pointsname."购买</a></div></div><div class='x-btn x-btn-buy' style='border: 1px solid #ebba73;border-radius: 22.5px;box-sizing: border-box;width: 150px;position: relative;margin-top: 14px;display: inline-block;padding: 0 12px;background-image: linear-gradient(132deg,#e1b271 0,#fce5aa 100%)';><div class='x-btn-text x-btn-buy-text'><a  style='display: inline-block;text-align: center;font-size: 13px;color: #ebba73;height: 32px;line-height: 36px;width: 100%;max-width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 13px;font-size: 13px;font-weight: 700;color: #5b3301;text-decoration:none'; href='/member.php'>开通会员</a></div></div></div></div>";
-	
-      	$content = str_replace("{playpage:player}",$viptips,$content);					 
-    }
-	else{  	
+    }else{  	
 /*---------插件管理---------*/
      
 $password=$row['v_psd'];
-$playerurl='/'.$cfg_cmspath.'/js/player/';
-$playerurl=str_replace('//','/',$playerurl);
 if(!empty($password) AND !in_array($from,$viparr)){
 		if($_POST['password'] !== $password)  {
 		$content = str_replace("{playpage:player}","<!DOCTYPE html><html><head><title>请输入视频播放口令后继续</title></head><body leftmargin='0' topmargin='0'><center><div style='font-size:12px; width:100%;height:100%;'><div style='width:200px; height:50px;text-align:left; margin-top:30px;'>请输入密码后继续：<br /><form action='' method='post'><input style='border:1px solid #3374b4;height:33px;line-height:33px;padding-left:5px' type='password' name='password' /><input style='border:1px solid #3374b4;background:#3374b4;padding:7px 10px;color:#fff;text-decoration:none;vertical-align:top' type='submit' value='播 放' /></form></div></div><br><img style='margin:15px 0 5px 0' src='".$GLOBALS ['cfg_ewm']."' height='100' width='100'><br/>扫描二维码关注微信<br />回复<font color='red'>".$vId."</font>获取播放口令</center></body></html>",$content);
 		}
 	else{
-		if($cfg_runmode==2) $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '{$playerurl}'+ pn + '.html';</script>",$content);
-		else $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '{$playerurl}'+ pn + '.html';</script>",$content);
+		if($cfg_runmode==2) $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
+		else $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
 	}	
 	
 }
 else{
-	if($cfg_runmode==2) $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '{$playerurl}'+ pn + '.html';</script>",$content);
-	else $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '{$playerurl}'+ pn + '.html';</script>",$content);
+	if($cfg_runmode==2) $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
+	else $content = str_replace("{playpage:player}","<iframe id='cciframe' scrolling='no' frameborder='0' allowfullscreen></iframe><script>var pn=pn;var forcejx1=forcejx;var forcejx2=\"no\";var forcejx3=forcejx;if(forcejx1!=forcejx2 && contains(unforcejxARR,pn)==false){pn=forcejx3;}else{pn=pn;}document.getElementById(\"cciframe\").width = playerw;document.getElementById(\"cciframe\").height = playerh;document.getElementById(\"cciframe\").src = '/js/player/'+ pn + '.html';</script>",$content);
 }
 	}
 
@@ -403,8 +384,8 @@ function parsePlayPart($templatePath,$currentTypeId,$vtag)
 	$content=$mainClassObj->parseSelf($content);
 	$content=$mainClassObj->parseGlobal($content);	
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag,'');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,$vtag);
 	$content=$mainClassObj->parseTopicList($content);
 	$content = str_replace("{seacms:currenttypeid}",$currentTypeId,$content);
 	return $content;

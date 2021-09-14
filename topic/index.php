@@ -39,8 +39,8 @@ function parseTopicIndexPart($templatePath,$page)
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"");
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,'','','');
-	$content=$mainClassObj->parseNewsList($content,'','','');
+	$content=$mainClassObj->parseVideoList($content);
+	$content=$mainClassObj->parseNewsList($content);
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseTopicIndexList($content,$page);
 	$content=$mainClassObj->parseLinkList($content);

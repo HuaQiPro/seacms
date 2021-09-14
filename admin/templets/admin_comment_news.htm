@@ -4,25 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
 <title>影片管理</title>
-<script src="js/jquery.js"></script>
-<script src="js/layer.js"></script>
 <link href="img/style.css" rel="stylesheet" type="text/css" />
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
-<script>
-//全屏弹出层
-var showNx=function (id) {
-        var index = layer.open({
-            type: 2,          //默认弹出层类型
-			shade: 0,
-			isOutAnim: false,
-            title:"评论详情",  //弹出层角标名称
-            content: "admin_comment_news.php?action=viewcomment&id="+id,  //弹出层页面地址
-            area: ['400px', '300px'],    //弹出层大小
-            maxmin: true   //弹出层是否全屏
-        });
-    }
-</script>
 </head>
 <body>
 <!--当前导航-->
@@ -35,10 +19,11 @@ var showNx=function (id) {
 if($action=='viewcomment'){
 $row=$dsql->GetOne("select msg from sea_comment where id='$id'");
 ?>
-
+<tr class="thead"><th colspan="2">评论详情查看</th></tr>
 <tr><td class="td_border">
 <?php echo showFace($row['msg']);?>
 </td></tr>
+<tr><td class="td_border"><input type="button" value="返    回" onClick="self.location.href='<?php echo $Pirurl;?>'" class="rb1" /></td></tr>
 <?php
 }elseif($action=='viewreporterror'){
 $row=$dsql->GetOne("select errtxt from sea_erradd where id='$id'");
@@ -123,7 +108,7 @@ $v_name=$row->v_name;
 ?>		
 <tr bgcolor="#ffffff" >
 <td height="30" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  class="checkbox" /><?php echo $row->id;?> </td>
-<td class="td_border"><?php echo encodeHtml(cn_substr($row->errtxt,40));?>  <a href="javascript:;" onclick="javascript:showNx('<?php echo $row->id;?>');">查看详情</a></td>
+<td class="td_border"><?php echo encodeHtml(cn_substr($row->errtxt,40));?>  <a href="?action=viewreporterror&id=<?php echo $row->id;?>">查看详情</a></td>
 <td class="td_border"><?php if(empty($v_name)) echo "该数据已删除"; else echo "<a href='".getContentLink($row->tid,$v_id,"")."' target='_blank' >{$v_name}({$v_id})</a>";?><a href='admin_video.php?action=edit&id=<?php echo $v_id;?>'> <font color="#FF0000">处理</font></a></td>
 <td class="td_border"><?php echo $row->ip;?></td>
 <td class="td_border"><?php echo isCurrentDay($row->sendtime);?></td>
@@ -133,10 +118,7 @@ $v_name=$row->v_name;
 <?php }?>	
     <tr>
     <td colspan="5"><div class="cuspages"><div class="pages">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onClick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onClick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onClick="if(confirm('确定要删除吗')){newslistform.action='?action=delallreporterror';}else{return false}" class="rb1"  />
-    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&action=reporterror">首页</a> <a href="?page=<?php echo ($page-1);?>&action=reporterror">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=reporterror">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=reporterror">尾页</a>&nbsp;&nbsp;跳转
-                <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
-                &nbsp;&nbsp;
-                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&action=reporterror';"/></div></div>
+    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=reporterror">首页</a> <a href="?page=<?php echo ($page-1);?>&action=reporterror">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=reporterror">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=reporterror">尾页</a></div></div>
     </td></tr>
 <?php }?>
 </form>
@@ -189,7 +171,7 @@ $v_name=$row->n_title;
 ?>		
 <tr bgcolor="#FFF" style="background-color:#FFF" onmouseover="style.backgroundColor='#E6F2FB'" onmouseout="style.backgroundColor='#FFF'">
 <td height="30" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  class="checkbox" /><?php echo $row->id.".".IsCheck($row->ischeck);?> </td>
-<td class="td_border"><?php echo showFace(encodeHtml(cn_substr($row->msg,40)));?>  <a href="javascript:;" onclick="javascript:showNx('<?php echo $row->id;?>');">查看详情</a></td>
+<td class="td_border"><?php echo showFace(encodeHtml(cn_substr($row->msg,40)));?>  <a href="?action=viewcomment&id=<?php echo $row->id;?>">查看详情</a></td>
 <td class="td_border"><?php if(empty($v_name)) echo "该数据已删除"; else echo "<a href='".getArticleLink($row->tid,$v_id,"")."' target='_blank' >{$v_name}({$v_id})</a>";?></td>
 <td class="td_border"><?php echo $row->ip;?></td>
 <td class="td_border"><?php echo isCurrentDay($row->dtime);?></td>
@@ -202,10 +184,7 @@ $v_name=$row->n_title;
     
 	<input type="submit" value="全部删除" onClick="if(confirm('确定要删除全部吗')){newslistform.action='?action=deltotalcomment'}" class="rb1"/>
 	<input type="submit" value="审核评论" onClick="if(confirm('确定要审核评论吗')){newslistform.action='?action=checkcomment'}" class="rb1"/>
-    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1&action=comment">首页</a> <a href="?page=<?php echo ($page-1);?>&action=comment">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=comment">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=comment">尾页</a>&nbsp;&nbsp;跳转
-                <input type="text" id="skip" value="" onkeyup="this.value=this.value.replace(/[^\d]+/,'')" style="width:40px"/>
-                &nbsp;&nbsp;
-                <input type="button" value="确 定" class="btn" onclick="location.href='?page='+ document.getElementById('skip').value +'&action=comment';"/></div></div>
+    &nbsp;&nbsp;页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?>总收录数据条<?php echo $TotalResult;?> <a href="?page=1&action=comment">首页</a> <a href="?page=<?php echo ($page-1);?>&action=comment">上一页</a> <a href="?page=<?php echo ($page+1);?>&action=comment">下一页</a> <a href="?page=<?php echo $TotalPage;?>&action=comment">尾页</a></div></div>
     </td></tr>
 <?php }?>
 </form>

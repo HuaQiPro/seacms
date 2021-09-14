@@ -6,12 +6,22 @@
 <link type="text/css" href="img/alerts.css" rel="stylesheet" media="screen">
 <title>剧情分类</title>
 <script type="text/javascript" language="javascript">var tentpath='/';</script>
-<script src="js/common.js" type="text/javascript"></script>
-<script src="js/main.js" type="text/javascript"></script>
 <script language="javascript" src="js/jquery.js"></script>
+<script language="javascript" src="js/alerts.js"></script>
 
 <script language="javascript">
- $(document).ready(function(){	
+ $(document).ready(function(){
+	$("#ChkAll").click(function(){
+		if($(this).attr("checked")==true){
+			$("input[id='E_ID']").each(function(){
+				$(this).attr("checked",true);									 
+			})							
+		}else{
+			$("input[id='E_ID']").each(function(){
+				$(this).attr("checked",false);									 
+			})							
+		}
+	})	
 
 $("#btn_editall").click(function(){
 				if(confirm('您确定要修改选中的剧情分类吗?'))
@@ -63,7 +73,7 @@ function del(id){
 	
 					  
 					<tr>
-<td height="30" colspan="6" align="left" bgcolor="#FFFFFF" class="td_border"><input type="checkbox" name="ChkAll" id="ChkAll" ids="S_ID"  class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')"/>全选&nbsp;&nbsp;
+<td height="30" colspan="6" align="left" bgcolor="#FFFFFF" class="td_border"><input type="checkbox" name="ChkAll" id="ChkAll" ids="S_ID"  class="checkbox"/>全选&nbsp;&nbsp;
 						  &nbsp;&nbsp;&nbsp;&nbsp; <input type="button" name="editall" value="修改所选分类" class="rb1"  id="btn_editall"/>
 				      &nbsp;&nbsp;<input type="button" name="delall"  value="删除所选分类" class="rb1"  id="btn_delall"/></td>
 					  </tr>

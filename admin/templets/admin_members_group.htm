@@ -25,7 +25,7 @@ if($action=='add')
         <td class="td_border"><input id="gname" type="text" value="" size="20" name="gname"></td>
       </tr>
       <tr>
-        <td class="td_border" width="22%" height="30">&nbsp;授权分类：          </td>
+        <td class="td_border" width="22%" height="30">&nbsp;包含分类：          </td>
         <td class="td_border"><?php
         $dsql->SetQuery("select tid,tname from sea_type where tptype=0");
         $dsql->Execute('tp_list');
@@ -48,7 +48,7 @@ if($action=='add')
 <input type="checkbox" checked="" value="2" name="g_auth[]">
 浏览内容页
 <input type="checkbox" checked="" value="3" name="g_auth[]">
-<font color="red">播放VIP收费视频</font> </td>
+浏览播放页 </td>
       </tr>
       <tr>
         <td class="td_border" width="22%" height="30">&nbsp;升级所需积分：
@@ -84,7 +84,7 @@ elseif($action=='edit')
         <td class="td_border"><input id="gname" type="text" value="<?php echo $row['gname']?>" size="20" name="gname"></td>
       </tr>
       <tr>
-        <td class="td_border" width="22%" height="30">&nbsp;授权分类：</td>
+        <td class="td_border" width="22%" height="30">&nbsp;包含分类：</td>
         <td class="td_border"><?php
         $dsql->SetQuery("select tid,tname from sea_type where tptype=0");
         $dsql->Execute('tp_list');
@@ -107,7 +107,7 @@ elseif($action=='edit')
 <input type="checkbox" <?php if(in_array(2,$authArr)) echo 'checked'?> value="2" name="g_auth[]">
 浏览内容页
 <input type="checkbox" <?php if(in_array(3,$authArr)) echo 'checked'?> value="3" name="g_auth[]">
-<font color="red">播放VIP收费视频</font></td>
+浏览播放页 </td>
       </tr>
       <tr>
         <td class="td_border" width="22%" height="30">&nbsp;升级所需积分：
@@ -168,8 +168,8 @@ else
       <tr>
         <td height="30" class="td_border" align="left"><?php if($gid!=1&&$gid!=2){?><input type="checkbox" value="<?php echo $gid;?>" name="g_id[]" class="checkbox"/><?php }?></TD>
         <td height="30" class="td_border" align="left"><?php echo $row->gname;?></TD>
-        <td height="30" class="td_border" align="left"><?php if($gid==1){echo '游客';} else {echo $rs['dd'].'&nbsp;<a href="admin_memberslist.php?ver='.$gid.'">[成员]</a>';}?> </TD>
-        <td height="30" class="td_border" align="left"><?php if($gid==1){echo '游客';} else {echo $row->g_upgrade;}?></TD>
+        <td height="30" class="td_border" align="left"><?php echo $rs['dd'];?></TD>
+        <td height="30" class="td_border" align="left"><?php echo $row->g_upgrade;?>&nbsp;</TD>
         <td height="30" class="td_border" align="left"><a href="?action=edit&id=<?php echo $gid;?>">编辑</a> <a href="?action=del&id=<?php echo $gid;?>" style="<?php if($gid==1||$gid==2) echo "display:none"?>">删除</a></TD>
       </tr>
 <?php
@@ -184,7 +184,7 @@ else
               <input type="submit" value="批量删除" onclick="if(confirm('确定要批量删除吗')){return true}else{return false}" class="rb1"  />
               &nbsp;
               <input type="button" value="添 加" onclick="location.href='?action=add'" class="rb1"  />
-              &nbsp;&nbsp; 页次0/0 每页30 总收录数据0条 <a href="?page=1">首页</a> <a href="?page=1">首页</a> <a href="?page=-1">上一页</a> <a href="?page=1">下一页</a> <a href="?page=0">尾页</a></div>
+              &nbsp;&nbsp; 页次0/0 每页30 总收录数据0条 <a href="?page=1">首页</a> <a href="?page=1">首页</a> <a href="?page=-1">上一页</a> <span></span><a href="?page=1">下一页</a> <a href="?page=0">尾页</a></div>
           </div></td>
       </tr>
     </TABLE>

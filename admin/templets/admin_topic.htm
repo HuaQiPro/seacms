@@ -5,8 +5,6 @@
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>资源管理</title>
-<script src="js/jquery.js"></script>
-<script src="js/layer.js"></script>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <script>
@@ -27,33 +25,6 @@ function onUploadBack(fn){
 	if(!!_1) _1.value=fn;
 	closeWin();
 }
-
-//全屏弹出层
-var showv=function (id) {
-        var index = layer.open({
-            type: 2,          //默认弹出层类型
-			shade: 0,
-			isOutAnim: false,
-            title:"专题视频",  //弹出层角标名称
-            content: "admin_topic_vod.php?tid="+id,  //弹出层页面地址
-            area: ['95%', '600px'],    //弹出层大小
-            maxmin: true   //弹出层是否全屏
-        });
-        
-    }
-var shown=function (id) {
-        var index = layer.open({
-            type: 2,          //默认弹出层类型
-			shade: 0,
-			isOutAnim: false,
-            title:"专题新闻",  //弹出层角标名称
-            content: "admin_topic_news.php?tid="+id,  //弹出层页面地址
-            area: ['95%', '600px'],    //弹出层大小
-            maxmin: true   //弹出层是否全屏
-        });
-          
-    }
-window.onload=parent.layer.closeAll(); //疯狂模式，关闭所有层
 </script>
 </head>
 <body>
@@ -150,10 +121,10 @@ $sql="select * from sea_topic ORDER BY  id DESC limit $limitstart,$numPerPage";
       <TD height="30"   bgcolor="#FFFFFF" class="td_border"><input type="checkbox" value="<?php echo $row->id;?>" name="e_id[]"  checked="checked"  class="checkbox" /><?php echo $row->id;?></TD>
       <TD bgcolor="#FFFFFF"  class="td_border"><a href="<?php echo $topicLink ?>" target="_blank"><?php echo $row->name;?></a></TD>
   
-      <TD bgcolor="#FFFFFF" class="td_border"><a href="javascript:;" onclick="javascript:showv('<?php echo $row->id;?>');"><img src='img/icon_l01.gif'> <?php echo $tcount-1;?></a>
+      <TD bgcolor="#FFFFFF" class="td_border"><a href="admin_topic_vod.php?tid=<?php echo $row->id;?>"><img src='img/icon_l01.gif'> <?php echo $tcount-1;?></a>
       </TD>
 	  
-	  <TD bgcolor="#FFFFFF" class="td_border"><a href="javascript:;" onclick="javascript:shown('<?php echo $row->id;?>');"><img src='img/icon_l01.gif'> <?php echo $tcountn-1;?></a>
+	  <TD bgcolor="#FFFFFF" class="td_border"><a href="admin_topic_news.php?tid=<?php echo $row->id;?>"><img src='img/icon_l01.gif'> <?php echo $tcountn-1;?></a>
       </TD>
       
      <?php if($cfg_runmode=='0'){?>

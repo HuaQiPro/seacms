@@ -22,7 +22,6 @@ class DB_MySQL
 	var $dbUser;
 	var $dbPwd;
 	var $dbName;
-	var $dbPort;
 	var $dbPrefix;
 	var $result;
 	var $queryString;
@@ -52,20 +51,18 @@ class DB_MySQL
 		$this->dbUser   =  $GLOBALS['cfg_dbuser'];
 		$this->dbPwd    =  $GLOBALS['cfg_dbpwd'];
 		$this->dbName   =  $GLOBALS['cfg_dbname'];
-		$this->dbPort   =  $GLOBALS['cfg_dbport'];
 		$this->dbPrefix =  $GLOBALS['cfg_dbprefix'];
 		$this->result["me"] = 0;
 		$this->Open($pconnect);
 	}
 
 	//用指定参数初始数据库信息
-	function SetSource($host,$username,$pwd,$dbname,$port,$dbprefix="sea_")
+	function SetSource($host,$username,$pwd,$dbname,$dbprefix="sea_")
 	{
 		$this->dbHost = $host;
 		$this->dbUser = $username;
 		$this->dbPwd = $pwd;
 		$this->dbName = $dbname;
-		$this->dbPort = $port;
 		$this->dbPrefix = $dbprefix;
 		$this->result["me"] = 0;
 	}
@@ -88,14 +85,13 @@ class DB_MySQL
 		}
 		else
 		{
-			if($this->dbPort=="" OR empty($this->dbPort)){$this->dbPort=3306;}
 			if(!$pconnect)
 			{
-				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName,$this->dbPort);
+				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName);
 			}
 			else
 			{
-				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName,$this->dbPort);
+				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName);
 			}
 
 			//复制一个对象副本
@@ -479,8 +475,8 @@ class DB_MySQL
 		//}
 		$emsg = '';
 		$emsg .= "<div><h3>seacms Error Warning!</h3>\r\n";
-		$emsg .= "<div><a href='http://www.seacms.com/ 
-' target='_blank' style='color:red'>Technical Support: http://www.seacms.com/</a></div>";
+		$emsg .= "<div><a href='http://www.seacms.net/ 
+' target='_blank' style='color:red'>Technical Support: http://www.seacms.net/</a></div>";
 		$emsg .= "<div style='line-helght:160%;font-size:14px;color:green'>\r\n";
 		$emsg .= "<div style='color:blue'><br />Error page: <font color='red'>".$this->GetCurUrl()."</font></div>\r\n";
 		$emsg .= "<div>Error infos: {$msg}</div>\r\n";

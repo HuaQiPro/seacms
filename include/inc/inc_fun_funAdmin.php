@@ -57,7 +57,7 @@ function SpGetNewInfo()
 	else {
 		$nurl = "test";
 	}
-	//$offUrl = "http://www.seacms.com/newinfo.php?version={$cfg_version}&formurl={$nurl}";
+	//$offUrl = "http://www.seacms.net/newinfo.php?version={$cfg_version}&formurl={$nurl}";
 	//return $offUrl;
 }
 

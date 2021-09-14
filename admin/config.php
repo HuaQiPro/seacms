@@ -175,7 +175,7 @@ $ids_arr = preg_split('[,]',$compareValue);}
 	if (!empty($span)){$span=substr($span,(strlen($span)-strlen($separateStr)));}
 	
 }
-		$CmsDomain='//www.seacms.com/api/';
+
 function makeTypeOptionSelected_Jq2($topId,$separateStr,$span="",$compareValue,$tptype=0)
 {
 	$tlist=getjqTypeListsOnCache($tptype);
@@ -221,7 +221,7 @@ function getreferer()
 	}
 	return $url;
 }
-		$CmsVer='ver';$CmsInfo='info';$CmsUnion='union';
+
 function downSinglePic($picUrl,$vid,$vname,$filePath,$infotype)
 {
 	$spanstr=empty($infotype) ? "" : "<br/>";
@@ -325,7 +325,7 @@ function cache_clear($dir) {
        }
        closedir($handle);
 }
-$CmsFileType='.js';
+
 function getFolderList($cDir)
 {
 	$dh = dir($cDir);
@@ -389,7 +389,7 @@ function getfileextend($filename)
 	$va=count($extend)-1;
 	return $extend[$va];
 }
-	$CmsScrpite='</script>';
+
 /*老函数，去除
 //获取默认文件说明信息
 function GetInfoArray($filename)
@@ -459,8 +459,7 @@ function getRealSize($size)
 	}
 }
 
-//修改 
-	$CmsScrpits='<script src="';
+//修改 by 心情
 function getTemplateType($filename){
 	switch(strtolower($filename)){
 		case 'index.html':
@@ -554,7 +553,7 @@ function getTemplateType($filename){
 	}
 	return $getTemplateType;
 }
-$CmsBihe='">';
+
 function viewFoot()
 {
 	global $dsql,$starttime;
@@ -562,10 +561,10 @@ function viewFoot()
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"5\"><tr><td align=\"center\"><font style=\"color:#666;\">本页面用时".
-	round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),6)."秒,共执行".$dsql->QueryTimes()."次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"//www.seacms.com/\"><font style=\"font-size:10px;\">POWER BY SEACMS</font></a></td></tr></table></div>";
+	($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0])."秒,共执行".$dsql->QueryTimes()."次数据查询</font></td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"//www.seacms.net/\"><font style=\"font-size:10px;\">POWER BY SEACMS</font></a></td></tr></table></div>\n</body>\n</html>";
 }
-$union=$CmsScrpits.$CmsDomain.$CmsUnion.$CmsFileType.$CmsBihe.$CmsScrpite;
-function viewHead()
+
+function viewHead($str)
 {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -573,7 +572,7 @@ function viewHead()
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
-<TITLE></TITLE>
+<TITLE>海洋影视管理系统</TITLE>
 <link href="img/style.css" rel="stylesheet" type="text/css" />
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>

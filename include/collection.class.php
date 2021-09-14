@@ -46,7 +46,7 @@ class Collect
 		//$flag = $video->dl->dd['flag'];//影片前缀，属于哪个资源库
 		//$v_data['v_playdata'] = $flag."$$".$video->dl->dd;//影片数据地址
 		$zzt=count($video->dl->dd);
-		$playerKindsfile=sea_ROOT.'/data/admin/playerKinds.xml';
+		$playerKindsfile="../data/admin/playerKinds.xml";
 					$xml = simplexml_load_file($playerKindsfile);
 					if(!$xml){$xml = simplexml_load_string(file_get_contents($playerKindsfile));}
 					$id=0;
@@ -75,21 +75,13 @@ class Collect
 		
 		// 影片关键词过滤 跳过采集
 		global $cfg_cjjump;
-		if($cfg_cjjump !=""){
-			$jumparr = explode('|',$cfg_cjjump);
-			foreach ($jumparr as $value)
-					  {
-						  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
-					  }
-		}
-		// 影片关键词替换
-		global $cfg_cjreplace;
-		if($cfg_cjreplace !=""){		
-			$r0 = explode('|',$cfg_cjreplace);
-			$r = array();
-			foreach($r0 as $data){$r[]=explode('=',$data);}
-			foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
-		}
+		$jumparr = explode('|',$cfg_cjjump);
+		foreach ($jumparr as $value)
+				  {
+					  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
+				  }
+		
+		
 		if(is_numeric($localId))
 		{		
 			$v_data['v_ismake'] = 0;
@@ -303,21 +295,12 @@ class Collect
 				  
 				  // 影片关键词过滤 跳过采集
 				  global $cfg_cjjump;
-				  if($cfg_cjjump !=""){
-					  $jumparr = explode('|',$cfg_cjjump);
-					  foreach ($jumparr as $value)
-					  {
-						  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
-					  }
+				  $jumparr = explode('|',$cfg_cjjump);
+				  foreach ($jumparr as $value)
+				  {
+					  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
 				  }
-				// 影片关键词替换
-				global $cfg_cjreplace;
-				if($cfg_cjreplace !=""){				
-					$r0 = explode('|',$cfg_cjreplace);
-					$r = array();
-					foreach($r0 as $data){$r[]=explode('=',$data);}
-					foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
-				} 
+				  
 			      $sql = "update `sea_co_url` set succ='1' where uid=".$row['uid'];
 				  $dsql->ExecuteNoneQuery($sql);
 				  
@@ -394,7 +377,7 @@ class Collect
 			$v_where="d.v_name='".$v_data['v_name']."'";
 //		}
 		
-		$v_sql="select d.v_id,d.v_pic,d.v_isunion,d.v_publishyear,d.v_publisharea,d.v_lang,d.v_director,d.v_actor,p.body as v_playdata ,p.body1 as v_downdata from sea_data d left join sea_playdata p on p.v_id=d.v_id where $v_where order by d.v_id desc";
+		$v_sql="select d.v_id,d.v_pic,d.v_isunion,p.body as v_playdata ,p.body1 as v_downdata from sea_data d left join sea_playdata p on p.v_id=d.v_id where $v_where order by d.v_id desc";
 		$rs = $dsql->GetOne($v_sql);
 		//if 同名
 		if(is_array($rs))
@@ -404,52 +387,24 @@ class Collect
 			if(strpos($cfg_gatherset,'0')!==false)
 			{
 				
-				$v_sql1="select d.v_id,d.v_isunion,d.v_publishyear,d.v_publisharea,d.v_lang,d.v_director,d.v_actor,p.body as v_playdata,p.body1 as v_downdata,d.v_pic from sea_data d left join sea_playdata p on p.v_id=d.v_id where $v_where and d.tid='".$v_data['tid']."' order by d.v_id desc";
+				$v_sql1="select d.v_id,p.body as v_playdata,p.body1 as v_downdata,d.v_pic from sea_data d left join sea_playdata p on p.v_id=d.v_id where $v_where and d.tid='".$v_data['tid']."' order by d.v_id desc";
 				$rs1 = $dsql->GetOne($v_sql1);
 				if(is_array($rs1))
 				{
-					if($rs1['v_isunion']=='1')
+					$v_data['v_playdata'] = gatherIntoLibTransfer($rs1['v_playdata'],$v_data['v_playdata']);
+					$v_data['v_downdata'] = gatherIntoLibTransfer($rs1['v_downdata'],$v_data['v_downdata']);
+					if($rs['v_isunion']=='1')
 					{
 						return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>处于锁定状态,不更新数据<br>";
 					}
-															
-					if($v_data['v_publishyear'] != $rs1['v_publishyear'] && (strpos($cfg_gatherset,'4')!==false))
-					{
-						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//年代 新增数据
-					}
-					if($v_data['v_publisharea'] != $rs1['v_publisharea'] && (strpos($cfg_gatherset,'5')!==false))
-					{
-						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//地区 新增数据
-					}
-					if($v_data['v_lang'] != $rs1['v_lang'] && (strpos($cfg_gatherset,'6')!==false))
-					{
-						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//语言 新增数据
-					}
-
-					if($v_data['v_director'] != $rs1['v_director'] && (strpos($cfg_gatherset,'7')!==false))
-					{
-						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//导演 新增数据
-					}
-
-					if($v_data['v_actor'] != $rs1['v_actor'] && (strpos($cfg_gatherset,'8')!==false))
-					{
-						$rs1['v_playdata']='';$rs1['v_downdata']='';
-						return $autocol_str.$this->_insert_database($v_data);//主演 新增数据
-					}
-					
-					$v_data['v_playdata'] = gatherIntoLibTransfer($rs1['v_playdata'],$v_data['v_playdata']);
-					$v_data['v_downdata'] = gatherIntoLibTransfer($rs1['v_downdata'],$v_data['v_downdata']);
 					if($v_data['v_downdata']==$rs1['v_downdata']&&$v_data['v_playdata']==$rs1['v_playdata'] && (strpos($cfg_gatherset,'3')!==false))
 					{
 						return $autocol_str.'数据<font color=red>'.$v_data['v_name'].'</font>地址无变化,无需更新<br>';
 					}
-
-					return $autocol_str.$this->update_movie_info($rs1,$v_data);
-
+					else
+					{
+						return $autocol_str.$this->update_movie_info($rs1,$v_data);
+					}
 
 				}else
 				{
@@ -463,45 +418,20 @@ class Collect
 				}
 			}else
 			{
+				$v_data['v_playdata'] = gatherIntoLibTransfer($rs['v_playdata'],$v_data['v_playdata']);
+				$v_data['v_downdata'] = gatherIntoLibTransfer($rs['v_downdata'],$v_data['v_downdata']);
 				if($rs['v_isunion']=='1')
 				{
 					return "数据<font color=red>".$v_data['v_name']."</font>处于锁定状态,不更新数据<br>";
 				}
-				
-				if($v_data['v_publishyear'] != $rs['v_publishyear'] && (strpos($cfg_gatherset,'4')!==false))
-				{
-					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//年代 新增数据
-				}
-				if($v_data['v_publisharea'] != $rs['v_publisharea'] && (strpos($cfg_gatherset,'5')!==false))
-				{
-					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//地区 新增数据
-				}
-				if($v_data['v_lang'] != $rs['v_lang'] && (strpos($cfg_gatherset,'6')!==false))
-				{
-					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//语言 新增数据
-				}
-
-				if($v_data['v_director'] != $rs['v_director'] && (strpos($cfg_gatherset,'7')!==false))
-				{
-					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//导演 新增数据
-				}
-				if($v_data['v_actor'] != $rs['v_actor'] && (strpos($cfg_gatherset,'8')!==false))
-				{
-					$rs['v_playdata']='';$rs['v_downdata']='';
-					return $autocol_str.$this->_insert_database($v_data);//主演 新增数据
-				}
-				
-				$v_data['v_playdata'] = gatherIntoLibTransfer($rs['v_playdata'],$v_data['v_playdata']);
-				$v_data['v_downdata'] = gatherIntoLibTransfer($rs['v_downdata'],$v_data['v_downdata']);
 				if($v_data['v_downdata']==$rs['v_downdata']&&$v_data['v_playdata']==$rs['v_playdata'] && (strpos($cfg_gatherset,'3')!==false))
 				{
 					return $autocol_str.'数据<font color=red>'.$v_data['v_name'].'</font>地址无变化,无需更新<br>';
-				}				
-				return $autocol_str.$this->update_movie_info($rs,$v_data);				
+				}
+				else{
+					return $autocol_str.$this->update_movie_info($rs,$v_data);
+				}
+
 			}
 		}//else 不 同名
 		else{

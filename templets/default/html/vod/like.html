@@ -1,0 +1,87 @@
+<div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_hd">
+			<div class="myui-panel__head active bottom-line clearfix">
+				<h3 class="title">
+					猜你喜欢
+				</h3>
+				<ul class="nav nav-tabs active">
+					<li class="active"><a href="#type" data-toggle="tab">同类型</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content myui-panel_bd">
+			<ul id="type" class="myui-vodlist__bd tab-pane fade in active clearfix">
+				{seacms:videolist type=current num=4 order=time}
+				<li class="col-md-5 col-sm-4 col-xs-3">
+					<div class="myui-vodlist__box">
+						<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
+							<span class="play hidden-xs"></span>
+							<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+								[videolist:score]分
+							</span>
+							<span class="pic-text text-right">
+								[videolist:note]</span>
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
+							<p class="text text-overflow text-muted hidden-xs">
+								[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]
+							</p>
+						</div>
+					</div>
+				</li>
+				{/seacms:videolist}
+				{seacms:videolist type=current num=2 start=5 order=time}
+				<li class="col-md-5 col-sm-4 col-xs-3 hidden-sm">
+					<div class="myui-vodlist__box">
+						<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
+							<span class="play hidden-xs"></span>
+							<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+								[videolist:score]分
+							</span>
+							<span class="pic-text text-right">
+								[videolist:note]</span>
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
+							<p class="text text-overflow text-muted hidden-xs">
+								[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]
+							</p>
+						</div>
+					</div>
+				</li>
+				{/seacms:videolist}
+				{seacms:videolist type=current num=4 start=8 order=time}
+				<li class="col-md-5 col-sm-4 col-xs-3 hidden-sm  hidden-xs">
+					<div class="myui-vodlist__box">
+						<a class="myui-vodlist__thumb lazyload" href="[videolist:link]" title="[videolist:name]" data-original="[videolist:pic]">
+							<span class="play hidden-xs"></span>
+							<span class="pic-tag pic-tag-top" style="background-color: #5bb7fe;">
+								[videolist:score]分
+							</span>
+							<span class="pic-text text-right">
+								[videolist:note]</span>
+						</a>
+						<div class="myui-vodlist__detail">
+							<h4 class="title text-overflow"><a href="[videolist:link]" title="[videolist:name]">[videolist:name]</a></h4>
+							<p class="text text-overflow text-muted hidden-xs">
+								[videolist:publishtime]/[videolist:publisharea]/[videolist:typename]
+							</p>
+						</div>
+					</div>
+				</li>
+				{/seacms:videolist}
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- <div class="myui-panel myui-panel-bg clearfix">
+	<div class="myui-panel-box clearfix">
+		<div class="myui-panel_bd">
+			<div class="col-xs-1">
+				<div style="padding: 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位</h5></div>
+			</div>
+		</div>
+	</div>				
+</div> -->

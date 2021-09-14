@@ -13,49 +13,7 @@ if($cfg_feedbackstart=='0'){
 	showMsg('对不起，留言暂时关闭','-1');
 	exit();
 }
-?>
 
-<style>
-.sea_page{text-align:center; display:block;margin-top:20px;}
-.sea_page_box{display:inline-block;zoom:1;*display:inline;margin:auto;}
-.sea_page a{float:left;font-family:Tahoma;height:22px;line-height:22px;padding:0 8px;margin-left:3px;background-color:#ddd;border-radius: 4px;font-size: 12px;color: #405884;list-style:none;}
-.sea_page a:link {color:#405884;text-decoration:none;}
-.sea_page a:visited {color:#405884;text-decoration:none;}
-.sea_page a:hover {color:#405884;text-decoration:none;background:#6394c8;}
-.sea_page a:active {color:#405884;text-decoration:none;}
-.sea_page .sea_num{float:left;font-family:Tahoma;height:22px;line-height:22px;padding:0 8px;margin-left:3px;background-color:#6394c8;border-radius: 4px;font-size: 12px;color: #fff;list-style:none;}
-
-.sea_title{font-size: 16px;margin-bottom:8px; font-weight:bold;}
-.sea_main_6{list-style:none;}
-.sea_main_8{width:100%;height:60px;border:0;background-color:#F5F5F5;font-size:14px; line-height:22px;font-family:Microsoft YaHei;border: 1px solid #ddd;border-radius:4px; margin-bottom:6px;}
-.sea_main_8 input,textarea{
-                -webkit-transition: all 0.30s ease-in-out;
-                -moz-transition: all 0.30s ease-in-out;
-                -ms-transition: all 0.30s ease-in-out;
-                -o-transition: all 0.30s ease-in-out;
-                outline: none;
-                border: #ddd 1px solid;
-            }
- 
-.sea_main_8 input:focus,textarea:focus {
-                box-shadow: 0 0 5px #6bb8ee;
-                border: #ddd 1px solid;
-            }
-.sea_postsub{float:right;margin-right:2px;}
-.sea_postsub img{align:middle;height:28px; line-height:30px;border:0;border-radius: 4px;}
-.sea_main_9{text-transform: uppercase;width: 60px;height:30px;text-align: center;border-radius: 4px;background-color: #F5F5F5;border: 1px solid #ddd;align:middle;}
-.sea_main_11{align:middle;cursor:pointer;color: #fff;width: 80px;cursor:pointer;background-color: #3383bc;background: linear-gradient(to right,#247ebe 0,#6bb8ee 100%);height: 28px;border:0; border-radius:4px;}
-.sea_listul{display:block;margin-top:10px;}
-.sea_pannel{width:100%;overflow:hidden;list-style:none;border-bottom:1px solid #efefef;overflow:hidden;margin:20px 2px;}
-.sea_pannel-box{padding:0px;}
-.sea_face{float: left;border-radius:50%; width:40px; height:40px;}
-.sea_text-name{margin-left: 5px;font-size: 14px;font-weight: bold;line-height:30px;}
-.sea_text-muted{margin-left: 5px;font-size: 12px; color:#BBB;}
-.sea_text-red{float: right;color: #3295d1;}
-.sea_top-line{padding-left:45px;padding-top:3px;line-height:25px;}
-.sea_top-line span{color:#ab1010;}
-</style>
-<?php
 if($cfg_feedbackcheck=='1') $needCheck = 0;
 else $needCheck = 1;
 
@@ -83,7 +41,7 @@ if($cfg_feedback_ck=='1')
 		$row = $dsql->GetOne("SELECT dtime FROM `sea_guestbook` WHERE `ip` = '$ip' ORDER BY `id` DESC ");
 		if($dtime - $row['dtime'] < $cfg_feedback_times)
 		{
-			ShowMsg("发布频繁，请稍后再操作！","-1");
+			ShowMsg("留言过快，歇会再来留言吧","-1");
 			exit();
 		}
 	}
@@ -165,8 +123,8 @@ else
 	$t=$mainClassObj->parseGlobal($t);
 	$t=$mainClassObj->parseAreaList($t);
 	$t=$mainClassObj->parseMenuList($t,"");
-	$t=$mainClassObj->parseVideoList($t,-444,'','');
-	$t=$mainClassObj->parseNewsList($t,-444,'','');
+	$t=$mainClassObj->parseVideoList($t,-444);
+	$t=$mainClassObj->parseNewsList($t,-444);
 	$t=$mainClassObj->parseTopicList($t);
 	$t=replaceCurrentTypeId($t,-444);
 	$t=$mainClassObj->parseIf($t);
@@ -195,25 +153,24 @@ function viewLeaveWord(){
 	
 	$mystr=
 	
-	"<div class=\"sea_main\"><div class=\"sea_main_1\"><div class=\"sea_main_2\">".
-	"<div class=\"sea_main_3\"><div class=\"sea_main_4\"><div class=\"sea_title\" id=\"sea_title\">我要留言</div></div></div>".
-	"<form id=\"f_leaveword\"   action=\"/".$GLOBALS['cfg_cmspath']."gbook.php?action=add\" method=\"post\" onsubmit=\"return leaveWordgbook2()\">".
+	"<div class=\"col-lg-wide-3 col-xs-1\"><div class=\"stui-pannel stui-pannel-bg clearfix\"><div class=\"stui-pannel-box clearfix\">".
+	"<div class=\"stui-pannel_hd\"><div class=\"stui-pannel__head clearfix\"><h3 class=\"title\">我要留言</h3></div></div>".
+	"<form id=\"f_leaveword\"   action=\"/".$GLOBALS['cfg_cmspath']."gbook.php?action=add\" method=\"post\">".
 	"<input type=\"hidden\" value=\"$userid\" name=\"userid\" />".
 	"<input type=\"hidden\" value=\"$uname\" name=\"m_author\" />".
-	"<div class=\"sea_main_5\"><div class=\"sea_main_6\">". 
-	"<div style=\"display:none;\">".
-	"".(isset($uname)?$uname:'<input class="sea_main_7" type="input"  value="匿名网友" name="m_author" id="m_author" size="20" />').
-	"</div>".
+	"<div class=\"col-pd clearfix\"><ul class=\"gbook-form\">". 
+	"<li>".
+	"".(isset($uname)?$uname:'<input class="form-control" type="input"  value="匿名" name="m_author" id="m_author" size="20" />').
+	"</li>".
 	  
-	  "<div>".
-		 	"<textarea class=\"sea_main_8\" placeholder=\"请输入留言内容...\"  name=\"m_content\" id=\"m_content\"></textarea>".
-	  "</div>".
-	  
-	  "<div class=\"sea_postsub\">".
-		"<input type=\"submit\"  value=\"提交留言\" class=\"sea_main_11\"/></div>".
-	"</div></div></form>".
+	  "<li>".
+		 	"<textarea class=\"form-control\" placeholder=\"请输入留言内容...\" cols=\"40\" name=\"m_content\" id=\"m_content\" rows=\"5\"  ></textarea>".
+	  "</li>".
+	  "<li>".
+		"<input type=\"submit\" click=\"leaveWord()\" value=\"提交留言\" class=\"btn btn-primary pull-right\"/><input type=\"reset\" value=\"重新留言\" class=\"btn btn-default\" /> </li>".
+	"</ul></div></form>".
 	"</div></div></div>".
-	"<div class=\"sea_main_12\">".leaveWordList($_GET['page'])."</div><script type=\"text/javascript\" src=\"js/base.js\"></script>";
+	"<div class=\"col-lg-wide-7 col-xs-1\">".leaveWordList($_GET['page'])."</div><script type=\"text/javascript\" src=\"js/base.js\"></script>";
 	return $mystr;
 }
 
@@ -228,32 +185,34 @@ function viewLeaveWord2(){
 	
 	$mystr=
 	
-	"<div class=\"sea_main\"><div class=\"sea_main_1\"><div class=\"sea_main_2\">".
-	"<div class=\"sea_main_3\"><div class=\"sea_main_4\"><div class=\"sea_title\" id=\"sea_title\">我要留言</div></div></div>".
-	"<form id=\"f_leaveword\"   action=\"/".$GLOBALS['cfg_cmspath']."gbook.php?action=add\" method=\"post\" onsubmit=\"return leaveWordgbook()\">".
+	"<div class=\"col-lg-wide-3 col-xs-1\"><div class=\"stui-pannel stui-pannel-bg clearfix\"><div class=\"stui-pannel-box clearfix\">".
+	"<div class=\"stui-pannel_hd\"><div class=\"stui-pannel__head clearfix\"><h3 class=\"title\">我要留言</h3></div></div>".
+	"<form id=\"f_leaveword\"   action=\"/".$GLOBALS['cfg_cmspath']."gbook.php?action=add\" method=\"post\">".
 	"<input type=\"hidden\" value=\"$userid\" name=\"userid\" />".
 	"<input type=\"hidden\" value=\"$uname\" name=\"m_author\" />".
-	"<div class=\"sea_main_5\"><div class=\"sea_main_6\">". 
-	"<div style=\"display:none;\">".
-	"".(isset($uname)?$uname:'<input class="sea_main_7" type="input"  value="匿名网友" name="m_author" id="m_author" size="20" />').
-	"</div>".
+	"<div class=\"col-pd clearfix\"><ul class=\"gbook-form\">". 
+	"<li>".
+	"".(isset($uname)?$uname:'<input class="form-control" type="input"  value="匿名" name="m_author" id="m_author" size="20" />').
+	"</li>".
 	  
-	  "<div class=\"sea_posttxt\">".
-		 	"<textarea class=\"sea_main_8\" placeholder=\"请输入留言内容...\"  name=\"m_content\" id=\"m_content\"></textarea>".
-	  "</div>".
+	  "<li>".
+		 	"<textarea class=\"form-control\" placeholder=\"请输入留言内容...\" cols=\"40\" name=\"m_content\" id=\"m_content\" rows=\"5\"  ></textarea>".
+	  "</li>".
 	  
-	  "<div class=\"sea_postsub\">".
-		 	"<input name=\"validate\" type=\"text\" placeholder=\"验证码\" class=\"sea_main_9\" id=\"vdcode\" style=\"text-transform:uppercase;\" onClick=\"document.getElementById('vdimgck').style.display='inline';\" tabindex=\"3\"/>&nbsp;<img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"cursor:pointer;display:none;\" onClick=\"this.src=this.src+'?get=' + new Date()\"/><input type=\"submit\"  value=\"提交留言\" class=\"sea_main_11\"/> </div>".
-	"</div></div></form>".
+	  "<li>".
+		 	"<input name=\"validate\" type=\"text\" placeholder=\"验证码\" class=\"form-control\" id=\"vdcode\" style=\"width: 80px; display: inline-block; margin-right: 10px;text-transform:uppercase\" class=\"text\" tabindex=\"3\"/> <img id=\"vdimgck\" src=\"include/vdimgck.php\" alt=\"看不清？点击更换\"  align=\"absmiddle\"  style=\"height: 28px; cursor:pointer\" onClick=\"this.src=this.src+'?get=' + new Date()\"/>".
+	  "</li>".
+	  
+	  "<li>".
+		"<input type=\"submit\" click=\"leaveWord()\" value=\"提交留言\" class=\"btn btn-primary pull-right\"/><input type=\"reset\" value=\"重新留言\" class=\"btn btn-default\" /> </li>".
+	"</ul></div></form>".
 	"</div></div></div>".
-	"<div class=\"sea_main_12\">".leaveWordList($_GET['page'])."</div><script type=\"text/javascript\" src=\"js/base.js\"></script>";
+	"<div class=\"col-lg-wide-7 col-xs-1\">".leaveWordList($_GET['page'])."</div><script type=\"text/javascript\" src=\"js/base.js\"></script>";
 	return $mystr;
 }
 function leaveWordList($currentPage){
-	global $dsql,$cfg_gb_size;
-	$vsize=20;
-	$cfg_gb_size=intval($cfg_gb_size);
-	if($cfg_gb_size !="" and $cfg_gb_size !=0){$vsize=$cfg_gb_size;}
+	global $dsql;
+	$vsize=10;
 	if($currentPage<=1)
 	{
 		$currentPage=1;
@@ -280,35 +239,33 @@ function leaveWordList($currentPage){
 	$i=$ii++;
 	$iii=$TotalResult-$i;
 	$iiii=$iii+1;
-	$picsql = "Select pic From `sea_member` where username='$row->uname'";
-	$picrow = $dsql->GetOne($picsql);
-	if($picrow['pic']==""){$pic='uploads/user/a.png';}else{$pic=$picrow['pic'];}
-	$txt.="<li class=\"sea_pannel\"><div class=\"sea_pannel-box\"><div class=\"sea_c-pd\"><div class=\"sea_topwords\"><span class=\"sea_text-name\"><img class=\"sea_face\" src=\"/".$pic."\">".$row->uname."</span><span class=\"sea_text-muted\">发表于 ".MyDate('',$row->dtime)."</span><span class=\"sea_text-red\">#".$iiii."</span></div><div class=\"sea_top-line\">".showFace($row->msg)."</div></div></div></li>";
+	$txt.="<div class=\"stui-pannel stui-pannel-bg clearfix\"><div class=\"stui-pannel-box clearfix\"><div class=\"col-pd clearfix\"><ul><li class=\"topwords\"><strong>".$row->uname."</strong>";
+	$txt.="<span class=\"text-red pull-right\">第".$iiii."楼<span></li>";
+	$txt.="<li class=\"top-line\" style=\"margin-top: 10px; padding: 10px 0;\">".showFace($row->msg)."</li>";
+	$txt.="<span class=\"font-12 text-muted\">发表于 ".MyDate('',$row->dtime)."<span>";
+	$txt.="</ul></div></div></div>";
 	//$i--;
 	}
 	unset($i);
-	$txt.="<div class=\"sea_page\"><div class=\"sea_page_box\">";
-	if($currentPage==1)$txt.="<a>‹‹</a><a>‹</a>";
-	else $txt.="<a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=1\">‹‹</a><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".($currentPage-1)."\">‹</a>";
+	$txt.="<ul class=\"stui-page text-center\">";
+	if($currentPage==1)$txt.="<li><a>首页</a></li><li><a>上一页</a></li>";
+	else $txt.="<li><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=1\">首页</a></li><li><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".($currentPage-1)."\">上一页</a></li>";
 	if($TotalPage==1)
 	{
-		$txt.="<span class=\"sea_num\">1</span>";
+		$txt.="<li><a>1</a></li>";
 	}else{
-	$x=$currentPage-1;
-	$y=$currentPage+1;
+	$x=$currentPage-4;
+	$y=$currentPage+4;
 	if($x<1)$x=1;
 	if($y>$TotalPage)$y=$TotalPage;
 	for($i=$x;$i<=$y;$i++)
 	{
-		if($i == $currentPage)
-			{$txt.="<span class=\"sea_num\">".$i."</span>";}
-		else
-			{$txt.="<a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$i."\">".$i."</a>";}
+		$txt.="<li class=\"hidden-xs\"><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$i."\">".$i."</a></li>";
 	}	
 	}
-	if($currentPage==$TotalPage)$txt.="<a>›</a><a>››</a>";
-	else $txt.="<a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".($currentPage+1)."\">›</a><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$TotalPage."\">››</a>";
-	return $txt."</div></div>";
+	if($currentPage==$TotalPage)$txt.="<li><a>下一页</a></li><li><a>尾页</a></li>";
+	else $txt.="<li><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".($currentPage+1)."\">下一页</a></li><li><a href=\"/".$GLOBALS['cfg_cmspath']."gbook.php?page=".$TotalPage."\">尾页</a></li>";
+	return $txt."</ul>";
 
 }
 

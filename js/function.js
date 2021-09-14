@@ -36,7 +36,7 @@ function submitComment(id){
 	if(document.getElementById("msg").value.length<1){alert('请填写内容');return false;}
 	ajax.postf(
 		document.getElementById("f_comment"),
-		function(obj){if(obj.responseText=="ok"){viewComment(id,1);alert('感谢您的评论!');}else if(obj.responseText=="validateerr"){alert('验证码错误，请点击验证码图片更新验证码！');}else if(obj.responseText=="havecomment"){alert('发布过于频繁，请稍后再操作！');}else if(obj.responseText=="ipcomment"){alert('您所在的ip不能评论');}else if(obj.responseText=="wordcomment"){alert('您的评论中有禁用词语，不能评论');}/*else{alert(obj.responseText);}*/}
+		function(obj){if(obj.responseText=="ok"){viewComment(id,1);alert('小弟我感谢您的评论!');}else if(obj.responseText=="validateerr"){alert('验证码错误，请点击验证码图片更新验证码！');}else if(obj.responseText=="havecomment"){alert('小样儿你手也太快了，歇会儿再来评论吧！');}else if(obj.responseText=="ipcomment"){alert('您所在的ip不能评论');}else if(obj.responseText=="wordcomment"){alert('您的评论中有禁用词语，不能评论');}/*else{alert(obj.responseText);}*/}
 	);
 }
 
@@ -45,7 +45,7 @@ function diggVideo(id,div){
 		"/"+sitePath+"include/ajax.php?id="+id+"&action=digg",
 		function (obj){
 			var returnValue=Number(obj.responseText)
-			if (!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('成功顶贴！');}else if(obj.responseText=="err"){alert('顶贴失败')}else if(obj.responseText=="havescore"){alert('您已经执行过顶踩操作！')}	
+			if (!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('(*^__^*) 嘻嘻……，顶得我真舒服！');}else if(obj.responseText=="err"){alert('顶失败')}else if(obj.responseText=="havescore"){alert('(*^__^*) 嘻嘻…… 这么热心啊，您已经顶过了！')}	
 		}
 	);	
 }
@@ -55,7 +55,7 @@ function treadVideo(id,div){
 		"/"+sitePath+"include/ajax.php?id="+id+"&action=tread",
 		function (obj){
 			var returnValue=Number(obj.responseText)
-			if(!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('踩贴成功！');}else if(obj.responseText=="err"){alert('踩贴失败')}	else if(obj.responseText=="havescore"){alert('您已经执行过顶踩操作！')}	
+			if(!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('小样儿，居然敢踩我！');}else if(obj.responseText=="err"){alert('踩失败')}	else if(obj.responseText=="havescore"){alert('我晕，您已经踩过了，想踩死我啊！')}	
 		}
 	);	
 }
@@ -63,7 +63,7 @@ function treadVideo(id,div){
 function diggNews(id,div){
 	ajax.get("/"+sitePath+"include/ajax.php?id="+id+"&action=diggnews",function (obj){
 			var returnValue=Number(obj.responseText)
-			if (!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('成功顶贴！');}else if(obj.responseText=="err"){alert('顶贴失败')}else if(obj.responseText=="havescore"){alert('您已经执行过顶踩操作！')}	
+			if (!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('(*^__^*) 嘻嘻……，顶得我真舒服！');}else if(obj.responseText=="err"){alert('顶失败')}else if(obj.responseText=="havescore"){alert('(*^__^*) 嘻嘻…… 这么热心啊，您已经顶过了！')}	
 		}
 	);
 }
@@ -71,7 +71,7 @@ function diggNews(id,div){
 function treadNews(id,div){
 	ajax.get("/"+sitePath+"include/ajax.php?id="+id+"&action=treadnews",function (obj){
 			var returnValue=Number(obj.responseText)
-			if(!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('踩贴成功！');}else if(obj.responseText=="err"){alert('踩贴失败')}	else if(obj.responseText=="havescore"){alert('您已经执行过顶踩操作！')}	
+			if(!isNaN(returnValue)){set(document.getElementById(div),returnValue);alert('小样儿，居然敢踩我！');}else if(obj.responseText=="err"){alert('踩失败')}	else if(obj.responseText=="havescore"){alert('我晕，您已经踩过了，想踩死我啊！')}	
 		}
 	);	
 }
@@ -215,25 +215,8 @@ function leaveWord(){
 	if(document.getElementById("m_content").value.length<1){alert('内容必须填写');return false;}
 	ajax.postf(
 		document.getElementById("f_leaveword"),
-		function(obj){if(obj.responseText=="ok"){viewLeaveWordList(1);alert('留言成功！');document.getElementById("m_content").value='';}else if(obj.responseText=="haveleave"){alert('发布过于频繁，请稍后再操作！');}else{alert('发生错误');}}
+		function(obj){if(obj.responseText=="ok"){viewLeaveWordList(1);alert('留言成功，多谢支持！');document.getElementById("m_content").value='';}else if(obj.responseText=="haveleave"){alert('小样儿你手也太快了，歇会儿再来留言吧！');}else{alert('发生错误');}}
 	);
-}
-
-function leaveWordgbook(){
-	if(document.getElementById("vdcode").value.length<1){alert('验证码必须填写');return false;}
-	if(document.getElementById("m_content").value.length<1){alert('内容必须填写');return false;}
-	var obj=document.getElementById("m_content").value;
-	if(!(/.*[\u4e00-\u9fa5]+.*$/.test(obj)))
-	{alert("留言内容请包含中文！");return false;}
-	return true;
-}
-
-function leaveWordgbook2(){
-	if(document.getElementById("m_content").value.length<1){alert('内容必须填写');return false;}
-	var obj=document.getElementById("m_content").value;
-	if(!(/.*[\u4e00-\u9fa5]+.*$/.test(obj)))
-	{alert("留言内容请包含中文！");return false;}
-	return true;
 }
 
 function getVideoHit(vid){
@@ -318,7 +301,7 @@ function markscore1(vd,d,t,s,l,ac){
 		document.write('<img id="'+i+'" src="'+src[i<=y ? 0 : 1]+'" title="'+alt[parseInt(i/l*(alt.length-1))]+'" style="cursor:pointer">');
 	}
 	document.write('</span>');
-	document.write('&nbsp;<strong style="font-size:14px;color:red" id="MARK_B2"></strong>(<span id="MARK_B3"></span>)</span>');
+	document.write('&nbsp;<strong style="font-size:14px;color:red" id="MARK_B2"></strong>(<span style="color:blue" id="MARK_B3"></span>)</span>');
 	var dc=document.getElementById(id),im=dc.getElementsByTagName('img');
 	for(var i=0;i<im.length;i++){
 		im[i].onclick=function (){

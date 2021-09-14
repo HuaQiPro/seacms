@@ -18,25 +18,17 @@
       <tr class="thead">
         <td class="td_title">SQL高级助手</td>
       </tr>
-      <tr><td><textarea name="sql" rows="3" cols="110" value=""></textarea></td></tr>
-	<tr><td>
-	<input type="submit" class="btn"  value="执行SQL语句">  
-	&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="清 除" class="btn">
-	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn" value="一键清空视频数据" onClick="if(confirm('注意：该操作将清空全站视频数据，请谨慎操作！')){location.href='?action=CAV';}else{return false;}">
-	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn" value="一键清空新闻数据" onClick="if(confirm('注意：该操作将清空全站新闻数据，请谨慎操作！')){location.href='?action=CAN';}else{return false;}">
-	</td></tr>
+      <tr>
+        <td><textarea name="sql" rows="3" cols="110" value=""></textarea><br /> <input type="submit" class="btn"  value="执行SQL语句">  <input type="reset" value="清 除" class="btn"></td>
+      </tr>
       <tr>
         <td>
 	1: 列出所有数据  select * from sea_data<br/>
 	2: 删除所有数据（id不还原为0）  delete  from sea_data/sea_playdata/sea_content 三个表各执行一次<br/>
-	3: 清空所有数据（id还原为从0开始） TRUNCATE sea_data/sea_playdata/sea_content 三个表各执行一次<br/>
-	4: 列出某一栏目数据  select  *  from sea_data where tid =(select tid from sea_type where tname = '频道1') <br/>
-	5: 删除某一栏目数据  delete  from sea_data where tid =(select tid from sea_type where tname = '频道1') <br/>	
-	6: 清空播放地址 UPDATE sea_playdata SET  body =''<br/>
-	7: 清空下载地址 UPDATE sea_playdata SET  body1 =''<br>
-	8: 批量设置会员到期时间 UPDATE sea_member SET vipendtime ='1923278400'  其中1923278400为时间戳<br/>
-	9: 批量设置会员积分：UPDATE sea_member SET points ='999' 其中999为需要设置的积分数<br/>
-    <span style="color:#F00">(请谨慎操作，以免造成数据错误！)</span><br/>
+	3: 列出某一栏目数据  select  *  from sea_data where tid =(select tid from sea_type where tname = '频道1') <br/>
+	4: 删除某一栏目数据  delete  from sea_data where tid =(select tid from sea_type where tname = '频道1') <br/>
+	5: 清空所有数据（id还原为从0开始） TRUNCATE sea_data/sea_playdata/sea_content 三个表各执行一次<br/>
+    <span style="color:#F00">(请谨慎操作，以免造成数据错误！<a target="_blank" href="//www.seacms.net">[?]</a>)</span><br/>
 		</td>
       </tr>
     </table>
@@ -62,7 +54,7 @@
     		$num=$dsql->ExecuteNoneQuery2($sql);
             if($num==-1)
             {
-                echo '<div style="color:#F00;text-align:center">'.$dsql->GetError().'<br />SQL执行失败，请检查SQL语句是否正确<a href="//www.seacms.com">[?]</a></div></tr></table>';
+                echo '<div style="color:#F00;text-align:center">'.$dsql->GetError().'<br />SQL执行失败，请检查SQL语句是否正确<a href="//www.seacms.net">[?]</a></div></tr></table>';
                 viewFoot();
                 exit();
 			}

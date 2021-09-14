@@ -174,8 +174,7 @@ function parseSearchPart($templatePath)
 	$content=$mainClassObj->parseSelf($content);
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,'','');
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId);
 	$content=$mainClassObj->parseTopicList($content);
 	return $content;
 }

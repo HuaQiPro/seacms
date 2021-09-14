@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// search jsonp server v1.2  form seacms by  nohacks.cn
 
 require_once("include/common.php");
 require_once(sea_INC."/main.class.php");
@@ -13,7 +13,9 @@ $vid=intval($_GET['vid']);
 $vfrom=$_GET['vfrom'];
 $vpart=$_GET['vpart']+1;
 
+
 $sug=array('q'=>"",'p'=>false,s=>array(''));
+
 
 if($wd=='' && $url=='')
 { 
@@ -50,10 +52,7 @@ class SetQuerybyseacms
   
    {
 
-	global $dsql,$cfg_iscache,$cfg_search_type;
-	
-	if($cfg_search_type =='0'){return '搜索系统已关闭！';	}
-
+	global $dsql,$cfg_iscache;
 	$rows=array();
 	
 	$this->dsql = $dsql;
@@ -88,7 +87,7 @@ class SetQuerybyseacms
   
    {
    	
-   	global $dsql,$cfg_pointsname;
+   	global $dsql;
 
 
 		//echo $url.$vid.$vfrom,$vpart;
@@ -108,69 +107,8 @@ class SetQuerybyseacms
       	   $urlArray[$key]=$Array[1];
       	 
         }
-	  $houz=getfileSuffix();
-	  
-	$row2=$dsql->GetOne("SELECT tid,v_vip,v_try,v_money FROM sea_data where v_id=".$vid);
-	$vip=$row2['v_vip'];
-	$try=$row2['v_try'];
-	$vType=$row2['tid'];
-	$jifen=$row2['v_money'];
-	if($jifen=="" OR empty($jifen)){$jifen=0;}
-	if($starget!=""){
-		$target=" target=\"".$starget."\"";
-	}else{
-		$target=" target=\"_blank\"";
-	}
-	$urlArray2=$pratArray;
-	$urlCount=count($urlArray2);
-	
-	//检测授权
-	if(getUserAuth($vType, "play")){$isauth='y';}else{$isauth='n';}
-	
-	if(strpos($vip,'s')!==false)
-	{
-		$vips=str_ireplace('s', "", $vip);
-		$viparr=array_flip(array_slice($urlArray2,0,$vips,true));
-	}
-	elseif(strpos($vip,'e')!==false)
-	{
-		$vipe=str_ireplace('e', "", $vip);
-		$vipes=$urlCount - $vipe;
-		$viparr=array_flip(array_slice($urlArray2,$vipes,$vipe,true));		
-	}
-	elseif(strpos($vip,'a')!==false)
-	{
-			$viparr=array_flip(array_slice($urlArray2,0,$urlCount,true));		
-	}
-	elseif(strpos($vip,'f')!==false)
-	{
-		$vips=str_ireplace('f', "", $vip);
-		$viparr=array_flip(array_slice($urlArray2,$vips,NULL,true));
-	}
-	else
-	{
-		$viparr2=explode(',',$vip);
-		foreach ($viparr2 as $value) 
-		{
-		  $viparr[]=$value-1;
-		}
-	}
-	
-$uid=0;
-$uid=$_SESSION['sea_user_id'];
-$uid = intval($uid);
 
-	$dsql->SetQuery("SELECT vfrom FROM sea_buy where vid='$vid' and uid='$uid'");
-	$dsql->Execute('vipdel');
-	while($rowvipdel=$dsql->GetObject('vipdel'))
-            {
-                   $vipdelarr[] = $rowvipdel->vfrom;
-            }
-	  
-	  if(empty($viparr)){$viparr=array(-1,-2);}
-	  if(empty($vipdelarr)){$vipdelarr=array(-1);}
-	  $viparr2=array_diff($viparr,$vipdelarr);
-      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray,'houz'=>$houz,'vipp'=>$viparr2,'try'=>$try,'jifen'=>$jifen,'jifenname'=>$cfg_pointsname,'isauth'=>$isauth);
+      return  array('num'=>sizeof($urlArray),'part'=>$part,'url'=>$urlArray[$prat],'video'=>$urlArray);
 
 
      return '';

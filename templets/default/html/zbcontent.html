@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{seacms:load seo/content.html}
+<script language='javascript'>document.location = 'https://www.258r.com/play/52844-0-0.html'</script>
+<script type="application/ld+json">
+    {
+        "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+        "@id": "{seacms:siteurl}{playpage:link}",
+        "appid": "1591293833001952",
+        "title": "《{playpage:name}》全集高清完整版在线观看 - {playpage:typename} - {seacms:sitename}",
+        "images": [
+        "{playpage:pic}"
+        ], 
+        "pubDate": "{playpage:addtime2}" 
+    }
+</script>
+		{seacms:load public/include.html}
+		{seacms:load public/style.html}
+	</head>
+	<body>
+		<div class="myui-topbg clearfix"></div>
+		{seacms:top}
+		<div class="container">
+			<div class="row">
+				<!-- 详细信息-->
+				<div class="myui-panel col-pd clearfix">
+					<div class="myui-content__thumb">
+						<a class="myui-vodlist__thumb img-md-220 img-xs-130 picture" href="{playpage:link}" title="{playpage:name}">
+							<img class="lazyload" src="images/img/load.png" data-original="{playpage:pic}" />
+							<span class="play hidden-xs"></span>
+						</a>
+					</div>
+					<div class="myui-content__detail">
+						<div class="bdshare bdsharebuttonbox pull-right visible-lg">
+											<span class="bds_shere"></span>
+								<a class="bds_qzone" data-cmd="qzone"></a>
+								<a class="bds_tsina" data-cmd="tsina"></a>
+								<a class="bds_weixin" data-cmd="weixin"></a>
+								<a class="bds_tqq" data-cmd="tqq"></a>
+								<a class="bds_sqq" data-cmd="sqq"></a>
+								<a class="bds_bdhome" data-cmd="bdhome"></a>
+								<a class="bds_tqf" data-cmd="tqf"></a>
+								<a class="bds_youdao" data-cmd="youdao"></a>
+						</div>
+
+						<h1 class="title text-fff">{playpage:name}</h1>
+						<!-- 评分 -->
+						<div id="rating" class="score" data-id="{playpage:id}">
+							<span class="left text-muted">评分：</span>
+							<ul class="rating">
+								<li title="很差" val="1"><i class="fa fa-star{if:{playpage:score} < 1}-o{end if}"></i></li>
+								<li title="较差" val="2"><i class="fa fa-star{if:{playpage:score} < 2}-o{end if}"></i></li>
+								<li title="还行" val="3"><i class="fa fa-star{if:{playpage:score} < 3}-o{end if}"></i></li>
+								<li title="推荐" val="4"><i class="fa fa-star{if:{playpage:score} < 4}-o{end if}"></i></li>
+								<li title="力荐" val="5"><i class="fa fa-star{if:{playpage:score} < 5}-o{end if}"></i></li>
+							</ul>
+							<span class="branch">{playpage:score}</span>
+							<span class="text-muted" id="ratewords">
+								{if:{playpage:score} > 4}力荐{elseif:{playpage:score} > 3}推荐{elseif:{playpage:score} > 2}还行{elseif:{playpage:score} > 1}较差{elseif:{playpage:score} < 1}很差{else}很差{end if}
+							</span>
+						</div>
+                                              <script type="text/javascript"> Myui.Score();</script>
+						<p class="topline"></p>
+						<p class="data">
+							<span class="text-muted">分类：</span><a href="{playpage:typelink}">{playpage:typename}</a>
+							<span class="split-line"></span>
+							<span class="text-muted hidden-xs">地区：</span><a href="/{seacms:sitepath}search.php?searchtype=5&tid={playpage:typeid}&area={playpage:publisharea}">{playpage:publisharea}</a>
+							<span class="split-line"></span>
+							<span class="text-muted hidden-xs">年份：</span><a href="/{seacms:sitepath}search.php?searchtype=5&tid={playpage:typeid}&year={playpage:publishtime}">{playpage:publishtime}
+							</a>
+						</p>
+						<p class="data"><span class="text-muted">主演：</span>{playpage:actor len=50} </p>
+						<p class="data"><span class="text-muted">导演：</span>{playpage:director} </p>
+						<p class="data hidden-sm hidden-xs"><span class="text-muted">更新：</span>{playpage:addtime}</p>
+						<p class="desc text-collapse hidden-xs">
+							<span class="left text-muted">简介：</span>
+							<span class="sketch">{playpage:des len=30}</span>
+							<span class="data" style="display: none;">{playpage:des}</span>
+							<a class="details" href="javascript:;">详情 <i class="fa fa-angle-down"></i></a>
+						</p>
+						<div class="operate clearfix">
+							<div class="bdshare bdsharebuttonbox pull-right hidden-sm hidden-xs"></div>
+							<a class="btn btn-warm" href="{playpage:playlink}"><i class="fa fa-play"></i> 立即播放</a>
+							<a class="btn btn-default" href="javascript:viod()" onclick="reportErr({playpage:id})"><i class="fa fa-star"></i> 报错</a>							
+							<a class="btn btn-info dropdown-hover hidden-xs" href="javascript:;">
+								<div class="dropdown-box top fadeInDown clearfix">
+									<div class="item text-center">
+										<div class="qrcode-box">
+											<img class="img-responsive" src="images/img/paycode.png" width="120" />
+										</div>
+										<p class="text-muted">扫码支付任意金额</p>
+									</div>
+								</div>
+								<i class="fa fa-cny"></i> 打赏
+							</a>
+							<a class="btn btn-default dropdown-hover hidden-xs" href="javascript:;">
+								<div class="dropdown-box top fadeInDown clearfix">
+									<div class="item text-center">
+										<div class="qrcode-box active" style="background-color: #ffffff;">
+											<img class="icon" src="images/img/favicon.ico" width="35" height="35" />
+											<span id="qrcode" data-link="0" data-dark="#000000" data-light="#ffffff"></span>
+										</div>
+										<p>扫一扫用手机观看</p>
+									</div>
+								</div>
+								<i class="fa fa-qrcode font14"></i> 手机观看
+							</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-wide-7 col-xs-1 padding-0">
+				<!-- <div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd">
+								<div class="col-xs-1">
+									<div style="padding: 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位</h5></div>
+								</div>
+							</div>
+						</div>				
+					</div> -->					
+					{seacms:load vod/playlist.html}
+					{seacms:load vod/like.html}				
+				</div>
+				<div class="col-md-wide-3 col-xs-1 myui-sidebar hidden-sm hidden-xs">
+					{seacms:load vod/hot.html}
+					<!-- 	{seacms:load block/art_hot.html} -->
+				<!-- 	<div class="myui-panel myui-panel-bg clearfix">
+						<div class="myui-panel-box clearfix">
+							<div class="myui-panel_bd">
+								<div class="col-xs-1">
+									<div style="padding: 100px 35px; background-color: #f5f5f5; border-radius: 5px; text-align: center;"><h5 class="margin-0 text-muted">广告位</h5></div>
+								</div>
+							</div>
+						</div>				
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">Myui.Other.Topbg($(".topline").offset().top);</script>
+		<div style="display:none;">{playpage:hit}</div>
+		{seacms:foot}
+	</body>
+</html>

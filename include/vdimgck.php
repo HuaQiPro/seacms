@@ -19,8 +19,8 @@ if(function_exists("imagecreate"))
 	ImageColorAllocate($im, 255,255,255);
 
 	//背景线
-	$lineColor1 = ImageColorAllocate($im,rand(200,255), rand(200,255), rand(200,255));
-	$lineColor2 = ImageColorAllocate($im,rand(200,255), rand(200,255), rand(200,255));
+	$lineColor1 = ImageColorAllocate($im,240,220,180);
+	$lineColor2 = ImageColorAllocate($im,255,255,255);
 	for($j=3;$j<=16;$j=$j+3)
 	{
 		imageline($im,2,$j,48,$j,$lineColor1);
@@ -31,20 +31,17 @@ if(function_exists("imagecreate"))
 	}
 
 	//画边框
-	//$bordercolor = ImageColorAllocate($im, 0x99,0x99,0x99);
-	//imagerectangle($im, 0, 0, 46, 18, $bordercolor);
+	$bordercolor = ImageColorAllocate($im, 0x99,0x99,0x99);
+	imagerectangle($im, 0, 0, 46, 18, $bordercolor);
 
 	//输出文字
-	//$fontColor = ImageColorAllocate($im, 48,61,50);
-	
+	$fontColor = ImageColorAllocate($im, 48,61,50);
 	for($i=0;$i<$rndcodelen;$i++)
 	{
 		$bc = mt_rand(0,1);
 		$rndstring[$i] = strtoupper($rndstring[$i]);
-		$fontColor=imagecolorallocate($im,rand(0,120), rand(0,120), rand(0,120));
 		imagestring($im, 5, $i*10+6, mt_rand(2,4), $rndstring[$i], $fontColor);
 	}
-
 
 	header("Pragma:no-cache\r\n");
 	header("Cache-Control:no-cache\r\n");
