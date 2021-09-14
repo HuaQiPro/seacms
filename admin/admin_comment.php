@@ -20,7 +20,7 @@ if($action=="editcomsave")
 		$adminmsg = str_replace(">","&gt;",$adminmsg);
 		$adminmsg = str_replace("  ","&nbsp;&nbsp;",$adminmsg);
 		$adminmsg = str_replace("\r\n","<br/>\n",$adminmsg);
-		$msg = $msg."<br/>\n"."<font color=red>管理员回复： $adminmsg</font>\n";
+		$msg = $msg."<br/>\n"."<span>管理员回复： $adminmsg</span>\n";
 	}
 	$query = "update `sea_comment` set username='$username',msg='$msg',ischeck=1 where id=$id";
 	$dsql->ExecuteNoneQuery($query);
@@ -38,7 +38,7 @@ if($action=="editgbooksave")
 		$adminmsg = str_replace(">","&gt;",$adminmsg);
 		$adminmsg = str_replace("  ","&nbsp;&nbsp;",$adminmsg);
 		$adminmsg = str_replace("\r\n","<br/>\n",$adminmsg);
-		$msg = $msg."<br/>\n"."<font color=red>管理员回复： $adminmsg</font>\n";
+		$msg = $msg."<br/>\n"."<span>管理员回复： $adminmsg</span>\n";
 	}
 	$query = "update `sea_guestbook` set uname='$uname',msg='$msg',ischeck=1 where id=$id";
 	$dsql->ExecuteNoneQuery($query);
