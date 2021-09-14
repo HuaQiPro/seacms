@@ -1,5 +1,5 @@
 ----------------------------------------
----  海洋CMS  www.seacms.net   ---
+---  海洋CMS  www.seacms.com   ---
 ---  请访问官网获取详细教程资料  ---
 ----------------------------------------
 
@@ -43,6 +43,6 @@
 特殊格式播放器，如云盘下载、弹幕播放器，用英文逗号","隔开。如：
 云盘下载播放器（无密码）：https://pan.baidu.com/s/xxxxxx
 云盘下载播放器（含密码）：https://pan.baidu.com/s/xxxxxx,12345 （12345为密码）
-弹幕视频播放器（不含bili弹幕）：https://www.seacms.net/v.mp4
-弹幕视频播放器（含有bili弹幕）：https://www.seacms.net/v.mp4,111（111为bili视频aid参数）
+弹幕视频播放器（不含bili弹幕）：https://www.seacms.com/v.mp4
+弹幕视频播放器（含有bili弹幕）：https://www.seacms.com/v.mp4,111（111为bili视频aid参数）
 弹幕视频播放器采用danmaku接口，也可调用bilibili.tv（哔哩哔哩）视频站的弹幕，按格式填写bilibili视频的aid参数即可。

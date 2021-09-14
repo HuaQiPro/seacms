@@ -28,7 +28,7 @@
 	3: 列出某一栏目数据  select  *  from sea_data where tid =(select tid from sea_type where tname = '频道1') <br/>
 	4: 删除某一栏目数据  delete  from sea_data where tid =(select tid from sea_type where tname = '频道1') <br/>
 	5: 清空所有数据（id还原为从0开始） TRUNCATE sea_data/sea_playdata/sea_content 三个表各执行一次<br/>
-    <span style="color:#F00">(请谨慎操作，以免造成数据错误！<a target="_blank" href="//www.seacms.net">[?]</a>)</span><br/>
+    <span style="color:#F00">(请谨慎操作，以免造成数据错误！<a target="_blank" href="//www.seacms.com">[?]</a>)</span><br/>
 		</td>
       </tr>
     </table>
@@ -54,7 +54,7 @@
     		$num=$dsql->ExecuteNoneQuery2($sql);
             if($num==-1)
             {
-                echo '<div style="color:#F00;text-align:center">'.$dsql->GetError().'<br />SQL执行失败，请检查SQL语句是否正确<a href="//www.seacms.net">[?]</a></div></tr></table>';
+                echo '<div style="color:#F00;text-align:center">'.$dsql->GetError().'<br />SQL执行失败，请检查SQL语句是否正确<a href="//www.seacms.com">[?]</a></div></tr></table>';
                 viewFoot();
                 exit();
 			}

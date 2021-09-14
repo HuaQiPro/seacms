@@ -202,7 +202,7 @@ function getRunTime($t1)
 
 function getPowerInfo()
 {
-	return "<p>Powered by <strong><a href=\"http://www.seacms.net\" title=\"".$GLOBALS['cfg_softname']."\" target=\"_blank\">".$GLOBALS['cfg_soft_enname']."</a></strong> <em>".$GLOBALS['cfg_version']."</em></p>";
+	return "<p>Powered by <strong><a href=\"http://www.seacms.com\" title=\"".$GLOBALS['cfg_softname']."\" target=\"_blank\">".$GLOBALS['cfg_soft_enname']."</a></strong> <em>".$GLOBALS['cfg_version']."</em></p>";
 }
 
 function dd2char($ddnum)
