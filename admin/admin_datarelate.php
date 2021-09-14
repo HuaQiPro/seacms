@@ -248,6 +248,28 @@ elseif($action=="redown")
 	echoFoot();
 	exit();	
 }
+elseif($action=="CAV")
+{
+	$query="TRUNCATE sea_data";
+	$dsql->ExecuteNoneQuery($query);
+	$query2="TRUNCATE sea_playdata";
+	$dsql->ExecuteNoneQuery($query2);
+	$query3="TRUNCATE sea_content";
+	$dsql->ExecuteNoneQuery($query3);
+	echoHead();
+	echo "<h3><br><br>成功清空全站视频数据！</h3>";
+	echoFoot();
+	exit();	
+}
+elseif($action=="CAN")
+{
+	$query="TRUNCATE sea_news";
+	$dsql->ExecuteNoneQuery($query);
+	echoHead();
+	echo "<h3><br><br>成功清空全站新闻数据！</h3>";
+	echoFoot();
+	exit();	
+}
 
 //清除多余数据图片
 elseif($action=="sumitcheck"){
@@ -506,7 +528,7 @@ elseif($action=="dorandomset"){
 	echo "<div style='font-size:13px'>正在更新。。。<br>";
 	while($row = $dsql->GetArray('randomset'))
 	{
-		$hit=rand(0, $maxHit);
+		$hit=rand($minHit, $maxHit);
 		$upSql = "update `sea_data` set v_hit=".$hit." where v_id =".$row[v_id];
 		$dsql->ExecNoneQuery($upSql);
 		echo '<body>成功更新&nbsp;ID:'.$row[v_id];
@@ -514,7 +536,7 @@ elseif($action=="dorandomset"){
 		echo '&nbsp;点击量:&nbsp;'.$hit.'<br>';
 	}
 	echo "请等待".($time/1000)."秒更新下一页</div>";
-	echo "<script>function urlto(){location.href='admin_datarelate.php?action=dorandomset&time=".$time."&maxHit=".$maxHit."&page=".($pageval+1)."';}
+	echo "<script>function urlto(){location.href='admin_datarelate.php?action=dorandomset&time=".$time."&maxHit=".$maxHit."&maxHit=".$minHit."&page=".($pageval+1)."';}
 	setInterval('urlto()',".$time.");</script>";
 	exit();	
 }

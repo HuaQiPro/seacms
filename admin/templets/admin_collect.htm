@@ -88,7 +88,7 @@ function ShowHide(objname){
               </td>
             </tr>
             <?php
-$numPerPage=6;
+$numPerPage=20;
 $page = isset($page) ? intval($page) : 1;
 if($page==0) $page=1;
 $cofrom=isset($cofrom) ? $cofrom : 0;
@@ -172,7 +172,7 @@ $cname=$row->cname;
             <td height=27 colspan="7" align="center"  ><div class="cuspages">
                 <div class="pages"><a href="?page=1">首页</a>&nbsp;<a href="?page=<?php echo $page-1;?>">上一页</a>&nbsp;<?php echo makePageNumber($page,8,$TotalPage,'adslist');?>&nbsp;<a href="?page=<?php echo $page+1;?>">下一页</a>&nbsp;<a href="?page=<?php echo $TotalPage;?>">尾页</a>&nbsp;
                   
-                  &nbsp;每页<b><?php echo $numPerPage;?></b>个记录，现在是:<b><span class="tx"><?php echo $page;?></span>/<?php echo $TotalPage;?></b>页，共<b><span id='recordcount'><?php echo $TotalResult;?></span></b>个记录。</div>
+                  &nbsp;每页<?php echo $numPerPage;?>个记录，共<?php echo $TotalResult;?>个记录。</div>
               </div></td>
           </tr>
         </table>

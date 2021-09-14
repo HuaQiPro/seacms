@@ -113,8 +113,8 @@ function parseTopicPart($ptopicName,$templatePath,$id,$ptopicDes,$ptopicContent,
 	$content=$mainClassObj->parseGlobal($content);
 	$content=$mainClassObj->parseMenuList($content,"",$currentTypeId);
 	$content=$mainClassObj->parseAreaList($content);
-	$content=$mainClassObj->parseVideoList($content,$currentTypeId,$id);
-	$content=$mainClassObj->parseNewsList($content,$currentTypeId);
+	$content=$mainClassObj->parseVideoList($content,$currentTypeId,$id,'');
+	$content=$mainClassObj->parseNewsList($content,$currentTypeId,'','');
 	$content=$mainClassObj->parseTopicList($content);
 	$content=$mainClassObj->parseLinkList($content);
 	$content = str_replace("{seacms:topicname}",$ptopicName,$content);

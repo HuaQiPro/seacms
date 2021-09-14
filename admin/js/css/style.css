@@ -1,0 +1,95 @@
+@charset "utf-8";
+/*初始化部分样式 */
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;font-family:"Microsoft Yahei"; }
+*:focus {outline:none}
+input{-webkit-appearance}
+html,body{color: #676a6c;}
+body{background:#fff; overflow-x:hidden;font-size: 12px;line-height: 1.5em; }
+ul,li{ list-style:none;}
+a,a:link, a:visited{color: #676a6c; text-decoration:none;}
+a:focus{outline: none;}
+img{ border:none;}
+h1,h2,h3,h4,h5{font-weight:normal;color: #676a6c;}
+table{border-collapse:collapse;}
+input,label,img,th {vertical-align: middle;}
+
+/*定义清除浮动 */
+.clearfloat:after{ content:'.';display:block;clear: both;overflow:hidden;visibility:hidden;font-size:0;line-height:0;width:0;height:0; }
+.clearfloat{zoom:1;}
+
+
+/*整体框架配色修改 Muntime.com*/
+.col-left,.left,.lf{float: left;}
+.col-right,.right,.rt,.fr{float: right;}
+.header{width: 100%;height: 80px;background: #293846;position:relative;}
+.header .logo{float:left;width:136px;height:80px;margin-right:10px;position: relative;}
+.logo a{display: block;height:55px;line-height: 55px;margin-top:25px;width: 145px;}
+.invisible {visibility: hidden;}
+.header .log{height: 24px;position: absolute;left: 0px;top: 0px; line-height: 24px; margin-left: 10px; font-size: 12px;}
+.header .log span,.rt-col span{padding: 0px 5px; color: #2f4050;}
+.rt-col{height: 24px;background: #1e2933;width: 100%;position: absolute;right: 0px;top: 0px;border-bottom: 1px solid #1c2730;line-height: 24px;text-align: right;font-size: 12px;padding-right: 10px;}
+.header .log,.header .log a,.rt-col,.rt-col a{color: #a7b1c2;}
+#top_menu{position: absolute;left: 145px;bottom: 0px;height: 55px;line-height: 55px}
+#top_menu li{float: left;}
+#top_menu li a{display: block;width: 80px;text-align: center;color: #DFE4ED;font-size: 14px;}
+#top_menu .on,#top_menu li:hover{background: #19aa8d;}
+#top_menu .on a{color: #fff;}
+#content .left_menu{width: 145px;position: relative;display: block;padding: 10px 0px 28px 0px;overflow: hidden;background: #2f4050;}
+#Scroll {float: left;width: 145px;overflow: hidden;}
+#leftMain .f14{background: #293846;padding: 8px 15px;font-size: 14px;color: #DFE4ED;border-left:4px solid #19aa8d; }
+#openClose{display: none;}
+#leftMain ul{padding: 5px 0px}
+#leftMain ul li{padding: 5px 20px;}
+#leftMain ul li a{display: block;color: #acb5c6;font-size: 12px;}
+#leftMain i {color: #2f4050;}
+#leftMain .on i {color: #19aa8d;}
+.f14 .switchs{display: block;float: right;height: 20x;width: 14px;line-height: 20px;}
+.f14 .switchs:before{content: "\f105";padding:5px;cursor: pointer; }
+#leftMain .f14 .on:before{content: "\f107";}
+#leftMain ul .on a,#leftMain ul li:hover a{display: block;color: #19aa8d;}
+.crumbs{position: absolute;height: 30px;line-height: 30px;width:100%;font-size: 12px;background: #f3f3f3;border-bottom:1px solid #dbdbdb;left: 0px; top:80px;}
+.crumbs:before{content: "\f108";padding-left: 160px}
+.crumbs .shortcut{position: absolute;right: 0px;top: 0px}
+.shortcut a{margin: 0px 5px;font-size: 12px;padding: 2px 8px;}
+.shortcut a:nth-child(3){margin-right: 88px;}
+.col-1{background:#fff;}
+.col-1 .content{position: relative;overflow: hidden;padding: 3px 5px 0px 5px; margin-top: 30px;}
+.scroll{background: #2f4050;position: absolute;left: 0px;bottom: 0px;width: 125px;height: 22px;overflow: hidden;z-index: 100;padding: 3px 10px;}
+.scroll a{width: 48px;height: 14px;line-height:14px;margin: 0  6px;display: inline-block;color: #fff;background: #19aa8d;text-align: center;border-radius: 2px;}
+.scroll .per:before{content: "\f106";}
+.scroll .next:before{content: "\f107";}
+.fav-nav{padding: 0 0 0 12px;position: absolute;left: 0;bottom: 0px;width: 100%;height: 26px;line-height: 26px;border-top:1px solid #dbdbdb;background: #f3f3f3; }
+.fav-nav div{float: left;}
+.panel-add em{font-style:normal;font-size:0;}
+#panellist a{font-size:12px;}
+#paneladd a em:before{content: "\f067";font-size:12px;}
+#panellist span{margin-right: 10px;border-right:1px solid #dbdbdb;padding-right: 5px; }
+#panellist span .panel-delete:before{content: "x";font-size:12px;}
+#rightMain{background: #fff;}
+.tab_web:hover{background: #19aa8d;}
+.tab-web-panel{display: none;padding:5px 12px;border: 1px solid #dbdbdb;margin-left: -5px; }
+.tab-web-panel a{display:block;padding-bottom:5px; }
+.tab_web span{display: block;height: 55px;}
+#top_menu .tab_web a{min-width: 80px;width:auto;padding:0px 5px; }
+
+
+/*登入界面修改 */
+#canvas{background: #2f4050;width: 100%;height: 100%;overflow: hidden;}
+.admin_login{width:300px;height:310px;overflow:hidden;padding:40px;background: #fff; box-shadow:0 -15px 30px #293846;border-radius:5px;position: absolute;left:50%;top: 50%;margin-left: -190px;margin-top: -250px;}
+.admin_title{font-size: 20px;font-weight: bold;text-align: center;margin-bottom: 15px;color: #2f4050}
+.admin_title em{display: block;font-size: 12px;margin-top: 8px;}
+.admin_user,.admin_pwd,.admin_val,.admin_sub{margin: 10px 0;height: 40px;overflow: hidden;clear: both;position: relative;border: 1px solid #dbdbdb;border-radius: 3px; }
+.admin_user:hover,.admin_pwd:hover,.admin_val:hover{border-color:#2f4050}
+.admin_sub{border: none;}
+.login_txt{font-size: 14px;height: 26px;line-height: 26px;padding: 8px 5%;width: 90%;text-indent: 2em;border: none;color: #676a6c;}
+.login_txt:focus{color: #676a6c; }
+.submit_btn{width: 100%;height: 40px;border: none;font-size: 16px;background: #2f4050;color: #FFF;cursor: pointer;}
+.submit_btn:hover{background: #293846;color: #f4f4f4;}
+.admin_info{padding-top: 5px;}
+.admin_info p{color: #2f4050;font-size: 12px;text-align: center;margin: 3px 0;}
+.admin_val input{width: 90px;}
+#yzm img{width: 120px;height: 40px;}
+.admin_user::before,.admin_pwd::before,.admin_val::before{font-family: 'FontAwesome';position: absolute;top: 0;left: 10px;height: 42px;line-height: 42px;width:25px;text-align: center; font-size: 16px;color: #2f4050;}
+.admin_user::before{content: "\f007";}
+.admin_pwd::before{content: "\f13e";}
+.admin_val::before{content: "\f11c";}

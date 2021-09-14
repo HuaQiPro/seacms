@@ -22,6 +22,7 @@ class DB_MySQL
 	var $dbUser;
 	var $dbPwd;
 	var $dbName;
+	var $dbPort;
 	var $dbPrefix;
 	var $result;
 	var $queryString;
@@ -51,18 +52,20 @@ class DB_MySQL
 		$this->dbUser   =  $GLOBALS['cfg_dbuser'];
 		$this->dbPwd    =  $GLOBALS['cfg_dbpwd'];
 		$this->dbName   =  $GLOBALS['cfg_dbname'];
+		$this->dbPort   =  $GLOBALS['cfg_dbport'];
 		$this->dbPrefix =  $GLOBALS['cfg_dbprefix'];
 		$this->result["me"] = 0;
 		$this->Open($pconnect);
 	}
 
 	//用指定参数初始数据库信息
-	function SetSource($host,$username,$pwd,$dbname,$dbprefix="sea_")
+	function SetSource($host,$username,$pwd,$dbname,$port,$dbprefix="sea_")
 	{
 		$this->dbHost = $host;
 		$this->dbUser = $username;
 		$this->dbPwd = $pwd;
 		$this->dbName = $dbname;
+		$this->dbPort = $port;
 		$this->dbPrefix = $dbprefix;
 		$this->result["me"] = 0;
 	}
@@ -85,13 +88,14 @@ class DB_MySQL
 		}
 		else
 		{
+			if($this->dbPort=="" OR empty($this->dbPort)){$this->dbPort=3306;}
 			if(!$pconnect)
 			{
-				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName);
+				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName,$this->dbPort);
 			}
 			else
 			{
-				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName);
+				$this->linkID  = @mysqli_connect($this->dbHost,$this->dbUser,$this->dbPwd,$this->dbName,$this->dbPort);
 			}
 
 			//复制一个对象副本

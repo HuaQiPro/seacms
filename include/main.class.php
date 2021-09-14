@@ -325,7 +325,7 @@ class MainClass_Template {
 								break;
 							case "link" :
 								$v = (trim ( $str ) == "type" || trim ( $str ) == "sectype") ? $row ['tid'] : trim ( $row );
-								$loopstrMlistNew = str_replace ( $matchfieldvalue, getCascadeLink ( $str, $v ), $loopstrMlistNew );
+								$loopstrMlistNew = str_replace ( $matchfieldvalue, getCascadeLink ( $str, $v,'' ), $loopstrMlistNew );
 								break;
 							case "tid" :
 								$loopstrMlistNew = str_replace ( $matchfieldvalue, $row ['tid'], $loopstrMlistNew );
@@ -3475,6 +3475,21 @@ class MainClass_Template {
 		if ((strpos ( $strIf, '==' ) === false) && (strpos ( $strIf, '=' ) > 0)) {
 			$strIf = str_replace ( '=', '==', $strIf );
 		}
+		if (strpos ( $strIf, '{' ) > 0) {
+			$strIf = str_replace ( '{', '', $strIf );
+		}
+		if (strpos ( $strIf, '}' ) > 0) {
+		$strIf = str_replace ( '}', '', $strIf );
+		}
+		if (strpos ( $strIf, ':' ) > 0) {
+			$strIf = str_replace ( ':', '', $strIf );
+		}
+		if (strpos ( $strIf, '[' ) > 0) {
+			$strIf = str_replace ( '[', '', $strIf );
+		}
+		if (strpos ( $strIf, ']' ) > 0) {
+			$strIf = str_replace ( ']', '', $strIf );
+		}
 		$strIfArr = explode ( '==', $strIf );
 		return (empty ( $strIfArr [0] ) ? 'NULL' : $strIfArr [0]) . "==" . (empty ( $strIfArr [1] ) ? 'NULL' : $strIfArr [1]);
 	}
@@ -3580,6 +3595,11 @@ class MainClass_Template {
 					$strElseIfThen0 = addslashes ( getSubStrByFromAndEnd ( $elseIfSubArray [0], "}", "", "start" ) );
 					if (strpos ( $strElseIf0, '==' ) === false && strpos ( $strElseIf0, '=' ) > 0)
 						$strElseIf0 = str_replace ( '=', '==', $strElseIf0 );
+					if (strpos ( $strElseIf0, '{' ) > 0)$strElseIf0 = str_replace ( '{', '', $strElseIf0 );
+					if (strpos ( $strElseIf0, '}' ) > 0)$strElseIf0 = str_replace ( '}', '', $strElseIf0 );
+					if (strpos ( $strElseIf0, ':' ) > 0)$strElseIf0 = str_replace ( ':', '', $strElseIf0 );
+					if (strpos ( $strElseIf0, '[' ) > 0)$strElseIf0 = str_replace ( '[', '', $strElseIf0 );
+					if (strpos ( $strElseIf0, ']' ) > 0)$strElseIf0 = str_replace ( ']', '', $strElseIf0 );
 					@eval ( "if(" . $strElseIf0 . "){\$resultStr=\"$strElseIfThen0\";\$elseIfFlag=true;}" );
 					$content = str_replace ( $iar [0] [$m], $resultStr, $content );
 				}

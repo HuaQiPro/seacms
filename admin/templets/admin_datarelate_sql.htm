@@ -18,7 +18,15 @@
 <table class="tb">
     <tr class="thead"><td class="td_title">SQL高级助手</td></tr>
     <tr><td><textarea name="sql" rows="3" cols="110" value=""></textarea></td></tr>
-	<tr><td><input type="submit" class="btn"  value="执行SQL语句">  <input type="reset" value="清 除" class="btn"></td></tr>
+	<tr><td>
+	<input type="submit" class="btn"  value="执行SQL语句">  
+	&nbsp;&nbsp;&nbsp;&nbsp;<input type="reset" value="清 除" class="btn">
+	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn" value="一键清空视频数据" onClick="if(confirm('注意：该操作将清空全站视频数据，请谨慎操作！')){location.href='?action=CAV';}else{return false;}">
+	&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="btn" value="一键清空新闻数据" onClick="if(confirm('注意：该操作将清空全站新闻数据，请谨慎操作！')){location.href='?action=CAN';}else{return false;}">
+	</td></tr>
+	
+	
+	
 	<tr><td>
 	1: 列出所有数据  select * from sea_data<br/>
 	2: 删除所有数据（id不还原为0）  delete  from sea_data/sea_playdata/sea_content 三个表各执行一次<br/>

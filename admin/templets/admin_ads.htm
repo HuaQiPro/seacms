@@ -79,7 +79,7 @@ $aid=$row->aid;
 }
 ?>
     <tr>
-    <td colspan="7" height="30" class="td_border"><div class="cuspages"><div class="pages">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onclick="if(confirm('确定要批量删除吗')){return true}else{return false}" class="rb1"  />&nbsp;&nbsp; 页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1">首页</a> <a href="?page=1">首页</a> <a href="?page=<?php echo ($page-1);?>">上一页</a> <span><?php echo makePageNumber($page, 10, $TotalPage, "adslist");?></span><a href="?page=<?php echo ($page+1);?>">下一页</a> <a href="?page=<?php echo $TotalPage;?>">尾页</a></div></div></td></tr>
+    <td colspan="7" height="30" class="td_border"><div class="cuspages"><div class="pages">全选<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','e_id[]')" />反选<input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','e_id[]')" /><input type="submit" value="批量删除" onclick="if(confirm('确定要批量删除吗')){return true}else{return false}" class="rb1"  />&nbsp;&nbsp; 页次<?php echo $page;?>/<?php echo $TotalPage;?> 每页<?php echo $numPerPage;?> 总收录数据<?php echo $TotalResult;?>条 <a href="?page=1">首页</a> <a href="?page=1">首页</a> <a href="?page=<?php echo ($page-1);?>">上一页</a> <a href="?page=<?php echo ($page+1);?>">下一页</a> <a href="?page=<?php echo $TotalPage;?>">尾页</a></div></div></td></tr>
 </TABLE>
 </form> 
 <?php

@@ -7,11 +7,29 @@
 <meta http-equiv="pragma" content="no-cache" />
 <link  href="img/style.css" rel="stylesheet" type="text/css" />
 <title>影片管理</title>
+<script src="js/jquery.js"></script>
+<script src="js/layer.js"></script>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <style type="text/css">
 select {font-size:12px;}
 </style>
+<script>
+//全屏弹出层
+    var show=function (id) {
+        var index = layer.open({
+            type: 2,          //默认弹出层类型
+			shade: 0,
+			isOutAnim: false,
+            title:"新闻编辑",  //弹出层角标名称
+            content: "?action=edit&id="+id,  //弹出层页面地址
+            area: ['800px', '500px'],    //弹出层大小
+            maxmin: true   //弹出层是否全屏
+        });
+        layer.full(index);  
+    }
+window.onload=parent.layer.closeAll(); //疯狂模式，关闭所有层
+</script>
 </head>
 <body>
 <!--当前导航-->
@@ -103,7 +121,7 @@ $contentUrl=getArticleLink($tid,$n_id,'');
 	<td id="star<?php echo $n_id;?>" class="td_border"><script>starView(<?php echo $row->n_commend;?>,<?php echo $n_id;?>,1)</script></td>
 	<td class="td_border"><span title="<?php echo MyDate('Y-m-d H:i:s',$row->n_addtime);?>"><?php echo isCurrentDay($row->n_addtime);?></span></td>
     <?php if($cfg_runmode2=='0'){?><td class="td_border"><?php isNewsMake($n_id,$contentUrl);?></td><?php }?>
-	<td class="td_border" align="center"><a href="?action=edit&id=<?php echo $n_id;?>">编辑</a> <a href="?action=del&id=<?php echo $n_id;?>" onClick="return confirm('确定要删除吗')">删除</a> <a href="?action=<?php echo $n_recycled=='ok'?'restore':'hide' ?>&id=<?php echo $n_id;?>"><?php echo $n_recycled=='ok'?'还原':'隐藏' ?></a></td>
+	<td class="td_border" align="center"><a href="javascript:;" onclick="javascript:show('<?php echo $n_id;?>');">编辑</a> <a href="?action=del&id=<?php echo $n_id;?>" onClick="return confirm('确定要删除吗')">删除</a> <a href="?action=<?php echo $n_recycled=='ok'?'restore':'hide' ?>&id=<?php echo $n_id;?>"><?php echo $n_recycled=='ok'?'还原':'隐藏' ?></a></td>
   </tr>
 <?php }?>
 
