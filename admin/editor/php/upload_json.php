@@ -13,7 +13,7 @@ $save_path = $php_path . '../../../uploads/editor/';
 $save_url = '/uploads/editor/';
 //定义允许上传的文件扩展名
 $ext_arr = array(
-	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
+	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp','webp'),
 	'flash' => array('swf', 'flv'),
 	'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb'),
 	'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2'),

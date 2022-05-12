@@ -45,7 +45,7 @@ exit( );
 class uploader {
         var $saveDir = 'uploads/allimg';
         var $subDir = 'Ym';
-        var $allowExts = array('jpg', 'gif',  'png', 'rar', 'zip', 'bmp');
+        var $allowExts = array('jpg', 'gif',  'png', 'webp', 'jpeg', 'bmp');
         var $maxSize = '5120';
         var $hasThumb = 0; //是否生成缩略图
         var $imageWidth= '300';
@@ -118,7 +118,7 @@ class uploader {
 					$this->_savePath = $this->saveDir."/".date($this->subDir);
 				}$this->mkDirs($this->_savePath);
                 //上传文件是否为图片
-                if(in_array(strtolower($this->_fileExt), array('jpg','gif','png'))) {
+                if(in_array(strtolower($this->_fileExt), array('jpg','gif','png','jpeg','webp'))) {
                         $this->_isimage = true;
                 }else {
                         $this->_isimage = false;
@@ -165,10 +165,8 @@ class uploader {
                         $this->saveToFile();
                         return ;
                 }
-                //上传图片宽度超过定义则进行裁剪,否则直接复制
-                
-                        //图片宽度没有超过定义则直接复制,这会极大加快处理速度(GD太消耗系统资源)
-                        copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
+
+                copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
               
                 //如果设置自动缩略图var $hasThumb = 1则生成缩略图
                 if($this->hasThumb) {

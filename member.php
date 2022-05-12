@@ -343,7 +343,97 @@ if($action=='chgpwdsubmit')
 	}
 	$result  = filter_var($email, FILTER_VALIDATE_EMAIL);if($result==false){ShowMsg('请输入正确的邮箱地址','-1');exit();}
 
-//处理头像上传	
+//处理头像上传
+function ImageResize2($srcFile,$toW,$toH,$toFile="")
+{
+
+	if($toFile=="")
+	{
+		$toFile = $srcFile;
+	}
+	
+	$srcInfo = getimagesize($srcFile);
+	switch ($srcInfo[2])
+	{
+		case 1:
+			$im = imagecreatefromgif($srcFile);
+			break;
+		case 2:
+			$im = imagecreatefromjpeg($srcFile);
+			break;
+		case 3:
+			$im = imagecreatefrompng($srcFile);
+			break;
+		case 18:
+			$im = imagecreatefromwebp($srcFile);
+			break;
+		case 6:
+			$im = imagecreatefromwbmp($srcFile);
+			break;
+	}
+	$srcW=ImageSX($im);
+	$srcH=ImageSY($im);
+	if($srcW<=$toW && $srcH<=$toH )
+	{
+		return true;
+	}
+	$toWH=$toW/$toH;
+	$srcWH=$srcW/$srcH;
+	if($toWH<=$srcWH)
+	{
+		$ftoW=$toW;
+		$ftoH=$ftoW*($srcH/$srcW);
+	}
+	else
+	{
+		$ftoH=$toH;
+		$ftoW=$ftoH*($srcW/$srcH);
+	}
+	if($srcW>$toW||$srcH>$toH)
+	{
+		if(function_exists("imagecreatetruecolor"))
+		{
+			@$ni = imagecreatetruecolor($ftoW,$ftoH);
+			if($ni)
+			{
+				imagecopyresampled($ni,$im,0,0,0,0,$ftoW,$ftoH,$srcW,$srcH);
+			}
+			else
+			{
+				$ni=imagecreate($ftoW,$ftoH);
+				imagecopyresized($ni,$im,0,0,0,0,$ftoW,$ftoH,$srcW,$srcH);
+			}
+		}
+		else
+		{
+			$ni=imagecreate($ftoW,$ftoH);
+			imagecopyresized($ni,$im,0,0,0,0,$ftoW,$ftoH,$srcW,$srcH);
+		}
+		switch ($srcInfo[2])
+		{
+			case 1:
+				imagegif($ni,$toFile);
+				break;
+			case 2:
+				imagejpeg($ni,$toFile,99);
+				break;
+			case 3:
+				imagepng($ni,$toFile);
+				break;
+			case 18:
+				imagewebp($ni,$toFile);
+				break;
+			case 6:
+				imagebmp($ni,$toFile);
+				break;
+			default:
+				return false;
+		}
+		imagedestroy($ni);
+	}
+	imagedestroy($im);
+	return true;
+}	
 	if($_FILES['image']['name'] !="" AND $cfg_upic=='1'){
 		
         $file_name = $_FILES['image']['name'];
@@ -352,9 +442,9 @@ if($action=='chgpwdsubmit')
         $file_type = $_FILES['image']['type'];
         $name_arr = explode('.',$_FILES['image']['name']);
         $file_ext=strtolower(end($name_arr));
-        $extensions= array("jpeg","jpg","png","gif","bmp");
+        $extensions= array("jpeg","jpg","png","gif","bmp","webp");
         /* 规定可以上传的扩展名文件 */
-		if($file_size > 204800) {$errors='头像文件大小不能超过200KB';ShowMsg($errors,'-1');exit;} 
+		if($file_size > 2048000) {$errors='头像文件大小不能超过2M';ShowMsg($errors,'-1');exit;} 
 		if(in_array($file_ext,$extensions)=== false){$errors="头像文件必须是图片";ShowMsg($errors,'-1');exit;}
 		$is_img = getimagesize($_FILES["image"]["tmp_name"]);
 		if(!$is_img){$errors="头像文件必须是图片";ShowMsg($errors,'-1');exit;}
@@ -367,7 +457,11 @@ if($action=='chgpwdsubmit')
 		$picok=move_uploaded_file($file_tmp,$path2); 
 		if($picok==false){$path2 ="";}		
 		if($picok AND $oldpic !='uploads/user/a.png'){unlink($oldpic);}
-}
+	}
+	if($path2 !=""){
+	$filePath = sea_ROOT.'/'.$path2;
+	$errno2= ImageResize2($filePath,$cfg_ddimg_width="100",$cfg_ddimg_height="100",$toFile="");
+	}
 	
 	if($path2 ==""){$path2=$oldpic;}
 	$nickname = RemoveXSS(stripslashes($nickname));

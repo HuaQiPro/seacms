@@ -147,7 +147,7 @@ function hide(){
             </tr>
             <tr>
               <td class="label">图片替换规则：</td>
-              <td><textarea name="pic_trim" id="pic_trim" rows="3" cols="40" wrap="off"></textarea>
+              <td><textarea name="pic_trim" id="pic_trim" rows="3" cols="40" wrap="off"><?php echo getrulevalueh($loopstr,"pic_trim");?></textarea>
                 <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('pic_trim')" /></td>
             </tr>
           </tbody>

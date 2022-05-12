@@ -20,6 +20,19 @@ if($action=="set")
 	ShowMsg("成功保存设置!","admin_ping.php");
 	exit;
 }
+if($action=="reset"){
+	$query = "update `sea_data` set v_push=0";
+    $dsql->ExecuteNoneQuery($query);
+	ShowMsg("已将所有视频状态修改为未推送!","admin_ping.php");
+	exit;
+}
+elseif($action=="resetn"){
+	$query = "update `sea_news` set n_push=0 ";
+    $dsql->ExecuteNoneQuery($query);
+	ShowMsg("已将所有新闻状态修改为未推送!","admin_ping.php");
+	exit;
+}
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -52,8 +65,10 @@ if($action=="set")
 </tr>
 <tr>
 <td width="90%" align="left" height="30" class="td_border">
-<a href="?action=v_all"><input type=button value="批量推送新视频" οnclick="window.location.href('?action=v_all')"></a> &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="?action=n_all"><input type=button value="批量推送新文章" οnclick="window.location.href('?action=n_all')"></a> 
+<a href="?action=v_all"><input type=button value="批量推送新视频" οnclick="window.location.href('?action=v_all')"></a> &nbsp;&nbsp;
+<a href="?action=n_all"><input type=button value="批量推送新文章" οnclick="window.location.href('?action=n_all')"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="javascript:if(confirm('确定重置所有视频为未推送吗?该操作不可恢复！'))location='?action=reset'"><input type=button value="重置所有视频为未推送"/></a> &nbsp;&nbsp;
+<a href="javascript:if(confirm('确定重置所有新闻为未推送吗?该操作不可恢复！'))location='?action=resetn'"><input type=button value="重置所有新闻为未推送" /></a> 
 </td>
 </tr>
 

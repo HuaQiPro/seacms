@@ -20,8 +20,16 @@ if(empty($id))
 	echo "err";
 	exit();
 }
+
+
+
 if($action=='send')
 {
+	
+	if($cfg_gbookstart=='2' AND $_SESSION['sea_user_name']==""){
+echo "<script>alert('对不起，需要登陆后发表评论！');</script>";
+exit();
+}
 	$validate = $captcha;
 	if($cfg_feedback_ck=='1')
 	{

@@ -142,6 +142,10 @@ function hide(){
                 介绍 
                 <input type="checkbox" class="checkbox" name="fields[]" value="jq" onclick="if(this.checked){show('jqbody')}else{hide('jqbody')}" />
                 剧情分类
+				<input type="checkbox" class="checkbox" name="fields[]" value="longtxt" onclick="if(this.checked){show('longtxtbody')}else{hide('longtxtbody')}" />
+                备用说明
+				<input type="checkbox" class="checkbox" name="fields[]" value="tag" onclick="if(this.checked){show('tagbody')}else{hide('tagbody')}" />
+                关键词
 				<input type="checkbox" class="checkbox" name="fields[]" value="down" onclick="if(this.checked){show('downbody')}else{hide('downbody')}" checked/>
                 下载地址
 				</td>
@@ -383,13 +387,49 @@ function hide(){
           <tr>
             <td class="label">剧情分类结束代码：
               <div class="blue">开始标签 和 结束标签<br />
-                为空不截取演员</div></td>
+                为空不截取</div></td>
             <td><textarea name="jqb" rows="4" cols="80" wrap="off"></textarea></td>
           </tr>
           <tr>
             <td class="label">剧情分类替换规则：</td>
             <td><textarea name="jq_trim" id="jq_trim" rows="3" cols="50" wrap="off"></textarea>
               <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('jq_trim')" /></td>
+          </tr>
+            </tbody>
+		  <tbody id="longtxtbody" style="display:none">
+          <input type='checkbox' name='item[]' checked='1'  value='longtxt' style='display:none' />
+          <tr>
+            <td class="label">备用说明开始代码：</td>
+            <td><textarea name="longtxta" rows="4" cols="80" wrap="off"></textarea></td>
+          </tr>
+          <tr>
+            <td class="label">备用说明结束代码：
+              <div class="blue">开始标签 和 结束标签<br />
+                为空不截取</div></td>
+            <td><textarea name="longtxtb" rows="4" cols="80" wrap="off"></textarea></td>
+          </tr>
+          <tr>
+            <td class="label">备用说明替换规则：</td>
+            <td><textarea name="longtxt_trim" id="longtxt_trim" rows="3" cols="50" wrap="off"></textarea>
+              <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('longtxt_trim')" /></td>
+          </tr>
+            </tbody>
+		<tbody id="tagbody" style="display:none">
+          <input type='checkbox' name='item[]' checked='1'  value='tag' style='display:none' />
+          <tr>
+            <td class="label">关键词开始代码：</td>
+            <td><textarea name="taga" rows="4" cols="80" wrap="off"></textarea></td>
+          </tr>
+          <tr>
+            <td class="label">关键词结束代码：
+              <div class="blue">开始标签 和 结束标签<br />
+                为空不截取</div></td>
+            <td><textarea name="tagb" rows="4" cols="80" wrap="off"></textarea></td>
+          </tr>
+          <tr>
+            <td class="label">关键词替换规则：</td>
+            <td><textarea name="tag_trim" id="tag_trim" rows="3" cols="50" wrap="off"></textarea>
+              <input type="button" class="rb1" name="button" id="button" value="常用规则" onclick="SelTrim('tag_trim')" /></td>
           </tr>
             </tbody>
           <tbody id="downbody">

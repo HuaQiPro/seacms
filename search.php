@@ -60,6 +60,7 @@ return $array;
 
 
 require_once("include/common.php");
+require_once(sea_INC."/splitword.class.php");
 //前置跳转start
 $cs=$_SERVER["REQUEST_URI"];
 if($GLOBALS['cfg_mskin']==3 AND $GLOBALS['isMobile']==1){header("location:$cfg_mhost$cs");}
@@ -325,6 +326,7 @@ if(check_str($page,$key)){ShowMsg('请勿输入危险字符！','index.php','0',
 	$content=$mainClassObj->parseIf($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$searchPageStr = $content;
+	GetKeywords($searchword,$TotalResult);
 	echo str_replace("{seacms:runinfo}",getRunTime($t1),$searchPageStr) ;
 }
 
@@ -356,4 +358,35 @@ function checkSearchTimes($searchtime)
 		PutCookie("ssea2_search","ok",$searchtime);
 	}
 	
+}
+
+//获得关键字的分词结果，并保存到数据库
+function GetKeywords($keyword,$TotalResult)
+{
+	global $dsql;
+	$keyword = cn_substr($keyword,50);
+	$row = $dsql->GetOne("Select spwords From `sea_search_keywords` where keyword='".addslashes($keyword)."'; ");
+	if(!is_array($row))
+	{
+		if(strlen($keyword)>7)
+		{
+			$sp = new SplitWord();
+			$keywords = $sp->SplitRMM($keyword);
+			$sp->Clear();
+			$keywords = m_ereg_replace("[ ]{1,}"," ",trim($keywords));
+		}
+		else
+		{
+			$keywords = $keyword;
+		}
+		$inquery = "INSERT INTO `sea_search_keywords`(`keyword`,`spwords`,`count`,`result`,`lasttime`,`tid`)
+  VALUES ('".addslashes($keyword)."', '".addslashes($keywords)."', '1', '$TotalResult', '".time()."','0'); ";
+		$dsql->ExecuteNoneQuery($inquery);
+	}
+	else
+	{
+		$dsql->ExecuteNoneQuery("Update `sea_search_keywords` set count=count+1,tid='0',result='$TotalResult',lasttime='".time()."' where keyword='".addslashes($keyword)."'; ");
+		$keywords = $row['spwords'];
+	}
+	return $keywords;
 }

@@ -33,12 +33,23 @@ function openUpdateWin(width, height,str){
 	}
 }
 
+function getQueryVariable(variable,url)
+{
+       var query = url;
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
 function openCollectWin(width, height,str,url){
 	openWindow2(101,width,height,50)
 	var msgDiv=document.getElementById("msg")
 	var bgDiv=document.getElementById("bg")
 	var iWidth = document.documentElement.scrollWidth
-	var str="<div style='width:400px;'><div class='divboxtitle'><span onclick=\"closeWin();\" ><img src='../pic/btn_close.gif'/></span>提示</div><div  class='divboxbody'>"+str+"<br><input type='button' value='继续采集' id='openwin' class='btn'/>&nbsp;&nbsp;<input id='closewin' type='button' value='取   消' name='button' class='btn'  />&nbsp;&nbsp;<input id='clearColHis' type='button' value='取消记录' name='button' class='btn'  /></div><div class='divboxbottom'></div></div>"
+	var str="<div style='width:400px;'><div class='divboxtitle'><span onclick=\"closeWin();\" ><img src='../pic/btn_close.gif'/></span>提示</div><div  class='divboxbody'>"+str+"<br><input type='button' value='继续采集' id='openwin' class='btn'/>&nbsp;&nbsp;<input type='button' value='跳过出错页' id='openwinjump' class='btn'/>&nbsp;&nbsp;<input id='clearColHis' type='button' value='删除记录' name='button' class='btn'  />&nbsp;&nbsp;<input id='closewin' type='button' value='关闭提示' name='button' class='btn'  /></div><div class='divboxbottom' style='height:auto;line-height:16px;padding:5px;text-align:left'>如一直无法采集某一页，可选择【跳过出错页】<br>出错地址："+url+"<br>其中&pg=xxx是出错页数</div></div>"
 	msgDiv.style.cssText += "FONT-SIZE: 12px;top:100px;left:"+(iWidth-width)/2+"px;text-align:center;";
 	set(msgDiv,str)
 	document.getElementById("closewin").onclick = function(){
@@ -51,6 +62,19 @@ function openCollectWin(width, height,str,url){
 	document.getElementById("openwin").onclick = function(){
 		closeWin()
 		location.href=url;
+	}
+	document.getElementById("openwinjump").onclick = function(){	
+        var url2=url.replace('action=','&action=');
+		
+		//admin_reslib.php?action=all&rid=c2345&pg=58&url=http://2345.choudidi.top/zyapi.php&backurl=admin_reslib.php
+	    var action=(getQueryVariable("action",url2));
+		var rid=(getQueryVariable("rid",url2)); 
+		var pg=(getQueryVariable("pg",url2)); 
+		var url3=(getQueryVariable("url",url2)); 
+		var pg2=parseInt(pg)+1;
+		var Jurl='admin_reslib.php?action='+action+'&rid='+rid+'&pg='+pg2+'&url='+url3+'&backurl=admin_reslib.php';	
+		closeWin()
+		location.href=Jurl;
 	}
 }
 

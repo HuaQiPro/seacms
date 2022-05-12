@@ -3,7 +3,7 @@ $config=array();
 
 $config['type']=array("flash","img"); //上传允许type值
 
-$config['img']=array("jpg","bmp","gif","png"); //img允许后缀
+$config['img']=array("jpg","bmp","gif","png","webp","jpeg"); //img允许后缀
 $config['flash']=array("flv","swf"); //flash允许后缀
 
 $config['flash_size']=5120; //上传flash大小上限 单位：KB

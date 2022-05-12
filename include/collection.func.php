@@ -177,6 +177,8 @@ function getTestItemRule($tid,$previewurl,$previewpic='')
 	getTestAreaValue($loopstr,"plang","影片语言",$html,$removecode);
 	getTestAreaValue($loopstr,"state","影片连载",$html,$removecode);
 	getTestAreaValue($loopstr,"note","影片备注",$html,$removecode);
+	getTestAreaValue($loopstr,"longtxt","备用说明",$html,$removecode);
+	getTestAreaValue($loopstr,"tag","关键词",$html,$removecode);
 	getTestAreaValue($loopstr,"des","影片介绍",$html,$removecode);
 	//处理时间
 	if($getherday){

@@ -40,6 +40,19 @@ if($action=="downpic")
 		//echo $v_name;
 		//echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
 		$dsql->ExecuteNoneQuery($query);
+		
+		if($cfg_ddimg_width > 0){
+			$filePath = sea_ROOT.'/'.$picUrl;
+			$errno2= ImageResize2($filePath,$cfg_ddimg_width,$cfg_ddimg_height,$toFile="");
+			if($errno2===true)
+			{
+				echo "数据<font color=red>".$row->v_name."</font>的图片裁剪完成<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
+			}else 
+			{
+				echo "数据<font color=red>".$row->v_name."</font>的图片裁剪失败,错误号$errno2<br>";;
+			}
+		}
+		
 		if($photo_markdown==1){
 			$errno = $image->watermark($picUrl,2);
 			if($errno===true)
@@ -52,6 +65,7 @@ if($action=="downpic")
 				$dsql->ExecNoneQuery("update sea_data set v_pic= '".$picUrl."#error_".$errno."_marked' where v_id = ".$v_id);
 			}
 		}
+		
 		@ob_flush();
 	    @flush();
 
@@ -469,6 +483,24 @@ elseif($action=="batchsubmit")
 			echo  "<tr><td>ID为".$row->v_id."的数据替换成功</td></tr>";
 		}
 	}
+	echo "</table>";
+	viewFoot();
+}
+elseif($action=="batchsubmitN")
+{
+	viewHead("新闻批量替换");
+	echo "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" class=\"tb\"><tr class=\"thead\" align='left'><td class=\"td_title\">批量替换处理结果</td></tr>";
+		
+		$sql="select n_id,".$v_field." from `sea_news` where ".$v_field." like '%".$v_str1."%'";
+		$dsql->SetQuery($sql);
+		$dsql->Execute('replacestr');
+		while($row=$dsql->GetObject('replacestr'))
+		{
+			$query="update `sea_news` set ".$v_field."='".addslashes(str_replace($v_str1,$v_str2,$row->$v_field))."' where n_id='".$row->n_id."'";
+			$dsql->ExecuteNoneQuery($query);
+			echo  "<tr><td>ID为".$row->n_id."的新闻替换成功</td></tr>";
+		}
+
 	echo "</table>";
 	viewFoot();
 }
@@ -1021,6 +1053,19 @@ elseif($action=="downnewspic")
 		//echo '已下载<font color=red>';
 		//echo $n_name;
 		//echo "</font>的图片<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
+		
+		if($cfg_ddimg_width > 0){
+			$filePath = sea_ROOT.'/'.$picUrl;
+			$errno2= ImageResize2($filePath,$cfg_ddimg_width,$cfg_ddimg_height,$toFile="");
+			if($errno2===true)
+			{
+				echo "数据<font color=red>".$row->v_name."</font>的图片裁剪完成<a target=_blank href='../".$picUrl."'>预览图片</a><br>";
+			}else 
+			{
+				echo "数据<font color=red>".$row->v_name."</font>的图片裁剪失败,错误号$errno2<br>";;
+			}
+		}
+		
 		if($photo_markdown==1){
 			$errno = $image->watermark($picUrl,2);
 			if($errno===true)
@@ -1052,7 +1097,7 @@ function echoFieldOptions()
 	$fieldOptionArray[7][0]="数据发行地区" ; $fieldOptionArray[7][1]="v_publisharea";
 	$fieldOptionArray[8][0]="主分类ID" ; $fieldOptionArray[8][1]="tid";
 	$fieldOptionArray[9][0]="扩展分类ID" ; $fieldOptionArray[9][1]="v_extratype";
-	$fieldOptionArray[10][0]="数据推荐" ; $fieldOptionArray[10][1]="v_commend";
+	$fieldOptionArray[10][0]="数据星级" ; $fieldOptionArray[10][1]="v_commend";
 	$fieldOptionArray[11][0]="数据点击量" ; $fieldOptionArray[11][1]="v_hit";
 	$fieldOptionArray[12][0]="播放地址/来源" ; $fieldOptionArray[12][1]="v_playdata";
 	$fieldOptionArray[13][0]="下载地址" ; $fieldOptionArray[13][1]="v_downdata";
@@ -1085,6 +1130,31 @@ function echoFieldOptions()
 	$fieldOptionArray[40][0]="试看时长" ; $fieldOptionArray[40][1]="v_try";
 	$fieldOptionArray[41][0]="收费积分" ; $fieldOptionArray[41][1]="v_money";	
 	$fieldOptionArray[41][0]="收费分集" ; $fieldOptionArray[41][1]="v_vip";	
+	$arrayLen=count($fieldOptionArray);
+	for ($i=0;$i<$arrayLen;$i++){
+		echo "<option value=\"".$fieldOptionArray[$i][1]."\">[".$fieldOptionArray[$i][0]."]</option>";
+	}
+}
+
+function echoFieldOptionsN()
+{
+	$fieldOptionArray[0][0]="新闻标题" ; $fieldOptionArray[0][1]="n_title";
+	$fieldOptionArray[1][0]="新闻图片" ; $fieldOptionArray[1][1]="n_pic";
+	$fieldOptionArray[2][0]="新闻作者" ; $fieldOptionArray[2][1]="n_author";
+	$fieldOptionArray[3][0]="新闻来源" ; $fieldOptionArray[3][1]="n_from";
+	$fieldOptionArray[4][0]="新闻关键词" ; $fieldOptionArray[4][1]="n_keyword";
+	$fieldOptionArray[5][0]="新闻点击率" ; $fieldOptionArray[5][1]="n_hit";
+	$fieldOptionArray[6][0]="新闻简述" ; $fieldOptionArray[6][1]="n_outline";
+	$fieldOptionArray[7][0]="新闻内容" ; $fieldOptionArray[7][1]="n_content";
+	$fieldOptionArray[8][0]="新闻添加时间" ; $fieldOptionArray[8][1]="n_addtime";
+	$fieldOptionArray[9][0]="新闻背景图片" ; $fieldOptionArray[9][1]="n_gpic";
+	$fieldOptionArray[10][0]="新闻幻灯图片" ; $fieldOptionArray[10][1]="n_spic";
+	$fieldOptionArray[11][0]="新闻分类ID" ; $fieldOptionArray[11][1]="tid";
+	$fieldOptionArray[12][0]="新闻顶" ; $fieldOptionArray[12][1]="n_digg";
+	$fieldOptionArray[13][0]="新闻踩" ; $fieldOptionArray[13][1]="n_tread";
+	$fieldOptionArray[14][0]="新闻星级" ; $fieldOptionArray[14][1]="n_commend";
+	$fieldOptionArray[15][0]="新闻总评分" ; $fieldOptionArray[15][1]="n_score";
+	$fieldOptionArray[16][0]="新闻评分次数" ; $fieldOptionArray[16][1]="n_scorenum";
 	$arrayLen=count($fieldOptionArray);
 	for ($i=0;$i<$arrayLen;$i++){
 		echo "<option value=\"".$fieldOptionArray[$i][1]."\">[".$fieldOptionArray[$i][0]."]</option>";
@@ -1192,10 +1262,102 @@ function gethouzhui($str)
 	
 }
 function getpichzh($str){
-$param = '/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg]))[\'|\"].*?[\/]?>/';
+$param = '/<[img|IMG].*?src=[\'|\"](.*?(?:[\.gif|\.jpg|\.bmp|\.webp]))[\'|\"].*?[\/]?>/i';
  //这个获取图片的全部标签
+$str=htmlspecialchars_decode($str);
 preg_match_all($param,$str,$matches);//不带引号
 $new_arr=array_unique($matches[1]);//去除数组中重复的值
 
     return $new_arr; 
+}
+
+function ImageResize2($srcFile,$toW,$toH,$toFile="")
+{
+
+	if($toFile=="")
+	{
+		$toFile = $srcFile;
+	}
+	
+	$srcInfo = getimagesize($srcFile);
+	switch ($srcInfo[2])
+	{
+		case 1:
+			$im = imagecreatefromgif($srcFile);
+			break;
+		case 2:
+			$im = imagecreatefromjpeg($srcFile);
+			break;
+		case 3:
+			$im = imagecreatefrompng($srcFile);
+			break;
+		case 18:
+			$im = imagecreatefromwebp($srcFile);
+			break;
+		case 6:
+			$im = imagecreatefromwbmp($srcFile);
+			break;
+	}
+	$srcW=ImageSX($im);
+	$srcH=ImageSY($im);
+	if($srcW<=$toW && $srcH<=$toH )
+	{
+		return true;
+	}
+	$toWH=$toW/$toH;
+	$srcWH=$srcW/$srcH;
+	if($toWH<=$srcWH)
+	{
+		$ftoW=$toW;
+		$ftoH=$ftoW*($srcH/$srcW);
+	}
+	else
+	{
+		$ftoH=$toH;
+		$ftoW=$ftoH*($srcW/$srcH);
+	}
+	if($srcW>$toW||$srcH>$toH)
+	{
+		if(function_exists("imagecreatetruecolor"))
+		{
+			@$ni = imagecreatetruecolor($ftoW,$ftoH);
+			if($ni)
+			{
+				imagecopyresampled($ni,$im,0,0,0,0,$ftoW,$ftoH,$srcW,$srcH);
+			}
+			else
+			{
+				$ni=imagecreate($ftoW,$ftoH);
+				imagecopyresized($ni,$im,0,0,0,0,$ftoW,$ftoH,$srcW,$srcH);
+			}
+		}
+		else
+		{
+			$ni=imagecreate($ftoW,$ftoH);
+			imagecopyresized($ni,$im,0,0,0,0,$ftoW,$ftoH,$srcW,$srcH);
+		}
+		switch ($srcInfo[2])
+		{
+			case 1:
+				imagegif($ni,$toFile);
+				break;
+			case 2:
+				imagejpeg($ni,$toFile,99);
+				break;
+			case 3:
+				imagepng($ni,$toFile);
+				break;
+			case 18:
+				imagewebp($ni,$toFile);
+				break;
+			case 6:
+				imagebmp($ni,$toFile);
+				break;
+			default:
+				return false;
+		}
+		imagedestroy($ni);
+	}
+	imagedestroy($im);
+	return true;
 }

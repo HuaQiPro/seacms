@@ -153,6 +153,8 @@ class Collect
 				
 			    $v_data['v_note']=getAreaValue($loopstr,"note",$html,$listconf["removecode"]);
 				$v_data['v_jq']=getAreaValue($loopstr,"jq",$html,$listconf["removecode"]);
+				$v_data['v_longtxt']=getAreaValue($loopstr,"longtxt",$html,$listconf["removecode"]);
+				$v_data['v_tags']=getAreaValue($loopstr,"tag",$html,$listconf["removecode"]);
 			    $v_data['v_des']=getAreaValue($loopstr,"des",$html,$listconf["removecode"]);
 			    $v_data['v_des']=$this->filterWord($v_data['v_des'],1);
 				$v_data['v_des'] =  htmlspecialchars($v_data['v_des']);
@@ -394,6 +396,12 @@ class Collect
 			$v_where="d.v_name='".$v_data['v_name']."'";
 //		}
 		
+		//获取资源库类型ztype
+		global $rid;
+		$r_sql="SELECT ztype FROM sea_zyk where zid='$rid'";
+		$r_rs = $dsql->GetOne($r_sql);	
+		if(is_array($r_rs)){$ztype=$r_rs['ztype'];}else{$ztype='1';}
+		
 		$v_sql="select d.v_id,d.v_pic,d.v_isunion,d.v_publishyear,d.v_publisharea,d.v_lang,d.v_director,d.v_actor,p.body as v_playdata ,p.body1 as v_downdata from sea_data d left join sea_playdata p on p.v_id=d.v_id where $v_where order by d.v_id desc";
 		$rs = $dsql->GetOne($v_sql);
 		//if 同名
@@ -458,6 +466,13 @@ class Collect
 				   {
 					  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新影片功能<br>";
 				   }
+				   
+				   //if 资源库类型为仅更新
+				   if($ztype==0)
+				   {
+					  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，此资源库类型为仅更新数据<br>";
+				   }
+				   
 				   //else 不勾选[开启不添加新影片]
 				   return $autocol_str.$this->_insert_database($v_data);
 				}
@@ -511,6 +526,13 @@ class Collect
 			{
 				return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新影片功能<br>";
 			}
+			
+			//if 资源库类型为仅更新
+				   if($ztype==0)
+				   {
+					  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，此资源库类型为仅更新数据<br>";
+				   }
+			
 			// else 以新影片添加
 			return $autocol_str.$this->_insert_database($v_data);
 		}

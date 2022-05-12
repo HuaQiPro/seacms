@@ -46,7 +46,7 @@ $ps = explode('/',$picUrl);}
 			$fileext=".gif";
 		}
 
-if (strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))===false){   //2021-7-31  hzh
+if (strpos("|.jpg|.gif|.png|.bmp|.jpeg|.webp|",strtolower($fileext))===false){   //2021-7-31  hzh
     $fileext=$this->kzm($pic);
 }
 
@@ -94,6 +94,7 @@ if (strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))===false){   //202
   'image/gif'=>'.gif',
   'image/jpeg'=>'.jpg',
   'image/png'=>'.png',
+  'image/webp'=>'.webp',
   'image/x-icon'=>'.ico'
  );
  // 获取响应头
@@ -124,7 +125,7 @@ if (strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))===false){   //202
 $ps="";}else{
 $ps = explode('/',$picUrl);}  
 		$filename=urldecode($ps[count($ps)-1]);
-		if ($fileext!="" && strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))>0){
+		if ($fileext!="" && strpos("|.jpg|.gif|.png|.bmp|.jpeg|.webp|",strtolower($fileext))>0){
 			if(!(strpos($picUrl,".ykimg.com/")>0)){
 			//	if(empty($filename) || strpos($filename,".")==0){   
 				if(empty($filename) || strpos('hzh'.$filePath,".")==0){   //2021-7-31  hzh
@@ -216,6 +217,7 @@ $ps = explode('/',$picUrl);}
 				case 1:@$water_im = imagecreatefromgif($photo_markimg);break;
 				case 2:@$water_im = imagecreatefromjpeg($photo_markimg);break;
 				case 3:@$water_im = imagecreatefrompng($photo_markimg);break;
+				case 18:@$water_im = imagecreatefromwebp($photo_markimg);break;
 				default:break;
 			}
 			if(empty($water_im)) {
@@ -236,6 +238,7 @@ $ps = explode('/',$picUrl);}
 					break;
 				case 2:@$src_im = imagecreatefromjpeg($filePath);break;
 				case 3:@$src_im = imagecreatefrompng($filePath);break;
+				case 18:@$src_im = imagecreatefromwebp($filePath);break;
 				default:break;
 			}
 			if(empty($src_im)) {
@@ -275,6 +278,7 @@ $ps = explode('/',$picUrl);}
 				case 1:@imagegif ($src_im, $filePath,$photo_marktrans);break;
 				case 2:@imagejpeg($src_im, $filePath,$photo_marktrans);break;
 				case 3:@imagepng ($src_im, $filePath,$photo_marktrans);break;
+				case 18:@imagewebp ($src_im, $filePath,$photo_marktrans);break;
 				default:return false;
 			}
 			} else {
@@ -282,6 +286,7 @@ $ps = explode('/',$picUrl);}
 				case 1:@imagegif ($src_im, $filePath.'.new.gif',$photo_marktrans);break;
 				case 2:@imagejpeg($src_im, $filePath.'.new.jpg',$photo_marktrans);break;
 				case 3:@imagepng ($src_im, $filePath.'.new.png',$photo_marktrans);break;
+				case 18:@imagewebp ($src_im, $filePath.'.new.webp',$photo_marktrans);break;
 				default:return false;
 				 }
 			}
@@ -310,6 +315,7 @@ $ps = explode('/',$picUrl);}
 					break;
 				case 2:@$src_im = imagecreatefromjpeg($filePath);break;
 				case 3:@$src_im = imagecreatefrompng($filePath);break;
+				case 18:@$src_im = imagecreatefromwebp($filePath);break;
 				default:break;
 			}
 			if(empty($src_im)) {
@@ -359,6 +365,7 @@ $ps = explode('/',$picUrl);}
 				case 1:@imagegif ($src_im, $filePath,$photo_marktrans);break;
 				case 2:@imagejpeg($src_im, $filePath,$photo_marktrans);break;
 				case 3:@imagepng ($src_im, $filePath,$photo_marktrans);break;
+				case 18:@imagewebp ($src_im, $filePath,$photo_marktrans);break;
 				default:return false;
 	  		}
 			@imagedestroy($src_im);

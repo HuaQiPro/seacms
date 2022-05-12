@@ -10,6 +10,7 @@ $cfg_photo_type['gif'] = false;
 $cfg_photo_type['jpeg'] = false;
 $cfg_photo_type['png'] = false;
 $cfg_photo_type['wbmp'] = false;
+$cfg_photo_type['webp'] = false;
 $cfg_photo_typenames = Array();
 $cfg_photo_support = '';
 if(function_exists("imagecreatefromgif") && function_exists("imagegif"))
@@ -31,6 +32,13 @@ if(function_exists("imagecreatefrompng") && function_exists("imagepng"))
 	$cfg_photo_typenames[] = "image/png";
 	$cfg_photo_typenames[] = "image/xpng";
 	$cfg_photo_support .= "PNG ";
+}
+if(function_exists("imagecreatefromwebp") && function_exists("imagewebp"))
+{
+	$cfg_photo_type["webp"] = true;
+	$cfg_photo_typenames[] = "image/webp";
+	$cfg_photo_typenames[] = "image/xwebp";
+	$cfg_photo_support .= "webp ";
 }
 if(function_exists("imagecreatefromwbmp") && function_exists("imagewbmp"))
 {
@@ -72,6 +80,13 @@ function ImageResize($srcFile,$toW,$toH,$toFile="")
 				return false;
 			}
 			$im = imagecreatefrompng($srcFile);
+			break;
+		case 18:
+			if(!$cfg_photo_type['webp'])
+			{
+				return false;
+			}
+			$im = imagecreatefromwebp($srcFile);
 			break;
 		case 6:
 			if(!$cfg_photo_type['bmp'])
@@ -125,10 +140,13 @@ function ImageResize($srcFile,$toW,$toH,$toFile="")
 				imagegif($ni,$toFile);
 				break;
 			case 2:
-				imagejpeg($ni,$toFile,85);
+				imagejpeg($ni,$toFile,99);
 				break;
 			case 3:
 				imagepng($ni,$toFile);
+				break;
+			case 18:
+				imagewebp($ni,$toFile);
 				break;
 			case 6:
 				imagebmp($ni,$toFile);

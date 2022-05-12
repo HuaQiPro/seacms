@@ -515,7 +515,7 @@ DROP TABLE IF EXISTS `sea_member_group`;
 CREATE TABLE `sea_member_group` (
   `gid` int(11) unsigned NOT NULL auto_increment,
   `gname` varchar(32) NOT NULL default '',
-  `gtype` varchar(255) NOT NULL default '',
+  `gtype` TEXT NOT NULL default '',
   `g_auth` varchar(32) NOT NULL default '',
   `g_upgrade` int(11) NOT NULL default '0',
   `g_authvalue` int(11) NOT NULL default '0',
@@ -559,6 +559,7 @@ CREATE TABLE IF NOT EXISTS `sea_zyk` (
   `zname` varchar(60) NOT NULL,
   `zapi` varchar(255) NOT NULL,
   `zinfo` varchar(255) NOT NULL default '暂无',
+  `ztype` varchar(1) NOT NULL default '1',
   PRIMARY KEY (`zid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

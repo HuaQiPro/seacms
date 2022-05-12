@@ -77,12 +77,14 @@ elseif($ac=='editsave')
 
 
 	$ustate = intval($ustate);
+	if($delpic==1){$picsql="update sea_member set pic='' where id=$id";$dsql->ExecuteNoneQuery($picsql);}
 		if($psd =="")
 			{$sql="update sea_member set gid=$gid,points=$upoints,email='$email',nickname='$nickname',state=$ustate,vipendtime='$vipendtime2',acode='$acode' where id=$id";}
 		else
 			{
 				$psd=substr(md5($psd),5,20);
 				$sql="update sea_member set gid=$gid,points=$upoints,email='$email',nickname='$nickname',state=$ustate,password='$psd',vipendtime='$vipendtime2',acode='$acode' where id=$id";}
+				
 	if($dsql->ExecuteNoneQuery($sql))
 	{
 		ShowMsg("更新成功",'-1');

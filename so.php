@@ -196,7 +196,7 @@ function checkSearchTimes($searchtime)
 	
 }
 
-//获得关键字的分词结果，并保存到数据库
+//获得关键字的分词结果，并保存到数据库 
 function GetKeywords($keyword)
 {
 	global $dsql;
@@ -215,13 +215,13 @@ function GetKeywords($keyword)
 		{
 			$keywords = $keyword;
 		}
-		$inquery = "INSERT INTO `sea_search_keywords`(`keyword`,`spwords`,`count`,`result`,`lasttime`)
-  VALUES ('".addslashes($keyword)."', '".addslashes($keywords)."', '1', '0', '".time()."'); ";
+		$inquery = "INSERT INTO `sea_search_keywords`(`keyword`,`spwords`,`count`,`result`,`lasttime`,`tid`)
+  VALUES ('".addslashes($keyword)."', '".addslashes($keywords)."', '1', '$TotalResult', '".time()."','1'); ";
 		$dsql->ExecuteNoneQuery($inquery);
 	}
 	else
 	{
-		$dsql->ExecuteNoneQuery("Update `sea_search_keywords` set count=count+1,lasttime='".time()."' where keyword='".addslashes($keyword)."'; ");
+		$dsql->ExecuteNoneQuery("Update `sea_search_keywords` set count=count+1,tid='1',result='$TotalResult',lasttime='".time()."' where keyword='".addslashes($keyword)."'; ");
 		$keywords = $row['spwords'];
 	}
 	return $keywords;

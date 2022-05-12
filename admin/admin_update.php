@@ -1,11 +1,12 @@
 ﻿<?php 
+die('<p style="font-size:18px;">暂不开放在线升级功能！</p>');
+
 require(dirname(__FILE__).'/config.php');
-//die('<p style="font-size:12px;">暂不开放在线升级功能！</p>');
 CheckPurview('');
 @set_time_limit(0);
 
 //升级服务器
-$updateHost = 'http://update.seacms.com/utf8';
+$updateHost = 'http://';
 
 //当前软件版本锁定文件
 $verLockFile = sea_ROOT.'/data/admin/ver.txt';

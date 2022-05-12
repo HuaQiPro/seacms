@@ -1,11 +1,11 @@
 <?php 
 require_once(dirname(__FILE__)."/config.php");
-$up = new uploader();
-//$up->config(array('saveDir'=>'../uploads/zt'));
-$up->config(array('saveDir'=>'../'.$cfg_upload_dir.'/zt','imageWidth'=>$cfg_ddimg_width));
+$up = new uploader($photo_markup,$photo_markdown,$photo_marktype,$photo_wwidth,$photo_wheight,$photo_waterpos,$photo_watertext,$photo_fontsize,$photo_fontcolor,$photo_marktrans,$photo_diaphaneity,$photo_markimg);
+$up->config(array('saveDir'=>'../uploads/zt'));
+
 $up->saveFile('file1');
 
-if ( $up )
+if ($up)
 {
 	$spic = $up->_fileName;
 	$spath = str_replace('../','',$up->_fileUrl);
@@ -19,7 +19,7 @@ exit( );
 class uploader {
         var $saveDir = 'uploads/allimg';
         var $subDir = 'Ym';
-        var $allowExts = array('jpg', 'gif',  'png', 'rar', 'zip', 'bmp');
+        var $allowExts = array('jpg', 'gif',  'png', 'webp', 'jpeg', 'bmp');
         var $maxSize = '5120';
         var $hasThumb = 0; //是否生成缩略图
         var $imageWidth= '300';
@@ -92,7 +92,7 @@ class uploader {
 					$this->_savePath = $this->saveDir."/".date($this->subDir);
 				}$this->mkDirs($this->_savePath);
                 //上传文件是否为图片
-                if(in_array(strtolower($this->_fileExt), array('jpg','gif','png'))) {
+                if(in_array(strtolower($this->_fileExt), array('jpg','gif','png','jpeg','webp'))) {
                         $this->_isimage = true;
                 }else {
                         $this->_isimage = false;
@@ -134,15 +134,9 @@ class uploader {
 				{
                 $this->_fileUrl = $this->saveDir."/".date($this->subDir)."/".$this->_saveName.'.'.$this->_fileExt;
 				}
-				//如果不支持GD则直接保存图片不进行裁剪
-                if(!function_exists('imagecreatetruecolor')) {
-                        $this->saveToFile();
-                        return ;
-                }
-                //上传图片宽度超过定义则进行裁剪,否则直接复制
-                
-                        //图片宽度没有超过定义则直接复制,这会极大加快处理速度(GD太消耗系统资源)
-                        copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
+
+
+                copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
               
                 //如果设置自动缩略图var $hasThumb = 1则生成缩略图
                 if($this->hasThumb) {

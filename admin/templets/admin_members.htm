@@ -138,6 +138,14 @@
               <input type="radio" name="ustate" value="1" <?php if($row['state']==1) echo 'checked' ?> id="ustate_1" />
             正常</label></td>
       </tr>
+	  <tr>
+        <td class="td_border" width="11%" height="30">&nbsp;用户头像：</td>
+        <td class="td_border">
+		<?php if($row['pic']==""){$row['pic']='uploads/user/a.png';} ?>
+		<img src="../<?php echo $row['pic'] ?>" style="width:50px; height:50px;"> 
+		<input type="checkbox" name="delpic" value="1" class="checkbox" style=" margin-left:5px;">删除头像
+		</td>
+      </tr>
       <tr>
         <td height="30" colspan="2" class="td_border">&nbsp;<input class="rb1" type="submit" value="确认保存" name="Submit">&nbsp;
         <input class="rb1" type="button" onclick="history.go(-1)" value="返 回"></td>

@@ -45,7 +45,7 @@ exit( );
 class uploader {
         var $saveDir = 'uploads/allimg';
         var $subDir = 'Ym';
-        var $allowExts = array('jpg', 'gif',  'png', 'rar', 'zip', 'bmp');
+        var $allowExts = array('jpg', 'gif',  'png', 'webp', 'jpeg', 'bmp');
         var $maxSize = '5120';
         var $hasThumb = 0; //是否生成缩略图
         var $imageWidth= '300';
@@ -118,7 +118,7 @@ class uploader {
 					$this->_savePath = $this->saveDir."/".date($this->subDir);
 				}$this->mkDirs($this->_savePath);
                 //上传文件是否为图片
-                if(in_array(strtolower($this->_fileExt), array('jpg','gif','png'))) {
+                if(in_array(strtolower($this->_fileExt), array('jpg','gif','png','jpeg','webp'))) {
                         $this->_isimage = true;
                 }else {
                         $this->_isimage = false;
@@ -166,23 +166,13 @@ class uploader {
                         return ;
                 }
                 //上传图片宽度超过定义则进行裁剪,否则直接复制
-                if($this->_width > $this->imageWidth AND $this->imageWidth !=0 ) {
+                if($this->_width > $this->imageWidth AND $this->imageWidth !=0) {
                         //根据定义的宽度生成图片
                         $this->image($this->imageWidth);
                 }
                 else {
                         //图片宽度没有超过定义则直接复制,这会极大加快处理速度(GD太消耗系统资源)
                         copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
-                }
-
-                //如果设置自动缩略图var $hasThumb = 1则生成缩略图
-                if($this->hasThumb) {
-                        $this->_destination = $this->_savePath."/".'image_'.date('dHis').'_thumb'.'.'.$this->_fileExt;
-                        if($this->_width > $this->thumbWidth) {
-                                $this->image($this->thumbWidth);
-                        }else {
-                                copy($this->_upFile, $this->_destination) or exit('复制文件时出错!');
-                        }
                 }
         }
         function image($width='600') {
@@ -202,6 +192,10 @@ class uploader {
                         $imagecreatefunc = 'imagecreatefrompng';
                         $imagefunc = 'imagepng';
                         break;
+				case 'image/webp':
+                        $imagecreatefunc = 'imagecreatefromwebp';
+                        $imagefunc = 'imagewebp';
+                        break;		
                 }
                 $image = $imagecreatefunc($this->_upFile);
                 imagecopyresampled($newImage, $image, 0, 0, 0, 0, $width, $height,$this->_width,$this->_height);
@@ -226,6 +220,7 @@ class uploader {
         			case 1:@$water_im = imagecreatefromgif($this->_markimg);break;
         			case 2:@$water_im = imagecreatefromjpeg($this->_markimg);break;
         			case 3:@$water_im = imagecreatefrompng($this->_markimg);break;
+					case 18:@$water_im = imagecreatefromwebp($this->_markimg);break;
         			default:break;
     			}
 				if(empty($water_im)) {
@@ -248,6 +243,7 @@ class uploader {
         				break;
         			case 2:@$src_im = imagecreatefromjpeg($this->_destination);break;
         			case 3:@$src_im = imagecreatefrompng($this->_destination);break;
+					case 18:@$src_im = imagecreatefromwebp($this->_destination);break;
         			default:break;
     			}
 	    		if(empty($src_im)) {
@@ -287,6 +283,7 @@ class uploader {
         			case 1:@imagegif ($src_im, $this->_destination,$this->_marktrans);break;
         			case 2:@imagejpeg($src_im, $this->_destination,$this->_marktrans);break;
         			case 3:@imagepng ($src_im, $this->_destination,$this->_marktrans);break;
+					case 18:@imagewebp ($src_im, $this->_destination,$this->_marktrans);break;
         			default:return '';
       			}
 				} else {
@@ -294,6 +291,7 @@ class uploader {
         			case 1:@imagegif ($src_im, $this->_destination.'.new.gif',$this->_marktrans);break;
         			case 2:@imagejpeg($src_im, $this->_destination.'.new.jpg',$this->_marktrans);break;
         			case 3:@imagepng ($src_im, $this->_destination.'.new.png',$this->_marktrans);break;
+					case 18:@imagewebp ($src_im, $this->_destination.'.new.webp',$this->_marktrans);break;
        				default:return '';
      				 }
 				}
@@ -319,6 +317,7 @@ class uploader {
         				break;
         			case 2:@$src_im = imagecreatefromjpeg($this->_destination);break;
         			case 3:@$src_im = imagecreatefrompng($this->_destination);break;
+					case 18:@$src_im = imagecreatefromwebp($this->_destination);break;
         			default:break;
     			}
 	    		if(empty($src_im)) {
@@ -368,6 +367,7 @@ class uploader {
         			case 1:@imagegif ($src_im, $this->_destination,$this->_marktrans);break;
         			case 2:@imagejpeg($src_im, $this->_destination,$this->_marktrans);break;
         			case 3:@imagepng ($src_im, $this->_destination,$this->_marktrans);break;
+					case 18:@imagewebp ($src_im, $this->_destination,$this->_marktrans);break;
         			default:return '';
     	  		}
 				@imagedestroy($src_im);        	
@@ -377,13 +377,13 @@ class uploader {
                 $this->check($upfile);
                 if($this->_isimage) {
                         $this->saveToImage();
-                        if($this->_markup==1){
-						if($this->_marktype==1)
-                		{
-                		$this->strwatermark();
-                		}else{
-						$this->imgwatermark();
-                		}
+                        if($this->_markup==1 AND $this->_width > $this->_wwidth){
+							if($this->_marktype==1)
+							{
+							$this->strwatermark();
+							}else{
+							$this->imgwatermark();
+							}
                         }
                         else
                         {

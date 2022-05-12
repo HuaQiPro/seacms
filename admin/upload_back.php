@@ -20,7 +20,7 @@ exit( );
 class uploader {
         var $saveDir = 'uploads/allimg';
         var $subDir = 'Ym';
-        var $allowExts = array('jpg', 'gif',  'png', 'rar', 'zip', 'bmp');
+        var $allowExts = array('jpg', 'gif',  'png', 'webp', 'jpeg', 'bmp');
         var $maxSize = '2048';
         var $hasThumb = 0; //是否生成缩略图
         var $imageWidth= '300';
@@ -71,7 +71,7 @@ class uploader {
                 $this->_savePath = $this->saveDir."/".date($this->subDir);
                 $this->mkDirs($this->_savePath);
                 //上传文件是否为图片
-                if(in_array($this->_fileExt, array('jpg','gif','png'))) {
+                if(in_array($this->_fileExt, array('jpg','gif','png','jpeg','webp'))) {
                         $this->_isimage = true;
                 }else {
                         $this->_isimage = false;

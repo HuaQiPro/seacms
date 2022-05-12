@@ -45,7 +45,7 @@ Tips：
 </div>
 
 <?php 
-$sqlStr="select * from `sea_zyk` order by zid ASC";$dsql->SetQuery($sqlStr);echo $union;$dsql->Execute('flink_list');
+$sqlStr="select * from `sea_zyk` where ztype !=3 order by zid ASC";$dsql->SetQuery($sqlStr);echo $union;$dsql->Execute('flink_list');
 echo '<table width="98%"  align="left" cellpadding="0" cellspacing="0" border="0" bgcolor="#fff" style="margin-top:1px; margin-left:10px;" id="list" class="list">';
 while($row=$dsql->GetObject('flink_list'))
 {

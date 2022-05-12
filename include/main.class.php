@@ -148,7 +148,12 @@ class MainClass_Template {
 		if (strpos ( $content, '{seacms:allcount}' ) > 0)
 			$content = str_replace ( "{seacms:allcount}", getDataCount ( "all" ), $content );
 		if (strpos ( $content, '{seacms:daycount}' ) > 0)
-			$content = str_replace ( "{seacms:daycount}", getDataCount ( "day" ), $content );
+			$content = str_replace ( "{seacms:daycount}", getDataCount ( "day" ), $content );		
+		if (strpos ( $content, '{seacms:allcountnews}' ) > 0)
+			$content = str_replace ( "{seacms:allcountnews}", getNewsDataCount ( "all" ), $content );
+		if (strpos ( $content, '{seacms:daycountnews}' ) > 0)
+			$content = str_replace ( "{seacms:daycountnews}", getNewsDataCount ( "day" ), $content );
+		
 		$content = $this->parseSlide ( $content );
 		$content = $this->parseCascadeList ( $content, 'type' );
 		$content = $this->parseCascadeList ( $content, 'year' );
@@ -1772,6 +1777,9 @@ class MainClass_Template {
 							case "ver" :
 								$loopstrVlistNew = str_replace ( $matchfieldvalue, $row->v_ver, $loopstrVlistNew );
 								break;
+							case "longtxt" :
+								$loopstrVlistNew = str_replace ( $matchfieldvalue, $row->v_longtxt, $loopstrVlistNew );
+								break;
 							case "publisharea" :
 								$loopstrVlistNew = str_replace ( $matchfieldvalue, $row->v_publisharea, $loopstrVlistNew );
 								break;
@@ -2290,6 +2298,9 @@ class MainClass_Template {
 								break;
 							case "ver" :
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->v_ver, $loopstrChannelNew );
+								break;
+							case "longtxt" :
+								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->v_longtxt, $loopstrChannelNew );
 								break;
 							case "publisharea" :
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->v_publisharea, $loopstrChannelNew );
@@ -3504,49 +3515,12 @@ class MainClass_Template {
 			preg_match_all ( $labelRule, $content, $iar );
 			foreach ( $iar as $v ) {
 				$iarok [] = str_ireplace ( array (
-						'unlink',
-						'\0',
-						'%00',
-						'\r',
-						'passthru',
-						'opendir',
-						'mysqli_',
-						'mysql_',
-						'socket_',
-						'char',
-						'chr',
-						'curl_',
-						'base64',
-						'putenv',
-						'popen',
-						'phpinfo',
-						'pfsockopen',
-						'proc_',
-						'preg_',
-						'_GET',
-						'_POST',
-						'_COOKIE',
-						'_REQUEST',
-						'_SESSION',
-						'_SERVER',
-						'assert',
-						'eval',
-						'file_',
-						'passthru',
-						'exec',
-						'fopen',
-						'chmod',
-						'dir',
-						'fread',
-						'fclose',
-						'fwrite',
-						'file',
-						'system',
-						'GLOBAL',
-						'copy',
-						'implode',
-						'session',
-						'shell_' 
+						'$_GET',
+						'$_POST',
+						'$_COOKIE',
+						'$_REQUEST',
+						'$_SESSION',
+						'$_SERVER'
 				), 'seacms', $v);
 			}
 			$iar = $iarok;
@@ -3618,49 +3592,12 @@ class MainClass_Template {
 			preg_match_all ( $labelRule, $content, $iar );
 			foreach ( $iar as $v ) {
 				$iarok [] = str_ireplace ( array (
-						'unlink',
-						'\0',
-						'%00',
-						'\r',
-						'passthru',
-						'opendir',
-						'mysqli_',
-						'mysql_',
-						'socket_',
-						'char',
-						'chr',
-						'curl_',
-						'base64',
-						'putenv',
-						'popen',
-						'phpinfo',
-						'pfsockopen',
-						'proc_',
-						'preg_',
-						'_GET',
-						'_POST',
-						'_COOKIE',
-						'_REQUEST',
-						'_SESSION',
-						'_SERVER',
-						'assert',
-						'eval',
-						'file_',
-						'passthru',
-						'exec',
-						'fopen',
-						'chmod',
-						'dir',
-						'fread',
-						'fclose',
-						'fwrite',
-						'file',
-						'system',
-						'GLOBAL',
-						'copy',
-						'implode',
-						'session',
-						'shell_'
+						'$_GET',
+						'$_POST',
+						'$_COOKIE',
+						'$_REQUEST',
+						'$_SESSION',
+						'$_SERVER'
 				), 'seacms', $v);
 			}
 			$iar = $iarok;
@@ -4435,6 +4372,9 @@ class MainClass_Template {
 								break;
 							case "ver" :
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->v_ver, $loopstrChannelNew );
+								break;
+							case "longtxt" :
+								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->v_longtxt, $loopstrChannelNew );
 								break;
 							case "publisharea" :
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $row->v_publisharea, $loopstrChannelNew );

@@ -634,7 +634,11 @@ $(function() {
         <td>评论开关:</td>
         <td>开启:
           <input type="radio" name="edit___cfg_gbookstart" value="1" <?php if ($cfg_gbookstart=='1') echo "checked";?> class="radio" onclick="getElementById('commentfont').style.display=''"/>
-          &nbsp;&nbsp;关闭:
+          &nbsp;&nbsp;
+		  登录开启:
+          <input type="radio" name="edit___cfg_gbookstart" value="2" <?php if ($cfg_gbookstart=='2') echo "checked";?> class="radio" onclick="getElementById('commentfont').style.display=''"/>
+          &nbsp;&nbsp;
+		  关闭:
           <input type="radio" name="edit___cfg_gbookstart" value="0"  <?php if ($cfg_gbookstart=='0') echo "checked";?> class="radio" onclick="getElementById('commentfont').style.display='none'"/>
           <font id="commentfont" <?php if ($cfg_gbookstart=='0') echo "style='display:none'";?>> &nbsp;评论时间间隔
           <input type="text" name="edit___cfg_comment_times" size="4" value="<?php echo $cfg_comment_times; ?>" />
@@ -725,8 +729,8 @@ $(function() {
           &nbsp;&nbsp;&nbsp;当开启缓存时有效，如感觉数据缓存周期过长请关闭此项</td>
       </tr>
       <tr>
-        <td class="td_border" width="103"  align="left">缩略图尺寸:</td>
-        <td class="td_border">宽度：<input name="edit___cfg_ddimg_width" type="text" id="edit___cfg_ddimg_width" value="<?php echo $cfg_ddimg_width;?>" size="6" />px&nbsp;&nbsp;&nbsp;高度：<input name="edit___cfg_ddimg_height" type="text" id="edit___cfg_ddimg_height" value="<?php echo $cfg_ddimg_height;?>" size="6" />px &nbsp;&nbsp;&nbsp;仅视频和新闻海报图片有效，尺寸设置为 0 则关闭缩略图功能
+        <td class="td_border" width="103"  align="left">图片尺寸压缩:</td>
+        <td class="td_border">宽度：<input name="edit___cfg_ddimg_width" type="text" id="edit___cfg_ddimg_width" value="<?php echo $cfg_ddimg_width;?>" size="6" />px&nbsp;&nbsp;&nbsp;高度：<input name="edit___cfg_ddimg_height" type="text" id="edit___cfg_ddimg_height" value="<?php echo $cfg_ddimg_height;?>" size="6" />px &nbsp;&nbsp;&nbsp;仅视频和新闻海报图片有效，宽度设置为 0 则关闭，对上传和同步图片均有效
 		  </td>
       </tr>
 
