@@ -98,16 +98,17 @@ CheckPurview();
         </tr>
         <tr>
           <td class="tipsblock">
+		  <div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
 &nbsp;*&nbsp;&nbsp;本功能为定时任务挂机版，需要保持此页面常开，关闭此页面则无法使用。<br>
 &nbsp;*&nbsp;&nbsp;请谨慎使用本功能，合理设置参数，以免系统崩溃。<br>
 &nbsp;*&nbsp;&nbsp;不需要执行定时操作的模块请填写时间为0即可关闭该模块。<br>
 &nbsp;*&nbsp;&nbsp;定时采集之前，需要在“资源库管理”功能中先添加资源库API接口。<br>
 &nbsp;*&nbsp;&nbsp;在左边的选择框中选择要采集的资源库，选中状态才有效。<br>
 &nbsp;*&nbsp;&nbsp;资源库采集范围是24小时内的更新内容。<br>
-&nbsp;*&nbsp;&nbsp;内容生成范围是24小时内更新的所有视频，当更新数量过多时请谨慎使用，否则可能造成服务器崩溃。<br>
-&nbsp;*&nbsp;&nbsp;栏目生成范围是全站所有栏目的所有数据，需要生成的数据量巨大，请谨慎使用，合理设置间隔时间。<br>
+&nbsp;*&nbsp;&nbsp;内容生成范围是24小时内更新，且更新后未执行过生成操作的视频，当更新过多时可能造成服务器超时。<br>
+&nbsp;*&nbsp;&nbsp;栏目生成范围是全站所有栏目的所有数据，需要生成的数据量巨大，请合理设置间隔时间。<br>
 &nbsp;*&nbsp;&nbsp;如需采集多个资源库，请重复打开多个本页面，并将其他页面中除采集外的所有模块填写时间为0关闭。					
-			</td>
+			</div></td>
         </tr>
 </table>
     <div style="width:650px; height:350px;">
@@ -118,7 +119,7 @@ CheckPurview();
 				
 				<select id="ds_url" name="ds_url" multiple="" style=" width:250px;height:300px">				
 <?php 
-$sqlStr="select * from `sea_zyk` order by zid ASC";
+$sqlStr="select * from `sea_zyk` WHERE ztype !=3 order by zid ASC";
 $dsql->SetQuery($sqlStr);
 $dsql->Execute('flink_list');
 while($row=$dsql->GetObject('flink_list'))

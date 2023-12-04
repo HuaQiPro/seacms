@@ -1,6 +1,6 @@
 <?php 
 /******************************
-海洋CMS版权所有 www.seacms.com
+海洋CMS
 功能：资源发布zyAPI模块
 版本：1.0
 开发：海洋
@@ -106,15 +106,15 @@ function cj()
 			$xml .= "<len>".$row->v_len."</len>";
 			$xml .= "<total>".$row->v_total."</total>";
 			$xml .= "<jq>".$row->v_jq."</jq>";
-			$xml .= "<nickname>".$row->v_nickname."</nickname>";
+			$xml .= "<nickname><![CDATA[".$row->v_nickname."]]></nickname>";
 			$xml .= "<reweek>".$row->v_reweek."</reweek>";
 			$xml .= "<douban>".$row->v_douban."</douban>";
 			$xml .= "<mtime>".$row->v_mtime."</mtime>";
 			$xml .= "<imdb>".$row->v_imdb."</imdb>";
-			$xml .= "<tvs>".$row->v_tvs."</tvs>";
-			$xml .= "<company>".$row->v_company."</company>";
-			$xml .= "<ver>".$row->v_ver."</ver>";
-			$xml .= "<longtxt>".$row->v_longtxt."</longtxt>";
+			$xml .= "<tvs><![CDATA[".$row->v_tvs."]]></tvs>";
+			$xml .= "<company><![CDATA[".$row->v_company."]]></company>";
+			$xml .= "<ver><![CDATA[".$row->v_ver."]]></ver>";
+			$xml .= "<longtxt><![CDATA[".$row->v_longtxt."]]></longtxt>";
 			$xml .= "<note><![CDATA[".$row->v_note."]]></note>";
 			$xml .= "<actor><![CDATA[".$row->v_actor."]]></actor>";
 			$xml .= "<director><![CDATA[".$row->v_director."]]></director>";

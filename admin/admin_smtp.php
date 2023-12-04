@@ -128,26 +128,14 @@ SMTP密码：<input name="smtppass" value="<?php  echo $smtppass;?>">
 </td>
 </tr>
 
+
 <tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 更改全部用户为已激活状态SQL语句：UPDATE sea_member SET acode='y';
-</td>
-</tr>
-<tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 邮件发送服务器必须支持使用SSL加密协议。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 网站服务器环境需要开启SSL扩展。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
+<td width="90%" align="left" height="30" class="td_border"><div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+* 更改全部用户为已激活状态SQL语句：UPDATE sea_member SET acode='y';<br>
+* 邮件发送服务器必须支持使用SSL加密协议。<br>
+* 网站服务器环境需要开启SSL扩展。<br>
 * 如果修改无效，请检查/data/admin/smtp.php文件权限是否可写。
-</td>
+</div></td>
 </tr>
 </tbody></table>	
 	

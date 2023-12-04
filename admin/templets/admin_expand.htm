@@ -38,7 +38,7 @@ function onUploadBack(fn){
 </script>
 <div class="container" id="cpcontainer">
 <table class="tb">
-	<tr class="thead"><td colspan="6" class="td_title">旧版幻灯片管理&nbsp;&nbsp;&nbsp;【提示：对应{seacms:slide}标签，因采用落后的Flash技术，已经不建议使用】 </td></tr>
+	<tr class="thead"><td colspan="6" class="td_title">幻灯片管理</td></tr>
 	<tr>
 		<td width="5%">ID</td>
 		<td width="30%">图片</td>
@@ -83,17 +83,24 @@ function onUploadBack(fn){
 </form>
 <form id="form3" name="form3" method="post" action="?action=addside">
 	<tr>
-		<td>新增</td>
+		<td>新增:</td>
 		<td><input type="text" name="item_url" value="" />&nbsp;<!--<button type="button" class="btn" style="width:60px;height:22px;" onClick="onUpClick(this,this.form.elements['item_url'])">浏览...</button>--></td>
 		<td><input type="text" name="link" value="" /></td>
 
 		<td><input type="text" name="title" value="" style="width:100px"/></td>
 		<td><input type="text" name="desc" value="" style="width:200px"/></td>
 		<td><input type="submit" name="submit" value="确 定" class="btn" /></td>
+		
 	</tr>
+	
+	
 </form>
-</table>
-</div>
+</table><br><div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+说明：<br>
+* 生成数据格式为xml文件，可以直接调用 /pic/slide/slide.xml文件使用。<br>
+* 图片文件保存位置为 /pic/slide/ 文件夹。<br>
+* 可使用{seacms:slide width=99 height=99}标签调用幻灯片，但该标签基于老旧的flash技术，已不被现代浏览器支持，保留该标签仅用于旧模板兼容。
+</div><br><br></div>
 <iframe frameborder="0" scrolling="no" height="0" width="0" name="hiddensubmit" id="hiddensubmit" src="about:blank"></iframe>
 <script type="text/JavaScript">if(parent.$('admincpnav')) parent.$('admincpnav').innerHTML='后台首页&nbsp;&raquo;&nbsp;扩展&nbsp;&raquo;&nbsp;扩展模块';</script>
 <?php

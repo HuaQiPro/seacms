@@ -48,7 +48,9 @@ if($action=='add')
 <input type="checkbox" checked="" value="2" name="g_auth[]">
 浏览内容页
 <input type="checkbox" checked="" value="3" name="g_auth[]">
-浏览收费内容</td>
+浏览播放页
+<input type="checkbox"   value="4" name="g_auth[]">
+免积分播放收费视频</td>
       </tr>
       <tr>
         <td class="td_border" width="22%" height="30">&nbsp;升级所需积分：
@@ -84,7 +86,7 @@ elseif($action=='edit')
         <td class="td_border"><input id="gname" type="text" value="<?php echo $row['gname']?>" size="20" name="gname"></td>
       </tr>
       <tr>
-        <td class="td_border" width="22%" height="30">&nbsp;授权分类：</td>
+        <td class="td_border" width="22%" height="30">&nbsp;授权分类：（<input type="checkbox" name="chkall" id="chkall" class="checkbox" onclick="checkAll(this.checked,'input','gtype[]')" />全选 | <input type="checkbox" name="chkothers" id="chkothers" class="checkbox" onclick="checkOthers('input','gtype[]')" />反选 ） </td>
         <td class="td_border"><?php
         $dsql->SetQuery("select tid,tname from sea_type where tptype=0");
         $dsql->Execute('tp_list');
@@ -107,7 +109,9 @@ elseif($action=='edit')
 <input type="checkbox" <?php if(in_array(2,$authArr)) echo 'checked'?> value="2" name="g_auth[]">
 浏览内容页
 <input type="checkbox" <?php if(in_array(3,$authArr)) echo 'checked'?> value="3" name="g_auth[]">
-浏览收费内容</td>
+浏览播放页
+<input type="checkbox" <?php if(in_array(4,$authArr)) echo 'checked'?> value="4" name="g_auth[]">
+免积分播放收费视频</td>
       </tr>
       <tr>
         <td class="td_border" width="22%" height="30">&nbsp;升级所需积分：

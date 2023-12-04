@@ -85,7 +85,7 @@ echoPlay($vid);
 
 function echoPlay($vId)
 {
-	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname,$payid,$cfg_cmspath;
+	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_playaddr_enc,$id,$from,$t1,$cfg_runmode,$cfg_user,$cfg_pointsname,$payid,$cfg_cmspath,$cfg_isfromsort;
 	
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
@@ -143,9 +143,9 @@ function echoPlay($vId)
 		}
 
 		
-        //if (!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
+        if(!getUserAuth($vType, "play")){ShowMsg("您当前的会员级别没有权限浏览此内容！","../member.php",0,20000);exit();}
 		//if(in_array($from,$viparr) AND empty($_SESSION['sea_user_id'])){showMsg("请先登录","../login.php"); exit();}	
-		if(in_array($from,$viparr) AND $vtry==0 AND !getUserAuth($vType, "play"))
+		if(in_array($from,$viparr) AND $vtry==0 AND !getUserAuth($vType, "pay"))
 		{
 			$row2=$dsql->GetOne("Select * from sea_buy where vid='$vId' and vfrom=$from and uid='$uid'");
 			if(!is_array($row2))
@@ -182,7 +182,34 @@ function echoPlay($vId)
 	$content=str_replace("{playpage:name}",$row['v_name'],$content);
 	$content=str_replace("{playpage:url}",$GLOBALS['cfg_basehost'].$contentLink2,$content);
 	$content=str_replace("{playpage:link}",$contentLink,$content);
-	$content=str_replace("{playpage:playlink}",getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname'],$id,$from),$content);
+	
+	
+	//如果开启播放来源排序，获取第一排序的播放组地址
+	if($cfg_isfromsort==1){
+		$playDataArray = getPlayurlArray ($row['v_playdata']);
+		$playerDic = getPlayerKindsArray ();
+		$vnum1 = substr_count ($row['v_playdata'], '$$' );
+					if ($vnum1 == 0) {
+						$vnum = 0;
+					} else {
+						$vnum = count ( $playDataArray );
+					}
+		for($i = 0; $i <= $vnum; $i ++) {
+							$singlePlayData = explode ( "$$", $playDataArray [$i] );
+							$playerSingleInfoArray[] = $playerDic [$singlePlayData [0]];
+							
+						}
+		$playerSingleInfoArray=array_filter($playerSingleInfoArray);
+
+		foreach($playerSingleInfoArray as $k=>$v){
+			{$b[$k]=(string)$v['sort'];}
+			}
+		$d=array_search(min($b),$b);
+	}else{
+		$d=0;
+	}
+
+	$content=str_replace("{playpage:playlink}",getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname'],$d),$content);
 	$totalLink = getLinkNum($row['v_playdata'],$id);
 	$nextplaylink = getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname'],$id,$from+1>=$totalLink?$totalLink:$from+1);
 	$preplaylink  = getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname'],$id,$from-1<=0?0:$from-1);

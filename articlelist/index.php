@@ -48,7 +48,7 @@ function echoChannel($typeId)
 	if (empty($pSize)) $pSize=12;
 	$typeIds = getTypeId($typeId,1);
 	$typename=getNewsTypeName($typeId);
-	$sql="select count(*) as dd from sea_news where tid in (".$typeIds.")";
+	$sql="select count(*) as dd from sea_news where tid in (".$typeIds.") AND n_recycled=0"; 
 	$row = $dsql->GetOne($sql);
 	if(is_array($row))
 	{

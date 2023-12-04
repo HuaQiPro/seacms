@@ -33,6 +33,7 @@ $t = time();
     }else{
         $TotalResult = 0;
     }
+	if($TotalResult == 0){echo '<br><br>&nbsp;&nbsp;<font style="color:red">没有搜索记录，请检查该功能是否开启 (系统 - 网站设置 - 性能效率设置 - 搜索关键词记录)</font><br><br>';}
 ?>
 
 
@@ -41,7 +42,7 @@ $t = time();
 <td class="td_border">ID</td>
 <td class="td_border">关键词</td>
 <td class="td_border">搜索次数</td>
-<td class="td_border">末次搜索结果</td>
+<td class="td_border">末次搜索结果数</td>
 <td class="td_border">末次搜索类型</td>
 <td class="td_border">末次搜索时间</td>
 </tr>
@@ -120,7 +121,7 @@ if($page==0) $page=1;
             <td class="td_border" height="30" ><?php echo $row->count;?></td>
 			<td class="td_border" height="30" ><?php echo $row->result;?></td>
             <td class="td_border" height="30" ><?php if($row->tid=="0"){echo '视频';}elseif($row->tid =="1"){echo '新闻';}else{echo '';}?></td>
-			<td class="td_border" height="30" ><?php echo date('Y-m-d',$row->lasttime);?></td>
+			<td class="td_border" height="30" ><?php echo date('Y-m-d H:m:s',$row->lasttime);?></td>
             
 	  
 	  

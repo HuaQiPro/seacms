@@ -36,8 +36,10 @@
           </tr>
           <tr>
             <td align="right" height="30" class="td_border">名称：</td>
-            <td class="td_border"><input id="v_name" name="v_name" size="23" autocomplete="off" value="<?php echo $vrow['v_name']?>"/>
-              &nbsp;<font color='red'>＊</font>
+            <td class="td_border">
+					<input id="v_name" name="v_name" size="23" autocomplete="off" value="<?php echo $vrow['v_name']?>"/>
+              &nbsp;拼音：<input id="v_enname" name="v_enname" size="23" autocomplete="off" value="<?php echo $vrow['v_enname']?>"/>
+              &nbsp;&nbsp;&nbsp;<font color='red'>＊</font>
               <label>连载？
                 <input type="checkbox" onclick="isViewState()" class="checkbox"  id="v_statebox" <?php if($vrow['v_state']!=0) echo " checked";?>/>
               </label>
@@ -68,12 +70,22 @@
           <tr>
             <td class="td_border" align="right" height="30">影片备注：</td>
             <td class="td_border"><input name="v_note"  size="30" value="<?php echo $vrow['v_note']?>">&nbsp;
-               视频标签：
-              <input type="text" id="v_tags" name="v_tags" size="30" value="<?php echo $vrow['v_tags']?>" />
+               
               <input type="hidden" name="v_oldtags" value="<?php echo $vrow['v_tags']?>" />
               备注如：高清,无水印 (配合标题一起显示)</td>
           </tr>
+		  <tr>
+            <td class="td_border" align="right" height="30">剧情：</td>
+            <td class="td_border">
+			<input type="text" id="v_jq" name="v_jq" size="30" value="<?php echo $vrow['v_jq']?>" />
+			&nbsp;&nbsp;&nbsp;&nbsp;关键词：<input type="text" id="v_tags" name="v_tags" size="30" value="<?php echo $vrow['v_tags']?>" />
+			</td>
+          </tr>
           <tr>
+            <td class="td_border" align="right" height="30">备用说明：</td>
+            <td class="td_border"><input type="text" id="v_longtxt" name="v_longtxt" size="100" value="<?php echo $vrow['v_longtxt']?>" />（不限字数,支持HTML）</td>
+          </tr>
+		   <tr>
             <td class="td_border" align="right" height="30">发行年份：</td>
             <td class="td_border"><?php echo getYearSelect("v_publishyear","选择年份",$vrow["v_publishyear"]);?>&nbsp;语言： <?php echo getYuyanSelect("v_lang","选择语言",$vrow["v_lang"]);?> &nbsp;地区：<?php echo getAreaSelect("v_publisharea","选择地区",$vrow["v_publisharea"]);?>&nbsp;点击率：
               <input type="text" name="v_hit" id="v_hit" maxlength="9" value="<?php echo $vrow['v_hit']?>" size="10" /></td>
@@ -99,8 +111,7 @@ $purlstr=str_replace("#",chr(13),$purlstr);
                         <option value=''>暂没有数据<?php echo $j;?></option>
                         <?php echo makePlayerSelect($pstr);?>
                       </select>
-                      <input type='button' class='rb1' value='WEB采集' onclick='viewGatherWin(<?php echo $j;?>);selectTogg();'/>
-                      &nbsp;&nbsp;<img onclick="var tb=$('playfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>&nbsp;&nbsp;<font color='red'>＊</font></td>
+                      <img onclick="var tb=$('playfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>&nbsp;&nbsp;<font color='red'>＊</font></td>
                   </tr>
                   <tr>
                     <td width='70' class='td_border'>数据地址<?php echo $j;?>：<br/>
@@ -115,9 +126,46 @@ $purlstr=str_replace("#",chr(13),$purlstr);
 ?>
               </div></td>
           </tr>
-          <tr>
-            <td colspan='2' height="30" class="td_border">&nbsp;<img onclick="expendPlayArea(<?php echo $j;?>,escape('<?php echo $makePlayerSelectStr;?>'),0)"  src='img/btn_add.gif' class='pointer' align='absmiddle'/>&nbsp;&nbsp;<font color="red">您可以单击前面的按钮添加一组播放来源</font></td>
-          </tr>
+		  
+
+<tr>
+            <td class="td_border" colspan="2" style="padding:0"><div style="" id="v_downarea">
+                <?php
+$playArray=explode("$$$",$v_downdata);
+$k=count($playArray);
+$j=1;
+if($v_downdata!=""){
+for($j=1;$j<=$k;$j++){
+
+$playArray2=explode("$$",$playArray[$j-1]);
+$pstr=$playArray2[0];
+$purlstr=str_replace(chr(10),"",$playArray2[1]);
+$purlstr=str_replace("#",chr(13),$purlstr);
+?>
+                <table width='100%' id='playfb<?php echo $j;?>' border='0' cellpadding='0' cellspacing='0'>
+                  <tr>
+                    <td height='30' class='td_border'>下载来源<?php echo $j;?>：</td>
+                    <td class='td_border'><select id='v_downfrom<?php echo $j;?>' name='v_downfrom[<?php echo $j;?>]'>
+                        <option value=''>暂没有数据<?php echo $j;?></option>
+                        <?php echo makeDownSelect($pstr);?>
+                      </select>
+                      <img onclick="var tb=$('playfb<?php echo $j;?>');tb.parentNode.removeChild(tb);" src='img/btn_dec.gif' class='pointer' alt="删除播放来源<?php echo $j;?>" align="absmiddle"/>&nbsp;&nbsp;<font color='red'>＊</font></td>
+                  </tr>
+                  <tr>
+                    <td width='70' class='td_border'>数据地址<?php echo $j;?>：<br/>
+                      <input type='button' value='校正' title='校正右侧文本框中的数据格式' class='rb1' onclick='repairUrl(<?php echo $j;?>)' /></td>
+                    <td align='left' class='td_border'><textarea id='v_downurl<?php echo $j;?>' name='v_downurl[<?php echo $j;?>]' rows='8' cols='85'><?php echo $purlstr;?></textarea>
+                      &nbsp;&nbsp;<font color='red'>＊</font></td>
+                  </tr>
+                </table>
+                <?php
+}
+}
+?>
+              </div></td>
+</tr>
+	  
+		  
           <tr>
             <td class="td_border" align="right" height="30">相关介绍：</td>
             <td class="td_border"><textarea id="editor_id" name="v_content" style="width:700px;height:300px;"><?php echo $v_content;?></textarea></td>

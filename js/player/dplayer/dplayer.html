@@ -9,9 +9,7 @@
 		
     <script type="text/javascript" src="jquery.min.js"></script>		
 	<script type="text/javascript" src="flv.min.js"></script>
-	<!-- <script type="text/javascript" src="hls.min.js"></script> -->
-	
-	<script type="text/javascript"  src="https://cdn.jsdelivr.net/npm/cdnbye@latest" ></script>
+	<script type="text/javascript" src="hls.min.js"></script>
 	
 	<script type="text/javascript" src="dash.all.min.js"></script>
 	<script type="text/javascript" src="webtorrent.min.js"></script>
@@ -26,7 +24,7 @@
 	function getUrlParam(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 		var r = window.location.search.substr(1).match(reg); //匹配目标参数
-		if(r != null) return unescape(r[2]);
+		if(r != null && r[2] !== undefined) return r[2].includes('%') ? decodeURI(r[2]) : unescape(r[2]);
 		return null; //返回参数值
 	}
 	
@@ -59,19 +57,23 @@
 	var a=videoUrl2.split(",");
 	var nextpage=a[0];
 	var videoUrl=a[1];
+	var videoUrl=videoUrl.split("|");
+	var zm=videoUrl[1];
+	var videoUrl=videoUrl[0];	
 	var vid=a[3];
 	var vfrom=a[4];
 	var vpart=a[5];
 	var vpart2=parseInt(a[5])+1;
 	var did=hex_md5(videoUrl);
 	var headtime=Number(getCookie(did) || 0);
-	
+
 //获取剧集数据
     function getvideo(url){  	
     		$.ajax({
 				url: '/ass.php?url=dp&vid='+vid+'&vfrom='+vfrom+'&vpart='+vpart,
 				dataType: 'jsonp',
-				jsonp: 'cb',                 
+				jsonp: 'cb', 
+				async: false,                
 				success:function(data){					
 					//剧集及当前集数
 				     xyplay=data.s;						 
@@ -105,14 +107,22 @@
     var dp = new DPlayer({
         container: document.getElementById('playerCnt'),
         autoplay: true,
+		airplay:true,
         video: {
             url: videoUrl,
             type:type
         },
+		subtitle: {
+        url:zm,
+        type: 'webvtt',
+        fontSize: '26px',
+        bottom: '10px',
+        color: '#b7daff',
+    },
         front:"video_front",
         next:"video_next",
     });
-	
+	dp.subtitle.show();
 	
 
 	
@@ -235,8 +245,17 @@ var viparr=Object.values(viparr2);
 if(IsInArray(viparr,vippart) && vtry =='0' ){top.location.href="/video/?"+vid+"-"+vfrom+"-"+vpart2+houz;}	           	
                 videoUrl=url; did=hex_md5(videoUrl);
                 headtime= Number(getCookie(did));
-                dp.switchVideo({url: videoUrl});
-                dp.play();
+				videoUrl=videoUrl.split("|");
+				zm2=videoUrl[1];
+				videoUrl2=videoUrl[0];
+
+                dp.switchVideo(
+				{url: videoUrl2,}
+				);
+				
+				dp.play();dp.subtitle.hide();
+				
+
 	
             }
 	

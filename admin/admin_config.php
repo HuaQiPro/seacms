@@ -77,9 +77,9 @@ if($dopost=="save")
 		if(m_ereg("^edit___",$k))
 		{
 			if(is_array($$k))
-				$v = cn_substr(str_replace("'","\'",str_replace("\\","\\\\",stripslashes(implode(',',$$k)))),500); 
+				$v = cn_substr(str_replace("'","\'",str_replace("\\","\\\\",stripslashes(implode(',',$$k)))),99999); 
 			else
-				$v = cn_substr(str_replace("'","\'",str_replace("\\","\\\\",stripslashes(${$k}))),500); 
+				$v = cn_substr(str_replace("'","\'",str_replace("\\","\\\\",stripslashes(${$k}))),99999); 
 		}
 		else
 		{

@@ -367,7 +367,7 @@ $(function() {
       </tr>
       <tr>
 	  
-        <td >智能采集设置:</td>
+        <td >新增判断规则:</td>
         <td > 
 		<label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="1" id="gatherset2" <?php if(strpos($cfg_gatherset,'1')!==false)echo 'checked'?>/>不添加新数据</label>
@@ -391,10 +391,13 @@ $(function() {
 		  &nbsp;&nbsp;
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="8" id="gatherset1" <?php if(strpos($cfg_gatherset,'8')!==false)echo 'checked'?> />演员识别</label>
-			&nbsp;&nbsp;        
+			</td>
+      </tr>
+<tr>
+      <td>更新判断规则：</td><td>	  
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="3" id="gatherset3" <?php if(strpos($cfg_gatherset,'3')!==false)echo 'checked'?>/>
-            播放/下载地址识别 </label>
+            根据播放/下载地址判断是否更新 </label>
 			&nbsp;&nbsp;
 		  <label>
             <input type="checkbox" name="edit___cfg_gatherset[]" value="Y" id="gatherset4" <?php if(strpos($cfg_gatherset,'Y')!==false)echo 'checked'?>/>
@@ -408,6 +411,7 @@ $(function() {
             <label><input type="checkbox" name="edit___cfg_gatherset[]" value="A" id="gatherset1" <?php if(strpos($cfg_gatherset,'A')!==false)echo 'checked'?> />播放地址</label>&nbsp;&nbsp;	
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="B" id="gatherset1" <?php if(strpos($cfg_gatherset,'B')!==false)echo 'checked'?> />下载地址</label>&nbsp;&nbsp;				
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="C" id="gatherset1" <?php if(strpos($cfg_gatherset,'C')!==false)echo 'checked'?> />图片</label>&nbsp;&nbsp;
+			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="Z" id="gatherset1" <?php if(strpos($cfg_gatherset,'Z')!==false)echo 'checked'?> />错误图片</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="D" id="gatherset1" <?php if(strpos($cfg_gatherset,'D')!==false)echo 'checked'?> />连载状态</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="E" id="gatherset1" <?php if(strpos($cfg_gatherset,'E')!==false)echo 'checked'?> />语言</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="F" id="gatherset1" <?php if(strpos($cfg_gatherset,'F')!==false)echo 'checked'?> />地区</label>&nbsp;&nbsp;
@@ -425,7 +429,7 @@ $(function() {
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="R" id="gatherset1" <?php if(strpos($cfg_gatherset,'R')!==false)echo 'checked'?> />备用说明</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="S" id="gatherset1" <?php if(strpos($cfg_gatherset,'S')!==false)echo 'checked'?> />演员</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="T" id="gatherset1" <?php if(strpos($cfg_gatherset,'T')!==false)echo 'checked'?> />导演</label>&nbsp;&nbsp;
-			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="U" id="gatherset1" <?php if(strpos($cfg_gatherset,'U')!==false)echo 'checked'?> />影片介绍</label>&nbsp;&nbsp;
+			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="U" id="gatherset1" <?php if(strpos($cfg_gatherset,'U')!==false)echo 'checked'?> />视频介绍</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="V" id="gatherset1" <?php if(strpos($cfg_gatherset,'V')!==false)echo 'checked'?> />集数</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="W" id="gatherset1" <?php if(strpos($cfg_gatherset,'W')!==false)echo 'checked'?> />时长</label>&nbsp;&nbsp;
 			<label><input type="checkbox" name="edit___cfg_gatherset[]" value="X" id="gatherset1" <?php if(strpos($cfg_gatherset,'X')!==false)echo 'checked'?> />剧情分类</label>
@@ -481,14 +485,39 @@ $(function() {
           请根据服务器配置性能合理设置，太快可能造成服务器资源耗尽导致中断</td>
       </tr>
 	  <tr>
-        <td>影片名过滤:</td>
+        <td>视频名称过滤:</td>
         <td ><input type="text" name="edit___cfg_cjjump" size="35" value="<?php echo $cfg_cjjump;?>"> &nbsp;
-          影片名包含关键词则跳过采集，多个关键词用 | 分割</td>
+          视频名称包含关键词则跳过采集，多个关键词用 | 分割，例如：色即是空|枪版</td>
+      </tr>
+	    <tr>
+        <td>视频年份过滤:</td>
+        <td ><input type="text" name="edit___cfg_cjjumpNF" size="35" value="<?php echo $cfg_cjjumpNF;?>"> &nbsp;
+          视频年份不在列表内则跳过采集，多个关键词用 | 分割，例如：2022|2021</td>
+      </tr>
+	   <tr>
+        <td>视频地区过滤:</td>
+        <td ><input type="text" name="edit___cfg_cjjumpDQ" size="35" value="<?php echo $cfg_cjjumpDQ;?>"> &nbsp;
+          视频地区不在列表内则跳过采集，多个关键词用 | 分割，例如：香港|美国</td>
+      </tr>
+	   <tr>
+        <td>视频语言过滤:</td>
+        <td ><input type="text" name="edit___cfg_cjjumpYY" size="35" value="<?php echo $cfg_cjjumpYY;?>"> &nbsp;
+          视频语言不在列表内则跳过采集，多个关键词用 | 分割，例如：英语|日语</td>
       </tr>
 	  <tr>
-        <td>影片名替换:</td>
+        <td>视频名称替换:</td>
         <td ><input type="text" name="edit___cfg_cjreplace" size="35" value="<?php echo $cfg_cjreplace;?>"> &nbsp;
-          影片名替换，使用=和|符号分割，不填写则替换为无，例如：英文=英语|高清=|a=A</td>
+          视频名称替换，使用|符号分割，=空则替换为空，例如：蓝光=高清|枪版=|a=A</td>
+      </tr>
+	  <tr>
+        <td>视频地区替换:</td>
+        <td ><input type="text" name="edit___cfg_cjreplaceDQ" size="35" value="<?php echo $cfg_cjreplaceDQ;?>"> &nbsp;
+          视频地区替换，使用|符号分割，=空则替换为空，例如：澳洲=澳大利亚|海外=|a=A</td>
+      </tr>
+	  <tr>
+        <td>视频语言替换:</td>
+        <td ><input type="text" name="edit___cfg_cjreplaceYY" size="35" value="<?php echo $cfg_cjreplaceYY;?>"> &nbsp;
+          视频语言替换，使用|符号分割，=空则替换为空，例如：英文=英语|泰语=|a=A</td>
       </tr>
 	  </table>
 </div>
@@ -775,7 +804,7 @@ $(function() {
           <input type="radio" name="edit___cfg_search_type"  value="-1" <?php if ($cfg_search_type=='-1') echo "checked";?> class="radio"/>
 		  &nbsp;&nbsp;验证码:
 		  <input type="radio" name="edit___cfg_search_type"  value="2" <?php if ($cfg_search_type=='2') echo "checked";?> class="radio"/>
-		  &nbsp;&nbsp;设置为复杂搜索影片名/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速仅搜索影片名/新闻标题</td>
+		  &nbsp;&nbsp;设置为复杂搜索视频名/导演/主演/关键词/别名|新闻标题/关键词/来源/作者，快速仅搜索视频名/新闻标题</td>
       </tr>
       <tr>
         <td >验证有效时间:</td>
@@ -788,12 +817,20 @@ $(function() {
           秒</td>
       </tr>
 	  <tr>
+        <td >搜索关键词记录:</td>
+        <td class="td_border">
+		开启:<input type="radio" name="edit___cfg_issearchlog" value="y" <?php if ($cfg_issearchlog=='y') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;
+        关闭:<input type="radio" name="edit___cfg_issearchlog" value="n" <?php if ($cfg_issearchlog !='y') echo "checked";?> class="radio" >
+          &nbsp;&nbsp;开启后可以查看访客搜索记录</td>
+      </tr>
+	  <tr>
         <td >禁止数据交互:</td>
         <td class="td_border">
 		开启:<input type="radio" name="edit___cfg_isallphp" value="1" <?php if ($cfg_isallphp=='1') echo "checked";?> class="radio" >
           &nbsp;&nbsp;
         关闭:<input type="radio" name="edit___cfg_isallphp" value="0" <?php if ($cfg_isallphp !='1') echo "checked";?> class="radio" >
-          &nbsp;&nbsp;开启将禁用影片和新闻的评分/顶踩/浏览量/收藏等交互功能，配合关闭搜索/留言/报错/评论/用户等，可实现极低负载运行</td>
+          &nbsp;&nbsp;开启将禁用视频和新闻的评分/顶踩/浏览量/收藏等交互功能，配合关闭搜索/留言/报错/评论/用户等，可实现极低负载运行</td>
       </tr>
 	  </table>
 </div>
@@ -808,7 +845,7 @@ $(function() {
       <tr>
         <td>过滤关键词:</td>
         <td><input type="text" name="edit___cfg_notallowstr" size="80" value="<?php echo $cfg_notallowstr;?>">
-          请以'|'分离，适用于留言/评论/</td>
+          请以'|'分离，适用于留言/评论</td>
       </tr>
       <tr>
         <td>禁止关键词:</td>
@@ -818,7 +855,7 @@ $(function() {
 	  <tr>
         <td>搜索过滤词:</td>
         <td><input type="text" name="edit___cfg_notallowsstr" size="80" value="<?php echo $cfg_notallowsstr ;?>">
-          请以'|'分离，适用于视频及文章搜索</td>
+          请以'|'分离，适用于视频及新闻搜索</td>
       </tr>
       <tr>
         <td>热门关键字</td>
@@ -826,7 +863,7 @@ $(function() {
           请以'|'分离</td>
       </tr>
       <tr>
-        <td>影片地区</td>
+        <td>视频地区</td>
         <td><input type="text" name="publisharea" size="80" value="<?php 
 	$publisharea = array();
 	if(filesize($publishareatxt)>0)
@@ -839,7 +876,7 @@ $(function() {
           请以'|'分离</td>
       </tr>
       <tr>
-        <td>影片年份</td>
+        <td>视频年份</td>
         <td><input type="text" name="publishyear" size="80" value="<?php 
 	$publishyear = array();
 	if(filesize($publishyeartxt)>0)
@@ -852,7 +889,7 @@ $(function() {
           请以'|'分离</td>
       </tr>
       <tr>
-        <td>影片语言</td>
+        <td>视频语言</td>
         <td><input type="text" name="publishyuyan" size="80" value="<?php 
 	$publishyuyan = array();
 	if(filesize($publishyuyantxt)>0)

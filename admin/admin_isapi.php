@@ -48,8 +48,8 @@ if($action=="set")
 </td>
 </tr>
 <tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 如果修改无效，请检查/data/admin/isapi.txt文件权限是否可写。资源库API访问地址是：您的域名/zyapi.php。
+<td><div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+* 如果修改无效，请检查/data/admin/isapi.txt文件权限是否可写。资源库API访问地址是：您的域名/zyapi.php。</div>
 </td>
 </tr>
 </tbody></table>

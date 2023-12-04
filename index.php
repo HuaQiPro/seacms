@@ -5,6 +5,7 @@ if(!file_exists("data/common.inc.php"))
     exit();
 }
 require_once ("include/common.php");
+if($cfg_runmode==0){ header("Location:index".$cfg_filesuffix2);exit;}
 
 //前置跳转start
 $cs=$_SERVER["REQUEST_URI"];

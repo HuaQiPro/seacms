@@ -3361,6 +3361,9 @@ function getUserAuth($id,$flag)
 	else if ($flag=="play"){
 		$flag = "3";
 	}
+	else if ($flag=="pay"){
+		$flag = "4";
+	}
 	$cache = GetGroupOnCache();
 	for ($i=0;$i<count($cache);$i++){
 		$gid=$cache[$i]["gid"];

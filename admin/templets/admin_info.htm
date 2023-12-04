@@ -241,6 +241,56 @@ $row=$dsql->GetOne("select count(*) as dd from sea_flink");$n3=$row['dd'];
 
 </ul></div>
 
+<?php 
+$row=$dsql->GetOne("select count(distinct v_publishyear) as dd from sea_data");$n1=$row['dd'];
+$sql="select distinct v_publishyear from sea_data";
+$dsql->SetQuery($sql);
+$dsql->Execute('al');
+?>
+<div class="v_info mtop" >【数据库中所有视频年份列表，共<font color='#ff0000'><?php echo $n1; ?></font>个】</div>
+<div style="padding-left:25px;padding-right:25px; padding-bottom:10px;">
+<?php while($row=$dsql->GetObject('al')){echo ' ['.$row->v_publishyear.'] ';}	?>
+</div>
+
+<?php 
+$sql="select distinct v_jq from sea_data";
+$dsql->SetQuery($sql);
+$dsql->Execute('al');
+while($row=$dsql->GetObject('al')){$str.=$row->v_jq.',';} 
+$find = array('/','\\',' ','*','(','`',')','、');
+$str=str_replace($find,',',$str);
+unset($strARR);
+$strARR=array_filter(array_unique(explode(',',$str)));
+?>
+<div class="v_info mtop" >【数据库中所有视频剧情分类，共<font color='#ff0000'><?php echo count($strARR); ?></font>个】</div>
+<div style="padding-left:25px;padding-right:25px; padding-bottom:10px;">
+<?php foreach($strARR as $value){echo ' ['.$value.'] ';} 	unset($strARR);unset($str);?>
+</div>
+
+<?php 
+$row=$dsql->GetOne("select count(distinct v_lang) as dd from sea_data");$n1=$row['dd'];
+$sql="select distinct v_lang from sea_data";
+$dsql->SetQuery($sql);
+$dsql->Execute('al');
+?>
+<div class="v_info mtop" >【数据库中所有视频语言列表，共<font color='#ff0000'><?php echo $n1; ?></font>个】</div>
+<div style="padding-left:25px;padding-right:25px; padding-bottom:10px;">
+<?php while($row=$dsql->GetObject('al')){echo ' ['.$row->v_lang.'] ';}	?>
+</div>
+
+<?php 
+$row=$dsql->GetOne("select count(distinct v_publisharea) as dd from sea_data");$n1=$row['dd'];
+$sql="select distinct v_publisharea from sea_data";
+$dsql->SetQuery($sql);
+$dsql->Execute('al');
+?>
+<div class="v_info mtop" >【数据库中所有视频地区列表，共<font color='#ff0000'><?php echo $n1; ?></font>个】</div>
+<div style="padding-left:25px;padding-right:25px; padding-bottom:10px;">
+<?php while($row=$dsql->GetObject('al')){echo ' ['.$row->v_publisharea.'] ';}	?>
+</div>
+
+
+
 	</div>
 </div>
 

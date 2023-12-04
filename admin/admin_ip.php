@@ -65,15 +65,13 @@ if($action=="set")
 <input type="submit" value="确 认" class="btn" >
 </td>
 </tr>
+
 <tr>
-<td width="90%" align="left" height="30" class="td_border">
+<td><div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
 * 开启该功能后，将只允许已登记的ip地址访问后台，如上网ip不固定，请勿开启。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
+<br>
 * 如果上网ip变化导致无法登陆后台，请手动修改/data/admin/ip.php文件内容，$v = "0"表示关闭该功能。
-</td>
+</div></td>
 </tr>
 </tbody></table>	
 	

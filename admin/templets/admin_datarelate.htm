@@ -51,10 +51,9 @@ if($action=="batch"){
               替换成：
               <input type="text" size="25" name="v_str2" />
               <input class="rb1" type="submit" value="确认替换" />
-              <br>
-              <br>
-			  <br>
-              <font color=#FF0000>注意，程序遇到待替换的字符就会立即替换且不可恢复，请小心处理。</font></td>
+              <br><br>
+              <div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+              <font color=#FF0000>注意，程序遇到待替换的字符就会立即替换且不可恢复，请小心处理。</font></div></td>
           </tr>
         </table>
       </form>
@@ -84,7 +83,7 @@ if($action=="batch"){
             提示：留空为不限制，可以输入网址、域名、包含的字符特征</td>
         </tr>
         <tr>
-          <td><input type="submit" value="确认删除"  class="rb1" onclick="if(fromvalue!=''){delsubmit.action='?action=delByFrom';delsubmit.submit();}else{alert('请选择删除的来源!')}"/>&nbsp;注意：为了防止意外、请操作前务必先备份数据库</td>
+          <td><input type="submit" value="确认删除"  class="rb1" onclick="if(fromvalue!=''){delsubmit.action='?action=delByFrom';delsubmit.submit();}else{alert('请选择删除的来源!')}"/></td>
         </tr>
 
       </table>
@@ -113,9 +112,14 @@ if($action=="batch"){
             提示：留空为不限制，可以输入网址、域名、包含的字符特征</td>
         </tr>
         <tr>
-          <td><input type="submit" value="确认删除"  class="rb1" onclick="if(fromvalue!=''){delsubmit.action='?action=delByFrom';delsubmit.submit();}else{alert('请选择删除的来源!')}"/>&nbsp;注意：为了防止意外、请操作前务必先备份数据库</td>
+          <td><input type="submit" value="确认删除"  class="rb1" onclick="if(fromvalue!=''){delsubmit.action='?action=delByFrom';delsubmit.submit();}else{alert('请选择删除的来源!')}"/></td>
+        </tr>
+		 <tr> <td>
+          <div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+              <font color=#FF0000>注意：该操作不可恢复，请先备份数据库。</font></div></td>
         </tr>
       </table>
+	  
 	  </form>
       <?php
 }elseif($action=="ftppic"){

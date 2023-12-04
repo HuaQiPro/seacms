@@ -85,7 +85,7 @@ else
 	<div class="r_content_1"><span class="td_border" style="text-align:center"><?php echo $n_id;?></span>
 <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<form action="?" method="post" >
+<form action="?tid=<?php echo $tid ?>" method="post" >
 <tr class="thead"><th colspan="15">
  全站待选新闻列表：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#CC6600">【点击 插入数据 即增加新闻到专题】</font>
 <input  name="keyword" type="text" id="keyword" size="20">
@@ -93,7 +93,7 @@ else
 <?php makeTypeOption(0,"&nbsp;|&nbsp;",1)?>
 </select>
 <input type="submit" name="selectBtn" value="查询或重置" class="btn"  />&nbsp;
-<select  onchange="self.location.href='?type='+this.options[this.selectedIndex].value+'&n_commend='">
+<select  onchange="self.location.href='?type='+this.options[this.selectedIndex].value+'&tid=<?php echo $tid ?>'">
 <option value="">按文章分类查看</option>
 <?php makeTypeOption(0,"&nbsp;|&nbsp;",1)?>
 </select></th></tr>

@@ -44,7 +44,7 @@ function automakeDay()
 	global $dsql;
 	$today_start = mktime(0,0,0,date('m'),date('d'),date('Y'));
 	$today_end = mktime(0,0,0,date('m'),date('d')+1,date('Y'));
-	$wheresql = " and `v_addtime` BETWEEN '{$today_start}' AND '{$today_end}'";
+	$wheresql = " and v_ismake=0 and `v_addtime` BETWEEN '{$today_start}' AND '{$today_end}'";
 	$pagesize=100;
 	if(!$pCount){
 	$rowc=$dsql->GetOne("SELECT count(*) as dd FROM `sea_data` WHERE `v_wrong`=0 ".$wheresql);
@@ -54,7 +54,7 @@ function automakeDay()
 	}else{
 	$TotalPage = $pCount;
 	}
-	$sql="select v_id from sea_data where v_wrong=0 $wheresql";
+	$sql="select v_id from sea_data where v_wrong=0 $wheresql order by v_addtime DESC";
 	$dsql->SetQuery($sql);
 	$dsql->Execute('makeDay');
 	while($row=$dsql->GetObject('makeDay'))

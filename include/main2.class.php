@@ -1,4 +1,4 @@
-<?php 
+<?php  
 @session_start();
 if (! defined ( 'sea_INC' )) {
 	exit ( "Request Error!" );
@@ -1388,7 +1388,7 @@ class MainClass_Template {
 							}
 							$y_str = rtrim ( $y_str, "#" );
 							$y_str = str_replace ( "#", " or m.v_actor like ", $y_str );
-							$whereRel = " and m.v_actor like $y_str ";
+							$whereRel = " and (m.v_actor like $y_str) ";
 							break;
 						case "r" :
 							$whereRel = " and m.v_name like '%$rel_r%'";
@@ -2563,7 +2563,7 @@ class MainClass_Template {
 								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
 								$actorlen = empty ( $fieldAttr ) ? "" : intval ( $fieldAttrarr [1] );
 								$v_actor = ! empty ( $actorlen ) && strlen ( $v_actor ) > $actorlen ? trimmed_title ( $v_actor, $actorlen ) : $v_actor;
-								$v_actor = getnewsKeywordsList ( $v_actor, "&nbsp;" );
+								$v_actor = getnewsKeywordsList( $v_actor, "&nbsp;" );
 								$loopstrChannelNew = str_replace ( $matchfieldvalue, $v_actor, $loopstrChannelNew );
 								break;
 							case "content" :
@@ -3182,7 +3182,7 @@ class MainClass_Template {
 									case "link" :
 										$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
 										$target = empty ( $fieldAttr ) ? "" : $fieldAttrarr [1];
-										$urlStr = getDownUrlList ( $videoUrl, $target );
+										$urlStr = getDownUrlList ( $videoUrl, $target,$k );
 										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, $urlStr, $loopstrPlaylistNew );
 										break;
 									case "linkstr" :
@@ -3193,6 +3193,10 @@ class MainClass_Template {
 										break;
 									case "i" :
 										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, $k, $loopstrPlaylistNew );
+										break;
+									case "num" :
+										$numarr=explode('#',$videoUrl);
+										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, count($numarr), $loopstrPlaylistNew );
 										break;
 								}
 							}
@@ -3255,6 +3259,10 @@ class MainClass_Template {
 										break;
 									case "s" :
 										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, $playerSingleInfoArray ['sort'], $loopstrPlaylistNew );
+										break;
+									case "num" :
+										$numarr=explode('#',$videoUrl);
+										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, count($numarr), $loopstrPlaylistNew );
 										break;
 								}
 							}
@@ -3590,7 +3598,7 @@ class MainClass_Template {
 						'$_REQUEST',
 						'$_SESSION',
 						'$_SERVER'
-				), 'seacms', $v );
+				), 'seacms', $v);
 			}
 			$iar = $iarok;
 			$arlen = count ( $iar [0] );

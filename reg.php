@@ -45,7 +45,7 @@ if(trim($m_pwd)<>trim($m_pwd2) || trim($m_pwd)=='')
 	}	
 	
 $username = $m_user;
-$username = RemoveXSS(stripslashes($username));
+$username = RemoveXSS(stripslashes(trim($username)));
 $username = addslashes(cn_substr($username,200));
 $email = RemoveXSS(stripslashes($email));
 $email = addslashes(cn_substr($email,200));

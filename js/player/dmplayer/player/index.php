@@ -197,9 +197,10 @@ session_start();
     <script src="js/jquery.min.js"></script>
     <script src="js/setting.js"></script>
     <?php
-    if (strpos($_GET['url'], 'm3u8')) {
+	$urlarr=explode(',',$_GET['url']);
+    if (strpos($urlarr[0], 'm3u8')) {
         echo '<script src="js/hls.min.js"></script>';
-    } elseif (strpos($_GET['url'], 'flv')) {
+    } elseif (strpos($urlarr[0], 'flv')) {
         echo '<script src="js/flv.min.js"></script>';
     }
 	$gid=$_SESSION['sea_user_group'];
@@ -237,8 +238,8 @@ session_start();
         }
         var config = {
             "api": '/js/player/dmplayer/dmku/', //弹幕接口
-            "av": '', //B站弹幕id 45520296
-            "url": "<?php echo ($_GET['url']); ?>", //视频链接
+            "av": "<?php echo ($urlarr[1]); ?>", //B站弹幕id 45520296
+            "url": "<?php echo ($urlarr[0]); ?>", //视频链接
             "id": "<?php echo ($_GET['vid']); ?>", //视频id
             "sid": "", //集数id
             "pic": "", //视频封面

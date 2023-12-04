@@ -1,4 +1,4 @@
-<?php 
+<?php  
 function makeIndex($by='video')
 {
 	global $mainClassObj;
@@ -265,6 +265,7 @@ function makeArticleById($vId)
 {
 	global $dsql,$cfg_iscache,$mainClassObj;
 	$playn = 0;
+	echo '<font style="color:#ccc">[id:'.$vId.']</font>';
 	$row=$dsql->GetOne("Select * From `sea_news` where n_id='$vId'");
 	if(!is_array($row)){
 		echo "<font color='red'>影片ID:".$vId." 该影片所属分类被隐藏，跳过生成</font><br>";
@@ -408,9 +409,9 @@ function makeArticleById($vId)
 
 function makeContentById($vId)
 {
-	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_cmspath;
+	global $dsql,$cfg_isalertwin,$cfg_ismakeplay,$cfg_iscache,$mainClassObj,$cfg_cmspath,$cfg_isfromsort;
 	$playn = 0;
-	
+	echo '<font style="color:#ccc">[id:'.$vId.']</font>';
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){
 		return "<font color='red'>影片ID:".$vId." 该影片所属分类被隐藏，跳过生成</font><br>";
@@ -467,7 +468,34 @@ function makeContentById($vId)
 		$content=str_replace("{playpage:name}",$row['v_name'],$content);
 		$content=str_replace("{playpage:url}",$GLOBALS['cfg_basehost'].$contentLink2,$content);
 		$content=str_replace("{playpage:link}",$contentLink2,$content);
-		$content=str_replace("{playpage:playlink}",getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname']),$content);
+		
+		//如果开启播放来源排序，获取第一排序的播放组地址
+		if($cfg_isfromsort==1){
+			$playDataArray = getPlayurlArray ($row['v_playdata']);
+			$playerDic = getPlayerKindsArray ();
+			$vnum1 = substr_count ($row['v_playdata'], '$$' );
+						if ($vnum1 == 0) {
+							$vnum = 0;
+						} else {
+							$vnum = count ( $playDataArray );
+						}
+			for($i = 0; $i <= $vnum; $i ++) {
+								$singlePlayData = explode ( "$$", $playDataArray [$i] );
+								$playerSingleInfoArray[] = $playerDic [$singlePlayData [0]];
+								
+							}
+			$playerSingleInfoArray=array_filter($playerSingleInfoArray);
+
+			foreach($playerSingleInfoArray as $k=>$v){
+				{$b[$k]=(string)$v['sort'];}
+				}
+			$d=array_search(min($b),$b);
+		}else{
+			$d=0;
+		}
+		
+		
+		$content=str_replace("{playpage:playlink}",getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname'],$d),$content);
 		if(strpos($content,"{playpage:typename}")>0) 
 		{
 			$content=str_replace("{playpage:typename}",getTypeName($vType).getExtraTypeName($vExtraType),$content);	

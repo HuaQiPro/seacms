@@ -28,7 +28,7 @@ if ($action=="errpic") $whereStr.=" and d.n_pic like '%err'";
 if ($n_recycled=="ok") $whereStr.=" and d.n_recycled=1";
 if ($n_commend=="ok") $whereStr.=" and d.n_commend>0";
 if (!empty($type)) $whereStr.=" and d.tid in (".getTypeId($type).")";
-if (!empty($keyword)) $whereStr.=" and d.n_title like '%".$keyword."%'";
+if (!empty($keyword)) $whereStr.=" and d.n_title like '%".$keyword."%' or d.n_keyword like '%".$keyword."%' or d.n_author like '%".$keyword."%' or d.n_id = '$keyword'";
 $whereorder = str_replace("where order","order",str_replace("where and","and",$whereStr.$orderStr));
 $csqlStr="select count(*) as dd from `sea_news` d where d.n_recycled=0 ".$whereorder;
 if ($n_recycled=="ok")$csqlStr="select count(*) as dd from `sea_news` d where d.n_recycled=1 ".$whereorder;
@@ -44,7 +44,7 @@ $limitstart = ($page-1) * $numPerPage;
 if($limitstart<0) $limitstart=0;
 $sqlStr="select d.n_id,d.n_title,d.n_pic,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid where d.n_recycled=0 ".$whereorder." limit $limitstart,$numPerPage";
 if ($n_recycled=="ok") $sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addtime,d.n_commend,t.tname from sea_news d left join `sea_type` t on t.tid=d.tid  where 1=1 ".$whereorder." limit $limitstart,$numPerPage";
-//echo $sqlStr;die();
+
 ?>
 <div class="r_main">
 <div class="r_content">
@@ -52,7 +52,7 @@ if ($n_recycled=="ok") $sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addt
 <table class="tb_style" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <form action="?" method="post" >
-<tr class="thead"><th colspan="15">新闻管理&nbsp;&nbsp;<input  name="keyword" type="text" id="keyword" size="20">
+<tr class="thead"><th colspan="15">新闻管理&nbsp;&nbsp;<input  name="keyword" type="text" id="keyword" size="25" placeholder="新闻id/名称/作者/关键词..">
 <select name="type" id="type"  ><option value="">请选择文章分类</option>
 <?php makeTypeOption(0,"&nbsp;|&nbsp;",1)?>
 </select>
@@ -66,12 +66,12 @@ if ($n_recycled=="ok") $sqlStr="select d.n_id,d.n_title,d.n_hit,0,d.tid,d.n_addt
 <?php
 if($TotalResult==0){
     if(!empty($keyword)){
-    echo "<tr align='center'><td>关键字  <font color=red>\"".$keyword."\"</font>   没有记录</td></tr>";
+    echo "<tr><td colspan='10'><div style='height: 22px;line-height: 22px;background-color: #daebf7;padding-left: 5px;color: #0d78be;'>关键字  <font color=red>".$keyword."</font>   没有记录</div></td></tr>";
     }
 }else{
 	if(!empty($keyword)){
 ?>
-  <tr ><td colspan="10">关键字  <font color=red> <?php echo $keyword;?> </font>   的记录如下</td></tr>
+  <tr ><td colspan="10"><div style="height: 22px;line-height: 22px;background-color: #daebf7;padding-left: 5px;color: #0d78be;">关键字 <font color=red> <?php echo $keyword;?> </font> 的记录如下：</div></td></tr>
 <?php
 	}
 }

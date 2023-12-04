@@ -66,13 +66,14 @@ function openCollectWin(width, height,str,url){
 	document.getElementById("openwinjump").onclick = function(){	
         var url2=url.replace('action=','&action=');
 		
-		//admin_reslib.php?action=all&rid=c2345&pg=58&url=http://2345.choudidi.top/zyapi.php&backurl=admin_reslib.php
+		//admin_reslib.php?action=all&rid=c2345&pg=58&t=13&url=http://2345.choudidi.top/zyapi.php&backurl=admin_reslib.php
 	    var action=(getQueryVariable("action",url2));
 		var rid=(getQueryVariable("rid",url2)); 
 		var pg=(getQueryVariable("pg",url2)); 
-		var url3=(getQueryVariable("url",url2)); 
+		var tt=(getQueryVariable("t",url2)); 
+		var url3=(getQueryVariable("url",url2)); 		
 		var pg2=parseInt(pg)+1;
-		var Jurl='admin_reslib.php?action='+action+'&rid='+rid+'&pg='+pg2+'&url='+url3+'&backurl=admin_reslib.php';	
+		var Jurl='admin_reslib.php?action='+action+'&rid='+rid+'&pg='+pg2+'&t='+tt+'&url='+url3+'&backurl=admin_reslib.php';	
 		closeWin()
 		location.href=Jurl;
 	}

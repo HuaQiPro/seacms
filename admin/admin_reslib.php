@@ -436,7 +436,11 @@ function intoDatabase($url,$gtype)
 	$content=filterChar($content);
 	$xml = simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA); 
 	if(!$xml){	$xml =  simplexml_load_string(cget($url,0), 'SimpleXMLElement', LIBXML_NOCDATA); }
-	if(!$xml){ ShowMsg('获取资源失败', 'admin_reslib.php');exit;}
+	if(!$xml){ 
+		//ShowMsg('获取资源失败', 'admin_reslib.php');
+		echo '<strong>采集失败，错误信息如下：</strong><br><br>地址：'.$url.'<br>原因：①网络中断 ②数据含有xml语法禁用的符号: & < > 等<br>解决：①重试 ②跳过出错页 ③向资源库反应,在XML里添加CDATA转义特殊字符<br><br><strong><a href="admin_reslib.php">点击此处继续</a></strong>';
+		exit;
+	}
 	echo "<div style='font-size:13px'><font color=red>资源库视频采集开始：</font><br>";
 	if ($gtype=="type" || $gtype=="day"|| $gtype=="week"|| $gtype=="all") 
 	{
@@ -558,9 +562,9 @@ function bottom()
 	echo "<div align=center>";
 	$starttime = explode(' ', $starttime);
 	$endtime = explode(' ', microtime()); 
-	$timeuse=round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),6);
+	$timeuse=round(($endtime[0]+($endtime[1]-$starttime[1])-$starttime[0]),0)/1000000;
 	echo "</div><div class=\"bottom\"><table width=\"100%\" cellspacing=\"2\"><tr><td align=\"center\">本页面用时".
-	$timeuse."秒,共执行2次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.com/\">Powered By SeaCms</a></td></tr></table></div>\n</body>\n</html>";
+	$timeuse."秒,共执行6次数据查询</td></tr><tr><td align=\"center\"><a target=\"_blank\" href=\"http://www.seacms.com/\">POWER BY SEACMS</a></td></tr></table></div>\n</body>\n</html>";
 
 
 ?></div>

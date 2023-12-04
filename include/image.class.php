@@ -1,4 +1,4 @@
-<?php  
+<?php 
 if(!defined('sea_INC'))
 {
 	exit("Request Error!");
@@ -42,9 +42,10 @@ $ps = explode('/',$picUrl);}
 		}
 		$fileext  = getFileFormat($filename);
 		$filename = substr(md5($filename.time()),0,16);
-		if (strpos($picUrl,".ykimg.com/")>0){
+		if (strpos($picUrl,".d32dsf3fdsf3432ds2dsdf3dsdf23k0dak0poidas.com/")>0){
 			$fileext=".gif";
 		}
+		if(strlen($fileext)<2){$fileext='.jpg';}
 
 if (strpos("|.jpg|.gif|.png|.bmp|.jpeg|.webp|",strtolower($fileext))===false){   //2021-7-31  hzh
     $fileext=$this->kzm($pic);
@@ -126,7 +127,7 @@ $ps="";}else{
 $ps = explode('/',$picUrl);}  
 		$filename=urldecode($ps[count($ps)-1]);
 		if ($fileext!="" && strpos("|.jpg|.gif|.png|.bmp|.jpeg|.webp|",strtolower($fileext))>0){
-			if(!(strpos($picUrl,".ykimg.com/")>0)){
+			if(!(strpos($picUrl,".d32dsf3fdsf3432ds2dsdf3dsdf23k0dak0poidas.com/")>0)){
 			//	if(empty($filename) || strpos($filename,".")==0){   
 				if(empty($filename) || strpos('hzh'.$filePath,".")==0){   //2021-7-31  hzh
 					return "数据<font color=red>".$vname."</font>的图片路径错误2,请检查图片地址是否有效 ".$spanstr;
@@ -139,7 +140,8 @@ $ps = explode('/',$picUrl);}
 				if($streamLen<2048){
 					return "数据<font color=red>".$vname."</font>的图片下载发生错误5,请检查图片地址是否有效  ".$spanstr;
 				}else{
-					return number_format($streamLen/1024,2);
+					$streamLen = intval($streamLen/1024);
+					return $streamLen;
 				}
 			}else{
 				return "数据<font color=red>".$vname."</font>的图片下载发生错误4,请检查图片地址是否有效  ".$spanstr;

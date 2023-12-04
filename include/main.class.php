@@ -1,4 +1,4 @@
-<?php
+<?php  
 @session_start();
 if (! defined ( 'sea_INC' )) {
 	exit ( "Request Error!" );
@@ -1395,7 +1395,7 @@ class MainClass_Template {
 							}
 							$y_str = rtrim ( $y_str, "#" );
 							$y_str = str_replace ( "#", " or m.v_actor like ", $y_str );
-							$whereRel = " and m.v_actor like $y_str ";
+							$whereRel = " and (m.v_actor like $y_str) ";
 							break;
 						case "r" :
 							$whereRel = " and m.v_name like '%$rel_r%'";
@@ -1539,7 +1539,7 @@ class MainClass_Template {
 				if (trim ( $whereStr ) == "where")
 					$whereStr = "";
 				$sql = "select m.*," . $field_des . "," . $field_playdata . " from sea_data m " . $left_des . $left_playdata . $whereStr . $orderStr . " LIMIT $vstart,$vnum";
-				// echo $sql.'<br>';
+				//echo $sql.'<br>';
 				if ($cfg_issqlcache || $cfg_runmode == '0') {
 					$mycachefile = md5 ( 'videolist' . $whereStr . $orderStr . $vstart . $vnum );
 					setCache ( $mycachefile, $sql );
@@ -2883,7 +2883,7 @@ class MainClass_Template {
 								$des = ! empty ( $deslen ) && strlen ( $des ) > $deslen ? trimmed_title ( $des, $deslen ) : $des;
 								$loopstrTopiclistNew = str_replace ( $matchfieldvalue, $des, $loopstrTopiclistNew );
 								break;
-								case "keyword" :
+							case "keyword" :
 								$des = Html2Text ( $row->keyword );
 								$fieldAttrarr = explode ( chr ( 61 ), $fieldAttr );
 								$deslen = empty ( $fieldAttr ) ? 200 : intval ( $fieldAttrarr [1] );
@@ -3201,6 +3201,10 @@ class MainClass_Template {
 									case "i" :
 										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, $k, $loopstrPlaylistNew );
 										break;
+									case "num" :
+										$numarr=explode('#',$videoUrl);
+										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, count($numarr), $loopstrPlaylistNew );
+										break;
 								}
 							}
 						} else {
@@ -3262,6 +3266,10 @@ class MainClass_Template {
 										break;
 									case "s" :
 										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, $playerSingleInfoArray ['sort'], $loopstrPlaylistNew );
+										break;
+									case "num" :
+										$numarr=explode('#',$videoUrl);
+										$loopstrPlaylistNew = str_replace ( $matchfieldvalue, count($numarr), $loopstrPlaylistNew );
 										break;
 								}
 							}
@@ -3896,7 +3904,7 @@ class MainClass_Template {
 			return $content;
 		}
 	}
-	
+
 	function paresPreNews($content, $dataId, $typeFlag, $vtype) {
 		$preNextLabel = "{news:pre}";
 		if (strpos ( $content, $preNextLabel ) === false) {

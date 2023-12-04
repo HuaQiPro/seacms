@@ -3,19 +3,22 @@ session_start();
 
 //获取随机字符
 $rndstring = '';
-for($i=0; $i<4; $i++) $rndstring .= chr(mt_rand(65,90));
-
+//for($i=0; $i<4; $i++) $rndstring .= chr(mt_rand(65,90));
+$rndstring_A=mt_rand(1,9);
+$rndstring_B=mt_rand(1,9);
+$rndstring=$rndstring_A.'+'.$rndstring_B.'=?';
+$rndstring_R=$rndstring_A + $rndstring_B;
 //如果支持GD，则绘图 
 if(function_exists("imagecreate"))
 {
 	//Firefox部份情况会多次请求的问题，5秒内刷新页面将不改变session
 	//$ntime = time();
-	$_SESSION['sea_ckstr'] = strtolower($rndstring);
+	$_SESSION['sea_ckstr'] = $rndstring_R;
 	$_SESSION['sea_ckstr_last'] = '';
 	$rndcodelen = strlen($rndstring);
 
 	//创建图片，并设置背景色
-	$im = imagecreate(50,20);
+	$im = imagecreate(56,20);
 	ImageColorAllocate($im, 255,255,255);
 
 	//背景线

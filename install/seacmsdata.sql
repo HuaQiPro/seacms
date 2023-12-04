@@ -47,8 +47,8 @@ INSERT INTO `sea_type` (`tid`, `upid`, `tname`, `tenname`, `torder`, `templist`,
 (23,0,'科技','keji',23,'newspage.html','news.html','play.html','','',0,'',1),
 (24,0,'财经','caijing',24,'newspage.html','news.html','play.html','','',0,'',1);
 
-INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('1', '游客用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2', '0');
-INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('2', '注册用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2', '0');
+INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('1', '游客用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2,3', '0');
+INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('2', '注册用户', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2,3', '0');
 INSERT INTO `sea_member_group` (`gid`, `gname`, `gtype`, `g_auth`, `g_upgrade`) VALUES ('3', '超级会员', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', '1,2,3', '100');
 
 INSERT INTO `sea_jqtype` (`tid`,`upid`, `tname`, `ishidden`) VALUES

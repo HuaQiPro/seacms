@@ -116,6 +116,7 @@ CREATE TABLE `sea_co_data` (
   `v_playdata` text,
   `v_downdata` text,
   `v_jq` text,
+  `v_longtxt` TEXT,
   PRIMARY KEY  (`v_id`),
   KEY `tid` (`v_rank`,`tid`,`v_commend`,`v_hit`),
   KEY `v_addtime` (`v_addtime`,`v_digg`,`v_tread`,`v_inbase`)
@@ -246,7 +247,7 @@ CREATE TABLE `sea_data` (
   `v_enname` varchar(200) default NULL,
   `v_lang` varchar(200) default NULL,
   `v_score` int(10) NULL default '0',
-  `v_scorenum` int(10) default '0',
+  `v_scorenum` int(10) default '1',
   `v_extratype` text,
   `v_jq` text,
   `v_nickname` CHAR( 60 ) NULL ,

@@ -40,14 +40,11 @@ if($action=="delall")
 <td colspan="5" class="td_title">清除采集分类绑定</td>
 </tr>
 <tr>
-<td width="80%" align="left" height="30" class="td_border">
-如果系统绑定的资源库分类过多，某些情况下会出现绑定失败的情况，需要清除多余的绑定数据。
-</td>
-</tr>
-<tr>
-<td width="80%" align="left" height="30" class="td_border">
-使用此功能可以一键清除所有资源库的分类绑定，请谨慎操作。
-</td>
+<td>
+<div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+如果系统绑定的资源库分类过多，某些情况下会出现绑定失败的情况，需要清除多余的绑定数据。<br>
+<font style="color:red">此功能一键清除所有资源库的分类绑定，请谨慎操作。</font>
+</div></td>
 </tr>
 
 

@@ -306,6 +306,15 @@ elseif($action=="delall")
 		ShowMsg("请选择需要删除的影片","-1");
 		exit();
 	}
+	
+	foreach($e_id as $id){
+	$vtypeAndPic=$dsql->GetOne("select tid,v_pic,v_addtime,v_enname from sea_data where v_id=".$id);
+	$vtype=$vtypeAndPic['tid'];
+	$vpic=$vtypeAndPic['v_pic'];
+	if(strpos($vpic,'uploads/')===0) delFile("../".$vpic);
+	//delContentFile($vtype,$id,date('Y-n',$vtypeAndPic['v_addtime']),$vtypeAndPic['v_enname']);
+	}
+	
 	$ids = implode(',',$e_id);
 	/*$sqlStr="select v_id,tid,v_enname,v_addtime from sea_data where v_id in(".$ids.")";
 	$dsql->SetQuery($sqlStr);

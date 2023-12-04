@@ -140,7 +140,7 @@ echoSearchPage();
 
 function echoSearchPage()
 {
-	global $dsql,$cfg_iscache,$mainClassObj,$page,$t1,$cfg_search_time,$searchtype,$searchword,$tid,$year,$letter,$area,$yuyan,$state,$ver,$order,$jq,$money,$cfg_basehost;
+	global $dsql,$cfg_iscache,$mainClassObj,$page,$t1,$cfg_search_time,$searchtype,$searchword,$tid,$year,$letter,$area,$yuyan,$state,$ver,$order,$jq,$money,$cfg_basehost,$cfg_issearchlog;
 	
 	$orderarr=array('id','idasc','time','timeasc','hit','hitasc','commend','commendasc','score','scoreasc','dayhit','weekhit','monthhit','random','douban','mtime','imdb','dayhitasc','weekhitasc','monthhitasc','mtimeasc','imdbasc');
     if(!(in_array($order,$orderarr))){$order='time';}
@@ -326,7 +326,7 @@ if(check_str($page,$key)){ShowMsg('请勿输入危险字符！','index.php','0',
 	$content=$mainClassObj->parseIf($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$searchPageStr = $content;
-	GetKeywords($searchword,$TotalResult);
+	if($cfg_issearchlog=="y"){GetKeywords($searchword,$TotalResult);}
 	echo str_replace("{seacms:runinfo}",getRunTime($t1),$searchPageStr) ;
 }
 
@@ -365,6 +365,7 @@ function GetKeywords($keyword,$TotalResult)
 {
 	global $dsql;
 	$keyword = cn_substr($keyword,50);
+	if($keyword=="" OR empty($keyword)){return $keywords;}
 	$row = $dsql->GetOne("Select spwords From `sea_search_keywords` where keyword='".addslashes($keyword)."'; ");
 	if(!is_array($row))
 	{

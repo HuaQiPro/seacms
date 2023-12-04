@@ -114,7 +114,7 @@ echoSearchPage();
 
 function echoSearchPage()
 {
-	global $dsql,$cfg_iscache,$mainClassObj,$page,$t1,$cfg_search_time,$searchword,$searchtype;
+	global $dsql,$cfg_iscache,$mainClassObj,$page,$t1,$cfg_search_time,$searchword,$searchtype,$cfg_issearchlog;
 	if($cfg_search_time) checkSearchTimes($cfg_search_time);
 	$searchTemplatePath = "/templets/".$GLOBALS['cfg_df_style']."/".$GLOBALS['cfg_df_html']."/newssearch.html";
 	if($GLOBALS['cfg_mskin']!=0 AND $GLOBALS['cfg_mskin']!=3 AND $GLOBALS['cfg_mskin']!=4  AND $GLOBALS['isMobile']==1)
@@ -162,7 +162,7 @@ function echoSearchPage()
 	$content=$mainClassObj->parseIf($content);
 	$content=str_replace("{seacms:member}",front_member(),$content);
 	$searchPageStr = $content;
-	GetKeywords($searchword);
+	if($cfg_issearchlog=="y"){GetKeywords($searchword,$TotalResult);}
 	echo str_replace("{seacms:runinfo}",getRunTime($t1),$searchPageStr) ;
 }
 
@@ -197,10 +197,11 @@ function checkSearchTimes($searchtime)
 }
 
 //获得关键字的分词结果，并保存到数据库 
-function GetKeywords($keyword)
+function GetKeywords($keyword,$TotalResult)
 {
 	global $dsql;
 	$keyword = cn_substr($keyword,50);
+	if($keyword=="" OR empty($keyword)){return $keywords;}
 	$row = $dsql->GetOne("Select spwords From `sea_search_keywords` where keyword='".addslashes($keyword)."'; ");
 	if(!is_array($row))
 	{

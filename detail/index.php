@@ -28,7 +28,7 @@ echoContent($id);
 
 function echoContent($vId)
 {
-	global $dsql,$cfg_iscache,$mainClassObj,$t1,$cfg_user;
+	global $dsql,$cfg_iscache,$mainClassObj,$t1,$cfg_user,$cfg_isfromsort;
 	$row=$dsql->GetOne("Select d.*,p.body as v_playdata,p.body1 as v_downdata,c.body as v_content From `sea_data` d left join `sea_playdata` p on p.v_id=d.v_id left join `sea_content` c on c.v_id=d.v_id where d.v_id='$vId'");
 	if(!is_array($row)){ShowMsg("该内容已被删除或者隐藏","../index.php",0,10000);exit();}
 	$vType=$row['tid'];
@@ -50,8 +50,6 @@ function echoContent($vId)
 	$GLOBALS[tid]=$currentTypeId;
 	$typeFlag = "parse_content_" ;
 	$cacheName = $typeFlag.$vType.$GLOBALS['cfg_mskin'].$GLOBALS['isMobile'];
-
-	
 	
 	if($cfg_iscache){
 		if(chkFileCache($cacheName)){
@@ -69,7 +67,36 @@ function echoContent($vId)
 	$content=str_replace("{playpage:name}",$row['v_name'],$content);
 	$content=str_replace("{playpage:url}",$GLOBALS['cfg_basehost'].$contentLink,$content);
 	$content=str_replace("{playpage:link}",$contentLink,$content);
-	$content=str_replace("{playpage:playlink}",getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname']),$content);
+	
+	
+	//如果开启播放来源排序，获取第一排序的播放组地址
+	if($cfg_isfromsort==1){
+		$playDataArray = getPlayurlArray ($row['v_playdata']);
+		$playerDic = getPlayerKindsArray ();
+		$vnum1 = substr_count ($row['v_playdata'], '$$' );
+					if ($vnum1 == 0) {
+						$vnum = 0;
+					} else {
+						$vnum = count ( $playDataArray );
+					}
+		for($i = 0; $i <= $vnum; $i ++) {
+							$singlePlayData = explode ( "$$", $playDataArray [$i] );
+							$playerSingleInfoArray[] = $playerDic [$singlePlayData [0]];
+							
+						}
+		$playerSingleInfoArray=array_filter($playerSingleInfoArray);
+
+		foreach($playerSingleInfoArray as $k=>$v){
+			{$b[$k]=(string)$v['sort'];}
+			}
+		$d=array_search(min($b),$b);
+	}else{
+		$d=0;
+	}
+	
+	
+	
+	$content=str_replace("{playpage:playlink}",getPlayLink2($vType,$vId,date('Y-n',$row['v_addtime']),$row['v_enname'],$d),$content);
 	$content=str_replace("{playpage:typelink}",getChannelPagesLink($vType),$content);
 	if(strpos($content,"{playpage:typename}")>0) 
 	{

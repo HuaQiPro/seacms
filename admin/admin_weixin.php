@@ -274,40 +274,17 @@ if($action=="set")
 </td>
 </tr>
 
+
 <tr>
-<td width="90%" align="left" height="30" class="td_border">
- 注意：token：<font color="red"><strong>weixin</strong></font>，服务器地址：<font color="red"><strong>http://你的网址/weixin/</strong></font>，末尾有/。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
- 当用户输入<font color="red"><strong>中文</strong></font>或<font color="red"><strong>英文</strong></font>时搜索影片；<font color="red"><strong>纯数字</strong></font>时获取观看密码。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
- 默认的帮助触发关键词为<font color="red"><strong>帮助</strong></font>，留言板触发关键词为<strong><font color="red">留言</strong></font>。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
- 当用户发送以<font color="red"><strong>http</strong></font>或<font color="red"><strong>https</strong></font>开头的网址时，自动调用解析接口进行解析播放。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
- 自定义回复内容支持链接，格式：<font color="red"><strong>&lta href='xxx'&gt文字&lt/a&gt</strong></font> 注意单引号。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
- 请在微信公众平台：https://mp.weixin.qq.com中正确填写开发者选项。
-</td>
-</tr>
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
- 如果修改无效，请检查/data/admin/weixin.php文件权限是否可写。
-</td>
+<td><div style="padding: 10px;border: 0;border-radius: 4px;line-height:22px;font-size: 12px;background-color: #eef5f4;">
+注意：token：<font color="red"><strong>weixin</strong></font>，服务器地址：<font color="red"><strong>http://你的网址/weixin/</strong></font>，末尾有/。
+<br>当用户输入<font color="red"><strong>中文</strong></font>或<font color="red"><strong>英文</strong></font>时搜索影片；<font color="red"><strong>纯数字</strong></font>时获取观看密码。
+<br>默认的帮助触发关键词为<font color="red"><strong>帮助</strong></font>，留言板触发关键词为<strong><font color="red">留言</strong></font>。
+<br>当用户发送以<font color="red"><strong>http</strong></font>或<font color="red"><strong>https</strong></font>开头的网址时，自动调用解析接口进行解析播放。
+<br>自定义回复内容支持链接，格式：<font color="red"><strong>&lta href='xxx'&gt文字&lt/a&gt</strong></font> 注意单引号。
+<br>请在微信公众平台：https://mp.weixin.qq.com中正确填写开发者选项。
+<br>如果修改无效，请检查/data/admin/weixin.php文件权限是否可写。
+</div></td>
 </tr>
 </tbody></table>	
 	

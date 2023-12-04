@@ -54,7 +54,7 @@ function echoChannel($typeId)
 		$extrasql = " or FIND_IN_SET('".$typeId."',v_extratype)<>0 ";
 	else
 		$extrasql = "";
-	$sql="select count(*) as dd from sea_data where (tid in (".$typeIds.") ".$extrasql.")";
+	$sql="select count(*) as dd from sea_data where (tid in (".$typeIds.") ".$extrasql.") AND v_recycled=0";
 	$row = $dsql->GetOne($sql);
 	if(is_array($row))
 	{

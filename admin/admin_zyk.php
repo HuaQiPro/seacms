@@ -160,10 +160,11 @@ $aid=$row->id;
 <input  name="zapi<?php  echo $row->zid; ?>" style=" margin-right:10px;width:250px;" value="<?php  echo $row->zapi; ?>"></td>
 <td style="width:220px;" align="left"  height="30" class="td_border">
 <input  name="zinfo<?php  echo $row->zid; ?>" style=" margin-right:10px;width:220px;" value="<?php  echo $row->zinfo; ?>"></td>
-<td style="width:250px;" align="left"  height="30" class="td_border">
+<td style="width:320px;" align="left"  height="30" class="td_border">
 <input type="radio" name="ztype<?php  echo $row->zid; ?>" value="1" <?php if($row->ztype == 1) echo "checked";?> class="radio" />新增+更新&nbsp
 <input type="radio" name="ztype<?php  echo $row->zid; ?>" value="0" <?php if($row->ztype == 0) echo "checked";?> class="radio" />仅更新&nbsp
-<input type="radio" name="ztype<?php  echo $row->zid; ?>" value="3" <?php if($row->ztype == 3) echo "checked";?> class="radio" />隐藏&nbsp
+<input type="radio" name="ztype<?php  echo $row->zid; ?>" value="2" <?php if($row->ztype == 2) echo "checked";?> class="radio" />仅新增&nbsp
+<input type="radio" name="ztype<?php  echo $row->zid; ?>" value="3" <?php if($row->ztype == 3) echo "checked";?> class="radio" />隐藏
 </td>
 </tr>
 
@@ -205,7 +206,7 @@ $aid=$row->id;
 <tr>
 <td width="80%" align="left" height="30" class="td_border">
 资源库地址：<input name="zapi" style="width:400px;">
- * 请填写正确的资源库api地址，如：http://www.123.com/api.php
+ * 资源库api地址，仅支持 XML 格式，如：http://www.123.com/api.php
 </td>
 </tr>
 
@@ -221,7 +222,8 @@ $aid=$row->id;
 资源库类型：
 <input type="radio" name="ztype" value="1" checked class="radio" />新增+更新&nbsp;&nbsp;
 <input type="radio" name="ztype" value="0" class="radio" />仅更新&nbsp;&nbsp;
- * 当选择仅更新时，此资源库将不新增数据
+<input type="radio" name="ztype" value="2" class="radio" />仅新增&nbsp;&nbsp;
+<input type="radio" name="ztype" value="3" class="radio" />隐藏
 </td>
 </tr>
 

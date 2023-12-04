@@ -7,10 +7,11 @@ require_once(sea_INC."/check.admin.php");
 require_once(sea_ADMIN."/coplugins/Snoopy.class.php");
 header("Cache-Control:private");
 
-$pkey = $cfg_cookie_encode; //采集授权密码，请修改为自己的密码，防止被恶意采集
+$pkey = $cfg_cookie_encode; 
 $ukey=$_GET['password'];
 if($ukey != $pkey){die('PassWord ERR!');}
-
+$password=$ukey;
+global $password;
 $days=1;
 
 $dsql->safeCheck = false;
@@ -169,8 +170,8 @@ function downSinglePic($picUrl,$vid,$vname,$filePath,$infotype)
 	$fileext=getFileFormat($filePath);
 	$ps=split("/",$picUrl);
 	$filename=urldecode($ps[count($ps)-1]);
-	if ($fileext!="" && strpos("|.jpg|.gif|.png|.bmp|.jpeg|",strtolower($fileext))>0){
-		if(!(strpos($picUrl,".ykimg.com/")>0)){
+	if ($fileext!="" && strpos("|.jpg|.gif|.png|.bmp|.jpeg|.webp|",strtolower($fileext))>0){
+		if(!(strpos($picUrl,".d32dsf3fdsf3432ds2dsdf3dsdf23k0dak0poidas.com/")>0)){
 			if(empty($filename) || strpos($filename,".")==0){
 				echo "数据<font color=red>".$vname."</font>的图片路径错误2,请检查图片地址是否有效 ".$spanstr;
 				return false;
@@ -295,7 +296,7 @@ function getFileType($filedir)
 		return "folder";
 	}else{
 		$filetype=strtolower(getfileextend($filedir));
-		$imgFileStr=".jpg|.jpeg|.gif|.bmp|.png";
+		$imgFileStr=".jpg|.jpeg|.gif|.bmp|.webp|.png";
 		$pageFileStr =".html|.htm|.js|.css|.txt";
 		if(strpos($imgFileStr,$filetype)>0) return "img";
 		if(strpos($pageFileStr,$filetype)>0) return "txt";
@@ -521,7 +522,7 @@ elseif($action=="js")
 elseif($action=="site")
 {
 	checkRunMode();
-	echo "<script language='javascript'>self.location='?action=allcontent&action2=allcontent&action3=".$action3."&by=".$by."';</script>";
+	echo "<script language='javascript'>self.location='?action=allcontent&action2=allcontent&action3=".$action3."&by=".$by."&password=".$ukey."';</script>";
 }
 elseif($action=="newssite")
 {
@@ -652,7 +653,7 @@ elseif($action=="allcontent")
 				alertMsg ("生成全部内容页完成","");
 				exit();
 			}elseif($action3=="site"){
-				echo "<script language='javascript'>self.location='?action=allchannel&action3=".$action3."';</script>";
+				echo "<script language='javascript'>self.location='?action=allchannel&action3=".$action3."&password=".$ukey."';</script>";
 				exit();
 			}
 		}
@@ -700,7 +701,8 @@ elseif($action=="daysview")
 	checkRunMode();
 	$ntime = gmmktime(0, 0, 0, gmdate('m'), gmdate('d'), gmdate('Y'));
 	$limitday = $ntime - ($days * 24 * 3600);
-	$sql = "SELECT v_id FROM sea_data where v_addtime>".$limitday;
+	//$sql = "SELECT v_id FROM sea_data where v_addtime>".$limitday;
+	$sql = "SELECT v_id FROM sea_data where v_ismake=0 and v_addtime>".$limitday." order by v_addtime DESC";
 	$dsql->SetQuery($sql);
 	$dsql->Execute('makedaysview');
 	echoHead();

@@ -54,7 +54,7 @@ elseif($action=="save")
 	$n_keyword = cn_substrR(strtolower(addslashes($n_keyword)),80);
 	$n_keyword = str_replace('，', ',', $n_keyword);
 	$n_keyword = str_replace(',,', ',', $n_keyword);
-	$n_from = cn_substrR($n_from,10);
+	$n_from = cn_substrR($n_from,30);
 	$n_commend = empty($n_commend) ? 0 : intval($n_commend);
 	if(empty($n_entitle))
 	{

@@ -3,7 +3,7 @@ if(!defined('sea_INC'))
 {
 	exit("Request Error!");
 }
-
+ 
 $dcollect = $col = new Collect();
 class Collect
 {
@@ -12,10 +12,11 @@ class Collect
 	 * $video xml单个simplexml数据 
 	 * $localId 入库后本地id
 	 * */
+	
 	public function xml_db($video,$localId)
 	{  
 		$v_data['v_name'] =  htmlspecialchars($video->name);//影片名称
-		$v_data['v_name'] = str_replace(array('\\','()','\''),'/',$v_data['v_name']);
+		//$v_data['v_name'] = str_replace(array('\\','()','\''),'/',$v_data['v_name']);
 		$v_data['v_pic'] = (String)$video->pic;//影片图片地址
 		$v_data['v_state'] = (String)$video->state;//影片连载状态
 		$v_data['v_lang'] = (String)$video->lang;//影片语言
@@ -41,6 +42,7 @@ class Collect
 		$v_data['v_len'] = (String)$video->len;//影片时长
 		$v_data['v_total'] = (String)$video->total;//影片集数
 		$v_data['v_jq'] = (String)$video->jq;//剧情分类
+		if($video->jq=="" OR empty($video->jq)){$v_data['v_jq']=(String)$video->class;} //兼容其它cms剧情分类
 		if($v_data['v_actor']=="" OR empty($v_data['v_actor'])){$v_data['v_actor']="内详";}
 		if($v_data['v_director']=="" OR empty($v_data['v_director'])){$v_data['v_director']="内详";}
 		//$flag = $video->dl->dd['flag'];//影片前缀，属于哪个资源库
@@ -63,9 +65,18 @@ class Collect
 		      {
 				  $f=$video->dl->dd[$i]['flag'];
 				  $flag=$z["$f"];
+					//如果检测到播放地址没有后缀
+					$find='$'.$f;$find=(String)$find;
+					if(strpos($video->dl->dd[$i],$find) !== true){
+						  $video->dl->dd[$i]=str_replace('#','$'.$f.'#',$video->dl->dd[$i]);
+						  $video->dl->dd[$i].='$'.$f;
+						  $video->dl->dd[$i]=str_replace($find.$find,$find,$video->dl->dd[$i]);
+					  }
+					  
 				  $v_data['v_playdata'] .= $flag."$$".$video->dl->dd[$i]."$$$";
 			  } 
 		} 
+
 		$v_data['v_playdata'] = substr($v_data['v_playdata'],0,-3);
 		$v_data['v_downdata'] = substr($v_data['v_downdata'],0,-3);
 		
@@ -82,7 +93,26 @@ class Collect
 						  if(strpos($v_data['v_name'],$value) !== false){return "数据<font color=red>".$v_data['v_name']."</font>含过滤词,跳过采集<br>";}
 					  }
 		}
-		// 影片关键词替换
+		
+		// 影片年份过滤 跳过采集
+		global $cfg_cjjumpNF;
+		if($cfg_cjjumpNF !=""){
+			if(strpos($cfg_cjjumpNF,$v_data['v_publishyear']) === false OR $v_data['v_publishyear']=="" OR $v_data['v_publishyear']=="0"){return "数据<font color=red>".$v_data['v_name']."</font>年份".$v_data['v_publishyear']."不在采集范围,跳过采集<br>";}
+		}
+		
+		// 影片地区过滤 跳过采集
+		global $cfg_cjjumpDQ;
+		if($cfg_cjjumpDQ !=""){
+			if(strpos($cfg_cjjumpDQ,$v_data['v_publisharea']) === false OR $v_data['v_publisharea']=="" OR $v_data['v_publisharea']=="0"){return "数据<font color=red>".$v_data['v_name']."</font>地区".$v_data['v_publisharea']."不在采集范围,跳过采集<br>";}
+		}
+		
+		// 影片语言过滤 跳过采集
+		global $cfg_cjjumpYY;
+		if($cfg_cjjumpYY !=""){
+			if(strpos($cfg_cjjumpYY,$v_data['v_lang']) === false OR $v_data['v_lang']=="" OR $v_data['v_lang']=="0"){return "数据<font color=red>".$v_data['v_name']."</font>语言".$v_data['v_lang']."不在采集范围,跳过采集<br>";}
+		}
+		
+		// 影片名称替换
 		global $cfg_cjreplace;
 		if($cfg_cjreplace !=""){		
 			$r0 = explode('|',$cfg_cjreplace);
@@ -90,6 +120,26 @@ class Collect
 			foreach($r0 as $data){$r[]=explode('=',$data);}
 			foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
 		}
+		
+		// 影片地区替换
+		global $cfg_cjreplaceDQ;
+		if($cfg_cjreplaceDQ !=""){		
+			$r0 = explode('|',$cfg_cjreplaceDQ);
+			$r = array();
+			foreach($r0 as $data){$r[]=explode('=',$data);}
+			foreach($r as $d){$v_data['v_publisharea']=str_replace($d['0'],$d['1'],$v_data['v_publisharea']);}
+		}
+		
+		// 影片语言替换
+		global $cfg_cjreplaceYY;
+		if($cfg_cjreplaceYY !=""){		
+			$r0 = explode('|',$cfg_cjreplaceYY);
+			$r = array();
+			foreach($r0 as $data){$r[]=explode('=',$data);}
+			foreach($r as $d){$v_data['v_lang']=str_replace($d['0'],$d['1'],$v_data['v_lang']);}
+		}
+		
+		
 		if(is_numeric($localId))
 		{		
 			$v_data['v_ismake'] = 0;
@@ -138,7 +188,7 @@ class Collect
 			    $v_data['v_name']=$this->filterWord($v_data['v_name'],0);
 				$v_data['v_enname']=Pinyin($v_data['v_name']);
 				$v_data['v_name'] =  htmlspecialchars($v_data['v_name']);
-				$v_data['v_name'] = str_replace(array('\\','()','\''),'/',$v_data['v_name']);
+				//$v_data['v_name'] = str_replace(array('\\','()','\''),'/',$v_data['v_name']);
 				
 			    
 			    $v_data['v_letter'] = strtoupper(substr( $v_data['v_enname'],0,1));
@@ -312,14 +362,54 @@ class Collect
 						  if(strpos($v_data['v_name'],$value) !== false){return "{$echo_id} ".$lurl."\t<font color=red>含过滤词,跳过采集</font>.<br>";}
 					  }
 				  }
-				// 影片关键词替换
+				
+				// 影片年份过滤 跳过采集
+				global $cfg_cjjumpNF;
+				if($cfg_cjjumpNF !=""){
+					if(strpos($cfg_cjjumpNF,$v_data['v_publishyear']) === false OR $v_data['v_publishyear']=="" OR $v_data['v_publishyear']=="0"){return "数据<font color=red>".$v_data['v_name']."</font>年份".$v_data['v_publishyear']."不在采集范围,跳过采集<br>";}
+				}
+				
+				// 影片地区过滤 跳过采集
+				global $cfg_cjjumpDQ;
+				if($cfg_cjjumpDQ !=""){
+					if(strpos($cfg_cjjumpDQ,$v_data['v_publisharea']) === false OR $v_data['v_publisharea']=="" OR $v_data['v_publisharea']=="0"){return "数据<font color=red>".$v_data['v_name']."</font>地区".$v_data['v_publisharea']."不在采集范围,跳过采集<br>";}
+				}
+				
+				// 影片语言过滤 跳过采集
+				global $cfg_cjjumpYY;
+				if($cfg_cjjumpYY !=""){
+					if(strpos($cfg_cjjumpYY,$v_data['v_lang']) === false OR $v_data['v_lang']=="" OR $v_data['v_lang']=="0"){return "数据<font color=red>".$v_data['v_name']."</font>语言".$v_data['v_lang']."不在采集范围,跳过采集<br>";}
+				}
+				
+				// 影片名称替换
 				global $cfg_cjreplace;
 				if($cfg_cjreplace !=""){				
 					$r0 = explode('|',$cfg_cjreplace);
 					$r = array();
 					foreach($r0 as $data){$r[]=explode('=',$data);}
 					foreach($r as $d){$v_data['v_name']=str_replace($d['0'],$d['1'],$v_data['v_name']);}
-				} 
+				}
+				
+				// 影片地区替换
+				global $cfg_cjreplaceDQ;
+				if($cfg_cjreplaceDQ !=""){		
+					$r0 = explode('|',$cfg_cjreplaceDQ);
+					$r = array();
+					foreach($r0 as $data){$r[]=explode('=',$data);}
+					foreach($r as $d){$v_data['v_publisharea']=str_replace($d['0'],$d['1'],$v_data['v_publisharea']);}
+				}
+				
+				// 影片语言替换
+				global $cfg_cjreplaceYY;
+				if($cfg_cjreplaceYY !=""){		
+					$r0 = explode('|',$cfg_cjreplaceYY);
+					$r = array();
+					foreach($r0 as $data){$r[]=explode('=',$data);}
+					foreach($r as $d){$v_data['v_lang']=str_replace($d['0'],$d['1'],$v_data['v_lang']);}
+				}
+
+
+				
 			      $sql = "update `sea_co_url` set succ='1' where uid=".$row['uid'];
 				  $dsql->ExecuteNoneQuery($sql);
 				  
@@ -408,6 +498,11 @@ class Collect
 		if(is_array($rs))
 		{
 			
+		//if 资源库类型为仅新增
+		   if($ztype==2)
+		   {
+			  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，此资源库类型为仅新增数据<br>";
+		   }
 			//if 勾选[开启分类识别]
 			if(strpos($cfg_gatherset,'0')!==false)
 			{
@@ -478,6 +573,11 @@ class Collect
 				}
 			}else
 			{
+				//if 勾选[开启不添加新影片]
+			   if(strpos($cfg_gatherset,'1')!==false)
+			   {
+				  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，您开启了不添加新影片功能<br>";
+			   }
 				if($rs['v_isunion']=='1')
 				{
 					return "数据<font color=red>".$v_data['v_name']."</font>处于锁定状态,不更新数据<br>";
@@ -528,10 +628,10 @@ class Collect
 			}
 			
 			//if 资源库类型为仅更新
-				   if($ztype==0)
-				   {
-					  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，此资源库类型为仅更新数据<br>";
-				   }
+		   if($ztype==0)
+		   {
+			  return $autocol_str."数据<font color=red>".$v_data['v_name']."</font>跳过，此资源库类型为仅更新数据<br>";
+		   }
 			
 			// else 以新影片添加
 			return $autocol_str.$this->_insert_database($v_data);
@@ -595,7 +695,8 @@ class Collect
 		$v_playdata = $v_data['v_playdata'];
 		$v_downdata = $v_data['v_downdata'];	
 		unset($v_data['tid']);
-		unset($v_data['v_hit']);	
+		unset($v_data['v_hit']);
+		$errpic=$v_data['v_pic'];
 		if(strpos($cfg_gatherset,'C')!==false){}else{unset($v_data['v_pic']);}
 		if(strpos($cfg_gatherset,'D')!==false){}else{unset($v_data['v_state']);}
 		if(strpos($cfg_gatherset,'E')!==false){}else{unset($v_data['v_lang']);}
@@ -617,7 +718,10 @@ class Collect
 		if(strpos($cfg_gatherset,'V')!==false){}else{unset($v_data['v_total']);}
 		if(strpos($cfg_gatherset,'W')!==false){}else{unset($v_data['v_len']);}
 		if(strpos($cfg_gatherset,'X')!==false){}else{unset($v_data['v_jq']);}
-		if(strpos($cfg_gatherset,'Y')!==false){unset($v_data['v_addtime']);}
+		if(strpos($cfg_gatherset,'Y')!==false){unset($v_data['v_addtime']);}	
+		
+		//同步错误的图片 重新入库
+		if(strpos($cfg_gatherset,'Z')!==false AND strpos($rs['v_pic'],'#err')!==false){$v_data['v_pic']=$errpic;}
 		
 		unset($v_data['v_des']);
 		unset($v_data['v_playdata']);

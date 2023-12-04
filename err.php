@@ -76,7 +76,7 @@ if($author=='' || $errtxt=='') {
     <head>
     	<title>影片报错</title>
         <script>
-			function checkReportErr(){if (document.getElementById('author').value.length<1){alert('请填写报错者');return false;}; if (document.getElementById('errtxt').value.length<1){alert('请填写报错内容');return false;}}
+			function checkReportErr(){if (document.getElementById('author').value.length<1){alert('请填写报错者');return false;}; if (document.getElementById('errtxt').value.length<1){alert('请填写报错内容');return false;}<?php if($cfg_feedback_ck=='1'){echo "if (document.getElementById('vdcode').value.length<1){alert('请填写验证码');return false;};";} ?>}
         </script>
 		<style>
 		h2,p{padding:0; margin:0;}

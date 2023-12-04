@@ -78,7 +78,7 @@
       </tr>
 	   <tr>
         <td class="td_border" width="11%" height="30">&nbsp;注册时间：</td>
-        <td class="td_border"><input disabled="disabled" id="nickname" type="text" value="<?php echo  date("Y-m-d h:i:s",$row['regtime']); ?>" size="20" name="nickname" /> </td>
+        <td class="td_border"><input disabled="disabled" id="nickname" type="text" value="<?php echo  date("Y-m-d H:i:s",$row['regtime']); ?>" size="20" name="nickname" /> </td>
       </tr>
 	   <tr>
         <td class="td_border" width="11%" height="30">&nbsp;注册IP：</td>
@@ -116,7 +116,7 @@
       </tr>
 	  <tr>
         <td class="td_border" width="11%" height="30">&nbsp;会员到期时间：</td>
-        <td class="td_border"><input id="vipendtime" type="text" value="<?php echo  date("Y-m-d h:i:s",$row['vipendtime']); ?>" size="20" name="vipendtime" /> </td>
+        <td class="td_border"><input id="vipendtime" type="text" value="<?php echo  date("Y-m-d H:i:s",$row['vipendtime']); ?>" size="20" name="vipendtime" /> </td>
       </tr>
 	  <tr>
         <td class="td_border" width="11%" height="30">&nbsp;邮箱激活状态：</td>
@@ -126,7 +126,7 @@
               未激活</label>
             <label>
               <input type="radio" name="acode" value="y" <?php if($row['acode']=='y') echo 'checked' ?> id="ustate_1" />
-            已激活</label></td>
+            已激活</label></td> 
       </tr>
       <tr>
         <td class="td_border" width="11%" height="30">&nbsp;账户状态：</td>

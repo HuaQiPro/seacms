@@ -533,8 +533,10 @@ elseif($action=="editVideo")
 	}
 	$vtype = $vrow['tid'];
 	$v_playdata=$vrow['v_playdata'];
+	$v_downdata=$vrow['v_downdata'];
 	$v_content=$vrow['v_des'];
 	$makePlayerSelectStr=str_replace("'","\'",makePlayerSelect(""));
+	$makeDownSelectStr=str_replace("'","\'",makeDownSelect(""));
 	include(sea_ADMIN.'/templets/admin_co_editvideo.htm');
 	exit();
 }
@@ -552,6 +554,8 @@ elseif($action=="saveVideo")
 	}
 	$v_playurl = empty($v_playurl) ? $v_playurl : repairUrlForm($v_playurl,$v_playfrom);
 	$v_playdata=transferUrl($v_playfrom,$v_playurl);
+	$v_downurl = empty($v_downurl) ? $v_downurl : repairUrlForm($v_downurl,$v_downfrom);
+	$v_downdata=transferUrl($v_downfrom,$v_downurl);
 	$tid = empty($v_type) ? 0 : intval($v_type);
 	$v_state = empty($v_state) ? 0 : intval($v_state);
 	$v_hit = empty($v_hit) ? 0 : intval($v_hit);
@@ -573,7 +577,7 @@ elseif($action=="saveVideo")
 	switch (trim($acttype)) 
 	{
 		case "edit":
-			$updateSql = "tid = '$tid',v_name = '$v_name',v_letter = '$v_letter',v_state = '$v_state',v_hit = '$v_hit',v_actor = '$v_actor',v_publishyear = '$v_publishyear',v_publisharea = '$v_publisharea',v_pic = '$v_pic',v_note = '$v_note',v_tags = '$v_tags',v_des = '$v_content',v_playdata = '$v_playdata'";
+			$updateSql = "tid = '$tid',v_name = '$v_name',v_enname = '$v_enname',v_letter = '$v_letter',v_state = '$v_state',v_hit = '$v_hit',v_actor = '$v_actor',v_publishyear = '$v_publishyear',v_publisharea = '$v_publisharea',v_pic = '$v_pic',v_note = '$v_note',v_lang = '$v_lang',v_tags = '$v_tags',v_des = '$v_content',v_playdata = '$v_playdata',v_downdata = '$v_downdata',v_longtxt = '$v_longtxt',v_jq = '$v_jq'";
 			if(!empty($isupdatetime)) $updateSql .= ",v_addtime='$v_addtime'";
 			$updateSql = "update sea_co_data set ".$updateSql." where v_id=".$v_id;
 			if(!$dsql->ExecuteNoneQuery($updateSql))
@@ -1255,7 +1259,7 @@ function import2Base($idsArray,$vtype)
 	if(count($idsArray)>0)
 	{
 		$ids = implode(',',$idsArray);
-		$sql="SELECT v_id,v_name,v_letter,tid,v_state,v_pic,v_director,v_actor,v_des,v_playdata,v_publishyear,v_publisharea,v_hit,v_note,v_tags,v_lang FROM sea_co_data WHERE v_id IN (".$ids.")";
+		$sql="SELECT v_id,v_name,v_enname,v_letter,tid,v_state,v_pic,v_director,v_actor,v_des,v_playdata,v_downdata,v_publishyear,v_publisharea,v_hit,v_note,v_tags,v_jq,v_longtxt,v_lang FROM sea_co_data WHERE v_id IN (".$ids.")";
 		$dsql->SetQuery($sql);
 		$dsql->Execute('import_list');
 		echo "<div style='font-size:13px'><font color=red>从临时数据库导出数据：</font><br>";

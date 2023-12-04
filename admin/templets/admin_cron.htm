@@ -19,12 +19,12 @@
         </tr>
         <tr>
           <td class="tipsblock">
+		  <div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
 &nbsp;*&nbsp;&nbsp;本功能为定时任务自动版，访客访问前台页面时即可自动触发，不需要打开后台管理。<br>
 &nbsp;*&nbsp;&nbsp;请谨慎使用本功能，合理设置执行间隔时间，延长PHP脚本执行时间，以免造成服务器崩溃。<br>
 &nbsp;*&nbsp;&nbsp;网站前台模板必须调用js/common.js和js/function.js两个系统js文件才可以正常执行。<br>
-&nbsp;*&nbsp;&nbsp;默认只生成首页/新闻首页/24小时有更新的内容和列表，修改/include/crons/automakehtml.php可配置更多项目。	<br>
-&nbsp;*&nbsp;&nbsp;自动采集时不建议同时下载视频海报图片，可能会造成脚本超时或者服务器崩溃。					
-			</td>
+&nbsp;*&nbsp;&nbsp;默认只生成首页/新闻首页/24小时有更新的内容和列表，修改/include/crons/automakehtml.php可配置更多项目。					
+			</div></td>
         </tr>
 </table>
       <?php
@@ -85,7 +85,7 @@ if($action=="edit")
             <td>
 			<select name="resourcefrom" id="resourcefrom">
                 <?php 
-                $sqlz="select * from sea_zyk";
+                $sqlz="select * from sea_zyk WHERE ztype !=3 order by zid ASC";
                 $rsz=$dsql->getOne($sqlz);
                 if(!is_array($rsz))
                 {
@@ -270,7 +270,7 @@ echo "<tr><td>".$t[0]."</td><td>".$t[2]."</td><td>".$t[1]."</td><td>".$t[3]."</t
 
                 <select name="resourcefrom" id="resourcefrom">
                 <?php 
-                $sqlz="select * from sea_zyk";
+                $sqlz="select * from sea_zyk WHERE ztype !=3 order by zid ASC";
                 $rsz=$dsql->getOne($sqlz);
                 if(!is_array($rsz))
                 {

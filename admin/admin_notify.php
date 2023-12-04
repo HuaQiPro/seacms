@@ -71,18 +71,16 @@ if($action=="set")
 </td>
 </tr>
 <tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 最多支持发布3条会员通知，删除通知内容即可取消发布该条。
+<td>
+<div style="padding: 10px;border: 0;border-radius: 4px;font-size: 12px;background-color: #eef5f4;">
+* 最多支持发布3条会员通知，删除通知内容即可取消发布该条。<br>
+* 如果修改无效，请检查/data/admin/notify.php文件权限是否可写。
+</div>
 </td>
 </tr>
 
-<tr>
-<td width="90%" align="left" height="30" class="td_border">
-* 如果修改无效，请检查/data/admin/notify.php文件权限是否可写。
-</td>
-</tr>
 </tbody></table>	
-	
+<br>
 
 </form>
 </div>
